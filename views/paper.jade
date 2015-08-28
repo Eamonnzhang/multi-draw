@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title #{title}
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    //if lt IE 9
+      script(src='http://html5shiv.googlecode.com/svn/trunk/html5.js')
+    #cursors
+    canvas#paper(width='1900', height='1000')
+      | Your browser needs to support canvas for this to work!
+    hgroup#instructions
+      h1 Draw anywhere!
+      h2 You will see everyone else who&apos;s doing the same.
+      h3 Tip: if the stage gets dirty, simply reload the page
+    footer
+      h2
+        i Tutorial:
+          | Node.js Multiplayer Drawing Game
+      a.tzine(href='http://tutorialzine.com/2012/08/nodejs-drawing-game/')
+        | Head on to 
+        i
+          | Tutorial
+          b zine
+        | to read and download
+    script(src='/socket.io/socket.io.js')
+    script(src='/javascripts/jquery-1.8.0.min.js')
+    script(src='/javascripts/script.js')
