@@ -20,6 +20,8 @@ $(function(){
 	//var id = Math.round($.now()*Math.random());
     var utils = new Utils();
 	var id = utils.getQueryString('username');
+    if(!getCookie('name'))
+        win.location='/';
 
 	// A flag for drawing activity
 	var drawing = false;
