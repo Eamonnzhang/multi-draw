@@ -17,8 +17,10 @@ $(function(){
 		instructions = $('#instructions');
 	
 	// Generate an unique ID
-	var id = Math.round($.now()*Math.random());
-	
+	//var id = Math.round($.now()*Math.random());
+    var utils = new Utils();
+	var id = utils.getQueryString('username');
+
 	// A flag for drawing activity
 	var drawing = false;
 

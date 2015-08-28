@@ -39,6 +39,9 @@ section, footer, header{
   display: block;
 }
 
+#container .col{
+    margin: 0 auto;
+}
 
 /*-------------------------
 	Main Area
@@ -65,7 +68,7 @@ h1{
 }
 
 h2{
-  font-size: 13px;
+  font-size: 18px;
   font-weight: normal;
   padding-bottom: 8px;
 }

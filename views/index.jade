@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    h1= title
+    hgroup#instructions
+        h1 Welcome to MutilOnlineDrawing
+        h2 Please enter your name:
+        form(action="/paper", method="get")
+            input(type='text' name='username').
+            input(type="submit", value="Draw now").
