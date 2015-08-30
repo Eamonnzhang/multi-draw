@@ -12,10 +12,13 @@ $(function(){
 	var doc = $(document),
 		win = $(window),
 		canvas = $('#paper'),
+
         //返回一个用于在画布上绘图的环境
 		ctx = canvas[0].getContext('2d'),
 		instructions = $('#instructions');
-	
+    //var button = document.createElement('button');
+    //button.value='ClearAll';
+
 	// Generate an unique ID
 	//var id = Math.round($.now()*Math.random());
     var utils = new Utils();
@@ -33,13 +36,28 @@ $(function(){
 	//get socket from socket.io.js
 	var socket = io.connect(url);
 
+    socket.on('resume',function(data){
+
+       //console.log('s-data:');
+       console.log(data);
+        for(var i=0;i<data.length;i++){
+            //ctx.moveTo(data, data.y[i-1]);
+            for(var j=0;j<data[i].x.length;j++){
+                ctx.lineTo(data[i].x[j], data[i].y[j]);
+                ctx.stroke();
+            }
+            if((data[i+1]!=null)&&(data[i+1]!=undefined)){
+                ctx.moveTo(data[i+1].x[0],data[i+1].y[0]);
+            }
+        }
+    });
+
 	socket.on('moving', function (data) {
 		//当收到来自服务器的moving事件和data时，如果data.id这个属性不在clients
         //添加一个鼠标图标
 		if(! (data.id in clients)){
             //其实cusors对象的每一个属性存的是一个div块，这个div是一个鼠标图片
 			cursors[data.id] = $('<div class="cursor">').appendTo('#cursors');
-			//name[data.id] = $('<div class="cursor">').appendTo('#cursors');
             name[data.id] = $('<div class="username">'+data.id+'</div>').appendTo('#cursors');
 		}
         //记录新加入鼠标图片的位置，通过它发给服务器的data来记录
@@ -67,6 +85,7 @@ $(function(){
 	//这个on函数是jquery定义的，相当于绑定了mousedown事件
     //为画布绑定mousedown事件，把鼠标按下的坐标，传给prev
 	canvas.on('mousedown',function(e){
+        socket.emit('mousedown',{});
         e.preventDefault();
 		drawing = true;
 		prev.x = e.pageX;
@@ -74,15 +93,20 @@ $(function(){
         //把首页的欢迎介绍隐藏
 		instructions.fadeOut();
 	});
-	doc.bind('mouseup mouseleave',function(){
+	doc.bind('mouseup',function(){
 		drawing = false;
+        socket.emit('newdraw',{});
 	});
+    doc.bind('mouseleave', function () {
+        drawing = false;
+    });
     //最后一次向服务器发送事件的时间？
 	var lastEmit = $.now();
     //当鼠标移动的时候，每隔30毫秒？向服务器emit一次？
 	doc.on('mousemove',function(e){
         if(me){
             $('<p class="myid">'+id+'</p>').appendTo('#cursors');
+            $('<button id="clear">ClearAll</button>').appendTo('#cursors');
             me=false;
         }
 		if($.now() - lastEmit > 30){
@@ -97,13 +121,21 @@ $(function(){
 			lastEmit = $.now();
 		}
 		if(drawing){
-            //参数含义为 当前鼠标按下的点和移动的点
 			drawLine(prev.x, prev.y, e.pageX, e.pageY);
             //更新当前点的xy坐标
-			prev.x = e.pageX;
-			prev.y = e.pageY;
+            prev.x = e.pageX;
+            prev.y = e.pageY;
+            socket.emit('mouserecord',{
+                'x': e.pageX,
+                'y': e.pageY,
+                'id': id
+            });
 		}
 	});
+   var  clearAll = $('button');
+    clearAll.bind('click',function(){
+        alert('aa');
+    });
 	// 移除不活动鼠标，这个函数会不停地调用，直到clearInterval，
 	// 由 setInterval() 返回的 ID 值可用作 clearInterval() 方法的参数。
 	setInterval(function(){

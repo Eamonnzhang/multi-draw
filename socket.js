@@ -4,6 +4,17 @@
 
 var socket = require('socket.io');
 var io=null;
+var clickX=new Array();
+var clickY=new Array();
+var s_data={};
+s_data.x=clickX;
+s_data.y=clickY;
+var drawStore = new Array();
+
+var addClick = function(x,y,name){
+    clickX.push(x);
+    clickY.push(y);
+};
 
 exports.getSocketIo = function(){
     return socket;
@@ -12,11 +23,26 @@ exports.getSocketIo = function(){
 exports.startSocketIo = function(server){
     io=socket(server);
     io.on('connection', function (socket) {
+        console.log('connection start');
+        socket.emit('resume',drawStore);
         socket.on('mousemove', function (data) {
-            //监听到客户端发来的mousemove信息后和data后，服务器向所有的客户端
-            //广播moving事件但除了当前客户端，这样就实现了其他在线客户端能够
-            //收到新加入客户端的data
             socket.broadcast.emit('moving', data);
+        });
+        socket.on('mouserecord', function (data) {
+            addClick(data.x,data.y);
+        });
+        socket.on('newdraw',function(){
+
+            drawStore.push(s_data);
+            clickX=new Array();
+            clickY=new Array();
+            s_data={};
+            s_data.x=clickX;
+            s_data.y=clickY;
+            console.log(drawStore);
+        });
+        socket.on('mousedown',function(){
         });
     });
 };
+
