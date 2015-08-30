@@ -28,6 +28,7 @@ $(function(){
 
 	var clients = {};
 	var cursors = {};
+	var name={};
 
 	//get socket from socket.io.js
 	var socket = io.connect(url);
@@ -37,13 +38,18 @@ $(function(){
         //添加一个鼠标图标
 		if(! (data.id in clients)){
             //其实cusors对象的每一个属性存的是一个div块，这个div是一个鼠标图片
-			cursors[data.id] = $('<div class="cursor">'+'<div>'+data.id+'</div>').appendTo('#cursors');
-            //$('<p>'+data.id+'</p>').appendTo('#cursors');
+			cursors[data.id] = $('<div class="cursor">').appendTo('#cursors');
+			//name[data.id] = $('<div class="cursor">').appendTo('#cursors');
+            name[data.id] = $('<div class="username">'+data.id+'</div>').appendTo('#cursors');
 		}
         //记录新加入鼠标图片的位置，通过它发给服务器的data来记录
 		cursors[data.id].css({
 			'left' : data.x,
 			'top' : data.y
+		});
+		name[data.id].css({
+			'left' : data.x+5,
+			'top' : data.y+17
 		});
 		if(data.drawing && clients[data.id]){
 			// Draw a line on the canvas. clients[data.id] holds

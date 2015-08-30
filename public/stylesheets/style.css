@@ -91,6 +91,13 @@ h3{
   background:url('../images/pointer.png') no-repeat -4px 0;
 }
 
+#cursors .username{
+  position:absolute;
+  width:15px;
+  height:22px;
+  /*background:url('../images/pointer.png') no-repeat -4px 0;*/
+}
+
 .myid{
   color:red;
 }
