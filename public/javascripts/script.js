@@ -39,8 +39,9 @@ $(function(){
     $('#clear1').on('click', function () {
         //var strokeLenth = strokeArray[0].x.length;
         socket.emit('clear','clear1',function(){
-            location.reload();
-        });
+			location.reload();
+		});
+        instructions.fadeOut();
 	});
 
     socket.on('resume',function(data){
