@@ -24,7 +24,7 @@ exports.startSocketIo = function(server){
     io=socket(server);
     io.on('connection', function (socket) {
         console.log('connection start');
-        socket.emit('resume',drawStore);
+
         socket.on('mousemove', function (data) {
             socket.broadcast.emit('moving', data);
         });
@@ -34,6 +34,7 @@ exports.startSocketIo = function(server){
         socket.on('mouseup',function(){
             if(s_data.x.length>0){
                 drawStore.push(s_data);
+                socket.emit('addStroke',s_data);
             }
             clickX=new Array();
             clickY=new Array();
@@ -45,10 +46,21 @@ exports.startSocketIo = function(server){
         socket.on('mousedown',function(){
         });
         socket.on('clearAll',function(data,fn){
-            console.log(data);
+            //console.log(data);
             drawStore.length=0;
+            console.log(drawStore);
             fn();
         });
+
+        socket.on('clear',function(data,fn){
+            //console.log(data);
+            //drawStore.length=0;
+            //console.log(drawStore);
+            drawStore.splice(0,1);
+            console.log(drawStore.length);
+            fn();
+        });
+        socket.emit('resume',drawStore);
     });
 };
 

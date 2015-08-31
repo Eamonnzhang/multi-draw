@@ -11,6 +11,7 @@ $(function(){
 	var doc = $(document),
 		win = $(window),
 		canvas = $('#paper'),
+        clear1=$('#clear1'),
 		ctx = canvas[0].getContext('2d'),
 		instructions = $('#instructions');
 
@@ -28,23 +29,31 @@ $(function(){
 	var socket = io.connect(url);
 
 	$('#clear').on('click', function () {
-		//console.log('click');
 		socket.emit('clearAll','clear',function(){
             console.log('clear me');
-            ctx.setTransform(1, 0, 0, 1, 0, 0);
-            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            clearAll();
+        });
+	});
+
+
+    $('#clear1').on('click', function () {
+        //var strokeLenth = strokeArray[0].x.length;
+        socket.emit('clear','clear1',function(){
+            location.reload();
         });
 	});
 
     socket.on('resume',function(data){
-        console.log(data);
-        for(var i=0;i<data.length;i++){
-            for(var j=0;j<data[i].x.length;j++){
-                ctx.lineTo(data[i].x[j], data[i].y[j]);
-                ctx.stroke();
-            }
-            if((data[i+1]!=null)&&(data[i+1]!=undefined)){
-                ctx.moveTo(data[i+1].x[0],data[i+1].y[0]);
+        if(data.length>0){
+            console.log(data);
+            for(var i=0;i<data.length;i++){
+                for(var j=0;j<data[i].x.length;j++){
+                    ctx.lineTo(data[i].x[j], data[i].y[j]);
+                    ctx.stroke();
+                }
+                if((data[i+1]!=null)&&(data[i+1]!=undefined)){
+                    ctx.moveTo(data[i+1].x[0],data[i+1].y[0]);
+                }
             }
         }
     });
@@ -69,7 +78,11 @@ $(function(){
 		clients[data.id] = data;
 		clients[data.id].updated = $.now();
 	});
-
+    var strokeArray = new Array();
+    socket.on('addStroke',function(data){
+        console.log(data);
+        strokeArray.push(data);
+    });
 
 	var prev = {};
     var me = true;
@@ -94,7 +107,7 @@ $(function(){
             $('<p class="myid">'+id+'</p>').appendTo('#cursors');
             me=false;
         }
-		if($.now() - lastEmit > 30){
+		if($.now() - lastEmit > 0){
 			socket.emit('mousemove',{
 				'x': e.pageX,
 				'y': e.pageY,
@@ -107,20 +120,17 @@ $(function(){
 			drawLine(prev.x, prev.y, e.pageX, e.pageY);
             prev.x = e.pageX;
             prev.y = e.pageY;
-            socket.emit('mouserecord',{
+            socket.emit('mouserecord', {
                 'x': e.pageX,
                 'y': e.pageY,
                 'id': id
             });
+
 		}
 	});
 
-	// 移除不活动鼠标，这个函数会不停地调用，直到clearInterval，
-	// 由 setInterval() 返回的 ID 值可用作 clearInterval() 方法的参数。
 	setInterval(function(){
-		//ident数据是谁传过来的？
 		for(ident in clients){
-            //超过10秒，删除dom节点，删除属性
 			if($.now() - clients[ident].updated > 1000000){
 				cursors[ident].remove();
 				delete clients[ident];
@@ -130,12 +140,14 @@ $(function(){
 	},10000);
 
 	function drawLine(fromx, fromy, tox, toy){
-        //把路径移动到画布中的指定点，不创建线条
 		ctx.moveTo(fromx, fromy);
-        //添加一个新点，然后在画布中创建从该点到最后指定点的线条
 		ctx.lineTo(tox, toy);
-        //绘制已定义路径
 		ctx.stroke();
 	}
 
+    function clearAll(){
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.beginPath();
+    }
 });
