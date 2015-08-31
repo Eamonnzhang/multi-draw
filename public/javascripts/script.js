@@ -6,23 +6,14 @@ $(function(){
 		return false;
 	}
 
-	// The URL of your web server (the port is set in app.js)
 	var url = 'http://localhost:8080';
 
 	var doc = $(document),
 		win = $(window),
 		canvas = $('#paper'),
-        //返回一个用于在画布上绘图的环境
 		ctx = canvas[0].getContext('2d'),
 		instructions = $('#instructions');
-    var button = document.createElement('button');
-    button.innerText='ClearAll';
-    button.setAttribute('id','clear');
-    button.addEventListener('click', function () {
-        console.log('click');
-    },false);
-    $('#clear').appendTo(canvas);
-	//var id = Math.round($.now()*Math.random());
+
     var utils = new Utils();
 	var id = utils.getQueryString('username');
     if(!getCookie('name'))
@@ -35,6 +26,15 @@ $(function(){
 	var name={};
 
 	var socket = io.connect(url);
+
+	$('#clear').on('click', function () {
+		//console.log('click');
+		socket.emit('clearAll','clear',function(){
+            console.log('clear me');
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        });
+	});
 
     socket.on('resume',function(data){
         console.log(data);
@@ -83,7 +83,7 @@ $(function(){
 	});
 	doc.bind('mouseup',function(){
 		drawing = false;
-        socket.emit('newdraw',{});
+        socket.emit('mouseup',{});
 	});
     doc.bind('mouseleave', function () {
         drawing = false;
@@ -92,7 +92,6 @@ $(function(){
 	doc.on('mousemove',function(e){
         if(me){
             $('<p class="myid">'+id+'</p>').appendTo('#cursors');
-            //$('<button id="clear">ClearAll</button>').appendTo('#cursors');
             me=false;
         }
 		if($.now() - lastEmit > 30){
@@ -115,12 +114,6 @@ $(function(){
             });
 		}
 	});
-
-    //var clearAll = $('div#clear');
-    //console.log(clearAll);
-    //clearAll.click(function(){
-    //    console.log('click');
-    //});
 
 	// 移除不活动鼠标，这个函数会不停地调用，直到clearInterval，
 	// 由 setInterval() 返回的 ID 值可用作 clearInterval() 方法的参数。

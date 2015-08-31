@@ -31,9 +31,10 @@ exports.startSocketIo = function(server){
         socket.on('mouserecord', function (data) {
             addClick(data.x,data.y);
         });
-        socket.on('newdraw',function(){
-
-            drawStore.push(s_data);
+        socket.on('mouseup',function(){
+            if(s_data.x.length>0){
+                drawStore.push(s_data);
+            }
             clickX=new Array();
             clickY=new Array();
             s_data={};
@@ -42,6 +43,11 @@ exports.startSocketIo = function(server){
             console.log(drawStore);
         });
         socket.on('mousedown',function(){
+        });
+        socket.on('clearAll',function(data,fn){
+            console.log(data);
+            drawStore.length=0;
+            fn();
         });
     });
 };
