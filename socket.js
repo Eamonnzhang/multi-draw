@@ -21,10 +21,9 @@ exports.getSocketIo = function(){
 };
 
 exports.startSocketIo = function(server){
-    io=socket(server);
+    io = socket(server);
     io.on('connection', function (socket) {
         console.log('connection start');
-
         socket.on('mousemove', function (data) {
             socket.broadcast.emit('moving', data);
         });
@@ -41,23 +40,16 @@ exports.startSocketIo = function(server){
             s_data={};
             s_data.x=clickX;
             s_data.y=clickY;
-            console.log(drawStore);
         });
         socket.on('mousedown',function(){
         });
         socket.on('clearAll',function(data,fn){
-            //console.log(data);
             drawStore.length=0;
-            console.log(drawStore);
             fn();
         });
 
         socket.on('clear',function(data,fn){
-            //console.log(data);
-            //drawStore.length=0;
-            //console.log(drawStore);
             drawStore.splice(0,1);
-            console.log(drawStore.length);
             fn();
         });
         socket.emit('resume',drawStore);
