@@ -27,10 +27,8 @@ exports.startSocketIo = function(server){
         var room;
         socket.on('room',function(data){
             room=data;
-            drawStore[room]=[];
-            //if(drawStore[room]==[])
-                //drawStore[room]=
-                //drawStore;
+            if(drawStore[room]==null||drawStore[room]==undefined)
+                drawStore[room]=[];
             socket.join(room);
         });
         socket.emit('resume',drawStore);
@@ -53,16 +51,20 @@ exports.startSocketIo = function(server){
             s_data.x=clickX;
             s_data.y=clickY;
         });
+
         socket.on('mousedown',function(){
         });
+
         socket.on('clearAll',function(data,fn){
-            drawStore.length=0;
+            drawStore[room].length=0;
             fn();
         });
 
         socket.on('clear',function(data,fn){
-            drawStore[room].splice(0,1);
-            //console.log(drawStore);
+            var arr = drawStore[room];
+            console.log(room);
+            arr.shift();
+            console.log(arr);
             fn();
         });
 

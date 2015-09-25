@@ -38,10 +38,10 @@ $(function(){
 
     $('#clear1').on('click', function () {
         //var strokeLenth = strokeArray[0].x.length;
-        socket.emit('clear','clear1',function(){
-			location.reload();
-		});
-        instructions.fadeOut();
+        socket.emit('clear','clear1',function() {
+            location.reload();
+            instructions.fadeOut();
+        });
 	});
 
     //console.log(urlParams(window.location.href)['ch']);
@@ -51,9 +51,9 @@ $(function(){
 	socket.emit('room', roomId);
 
     socket.on('resume',function(data){
-        console.log(data);
         if(data[roomId].length>0){
-            console.log('data');
+            //console.log('data');
+            //console.log(data);
             for(var i=0;i<data[roomId].length;i++){
                 for(var j=0;j<data[roomId][i].x.length;j++){
                     ctx.lineTo(data[roomId][i].x[j], data[roomId][i].y[j]);
