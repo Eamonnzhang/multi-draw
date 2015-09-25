@@ -16,9 +16,9 @@ $(function(){
 		instructions = $('#instructions');
 
     var utils = new Utils();
-	var id = utils.getQueryString('username');
-    if(!getCookie('name'))
-        win.location='/';
+	//var id = utils.getQueryString('username');
+    //if(!getCookie('name'))
+     //   win.location='/';
 
 	var drawing = false;
 
@@ -30,7 +30,7 @@ $(function(){
 
 	$('#clear').on('click', function () {
 		socket.emit('clearAll','clear',function(){
-            console.log('clear me');
+            //console.log('clear me');
             clearAll();
         });
 	});
@@ -44,16 +44,23 @@ $(function(){
         instructions.fadeOut();
 	});
 
+    //console.log(urlParams(window.location.href)['ch']);
+
+
+    var roomId = urlParams(window.location.href)['room'];
+	socket.emit('room', roomId);
+
     socket.on('resume',function(data){
-        if(data.length>0){
-            console.log(data);
-            for(var i=0;i<data.length;i++){
-                for(var j=0;j<data[i].x.length;j++){
-                    ctx.lineTo(data[i].x[j], data[i].y[j]);
+        console.log(data);
+        if(data[roomId].length>0){
+            console.log('data');
+            for(var i=0;i<data[roomId].length;i++){
+                for(var j=0;j<data[roomId][i].x.length;j++){
+                    ctx.lineTo(data[roomId][i].x[j], data[roomId][i].y[j]);
                     ctx.stroke();
                 }
-                if((data[i+1]!=null)&&(data[i+1]!=undefined)){
-                    ctx.moveTo(data[i+1].x[0],data[i+1].y[0]);
+                if((data[roomId][i+1]!=null)&&(data[roomId][i+1]!=undefined)){
+                    ctx.moveTo(data[roomId][i+1].x[0],data[roomId][i+1].y[0]);
                 }
             }
         }
@@ -62,16 +69,16 @@ $(function(){
 	socket.on('moving', function (data) {
 		if(! (data.id in clients)){
 			cursors[data.id] = $('<div class="cursor">').appendTo('#cursors');
-            name[data.id] = $('<div class="username">'+data.id+'</div>').appendTo('#cursors');
+            //name[data.id] = $('<div class="username">'+data.id+'</div>').appendTo('#cursors');
 		}
 		cursors[data.id].css({
 			'left' : data.x,
 			'top' : data.y
 		});
-		name[data.id].css({
-			'left' : data.x+5,
-			'top' : data.y+17
-		});
+		//name[data.id].css({
+		//	'left' : data.x+5,
+		//	'top' : data.y+17
+		//});
 		if(data.drawing && clients[data.id]){
 			drawLine(clients[data.id].x, clients[data.id].y, data.x, data.y);
 		}
@@ -81,7 +88,7 @@ $(function(){
 	});
     var strokeArray = new Array();
     socket.on('addStroke',function(data){
-        console.log(data);
+        //console.log(data);
         strokeArray.push(data);
     });
 
@@ -104,16 +111,16 @@ $(function(){
     });
 	var lastEmit = $.now();
 	doc.on('mousemove',function(e){
-        if(me){
-            $('<p class="myid">'+id+'</p>').appendTo('#cursors');
-            me=false;
-        }
+        //if(me){
+        //    $('<p class="myid">'+id+'</p>').appendTo('#cursors');
+        //    me=false;
+        //}
 		if($.now() - lastEmit > 0){
 			socket.emit('mousemove',{
 				'x': e.pageX,
 				'y': e.pageY,
 				'drawing': drawing,
-				'id': id
+				//'id': id
 			});
 			lastEmit = $.now();
 		}
@@ -124,7 +131,7 @@ $(function(){
             socket.emit('mouserecord', {
                 'x': e.pageX,
                 'y': e.pageY,
-                'id': id
+                //'id': id
             });
 
 		}

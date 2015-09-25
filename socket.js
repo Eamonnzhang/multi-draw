@@ -9,7 +9,7 @@ var clickY=new Array();
 var s_data={};
 s_data.x=clickX;
 s_data.y=clickY;
-var drawStore = new Array();
+var drawStore = {};
 
 var addClick = function(x,y,name){
     clickX.push(x);
@@ -24,16 +24,28 @@ exports.startSocketIo = function(server){
     io = socket(server);
     io.on('connection', function (socket) {
         console.log('connection start');
-        socket.on('mousemove', function (data) {
-            socket.broadcast.emit('moving', data);
+        var room;
+        socket.on('room',function(data){
+            room=data;
+            drawStore[room]=[];
+            //if(drawStore[room]==[])
+                //drawStore[room]=
+                //drawStore;
+            socket.join(room);
         });
+        socket.emit('resume',drawStore);
+        socket.on('mousemove', function (data) {
+            socket.broadcast.to(room).emit('moving', data);
+        });
+
         socket.on('mouserecord', function (data) {
             addClick(data.x,data.y);
         });
+
         socket.on('mouseup',function(){
             if(s_data.x.length>0){
-                drawStore.push(s_data);
-                socket.emit('addStroke',s_data);
+                drawStore[room].push(s_data);
+                socket.broadcast.to(room).emit('addStroke',s_data);
             }
             clickX=new Array();
             clickY=new Array();
@@ -49,10 +61,11 @@ exports.startSocketIo = function(server){
         });
 
         socket.on('clear',function(data,fn){
-            drawStore.splice(0,1);
+            drawStore[room].splice(0,1);
+            //console.log(drawStore);
             fn();
         });
-        socket.emit('resume',drawStore);
+
     });
 };
 

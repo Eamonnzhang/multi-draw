@@ -5,7 +5,7 @@
 
 module.exports = function(app){
     app.get('/',function(req,res){
-        res.render('index',{title:'MultiDraw'});
+        res.render('paper',{title:'MultiDraw'});
     });
 
     app.get('/paper',function(req,res){
@@ -24,7 +24,6 @@ module.exports = function(app){
     });
 
     // error handlers
-
     // development error handler
     // will print stacktrace
     if (app.get('env') === 'development') {
