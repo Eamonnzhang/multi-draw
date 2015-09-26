@@ -23,7 +23,7 @@ exports.getSocketIo = function(){
 exports.startSocketIo = function(server){
     io = socket(server);
     io.on('connection', function (socket) {
-        console.log('connection start');
+        //console.log('connection start');
         var room;
         socket.on('room',function(data){
             room=data;

@@ -51,16 +51,19 @@ $(function(){
 	socket.emit('room', roomId);
 
     socket.on('resume',function(data){
-        if(data[roomId].length>0){
-            //console.log('data');
-            //console.log(data);
-            for(var i=0;i<data[roomId].length;i++){
-                for(var j=0;j<data[roomId][i].x.length;j++){
-                    ctx.lineTo(data[roomId][i].x[j], data[roomId][i].y[j]);
-                    ctx.stroke();
-                }
-                if((data[roomId][i+1]!=null)&&(data[roomId][i+1]!=undefined)){
-                    ctx.moveTo(data[roomId][i+1].x[0],data[roomId][i+1].y[0]);
+        console.log(data);
+		if(data[roomId]){
+            if(data[roomId].length>0){
+                //console.log('data');
+                //console.log(data);
+                for(var i=0;i<data[roomId].length;i++){
+                    for(var j=0;j<data[roomId][i].x.length;j++){
+                        ctx.lineTo(data[roomId][i].x[j], data[roomId][i].y[j]);
+                        ctx.stroke();
+                    }
+                    if((data[roomId][i+1]!=null)&&(data[roomId][i+1]!=undefined)){
+                        ctx.moveTo(data[roomId][i+1].x[0],data[roomId][i+1].y[0]);
+                    }
                 }
             }
         }
