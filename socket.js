@@ -62,9 +62,9 @@ exports.startSocketIo = function(server){
 
         socket.on('clear',function(data,fn){
             var arr = drawStore[room];
-            console.log(room);
+            //console.log(room);
             arr.shift();
-            console.log(arr);
+            //console.log(arr);
             fn();
         });
 

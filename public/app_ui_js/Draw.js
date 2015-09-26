@@ -37,15 +37,11 @@ $(function(){
 
 
     $('#clear1').on('click', function () {
-        //var strokeLenth = strokeArray[0].x.length;
         socket.emit('clear','clear1',function() {
             location.reload();
             instructions.fadeOut();
         });
 	});
-
-    //console.log(urlParams(window.location.href)['ch']);
-
 
     var roomId = urlParams(window.location.href)['room'];
 	socket.emit('room', roomId);

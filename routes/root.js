@@ -5,7 +5,7 @@
 
 module.exports = function(app){
     app.get('/',function(req,res){
-        res.render('paper',{title:'MultiDraw'});
+        res.render('index2',{title:'MultiDraw'});
     });
 
     app.get('/paper',function(req,res){

@@ -1,17 +1,15 @@
 #!/usr/bin/env node
 
-/**
- * 启动服务器的端口、http配置
- */
+
 var debug = require('debug')('multidraw:server');
-var http = require('http'); //获取http服务器
-var socket = require('./socket.js'); //获取socoket服务
+var http = require('http');
+var socket = require('./socket.js');
 
 /**
  * 如果最终需要数据库的话，可以把以下部分添加到连接数据库的回调函数里
  */
 var app = require('./config'); //获取启动app的基本配置信息，实际上就是express对象
-app = require('./routes/root')(app); //把获取的app传到root的参数里，进行对app进行路由的配置
+app = require('./routes/root')(app); //把获取的app传到root的参数里，进行对app进行路由的配置,有点儿面向过程的感觉
 
 var port = normalizePort(process.env.PORT || '8080');
 app.set('port', port);

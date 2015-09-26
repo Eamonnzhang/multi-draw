@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+</head>
+<body>
+<div style="float:left; display: inline-block; margin-left: 10px">
+    <button id="drawing-mode" class="btn btn-info" style="margin-top: 10px">Cancel drawing mode</button><br>
+    <button id="clear-canvas" class="btn btn-info" style="margin-top: 10px">Clear</button><br>
+    <div id="drawing-mode-options" style="margin-top: 10px">
+        <label for="drawing-mode-selector">Mode:</label>
+        <select id="drawing-mode-selector">
+            <option>Pencil</option>
+            <option>Circle</option>
+            <option>Spray</option>
+            <option>Pattern</option>
+
+            <option>hline</option>
+            <option>vline</option>
+            <option>square</option>
+            <option>diamond</option>
+            <option>texture</option>
+        </select><br>
+
+        <label for="drawing-line-width">Line width:</label>
+        <span class="info">30</span><input type="range" value="30" min="0" max="150" id="drawing-line-width"><br>
+
+        <label for="drawing-color">Line color:</label>
+        <input type="color" value="#005E7A" id="drawing-color"><br>
+
+        <label for="drawing-shadow-color">Shadow color:</label>
+        <input type="color" value="#005E7A" id="drawing-shadow-color"><br>
+
+        <label for="drawing-shadow-width">Shadow width:</label>
+        <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-width"><br>
+
+        <label for="drawing-shadow-offset">Shadow offset:</label>
+        <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-offset"><br>
+    </div>
+</div>
+<div style="float:left;margin-left: 10px">
+    <canvas id="c" width="1610" height="1000" style="border:1px solid #aaa"></canvas>
+</div>
+
+</body>
+<script src='/app_3th_js/jquery-1.11.3.min.js'></script>
+<script src='/app_3th_js/bootstrap.js'></script>
+<script src='/app_3th_js/fabric.min.js'></script>
+<script src='/app_ui_js/freeDraw.js'></script>
+
+</html>
