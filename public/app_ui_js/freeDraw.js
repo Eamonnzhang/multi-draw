@@ -4,6 +4,10 @@
 (function() {
     var $ = function(id){return document.getElementById(id)};
 
+    //var myCanvas = document.createElement("canvas");
+    //myCanvas.setAttribute("width", screen.availWidth);
+    //myCanvas.setAttribute("height", screen.availHeight);
+
     var canvas = this.__canvas = new fabric.Canvas('c', {
         isDrawingMode: true
     });
@@ -20,7 +24,7 @@
         drawingShadowOffset = $('drawing-shadow-offset'),
         clearEl = $('clear-canvas');
 
-    clearEl.onclick = function() { canvas.clear() };
+    clearEl.onclick = function() { canvas.clearContext() };
 
     drawingModeEl.onclick = function() {
         canvas.isDrawingMode = !canvas.isDrawingMode;
