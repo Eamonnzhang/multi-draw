@@ -2,29 +2,70 @@
  * Created by Eamonn on 2015/9/26.
  */
 (function() {
-    var $ = function(id){return document.getElementById(id)};
-
-    //var myCanvas = document.createElement("canvas");
-    //myCanvas.setAttribute("width", screen.availWidth);
-    //myCanvas.setAttribute("height", screen.availHeight);
-
+    var _ = function(id){return document.getElementById(id)};
+    var doc = $(document);
+    var url = 'http://localhost:8080';
+    var drawing = false;
+    var socket = io.connect(url);
     var canvas = this.__canvas = new fabric.Canvas('c', {
         isDrawingMode: true
     });
-
-
     fabric.Object.prototype.transparentCorners = false;
+    var drawingModeEl = _('drawing-mode'),
+        drawingOptionsEl = _('drawing-mode-options'),
+        drawingColorEl = _('drawing-color'),
+        drawingShadowColorEl = _('drawing-shadow-color'),
+        drawingLineWidthEl = _('drawing-line-width'),
+        drawingShadowWidth = _('drawing-shadow-width'),
+        drawingShadowOffset = _('drawing-shadow-offset'),
+        clearEl = _('clear-selected-canvas'),
+        clearE2 = _('clear-all-canvas');
 
-    var drawingModeEl = $('drawing-mode'),
-        drawingOptionsEl = $('drawing-mode-options'),
-        drawingColorEl = $('drawing-color'),
-        drawingShadowColorEl = $('drawing-shadow-color'),
-        drawingLineWidthEl = $('drawing-line-width'),
-        drawingShadowWidth = $('drawing-shadow-width'),
-        drawingShadowOffset = $('drawing-shadow-offset'),
-        clearEl = $('clear-canvas');
+    canvas.on('mousedown',function(e){
+        //socket.emit('mousedown',{});
+        drawing = true;
+    });
 
-    clearEl.onclick = function() { canvas.clearContext() };
+    //doc.bind('mouseup',function(){
+    //    drawing = false;
+    //
+    //
+    //});
+
+    canvas.on('path:created',function(e){
+        //console.log(e.path.getSvgTransform());
+        console.log(e);
+        socket.emit('objects', e.path);
+    });
+
+    clearE2.onclick = function() { canvas.clear() };
+    clearEl.onclick = function() {
+        if (canvas.getActiveGroup()) {
+            canvas.getActiveGroup().forEachObject(function(a) {
+                canvas.remove(a);
+            });
+            canvas.discardActiveGroup();
+        }
+        if (canvas.getActiveObject()) {
+            canvas.remove(canvas.getActiveObject());
+        }
+    };
+
+
+    //socket.emit('objects',canvas.getObjects());
+
+    socket.on('message',function(data){
+        console.log(data);
+        var option = {};
+        option.stroke = data.stroke;
+        option.strokeWidth = data.strokeWidth;
+        option.strokeLineCap = data.strokeLineCap;
+        option.strokeLineJoin = data.strokeLineJoin;
+        option.originX = data.originX;
+        option.originY = data.originY;
+        option.fill = data.fill;
+        canvas.add(new fabric.Path(data.path,option));
+    });
 
     drawingModeEl.onclick = function() {
         canvas.isDrawingMode = !canvas.isDrawingMode;
@@ -114,7 +155,7 @@
         };
 
         var img = new Image();
-        img.src = '../assets/honey_im_subtle.png';
+        img.src = '/images/bg.png';
 
         var texturePatternBrush = new fabric.PatternBrush(canvas);
         texturePatternBrush.source = img;

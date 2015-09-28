@@ -35,11 +35,9 @@ exports.startSocketIo = function(server){
         socket.on('mousemove', function (data) {
             socket.broadcast.to(room).emit('moving', data);
         });
-
         socket.on('mouserecord', function (data) {
             addClick(data.x,data.y);
         });
-
         socket.on('mouseup',function(){
             if(s_data.x.length>0){
                 drawStore[room].push(s_data);
@@ -66,6 +64,11 @@ exports.startSocketIo = function(server){
             arr.shift();
             //console.log(arr);
             fn();
+        });
+
+        socket.on('objects',function(data){
+            //console.log(data.length);
+            socket.broadcast.emit('message', data);
         });
 
     });

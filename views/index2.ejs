@@ -9,7 +9,8 @@
 <body>
 <div style="float:left; display: inline-block; margin-left: 10px">
     <button id="drawing-mode" class="btn btn-info" style="margin-top: 10px">Cancel drawing mode</button><br>
-    <button id="clear-canvas" class="btn btn-info" style="margin-top: 10px">Clear</button><br>
+    <button id="clear-selected-canvas" class="btn btn-info" style="margin-top: 10px">ClearSelected</button><br>
+    <button id="clear-all-canvas" class="btn btn-info" style="margin-top: 10px">ClearAll</button><br>
     <div id="drawing-mode-options" style="margin-top: 10px">
         <label for="drawing-mode-selector">Mode:</label>
         <select id="drawing-mode-selector">
@@ -26,7 +27,7 @@
         </select><br>
 
         <label for="drawing-line-width">Line width:</label>
-        <span class="info">30</span><input type="range" value="30" min="0" max="150" id="drawing-line-width"><br>
+        <span class="info">8</span><input type="range" value="8" min="0" max="150" id="drawing-line-width"><br>
 
         <label for="drawing-color">Line color:</label>
         <input type="color" value="#005E7A" id="drawing-color"><br>
@@ -48,6 +49,7 @@
 </body>
 <script src='/app_3th_js/jquery-1.11.3.min.js'></script>
 <script src='/app_3th_js/bootstrap.js'></script>
+<script src='/socket.io/socket.io.js'></script>
 <script src='/app_3th_js/fabric.min.js'></script>
 <script src='/app_ui_js/freeDraw.js'></script>
 
