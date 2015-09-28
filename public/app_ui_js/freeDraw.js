@@ -6,11 +6,23 @@
     var doc = $(document);
     var url = 'http://localhost:8080';
     var drawing = false;
+    var isFirstMove = true;
     var socket = io.connect(url);
     var canvas = this.__canvas = new fabric.Canvas('c', {
         isDrawingMode: true
     });
     fabric.Object.prototype.transparentCorners = false;
+    var dataToPathOption = function(data){
+        var option={};
+        option.stroke = data.stroke;
+        option.strokeWidth = data.strokeWidth;
+        option.strokeLineCap = data.strokeLineCap;
+        option.strokeLineJoin = data.strokeLineJoin;
+        option.originX = data.originX;
+        option.originY = data.originY;
+        option.fill = data.fill;
+        return option;
+    };
     var drawingModeEl = _('drawing-mode'),
         drawingOptionsEl = _('drawing-mode-options'),
         drawingColorEl = _('drawing-color'),
@@ -21,49 +33,72 @@
         clearEl = _('clear-selected-canvas'),
         clearE2 = _('clear-all-canvas');
 
-    canvas.on('mousedown',function(e){
-        //socket.emit('mousedown',{});
-        drawing = true;
+    socket.on('allPath',function(data){
+        console.log(data);
+        if(data){
+            //if(data.length===0){
+            //    canvas.clear();
+            //}
+            data.forEach(function(x){
+                var option = dataToPathOption(x);
+                canvas.add(new fabric.Path(x.path,option));
+            });
+        }
     });
-
-    //doc.bind('mouseup',function(){
-    //    drawing = false;
-    //
-    //
-    //});
 
     canvas.on('path:created',function(e){
-        //console.log(e.path.getSvgTransform());
-        console.log(e);
-        socket.emit('objects', e.path);
+        //console.log(e);
+        var obj = {};
+        obj.id = count++;
+        obj.data = e.path;
+        socket.emit('path', e.path);
     });
 
-    clearE2.onclick = function() { canvas.clear() };
-    clearEl.onclick = function() {
-        if (canvas.getActiveGroup()) {
-            canvas.getActiveGroup().forEachObject(function(a) {
-                canvas.remove(a);
-            });
-            canvas.discardActiveGroup();
-        }
-        if (canvas.getActiveObject()) {
-            canvas.remove(canvas.getActiveObject());
-        }
+    canvas.on('object:selected',function(e){
+        //console.log(e);
+    });
+
+    canvas.on('selection:cleared',function(e){
+        //console.log(e);
+    });
+
+    clearE2.onclick = function() {
+        socket.emit('clearAll','clearAll',function(){
+            canvas.clear();
+        });
     };
 
+    socket.on('clearAll',function(data){
+        if(data=='clearAll'){
+            canvas.clear();
+        }
+    });
 
-    //socket.emit('objects',canvas.getObjects());
+    clearEl.onclick = function() {
+        socket.emit('clearOne',canvas.getActiveObject(),function(){
+            if (canvas.getActiveGroup()) {
+                canvas.getActiveGroup().forEachObject(function(a) {
+                    canvas.remove(a);
+                });
+                canvas.discardActiveGroup();
+            }
+            if (canvas.getActiveObject()) {
+                canvas.remove(canvas.getActiveObject());
+            }
+
+        });
+
+    };
+
+    socket.on('clearOne',function(data){
+        console.log(canvas.getObjects('path'));
+        console.log(canvas.getObjects().indexOf(canvas.getActiveObject()));
+        //var option = dataToPathOption(data.data);
+        canvas.remove(data.data);
+    });
 
     socket.on('message',function(data){
-        console.log(data);
-        var option = {};
-        option.stroke = data.stroke;
-        option.strokeWidth = data.strokeWidth;
-        option.strokeLineCap = data.strokeLineCap;
-        option.strokeLineJoin = data.strokeLineJoin;
-        option.originX = data.originX;
-        option.originY = data.originY;
-        option.fill = data.fill;
+        var option = dataToPathOption(data);
         canvas.add(new fabric.Path(data.path,option));
     });
 

@@ -10,6 +10,7 @@ var s_data={};
 s_data.x=clickX;
 s_data.y=clickY;
 var drawStore = {};
+var pathArr = [];
 
 var addClick = function(x,y,name){
     clickX.push(x);
@@ -49,28 +50,24 @@ exports.startSocketIo = function(server){
             s_data.x=clickX;
             s_data.y=clickY;
         });
-
         socket.on('mousedown',function(){
         });
-
         socket.on('clearAll',function(data,fn){
-            drawStore[room].length=0;
+            pathArr = [];
+            socket.broadcast.emit('clearAll', data);
             fn();
         });
-
-        socket.on('clear',function(data,fn){
-            var arr = drawStore[room];
-            //console.log(room);
-            arr.shift();
-            //console.log(arr);
+        socket.on('clearOne',function(data,fn){
+            socket.broadcast.emit('clearOne', {
+                data: data
+            });
             fn();
         });
-
-        socket.on('objects',function(data){
-            //console.log(data.length);
+        socket.on('path',function(data){
+            pathArr.push(data);
             socket.broadcast.emit('message', data);
         });
-
+        socket.emit('allPath', pathArr);
     });
 };
 
