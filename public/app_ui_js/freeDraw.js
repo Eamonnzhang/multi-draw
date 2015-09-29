@@ -14,13 +14,14 @@
     fabric.Object.prototype.transparentCorners = false;
     var dataToPathOption = function(data){
         var option={};
-        option.stroke = data.stroke;
-        option.strokeWidth = data.strokeWidth;
-        option.strokeLineCap = data.strokeLineCap;
-        option.strokeLineJoin = data.strokeLineJoin;
-        option.originX = data.originX;
-        option.originY = data.originY;
-        option.fill = data.fill;
+        option.id=data.id;
+        option.stroke = data.path.stroke;
+        option.strokeWidth = data.path.strokeWidth;
+        option.strokeLineCap = data.path.strokeLineCap;
+        option.strokeLineJoin = data.path.strokeLineJoin;
+        option.originX = data.path.originX;
+        option.originY = data.path.originY;
+        option.fill = data.path.fill;
         return option;
     };
     var drawingModeEl = _('drawing-mode'),
@@ -33,25 +34,16 @@
         clearEl = _('clear-selected-canvas'),
         clearE2 = _('clear-all-canvas');
 
-    socket.on('allPath',function(data){
-        console.log(data);
-        if(data){
-            //if(data.length===0){
-            //    canvas.clear();
-            //}
-            data.forEach(function(x){
-                var option = dataToPathOption(x);
-                canvas.add(new fabric.Path(x.path,option));
-            });
-        }
-    });
-
     canvas.on('path:created',function(e){
-        //console.log(e);
-        var obj = {};
-        obj.id = count++;
-        obj.data = e.path;
-        socket.emit('path', e.path);
+        var id = generateId(8,32);
+        e.path.set('id',id);
+        e.id = id;
+        //var rawPath = {
+        //    id:asdfas
+        //    stroke
+        //        path
+        //}
+        socket.emit('path', e);
     });
 
     canvas.on('object:selected',function(e){
@@ -62,11 +54,15 @@
         //console.log(e);
     });
 
-    clearE2.onclick = function() {
-        socket.emit('clearAll','clearAll',function(){
-            canvas.clear();
-        });
-    };
+    socket.on('allPath',function(data){
+        if(data){
+            data.forEach(function(x){
+                var option = dataToPathOption(x);
+                //console.log(x.id);
+                canvas.add(new fabric.Path(x.path.path,option));
+            });
+        }
+    });
 
     socket.on('clearAll',function(data){
         if(data=='clearAll'){
@@ -74,8 +70,43 @@
         }
     });
 
+    socket.on('clearSelected',function(data){
+        //console.log(data);
+        var obj = canvas.getObjects();
+
+        console.log(obj);
+        console.log(obj.length);
+        //var i = 0;
+        //while(canvas.item(i)){
+        //    if(data.indexOf(canvas.item(i).id)){
+        //        canvas.remove(canvas.item(i));
+        //    }
+        //    i++;
+        //}
+        obj.forEach(function(a){
+            if(data.indexOf(a.id)!==-1){
+                canvas.remove(a);
+            }
+        })
+    });
+    socket.on('message',function(data){
+        var option = dataToPathOption(data);
+        canvas.add(new fabric.Path(data.path.path,option));
+    });
+
     clearEl.onclick = function() {
-        socket.emit('clearOne',canvas.getActiveObject(),function(){
+        var idArr = [];
+        if(canvas.getActiveObject()){
+            idArr.push(canvas.getActiveObject().id);
+        }
+        if(canvas.getActiveGroup()){
+            canvas.getActiveGroup().forEachObject(function(a) {
+                idArr.push(a.id);
+            });
+        }
+        //var id = canvas.getActiveObject().id;
+        //console.log(idArr);
+        socket.emit('clearSelected',idArr,function(){
             if (canvas.getActiveGroup()) {
                 canvas.getActiveGroup().forEachObject(function(a) {
                     canvas.remove(a);
@@ -85,22 +116,14 @@
             if (canvas.getActiveObject()) {
                 canvas.remove(canvas.getActiveObject());
             }
-
         });
-
     };
 
-    socket.on('clearOne',function(data){
-        console.log(canvas.getObjects('path'));
-        console.log(canvas.getObjects().indexOf(canvas.getActiveObject()));
-        //var option = dataToPathOption(data.data);
-        canvas.remove(data.data);
-    });
-
-    socket.on('message',function(data){
-        var option = dataToPathOption(data);
-        canvas.add(new fabric.Path(data.path,option));
-    });
+    clearE2.onclick = function() {
+        socket.emit('clearAll','clearAll',function(){
+            canvas.clear();
+        });
+    };
 
     drawingModeEl.onclick = function() {
         canvas.isDrawingMode = !canvas.isDrawingMode;
