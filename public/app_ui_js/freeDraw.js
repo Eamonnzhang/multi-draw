@@ -8,21 +8,27 @@
     var drawing = false;
     var isFirstMove = true;
     var socket = io.connect(url);
+    var roomId = urlParams(window.location.href)['room'];
+    socket.emit('room', roomId);
     var canvas = this.__canvas = new fabric.Canvas('c', {
         isDrawingMode: true
     });
     fabric.Object.prototype.transparentCorners = false;
-    var dataToPathOption = function(data){
+    var objToSerializable = function(data,id){
         var option={};
-        option.id=data.id;
-        option.stroke = data.path.stroke;
-        option.strokeWidth = data.path.strokeWidth;
-        option.strokeLineCap = data.path.strokeLineCap;
-        option.strokeLineJoin = data.path.strokeLineJoin;
-        option.originX = data.path.originX;
-        option.originY = data.path.originY;
-        option.fill = data.path.fill;
+        option.id=id;
+        option.path = data.path;
+        option.stroke = data.stroke;
+        option.strokeWidth = data.strokeWidth;
+        option.strokeLineCap = data.strokeLineCap;
+        option.strokeLineJoin = data.strokeLineJoin;
+        option.originX = data.originX;
+        option.originY = data.originY;
+        option.fill = data.fill;
         return option;
+    };
+    var getMyObjArr = function(o_arr){
+        return o_arr.concat('');
     };
     var drawingModeEl = _('drawing-mode'),
         drawingOptionsEl = _('drawing-mode-options'),
@@ -34,16 +40,22 @@
         clearEl = _('clear-selected-canvas'),
         clearE2 = _('clear-all-canvas');
 
+    if(roomId){
+        socket.on('allPath',function(data){
+            if(data[roomId]){
+                data[roomId].forEach(function(x){
+                    canvas.add(new fabric.Path(x.path,x));
+                });
+            }
+        });
+    }
     canvas.on('path:created',function(e){
+        //console.log(e.path);
+        var path = e.path;
         var id = generateId(8,32);
-        e.path.set('id',id);
-        e.id = id;
-        //var rawPath = {
-        //    id:asdfas
-        //    stroke
-        //        path
-        //}
-        socket.emit('path', e);
+        path.id=id;
+        var data = objToSerializable(path,id);
+        socket.emit('path', data);
     });
 
     canvas.on('object:selected',function(e){
@@ -54,15 +66,7 @@
         //console.log(e);
     });
 
-    socket.on('allPath',function(data){
-        if(data){
-            data.forEach(function(x){
-                var option = dataToPathOption(x);
-                //console.log(x.id);
-                canvas.add(new fabric.Path(x.path.path,option));
-            });
-        }
-    });
+
 
     socket.on('clearAll',function(data){
         if(data=='clearAll'){
@@ -70,28 +74,17 @@
         }
     });
 
-    socket.on('clearSelected',function(data){
-        //console.log(data);
-        var obj = canvas.getObjects();
-
-        console.log(obj);
-        console.log(obj.length);
-        //var i = 0;
-        //while(canvas.item(i)){
-        //    if(data.indexOf(canvas.item(i).id)){
-        //        canvas.remove(canvas.item(i));
-        //    }
-        //    i++;
-        //}
-        obj.forEach(function(a){
-            if(data.indexOf(a.id)!==-1){
+    socket.on('clearSelected',function(idArr){
+        var myObjArr = getMyObjArr(canvas.getObjects());
+        myObjArr.forEach(function(a){
+            if(idArr.indexOf(a.id)!==-1){
                 canvas.remove(a);
             }
-        })
+        });
     });
-    socket.on('message',function(data){
-        var option = dataToPathOption(data);
-        canvas.add(new fabric.Path(data.path.path,option));
+    socket.on('path',function(data){
+        //console.log(data);
+        canvas.add(new fabric.Path(data.path,data));
     });
 
     clearEl.onclick = function() {
