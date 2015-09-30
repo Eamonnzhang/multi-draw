@@ -9,12 +9,12 @@
     var isFirstMove = true;
     var socket = io.connect(url);
     var roomId = urlParams(window.location.href)['room'];
-    socket.emit('room', roomId);
+
     var canvas = this.__canvas = new fabric.Canvas('c', {
         isDrawingMode: true
     });
     fabric.Object.prototype.transparentCorners = false;
-    var objToSerializable = function(data,id){
+    var pathToSerializable = function(data,id){
         var option={};
         option.id=id;
         option.path = data.path;
@@ -38,7 +38,39 @@
         drawingShadowWidth = _('drawing-shadow-width'),
         drawingShadowOffset = _('drawing-shadow-offset'),
         clearEl = _('clear-selected-canvas'),
+        consoleInfo = _('console-info'),
+        test = _('test'),
+        optionDiv = _('optionDiv'),
         clearE2 = _('clear-all-canvas');
+
+    if(roomId){
+        socket.emit('room', roomId);
+        var roomInfoDiv = document.createElement('div');
+        var roomInfoSpan = document.createElement('span');
+        roomInfoSpan.innerText = 'Your RoomId is: '+roomId;
+        roomInfoSpan.setAttribute('style','color:red');
+        roomInfoDiv.appendChild(roomInfoSpan);
+        optionDiv.appendChild(roomInfoDiv);
+    }
+
+    consoleInfo.onclick = function(){
+        if(canvas.getActiveObject()){
+            console.log(canvas.getActiveObject());
+        }
+        if(canvas.getActiveGroup()){
+            canvas.getActiveGroup().forEachObject(function(a) {
+                console.log(a);
+            });
+        }
+    };
+
+    test.onclick = function(){
+        if(canvas.getActiveObject()){
+
+            console.log(canvas.getActiveObject().toObject());
+            canvas.add(canvas.getActiveObject().toObject());
+        }
+    };
 
     if(roomId){
         socket.on('allPath',function(data){
@@ -54,7 +86,7 @@
         var path = e.path;
         var id = generateId(8,32);
         path.id=id;
-        var data = objToSerializable(path,id);
+        var data = pathToSerializable(path,id);
         socket.emit('path', data);
     });
 
@@ -80,8 +112,12 @@
             }
         });
     });
+
     socket.on('path',function(data){
         //console.log(data);
+        //data.type = 'path';
+        //console.log(data);
+        //canvas.add(new fabric.Object(data));
         canvas.add(new fabric.Path(data.path,data));
     });
 
@@ -121,11 +157,17 @@
         if (canvas.isDrawingMode) {
             drawingModeEl.innerHTML = 'Cancel drawing mode';
             drawingModeEl.setAttribute('class','btn btn-default');
+            consoleInfo.setAttribute('disabled','disabled');
+            clearE2.setAttribute('disabled','disabled');
+            clearEl.setAttribute('disabled','disabled');
             drawingOptionsEl.style.display = '';
         }
         else {
             drawingModeEl.innerHTML = 'Enter drawing mode';
             drawingModeEl.setAttribute('class','btn btn-info');
+            consoleInfo.removeAttribute('disabled');
+            clearE2.removeAttribute('disabled');
+            clearEl.removeAttribute('disabled');
             drawingOptionsEl.style.display = 'none';
         }
     };

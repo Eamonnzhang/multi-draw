@@ -21,10 +21,12 @@
 <div style="float:left">
     <canvas id="c" width="800" height="600" style="border:1px solid #aaa;"></canvas>
 </div>
-<div style="float:left; margin-left: 10px">
-    <button id="drawing-mode" class="btn btn-default" style="margin-top: 10px">Cancel drawing mode</button><br>
-    <button id="clear-selected-canvas" class="btn btn-warning"style="margin-top: 10px" >ClearSelected</button>
-    <button id="clear-all-canvas" class="btn btn-warning" style="margin-top: 10px">ClearAll</button><br>
+<div id='optionDiv'style="float:left; margin-left: 10px">
+    <button id="drawing-mode" class="btn btn-default" style="margin-top: 10px">Cancel Drawing Mode</button><br>
+    <button id="clear-selected-canvas" class="btn btn-warning"style="margin-top: 10px" disabled="disabled" >Clear Selected</button>
+    <button id="clear-all-canvas" class="btn btn-warning" style="margin-top: 10px" disabled="disabled">Clear All</button><br>
+    <button id="console-info" class="btn btn-default btn-sm" style="margin-top: 10px" disabled="disabled">Console Info</button>
+    <button id="test" class="btn btn-default btn-sm" style="margin-top: 10px" >test</button><br>
     <div id="drawing-mode-options" style="margin-top: 10px">
         <label for="drawing-mode-selector">Mode:</label>
         <select id="drawing-mode-selector">

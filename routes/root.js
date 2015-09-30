@@ -5,11 +5,16 @@
 
 module.exports = function(app){
     app.get('/',function(req,res){
-        res.render('index2',{title:'MultiDraw'});
+        if(req.query.room){
+            res.render('index2',{title:'MultiDraw'});
+        }else{
+            res.redirect('/start')
+        }
+
     });
 
-    app.get('/paper',function(req,res){
-        res.render('paper',{title:'MultiDraw'});
+    app.get('/start',function(req,res){
+        res.render('index',{title:'MultiDraw'});
     });
 
     app.get('/users',function(req,res){
