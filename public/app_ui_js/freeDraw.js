@@ -66,10 +66,8 @@
         //console.log(e);
     });
 
-
-
     socket.on('clearAll',function(data){
-        if(data=='clearAll'){
+        if(data == 'clearAll'){
             canvas.clear();
         }
     });
@@ -122,10 +120,12 @@
         canvas.isDrawingMode = !canvas.isDrawingMode;
         if (canvas.isDrawingMode) {
             drawingModeEl.innerHTML = 'Cancel drawing mode';
+            drawingModeEl.setAttribute('class','btn btn-default');
             drawingOptionsEl.style.display = '';
         }
         else {
             drawingModeEl.innerHTML = 'Enter drawing mode';
+            drawingModeEl.setAttribute('class','btn btn-info');
             drawingOptionsEl.style.display = 'none';
         }
     };

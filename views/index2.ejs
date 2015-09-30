@@ -3,14 +3,28 @@
 <head>
     <meta charset="utf-8" />
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <link rel='stylesheet' href='/stylesheets/mystyle.css' />
+    <style>
+        #drawing-mode-options {
+            display: inline-block;
+            vertical-align: top;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            background: #f5f2f0;
+            padding: 10px;
+        }
+
+    </style>
 </head>
 <body>
-<div style="float:left; display: inline-block; margin-left: 10px">
-    <button id="drawing-mode" class="btn btn-info" style="margin-top: 10px">Cancel drawing mode</button><br>
-    <button id="clear-selected-canvas" class="btn btn-info" style="margin-top: 10px">ClearSelected</button><br>
-    <button id="clear-all-canvas" class="btn btn-info" style="margin-top: 10px">ClearAll</button><br>
+<div style="float:left">
+    <canvas id="c" width="800" height="600" style="border:1px solid #aaa;"></canvas>
+</div>
+<div style="float:left; margin-left: 10px">
+    <button id="drawing-mode" class="btn btn-default" style="margin-top: 10px">Cancel drawing mode</button><br>
+    <button id="clear-selected-canvas" class="btn btn-warning"style="margin-top: 10px" >ClearSelected</button>
+    <button id="clear-all-canvas" class="btn btn-warning" style="margin-top: 10px">ClearAll</button><br>
     <div id="drawing-mode-options" style="margin-top: 10px">
         <label for="drawing-mode-selector">Mode:</label>
         <select id="drawing-mode-selector">
@@ -42,10 +56,6 @@
         <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-offset"><br>
     </div>
 </div>
-<div style="float:left;margin-left: 10px;width: auto">
-    <canvas id="c" width="800" height="800" style="border:1px solid #aaa;display: block"></canvas>
-</div>
-
 </body>
 <script src='/app_3th_js/jquery-1.11.3.min.js'></script>
 <script src='/app_3th_js/bootstrap.js'></script>
