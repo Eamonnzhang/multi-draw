@@ -54,7 +54,7 @@ exports.startSocketIo = function(server){
             socket.broadcast.to(room).emit('path', data);
         });
 
-        socket.on('move',function(data){
+        socket.on('stateChange',function(data){
             for(var i =0;i<pathRoom[room].length;i++) {
                 if (data.id === pathRoom[room][i].id) {
                     pathRoom[room][i].left = data.left;
@@ -64,7 +64,7 @@ exports.startSocketIo = function(server){
                     pathRoom[room][i].scaleY = data.scaleY;
                 }
             }
-            socket.broadcast.to(room).emit('move', data);
+            socket.broadcast.to(room).emit('stateChange', data);
         });
         //socket.emit('resume',drawStore);
         //socket.on('mousemove', function (data) {

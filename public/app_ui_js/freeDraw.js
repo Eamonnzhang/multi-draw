@@ -35,6 +35,20 @@
         option.fill = data.fill;
         return option;
     };
+    var groupToSerializable = function(group){
+        var obj={};
+        var idArr = [];
+        group.forEachObject(function(x){
+            idArr.push(x.id);
+        });
+        obj.idArr = idArr;
+        obj.top = group.top;
+        obj.left =group.left;
+        obj.angle=group.angle;
+        obj.scaleX = group.scaleX;
+        obj.scaleY = group.scaleY;
+        return obj;
+    };
     var getMyObjArr = function(o_arr){
         return o_arr.concat('');
     };
@@ -77,9 +91,8 @@
         //    console.log(canvas.getActiveObject().toObject());
         //    //canvas.add(canvas.getActiveObject().toObject());
         //}
-        var obj = canvas.getActiveObject();
-        obj.setTop(100);
-        obj.setLeft(100);
+        var obj = canvas.getActiveGroup();
+        console.log(obj);
 
     };
 
@@ -100,8 +113,7 @@
         var data = pathToSerializable(path,id);
         socket.emit('path', data);
     });
-    var isMouseDown = false,
-        isRotated = false;
+    var isMouseDown = false;
     canvas.on('mouse:down',function(e){
         //console.log(e);
         isMouseDown = true;
@@ -112,20 +124,25 @@
 
     canvas.on('mouse:up',function(e){
         //console.log(e);
-        if(isMouseDown&&canvas.getActiveObject()){
+        if(isMouseDown){
             isMouseDown = !isMouseDown;
-            //console.log(e);
-            if(e.target){
-                var obj = e.target;
-                var data = {
-                    id : obj.id,
-                    top: obj.top,
-                    left:obj.left,
-                    angle:obj.angle,
-                    scaleX:obj.scaleX,
-                    scaleY:obj.scaleY
-                };
-                socket.emit('move',data);
+            var obj = e.target;
+            if(obj){
+                if(canvas.getActiveObject()){
+                    var data = {
+                        id : obj.id,
+                        top: obj.top,
+                        left:obj.left,
+                        angle:obj.angle,
+                        scaleX:obj.scaleX,
+                        scaleY:obj.scaleY
+                    };
+                    socket.emit('stateChange',data);
+                }
+                if(canvas.getActiveGroup()){
+                    var group = groupToSerializable(canvas.getActiveGroup());
+                    socket.emit('groupChange',group);
+                }
             }
         }
 
@@ -162,18 +179,14 @@
     canvas.on('object:rotating',function(e){
         //if(!isMouseDown){
         //    console.log(e);
-        //}
-        if(!isRotated){
-            isRotated =!isRotated;
-            console.log(isRotated);
-        }
+
     });
 
     canvas.on('after:render',function(e){
         //console.log(e);
     });
 
-    socket.on('move',function(data){
+    socket.on('stateChange',function(data){
         var myObjArr = getMyObjArr(canvas.getObjects());
         myObjArr.forEach(function(a){
             if(a.id === data.id){
