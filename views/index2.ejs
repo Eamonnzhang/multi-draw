@@ -14,49 +14,67 @@
             background: #f5f2f0;
             padding: 10px;
         }
+        .divGlobal,.DivTop,.DivBottom{min-width: 500px;width: expression(document.body.clientWidth < 760? "760px": "100%" )/*??§³????????*/;width:100%;}
+        .divGlobal{/*border:1px solid #ff0000;*/}
+        /*.DivTop,.DivBottom,.DivMainLeft,.DivMainRight {border:1px solid #ff0000;}*/
+        .DivBottom {clear: both;}
+        .DivMainLeft{float:left;}
+        .DivMainRight{margin-left:220px;}
 
     </style>
 </head>
 <body>
-<div style="float:left">
-    <canvas id="c" width="800" height="600" style="border:1px solid #aaa;"></canvas>
+<div class="DivTop">
+    top
 </div>
-<div id='optionDiv'style="float:left; margin-left: 10px">
-    <button id="drawing-mode" class="btn btn-default" style="margin-top: 10px">Cancel Drawing Mode</button><br>
-    <button id="clear-selected-canvas" class="btn btn-warning"style="margin-top: 10px" disabled="disabled" >Clear Selected</button>
-    <button id="clear-all-canvas" class="btn btn-warning" style="margin-top: 10px" disabled="disabled">Clear All</button><br>
-    <button id="console-info" class="btn btn-default btn-sm" style="margin-top: 10px" disabled="disabled">Console Info</button>
-    <button id="test" class="btn btn-default btn-sm" style="margin-top: 10px" >test</button><br>
-    <div id="drawing-mode-options" style="margin-top: 10px">
-        <label for="drawing-mode-selector">Mode:</label>
-        <select id="drawing-mode-selector">
-            <option>Pencil</option>
-            <option>Circle</option>
-            <option>Spray</option>
-            <option>Pattern</option>
+<div class="divGlobal">
+    <div class="DivMainLeft">
+        <div id='optionDiv'style="float:left; margin-left: 10px">
+            <button id="drawing-mode" class="btn btn-default" style="margin-top: 10px">Cancel Drawing Mode</button><br>
+            <button id="clear-selected-canvas" class="btn btn-warning"style="margin-top: 10px" disabled="disabled" >Clear Selected</button>
+            <button id="clear-all-canvas" class="btn btn-warning" style="margin-top: 10px" disabled="disabled">Clear All</button><br>
+            <button id="console-info" class="btn btn-default btn-sm" style="margin-top: 10px" disabled="disabled">Console Info</button>
+            <button id="test" class="btn btn-default btn-sm" style="margin-top: 10px" >test</button><br>
+            <div id="drawing-mode-options" style="margin-top: 10px">
+                <label for="drawing-mode-selector">Mode:</label>
+                <select id="drawing-mode-selector">
+                    <option>Pencil</option>
+                    <option>Circle</option>
+                    <option>Spray</option>
+                    <option>Pattern</option>
 
-            <option>hline</option>
-            <option>vline</option>
-            <option>square</option>
-            <option>diamond</option>
-            <option>texture</option>
-        </select><br>
+                    <option>hline</option>
+                    <option>vline</option>
+                    <option>square</option>
+                    <option>diamond</option>
+                    <option>texture</option>
+                </select><br>
 
-        <label for="drawing-line-width">Line width:</label>
-        <span class="info">8</span><input type="range" value="8" min="0" max="150" id="drawing-line-width"><br>
+                <label for="drawing-line-width">Line width:</label>
+                <span class="info">8</span><input type="range" value="8" min="0" max="150" id="drawing-line-width"><br>
 
-        <label for="drawing-color">Line color:</label>
-        <input type="color" value="#005E7A" id="drawing-color"><br>
+                <label for="drawing-color">Line color:</label>
+                <input type="color" value="#005E7A" id="drawing-color"><br>
 
-        <label for="drawing-shadow-color">Shadow color:</label>
-        <input type="color" value="#005E7A" id="drawing-shadow-color"><br>
+                <label for="drawing-shadow-color">Shadow color:</label>
+                <input type="color" value="#005E7A" id="drawing-shadow-color"><br>
 
-        <label for="drawing-shadow-width">Shadow width:</label>
-        <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-width"><br>
+                <label for="drawing-shadow-width">Shadow width:</label>
+                <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-width"><br>
 
-        <label for="drawing-shadow-offset">Shadow offset:</label>
-        <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-offset"><br>
+                <label for="drawing-shadow-offset">Shadow offset:</label>
+                <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-offset"><br>
+            </div>
+        </div>
     </div>
+    <div class="DivMainRight" style="margin-right: 50px;margin-bottom: 100px">
+        <!--<div class="DivMainRightChild" >-->
+            <canvas id="c" style="border:1px solid #aaa;display: block"></canvas>
+        <!--</div>-->
+    </div>
+</div>
+<div class="DivBottom">
+    DivBottom
 </div>
 </body>
 <script src='/app_3th_js/jquery-1.11.3.min.js'></script>

@@ -4,7 +4,7 @@
 (function() {
     var _ = function(id){return document.getElementById(id)};
     var doc = $(document);
-    var url = 'http://localhost:8080';
+    var url = 'http://192.168.1.81:8080';
     var drawing = false;
     var isFirstMove = true;
     var socket = io.connect(url);
@@ -12,7 +12,15 @@
 
     var canvas = this.__canvas = new fabric.Canvas('c', {
         isDrawingMode: true
+        //height:500
     });
+    window.onresize=resizeCanvas;
+    function resizeCanvas(){
+        canvas.setWidth(window.innerWidth-270);
+        canvas.setHeight(window.innerHeight-100);
+        //canvas.setZoom((window.innerWidth-220)/window.innerWidth);
+    }
+    resizeCanvas();
     fabric.Object.prototype.transparentCorners = false;
     var pathToSerializable = function(data,id){
         var option={};
@@ -63,13 +71,16 @@
             });
         }
     };
-
+//testbutton
     test.onclick = function(){
-        if(canvas.getActiveObject()){
+        //if(canvas.getActiveObject()){
+        //    console.log(canvas.getActiveObject().toObject());
+        //    //canvas.add(canvas.getActiveObject().toObject());
+        //}
+        var obj = canvas.getActiveObject();
+        obj.setTop(100);
+        obj.setLeft(100);
 
-            console.log(canvas.getActiveObject().toObject());
-            canvas.add(canvas.getActiveObject().toObject());
-        }
     };
 
     if(roomId){
@@ -89,13 +100,93 @@
         var data = pathToSerializable(path,id);
         socket.emit('path', data);
     });
+    var isMouseDown = false,
+        isRotated = false;
+    canvas.on('mouse:down',function(e){
+        //console.log(e);
+        isMouseDown = true;
+        if(e.target){
 
+        }
+    });
+
+    canvas.on('mouse:up',function(e){
+        //console.log(e);
+        if(isMouseDown&&canvas.getActiveObject()){
+            isMouseDown = !isMouseDown;
+            //console.log(e);
+            if(e.target){
+                var obj = e.target;
+                var data = {
+                    id : obj.id,
+                    top: obj.top,
+                    left:obj.left,
+                    angle:obj.angle,
+                    scaleX:obj.scaleX,
+                    scaleY:obj.scaleY
+                };
+                socket.emit('move',data);
+            }
+        }
+
+    });
+
+    canvas.on('mouse:move',function(e){
+        if(isMouseDown&&canvas.getActiveObject()){
+            //console.log(e);
+        }
+        //console.log(e);
+        if(e.target){
+
+        }
+    });
+
+
+    //选中
     canvas.on('object:selected',function(e){
+        //console.log(e);
+        //isObjSelected = !isObjSelected;
+    });
+
+    //移动
+    canvas.on('object:moving',function(e){
+
+    });
+
+    //缩放
+    canvas.on('object:scaling',function(e){
         //console.log(e);
     });
 
-    canvas.on('selection:cleared',function(e){
+    //旋转
+    canvas.on('object:rotating',function(e){
+        //if(!isMouseDown){
+        //    console.log(e);
+        //}
+        if(!isRotated){
+            isRotated =!isRotated;
+            console.log(isRotated);
+        }
+    });
+
+    canvas.on('after:render',function(e){
         //console.log(e);
+    });
+
+    socket.on('move',function(data){
+        var myObjArr = getMyObjArr(canvas.getObjects());
+        myObjArr.forEach(function(a){
+            if(a.id === data.id){
+                //console.log(data);
+                a.setTop(data.top);
+                a.setLeft(data.left);
+                a.setAngle(data.angle);
+                a.setScaleX(data.scaleX);
+                a.setScaleY(data.scaleY);
+                a.setCoords();
+                canvas.renderAll();
+            }
+        });
     });
 
     socket.on('clearAll',function(data){
@@ -114,10 +205,6 @@
     });
 
     socket.on('path',function(data){
-        //console.log(data);
-        //data.type = 'path';
-        //console.log(data);
-        //canvas.add(new fabric.Object(data));
         canvas.add(new fabric.Path(data.path,data));
     });
 
@@ -307,4 +394,5 @@
         canvas.freeDrawingBrush.width = parseInt(drawingLineWidthEl.value, 10) || 1;
         canvas.freeDrawingBrush.shadowBlur = 0;
     }
+
 })();
