@@ -68,16 +68,19 @@ exports.startSocketIo = function(server){
         });
 
         socket.on('groupChange',function(group){
-            //for(var i =0;i<pathRoom[room].length;i++) {
-            //    if (group.idArr.indexOf(pathRoom[room][i].id) !== -1) {
-            //        //pathRoom[room][i].left = group.left;
-            //        //pathRoom[room][i].top = group.top;
-            //        //pathRoom[room][i].angle = group.angle;
-            //        //pathRoom[room][i].scaleX = group.scaleX;
-            //        //pathRoom[room][i].scaleY = group.scaleY;
-            //    }
-            //}
+            for(var i =0;i<pathRoom[room].length;i++) {
+                if (group.idArr.indexOf(pathRoom[room][i].id) !== -1) {
+                    //pathRoom[room][i].left = group.left;
+                    //pathRoom[room][i].top = group.top;
+                    //pathRoom[room][i].angle = group.angle;
+                    //pathRoom[room][i].scaleX = group.scaleX;
+                    //pathRoom[room][i].scaleY = group.scaleY;
+                }
+            }
             socket.broadcast.to(room).emit('groupChange', group);
+        });
+        socket.on('deActive',function(data){
+            socket.broadcast.to(room).emit('deActive', 'deActive');
         });
         //socket.emit('resume',drawStore);
         //socket.on('mousemove', function (data) {

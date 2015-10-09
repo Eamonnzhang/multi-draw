@@ -11,13 +11,13 @@
     var roomId = urlParams(window.location.href)['room'];
 
     var canvas = this.__canvas = new fabric.Canvas('c', {
-        isDrawingMode: true
-        //height:500
+        isDrawingMode: true,
+        //height:800
     });
     window.onresize=resizeCanvas;
     function resizeCanvas(){
         canvas.setWidth(window.innerWidth-215);
-        canvas.setHeight(window.innerHeight-85);
+        canvas.setHeight(window.innerHeight-40);
         //canvas.setZoom((window.innerWidth-220)/window.innerWidth);
     }
     resizeCanvas();
@@ -91,10 +91,10 @@
         //    console.log(canvas.getActiveObject().toObject());
         //    //canvas.add(canvas.getActiveObject().toObject());
         //}
-        //var obj = canvas.getActiveGroup();
-        //console.log(obj);
+        var obj = canvas.getActiveGroup();
+        console.log(obj);
         //canvas.setActiveObject(canvas.item(0));
-        canvas.setActiveGroup();
+        //canvas.setActiveGroup();
 
     };
 
@@ -145,6 +145,8 @@
                     var group = groupToSerializable(canvas.getActiveGroup());
                     socket.emit('groupChange',group);
                 }
+            }else{
+                socket.emit('deActive','deActive');
             }
         }
 
@@ -154,7 +156,6 @@
         if(isMouseDown&&canvas.getActiveObject()){
             //console.log(e);
         }
-        //console.log(e);
         if(e.target){
 
         }
@@ -186,6 +187,12 @@
 
     canvas.on('after:render',function(e){
         //console.log(e);
+    });
+
+    socket.on('deActive',function(data){
+        //console.log('deActive all');
+        canvas.deactivateAll();
+        canvas.renderAll();
     });
 
     socket.on('stateChange',function(data){
