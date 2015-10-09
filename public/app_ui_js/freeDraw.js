@@ -16,8 +16,8 @@
     });
     window.onresize=resizeCanvas;
     function resizeCanvas(){
-        canvas.setWidth(window.innerWidth-270);
-        canvas.setHeight(window.innerHeight-100);
+        canvas.setWidth(window.innerWidth-215);
+        canvas.setHeight(window.innerHeight-85);
         //canvas.setZoom((window.innerWidth-220)/window.innerWidth);
     }
     resizeCanvas();
@@ -91,8 +91,10 @@
         //    console.log(canvas.getActiveObject().toObject());
         //    //canvas.add(canvas.getActiveObject().toObject());
         //}
-        var obj = canvas.getActiveGroup();
-        console.log(obj);
+        //var obj = canvas.getActiveGroup();
+        //console.log(obj);
+        //canvas.setActiveObject(canvas.item(0));
+        canvas.setActiveGroup();
 
     };
 
@@ -202,6 +204,25 @@
         });
     });
 
+    socket.on('groupChange',function(group){
+        var myObjArr = getMyObjArr(canvas.getObjects());
+        var selectObjs = [];
+        myObjArr.forEach(function(a){
+            if(group.idArr.indexOf(a.id) !== -1){
+                selectObjs.push(a);
+            }
+        });
+        var opt ={};
+        opt.top = group.top;
+        opt.left =group.left;
+        opt.angle=group.angle;
+        opt.scaleX = group.scaleX;
+        opt.scaleY = group.scaleY;
+        var objGroup = new fabric.Group(selectObjs,opt);
+        canvas.setActiveGroup(objGroup);
+        canvas.renderAll();
+    });
+
     socket.on('clearAll',function(data){
         if(data == 'clearAll'){
             canvas.clear();
@@ -258,7 +279,7 @@
             drawingModeEl.innerHTML = 'Cancel drawing mode';
             drawingModeEl.setAttribute('class','btn btn-default');
             consoleInfo.setAttribute('disabled','disabled');
-            clearE2.setAttribute('disabled','disabled');
+            //clearE2.setAttribute('disabled','disabled');
             clearEl.setAttribute('disabled','disabled');
             drawingOptionsEl.style.display = '';
         }
@@ -266,7 +287,7 @@
             drawingModeEl.innerHTML = 'Enter drawing mode';
             drawingModeEl.setAttribute('class','btn btn-info');
             consoleInfo.removeAttribute('disabled');
-            clearE2.removeAttribute('disabled');
+            //clearE2.removeAttribute('disabled');
             clearEl.removeAttribute('disabled');
             drawingOptionsEl.style.display = 'none';
         }
