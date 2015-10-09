@@ -37,16 +37,26 @@
     };
     var groupToSerializable = function(group){
         var obj={};
+        var objArr = [];
         var idArr = [];
         group.forEachObject(function(x){
+            var path = {
+                id : x.id,
+                left : x.left,
+                top : x.top
+            };
+            objArr.push(path);
             idArr.push(x.id);
         });
+        obj.objArr = objArr;
         obj.idArr = idArr;
         obj.top = group.top;
-        obj.left =group.left;
-        obj.angle=group.angle;
+        obj.left = group.left;
+        obj.angle= group.angle;
         obj.scaleX = group.scaleX;
         obj.scaleY = group.scaleY;
+        obj.width = group.width;
+        obj.height = group.height;
         return obj;
     };
     var getMyObjArr = function(o_arr){
@@ -91,7 +101,8 @@
         //    console.log(canvas.getActiveObject().toObject());
         //    //canvas.add(canvas.getActiveObject().toObject());
         //}
-        var obj = canvas.getActiveGroup();
+        //var obj = canvas.getActiveGroup();
+        var obj = canvas.getObjects();
         console.log(obj);
         //canvas.setActiveObject(canvas.item(0));
         //canvas.setActiveGroup();
@@ -131,6 +142,7 @@
             var obj = e.target;
             if(obj){
                 if(canvas.getActiveObject()){
+                    //console.log(obj.top+','+obj.left);
                     var data = {
                         id : obj.id,
                         top: obj.top,
@@ -170,6 +182,8 @@
 
     //移动
     canvas.on('object:moving',function(e){
+        //console.log(e.target);
+
 
     });
 
@@ -227,6 +241,7 @@
         opt.scaleY = group.scaleY;
         var objGroup = new fabric.Group(selectObjs,opt);
         canvas.setActiveGroup(objGroup);
+        //objGroup.setObjectsCoords();
         canvas.renderAll();
     });
 
