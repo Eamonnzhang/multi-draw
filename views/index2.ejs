@@ -5,6 +5,7 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
     <link rel='stylesheet' href='/stylesheets/mystyle.css' />
+
     <style>
         #drawing-mode-options {
             display: inline-block;
@@ -24,17 +25,17 @@
     </style>
 </head>
 <body>
-<div class="DivTop">
-    top
-</div>
+<!--<div class="DivTop">-->
+    <!--top-->
+<!--</div>-->
 <div class="divGlobal">
     <div class="DivMainLeft">
         <div id='optionDiv'style="float:left; margin-left: 10px">
             <button id="drawing-mode" class="btn btn-default" style="margin-top: 10px">Cancel Drawing Mode</button><br>
             <button id="clear-all-canvas" class="btn btn-warning" style="margin-top: 10px">Clear All</button><br>
             <button id="clear-selected-canvas" class="btn btn-warning"style="margin-top: 10px" disabled="disabled" >Clear Selected</button><br>
-            <button id="console-info" class="btn btn-default btn-sm" style="margin-top: 10px" disabled="disabled">Console Info</button>
-            <button id="test" class="btn btn-default btn-sm" style="margin-top: 10px" >test</button><br>
+            <!--<button id="console-info" class="btn btn-default btn-sm" style="margin-top: 10px" disabled="disabled">Console Info</button>-->
+            <!--<button id="test" class="btn btn-default btn-sm" style="margin-top: 10px" >test</button><br>-->
             <div id="drawing-mode-options" style="margin-top: 10px">
                 <label for="drawing-mode-selector">Mode:</label>
                 <select id="drawing-mode-selector">
@@ -51,7 +52,7 @@
                 </select><br>
 
                 <label for="drawing-line-width">Line width:</label>
-                <span class="info">8</span><input type="range" value="8" min="0" max="150" id="drawing-line-width"><br>
+                <span class="info">2</span><input type="range" value="2" min="0" max="150"  data-orientation="vertical" id="drawing-line-width"><br>
 
                 <label for="drawing-color">Line color:</label>
                 <input type="color" value="#005E7A" id="drawing-color"><br>
@@ -67,15 +68,15 @@
             </div>
         </div>
     </div>
-    <div class="DivMainRight" style="margin-right: 25px;margin-bottom: 40px">
+    <div class="DivMainRight" style="margin-right: 25px;margin-bottom: 40px;margin-top: 20px">
         <!--<div class="DivMainRightChild" >-->
             <canvas id="c" style="border:1px solid #aaa;display: block"></canvas>
         <!--</div>-->
     </div>
 </div>
-<div class="DivBottom">
-    DivBottom
-</div>
+<!--<div class="DivBottom">-->
+    <!--DivBottom-->
+<!--</div>-->
 </body>
 <script src='/app_3th_js/jquery-1.11.3.min.js'></script>
 <script src='/app_3th_js/bootstrap.js'></script>

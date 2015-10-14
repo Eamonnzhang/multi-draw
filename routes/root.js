@@ -6,7 +6,7 @@
 module.exports = function(app){
     app.get('/',function(req,res){
         if(req.query.room){
-            res.render('index2',{title:'MultiDraw'});
+            res.render('index3',{title:'MultiDraw'});
         }else{
             res.redirect('/start')
         }

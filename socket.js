@@ -70,12 +70,6 @@ exports.startSocketIo = function(server){
         socket.on('groupChange',function(group){
             socket.broadcast.to(room).emit('groupChange', group);
             for(var i =0;i<pathRoom[room].length;i++) {
-                //if (group.idArr.indexOf(pathRoom[room][i].id) !== -1) {
-                    //var gx = e.target.width/2+ e.target.left;
-                    //var gy = e.target.height/2+ e.target.top;
-                    //var tx = e.target._objects[0].left + gx;
-                    //var ty = e.target._objects[0].top + gy;
-                    //console.log(tx+','+ty);
                     group.objArr.forEach(function(x){
                         if(x.id === pathRoom[room][i].id ){
                             pathRoom[room][i].left = x.left+group.width/2+group.left;
@@ -85,8 +79,6 @@ exports.startSocketIo = function(server){
                             //pathRoom[room][i].scaleY = group.scaleY;
                         }
                     });
-
-                //}
             }
         });
         socket.on('deActive',function(data){
