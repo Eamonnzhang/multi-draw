@@ -6,7 +6,7 @@
 <title>Multi - Drawingboard</title>
 
 <link href="/css/bootstrap.min.css" rel="stylesheet">
-<link href="/css/datepicker3.css" rel="stylesheet">
+<!--<link href="/css/datepicker3.css" rel="stylesheet">-->
 <link href="/css/styles.css" rel="stylesheet">
 
 <!--[if lt IE 9]>
@@ -20,58 +20,57 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href=""><span>Multi</span>Draw</a>
-                    <ul class="user-menu" style="float:right">
-                        <li class="dropdown pull-right">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                            </ul>
-                        </li>
-				    </ul>
-                    <div id="roomId" style="float: right;height:50px;line-height:50px;color: #30A5FF;margin-right: 10px" ></div>
-			</div>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href=""><span>Multi</span>Draw</a>
+                <ul class="user-menu" style="float:right">
+                    <li class="dropdown pull-right">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href=""><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                            <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                            <li><a href=""><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div id="roomId" style="float: right;height:50px;line-height:50px;color: #30A5FF;margin-right: 10px" ></div>
+            </div>
 		</div><!-- /.container-fluid -->
 	</nav>
-		
+
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<ul class="nav menu">
 			<li class="active"><a href=""><span class="glyphicon glyphicon-dashboard"></span>自由画板</a></li>
-			<li class="parent ">
+			<li class="parent">
 				<a href="">
-					<span class="glyphicon glyphicon-list"></span> 笔画形状 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
+					<span class="glyphicon glyphicon-list"></span> 文件管理 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span>
 				</a>
 				<ul class="children collapse" id="sub-item-1">
-					<li>
-						<a class="" href="">
-							<span class="glyphicon glyphicon-share-alt"></span> 铅笔
-						</a>
-					</li>
-					<li>
-						<a class="" href="">
-							<span class="glyphicon glyphicon-share-alt"></span> 圆圈
-						</a>
-					</li>
-					<li>
-						<a class="" href="">
-							<span class="glyphicon glyphicon-share-alt"></span> 方形
-						</a>
-					</li>
-				</ul>
+                    <li>
+                        <a class="" href="">
+                            <span class="glyphicon glyphicon-file"></span> 新建
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="">
+                            <span class="glyphicon glyphicon-open-file"></span> 打开
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="">
+                            <span class="glyphicon glyphicon-share"></span> 我参与的
+                        </a>
+                    </li>
+                </ul>
 			</li>
 			<li role="presentation" class="divider"></li>
 			<!--<li><a href="login.html"><span class="glyphicon glyphicon-user"></span> Login Page</a></li>-->
 		</ul>
-        <div id='optionDiv'style=" margin-left: 10px">
-
+        <div id='optionDiv' style=" margin-left: 10px">
             <div id="drawing-mode-options" style="margin-right: 20px">
                 <!--<label for="drawing-mode-selector">Mode:</label>-->
                 <!--<select id="drawing-mode-selector">-->
@@ -106,7 +105,8 @@
         </div>
 	</div><!--/.sidebar-->
 		
-	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+
 		<div class="row">
 			<ol class="breadcrumb">
 				<li><a href=""><span class="glyphicon glyphicon-home"></span></a></li>
@@ -119,10 +119,11 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
                         <button id="drawing-mode" class="btn btn-default">进入编辑模式</button>
-                        <button id="clear-all-canvas" class="btn btn-warning">清除全部</button>
                         <button id="clear-selected-canvas" class="btn btn-warning" disabled="disabled" >清除选中</button>
+						<button id="delete" class="btn btn-danger" style="float:right;margin-top: 5px">删除</button>
+                        <button id="save" class="btn btn-primary"  data-toggle="modal" data-target="#myModal" style="float:right;margin-top: 5px;margin-right: 5px">保存</button>
+						<button id="clear-all-canvas" class="btn btn-warning" style="float:right;margin-top: 5px;margin-right: 5px">清空</button>
                     </div>
-
 					<div class="panel-body">
 						<div class="canvas-wrapper">
 							<canvas id="c" height="600"></canvas>
@@ -131,9 +132,11 @@
 				</div>
 			</div>
 		</div><!--/.row-->
+
+        <!--聊天和待办事项row-->
 		<div class="row">
+            <!--聊天占8列-->
 			<div class="col-md-8">
-			
 				<div class="panel panel-default chat">
 					<div class="panel-heading" id="accordion"><span class="glyphicon glyphicon-comment"></span> 聊天</div>
 					<div class="panel-body">
@@ -189,26 +192,24 @@
 						</div>
 					</div>
 				</div>
-				
 			</div><!--/.col-->
-			
+			<!--待办占4列-->
 			<div class="col-md-4">
-			
 				<div class="panel panel-blue">
 					<div class="panel-heading dark-overlay"><span class="glyphicon glyphicon-check"></span>待办事项</div>
 					<div class="panel-body">
 						<ul class="todo-list">
-						<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox" />
-									<label for="checkbox">Make a plan for today</label>
-								</div>
-								<div class="pull-right action-buttons">
-									<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
-									<a href="#" class="flag"><span class="glyphicon glyphicon-flag"></span></a>
-									<a href="#" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
-								</div>
-							</li>
+                            <li class="todo-list-item">
+                                <div class="checkbox">
+                                    <input type="checkbox" id="checkbox" />
+                                    <label for="checkbox">Make a plan for today</label>
+                                </div>
+                                <div class="pull-right action-buttons">
+                                    <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+                                    <a href="#" class="flag"><span class="glyphicon glyphicon-flag"></span></a>
+                                    <a href="#" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
+                                </div>
+                            </li>
 							<li class="todo-list-item">
 								<div class="checkbox">
 									<input type="checkbox" id="checkbox" />
@@ -275,12 +276,31 @@
 						</div>
 					</div>
 				</div>
-								
 			</div><!--/.col-->
 		</div><!--/.row-->
+        <!--聊天和待办事项row结束-->
 	</div>	<!--/.main-->
+    <!-- Modal -->
+    <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">请输入文件名：</h4>
+                </div>
+                <div class="modal-body">
+                    <input id='filename' type='text' size="30">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id='confirmSave' type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
 	<script src='/app_3th_js/jquery-1.11.3.min.js'></script>
 	<script src='/app_3th_js/bootstrap.js'></script>
+	<script src='/app_util_js/mxClient.js'></script>
 	<script>
 		!function ($) {
 		    $(document).on("click","ul.nav li.parent > a > span.icon", function(){          
@@ -292,6 +312,7 @@
 		$(window).on('resize', function () {
 		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
 		});
+
 		$(window).on('resize', function () {
 		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 		});
@@ -299,6 +320,7 @@
 	<script src='/socket.io/socket.io.js'></script>
 	<script src='/app_3th_js/fabric.min.js'></script>
 	<script src='/app_util_js/util.js'></script>
+	<script src='/app_ui_js/Communication.js'></script>
 	<script src='/app_ui_js/freeDraw.js'></script>
 </body>
 

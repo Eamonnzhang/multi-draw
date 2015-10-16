@@ -9,16 +9,33 @@
     var isFirstMove = true;
     var socket = io.connect(url);
     var roomId = decodeURI(urlParams(window.location.href)['room']);
-
+    var drawingModeEl = _('drawing-mode'),
+        drawingOptionsEl = _('drawing-mode-options'),
+        drawingColorEl = _('drawing-color'),
+        drawingShadowColorEl = _('drawing-shadow-color'),
+        drawingLineWidthEl = _('drawing-line-width'),
+        drawingShadowWidth = _('drawing-shadow-width'),
+        drawingShadowOffset = _('drawing-shadow-offset'),
+        clearEl = _('clear-selected-canvas'),
+        consoleInfo = _('console-info'),
+        test = _('test'),
+        roomDiv = _('roomId'),
+        deleteBtn = _('delete'),
+        saveBtn = _('save'),
+        confirmSaveBtn = _('confirmSave'),
+        clearAllEl = _('clear-all-canvas');
+    var communication = new Communication();
     var canvas = this.__canvas = new fabric.Canvas('c', {
         isDrawingMode: true
     });
     window.onresize=resizeCanvas;
     function resizeCanvas(){
-        if ($(window).width() > 768)
+        if ($(window).width() > 768){
             canvas.setWidth($(window).width()-$("#sidebar-collapse").width()-60);
-        else
+        }
+        else{
             canvas.setWidth($(window).width()-60);
+        }
         canvas.setHeight(window.innerHeight-300);
     }
     resizeCanvas();
@@ -63,18 +80,6 @@
     var getMyObjArr = function(o_arr){
         return o_arr.concat('');
     };
-    var drawingModeEl = _('drawing-mode'),
-        drawingOptionsEl = _('drawing-mode-options'),
-        drawingColorEl = _('drawing-color'),
-        drawingShadowColorEl = _('drawing-shadow-color'),
-        drawingLineWidthEl = _('drawing-line-width'),
-        drawingShadowWidth = _('drawing-shadow-width'),
-        drawingShadowOffset = _('drawing-shadow-offset'),
-        clearEl = _('clear-selected-canvas'),
-        consoleInfo = _('console-info'),
-        test = _('test'),
-        roomDiv = _('roomId'),
-        clearE2 = _('clear-all-canvas');
 
     if(roomId){
         socket.emit('room', roomId);
@@ -124,7 +129,7 @@
     });
     var isMouseDown = false;
     canvas.on('mouse:down',function(e){
-        console.log(e);
+        //console.log(e);
         isMouseDown = true;
         if(e.target){
 
@@ -256,6 +261,16 @@
         });
     });
 
+    confirmSaveBtn.onclick = function(){
+        //prompt('请输入文件名');
+        var fileName = _('filename').value;
+        var data ={};
+        data.fileName =fileName;
+        console.log(data);
+        communication.savaData(data,function(){
+        });
+    };
+
     socket.on('path',function(data){
         canvas.add(new fabric.Path(data.path,data));
     });
@@ -285,7 +300,7 @@
         });
     };
 
-    clearE2.onclick = function() {
+    clearAllEl.onclick = function() {
         socket.emit('clearAll','clearAll',function(){
             canvas.clear();
         });

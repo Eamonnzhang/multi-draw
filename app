@@ -4,87 +4,92 @@
 var debug = require('debug')('multidraw:server');
 var http = require('http');
 var socket = require('./socket.js');
+var dataSource = require('./app_db/dataSource.js');
+var config = require('./config.json');
 
 /**
  * 如果最终需要数据库的话，可以把以下部分添加到连接数据库的回调函数里
  */
-var app = require('./config'); //获取启动app的基本配置信息，实际上就是express对象
-app = require('./routes/root')(app); //把获取的app传到root的参数里，进行对app进行路由的配置,有点儿面向过程的感觉
+dataSource.connectDb(config.dbUrl,function(){
+    var app = require('./config'); //获取启动app的基本配置信息，实际上就是express对象
+    app = require('./routes/root')(app); //把获取的app传到root的参数里，进行对app进行路由的配置,有点儿面向过程的感觉
 
-var port = normalizePort(process.env.PORT || '4500');
-app.set('port', port);
-
-
-/**
- * Create HTTP server.
- */
-var server = http.createServer(app);
-socket.startSocketIo(server);
+    var port = normalizePort(process.env.PORT || '4500');
+    app.set('port', port);
 
 
-/**
- * Listen on provided port, on all network interfaces.
- */
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+    /**
+     * Create HTTP server.
+     */
+    var server = http.createServer(app);
+    socket.startSocketIo(server);
 
-/**
- * Normalize a port into a number, string, or false.
- */
 
-function normalizePort(val) {
-    var port = parseInt(val, 10);
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
 
-    if (isNaN(port)) {
-        // named pipe
-        return val;
+    /**
+     * Normalize a port into a number, string, or false.
+     */
+
+    function normalizePort(val) {
+        var port = parseInt(val, 10);
+
+        if (isNaN(port)) {
+            // named pipe
+            return val;
+        }
+
+        if (port >= 0) {
+            // port number
+            return port;
+        }
+
+        return false;
     }
 
-    if (port >= 0) {
-        // port number
-        return port;
-    }
+    /**
+     * Event listener for HTTP server "error" event.
+     */
 
-    return false;
-}
+    function onError(error) {
+        if (error.syscall !== 'listen') {
+            throw error;
+        }
 
-/**
- * Event listener for HTTP server "error" event.
- */
+        var bind = typeof port === 'string'
+            ? 'Pipe ' + port
+            : 'Port ' + port;
 
-function onError(error) {
-    if (error.syscall !== 'listen') {
-        throw error;
-    }
-
-    var bind = typeof port === 'string'
-        ? 'Pipe ' + port
-        : 'Port ' + port;
-
-    // handle specific listen errors with friendly messages
-    switch (error.code) {
-        case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
-            process.exit(1);
-        break;
+        // handle specific listen errors with friendly messages
+        switch (error.code) {
+            case 'EACCES':
+                console.error(bind + ' requires elevated privileges');
+                process.exit(1);
+                break;
             case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
-            process.exit(1);
-        break;
-    default:
-        throw error;
-  }
-}
+                console.error(bind + ' is already in use');
+                process.exit(1);
+                break;
+            default:
+                throw error;
+        }
+    }
 
-/**
- * Event listener for HTTP server "listening" event.
- */
+    /**
+     * Event listener for HTTP server "listening" event.
+     */
 
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-      ? 'pipe ' + addr
-      : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
+    function onListening() {
+        var addr = server.address();
+        var bind = typeof addr === 'string'
+            ? 'pipe ' + addr
+            : 'port ' + addr.port;
+        debug('Listening on ' + bind);
+    }
+
+});

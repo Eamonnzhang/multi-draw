@@ -1,7 +1,7 @@
 /**
  * Created by Eamonn on 2015/9/17.
  */
-
+var fileController = require('../app_modules/fileController.js');
 
 module.exports = function(app){
     app.get('/',function(req,res){
@@ -10,7 +10,6 @@ module.exports = function(app){
         }else{
             res.redirect('/start')
         }
-
     });
 
     app.get('/start',function(req,res){
@@ -19,6 +18,10 @@ module.exports = function(app){
 
     app.get('/users',function(req,res){
 
+    });
+
+    app.post('/save',function(req,res){
+        fileController.save(req,res);
     });
 
     // catch 404 and forward to error handler
