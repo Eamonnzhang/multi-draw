@@ -36,7 +36,7 @@
         else{
             canvas.setWidth($(window).width()-60);
         }
-        canvas.setHeight(window.innerHeight-300);
+        canvas.setHeight(window.innerHeight-185);
     }
     resizeCanvas();
     fabric.Object.prototype.transparentCorners = false;
@@ -219,14 +219,14 @@
         //console.log(e);
     });
 
-    socket.on('lockState',function(data){
-        var myObjArr = getMyObjArr(canvas.getObjects());
-        myObjArr.forEach(function(x){
-            if(data.indexOf(x.id)!==-1 ){
-                x.selectable = false;
-            }
-        })
-    });
+    //socket.on('lockState',function(data){
+    //    var myObjArr = getMyObjArr(canvas.getObjects());
+    //    myObjArr.forEach(function(x){
+    //        if(data.indexOf(x.id)!==-1 ){
+    //            x.selectable = false;
+    //        }
+    //    })
+    //});
 
     socket.on('unlockState',function(data){
         var myObjArr = getMyObjArr(canvas.getObjects());
@@ -271,7 +271,6 @@
         var objGroup = new fabric.Group(selectObjs,opt);
         canvas.setActiveGroup(objGroup);
         //objGroup.setObjectsCoords();
-        canvas.deactivateAll();
         canvas.renderAll();
     });
 
