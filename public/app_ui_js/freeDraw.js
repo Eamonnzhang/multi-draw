@@ -104,7 +104,11 @@
         //}
         var obj = canvas.getActiveGroup();
         //var obj = canvas.getObjects();
-        console.log(obj);
+        //console.log(obj);
+        obj.forEachObject(function(x){
+            //x.selectable=false;
+            x.selectable  = false;
+        });
         //canvas.setActiveObject(canvas.item(0));
         //canvas.setActiveGroup();
 
@@ -153,10 +157,12 @@
                         scaleY:obj.scaleY
                     };
                     socket.emit('stateChange',data);
+                    socket.emit('unlockStates',obj.id);
                 }
                 if(canvas.getActiveGroup()){
                     var group = groupToSerializable(canvas.getActiveGroup());
                     socket.emit('groupChange',group);
+                    socket.emit('unlockState',group.idArr);
                 }
             }else{
                 //socket.emit('deActive','deActive');
@@ -178,13 +184,24 @@
     //选中
     canvas.on('object:selected',function(e){
         //console.log(e);
+        var objs = e.target;
+        var idArr = [];
+        if(objs){
+            if(objs._objects){
+                objs._objects.forEach(function(x){
+                    idArr.push(x.id);
+                });
+                //console.log(idArr);
+                socket.emit('lockState',idArr);
+            }else{
+                socket.emit('lockState',objs.id);
+            }
+        }
         //isObjSelected = !isObjSelected;
     });
 
     //移动
     canvas.on('object:moving',function(e){
-        //console.log(e.target);
-
 
     });
 
@@ -195,8 +212,6 @@
 
     //旋转
     canvas.on('object:rotating',function(e){
-        //if(!isMouseDown){
-        //    console.log(e);
 
     });
 
@@ -204,13 +219,26 @@
         //console.log(e);
     });
 
-    socket.on('deActive',function(data){
-        //console.log('deActive all');
-        //canvas.deactivateAll();
-        //canvas.renderAll();
+    socket.on('lockState',function(data){
+        var myObjArr = getMyObjArr(canvas.getObjects());
+        myObjArr.forEach(function(x){
+            if(data.indexOf(x.id)!==-1 ){
+                x.selectable = false;
+            }
+        })
+    });
+
+    socket.on('unlockState',function(data){
+        var myObjArr = getMyObjArr(canvas.getObjects());
+        myObjArr.forEach(function(x){
+            if(data.indexOf(x.id)!==-1 ){
+                x.selectable = true;
+            }
+        })
     });
 
     socket.on('stateChange',function(data){
+        canvas.deactivateAll();
         var myObjArr = getMyObjArr(canvas.getObjects());
         myObjArr.forEach(function(a){
             if(a.id === data.id){
@@ -220,7 +248,7 @@
                 a.setAngle(data.angle);
                 a.setScaleX(data.scaleX);
                 a.setScaleY(data.scaleY);
-                a.setCoords();
+                //a.setCoords();
                 canvas.renderAll();
             }
         });
@@ -243,6 +271,7 @@
         var objGroup = new fabric.Group(selectObjs,opt);
         canvas.setActiveGroup(objGroup);
         //objGroup.setObjectsCoords();
+        canvas.deactivateAll();
         canvas.renderAll();
     });
 
@@ -266,7 +295,7 @@
         var fileName = _('filename').value;
         var data ={};
         data.fileName =fileName;
-        console.log(data);
+        //console.log(data);
         communication.savaData(data,function(){
         });
     };

@@ -1,21 +1,10 @@
 /**
  * Created by Eamonn on 2015/8/28.
  */
-
-
-//var clickX=new Array();
-//var clickY=new Array();
-//var s_data={};
-//s_data.x=clickX;
-//s_data.y=clickY;
-//var addClick = function(x,y,name){
-//    clickX.push(x);
-//    clickY.push(y);
-//};
 var socket = require('socket.io');
 var io=null;
 var pathRoom = {};
-var pathArr = [];
+//var pathArr = [];
 exports.getSocketIo = function(){
     return socket;
 };
@@ -81,29 +70,14 @@ exports.startSocketIo = function(server){
                     });
             }
         });
-        socket.on('deActive',function(data){
-            socket.broadcast.to(room).emit('deActive', 'deActive');
+        socket.on('lockState',function(data){
+            //console.log(data);
+            socket.broadcast.to(room).emit('lockState', data);
         });
-        //socket.emit('resume',drawStore);
-        //socket.on('mousemove', function (data) {
-        //    socket.broadcast.to(room).emit('moving', data);
-        //});
-        //socket.on('mouserecord', function (data) {
-        //    addClick(data.x,data.y);
-        //});
-        //socket.on('mouseup',function(){
-        //    if(s_data.x.length>0){
-        //        drawStore[room].push(s_data);
-        //        socket.broadcast.to(room).emit('addStroke',s_data);
-        //    }
-        //    clickX=new Array();
-        //    clickY=new Array();
-        //    s_data={};
-        //    s_data.x=clickX;
-        //    s_data.y=clickY;
-        //});
-        //socket.on('mousedown',function(){
-        //});
+        socket.on('unlockState',function(data){
+            //console.log(data);
+            socket.broadcast.to(room).emit('unlockState', data);
+        });
     });
 };
 
