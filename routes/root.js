@@ -1,14 +1,18 @@
 /**
  * Created by Eamonn on 2015/9/17.
  */
-var fileController = require('../app_modules/fileController.js');
-
+var fileController = require('../app_modules/files_mgmt/fileController.js');
+var userController = require('../app_modules/users_mgmt/userController.js');
+var message = require('../app_modules/_utils/messageGenerator.js');
 module.exports = function(app){
     app.get('/',function(req,res){
-        if(req.query.room){
-            res.render('index3',{title:'MultiDraw'});
+        if (req.session.userData) {
+            res.render('app', {
+                userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
+                apiKey: req.session.userData.apiKey,title:'MultiDraw'
+            });
         }else{
-            res.redirect('/start')
+            res.redirect('/login');
         }
     });
 
@@ -16,7 +20,31 @@ module.exports = function(app){
         res.render('index',{title:'MultiDraw'});
     });
 
+    app.get('/login',function(req,res){
+        res.render('login',{title:'MultiDraw'});
+    });
+
+    app.post('/loginHandle',function(req,res){
+        userController.isExist(req,res);
+    });
+
     app.get('/users',function(req,res){
+
+    });
+
+    app.get('/admin/users/autoadd', function (req, res) {
+        for (var i = 1; i <= 20; i++) {
+            var user = {
+                username: 'user' + i,
+                password: '123',
+                name: {
+                    firstName: 'Developer',
+                    lastName: i.toString()
+                }
+            };
+            userController.addUser(user, req, res);
+        }
+        res.send(new message.genSimpSuccessMsg('Command has been sent.'));
 
     });
 

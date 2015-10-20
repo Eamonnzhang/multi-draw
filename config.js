@@ -7,7 +7,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var session = require('express-session');
+var sessionstore = require('sessionstore');
 var app = express();
 
 // view engine setup
@@ -20,5 +21,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+var aDay = 3600000 * 24;
+app.use(session({
+    secret: '12345',
+    cookie: {maxAge: aDay, expires: new Date(Date.now() + aDay)},
+    store: sessionstore.createSessionStore(),
+    resave: true,
+    saveUninitialized: true
+}));
 module.exports = app;

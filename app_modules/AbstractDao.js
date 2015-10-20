@@ -5,10 +5,10 @@ var dataSource = require('../app_db/dataSource.js');
 var uuid = require('node-uuid');
 var message = require('./_utils/messageGenerator.js');
 
-var AbstractFileDao = function(collectionName){
+var AbstractDao = function(collectionName){
     this.dataCollection = dataSource.getDB().collection(collectionName);
 };
-AbstractFileDao.prototype.prepareNewObj = function(obj){
+AbstractDao.prototype.prepareNewObj = function(obj){
     if(obj === undefined || obj === null){
         obj = {};
     }
@@ -17,7 +17,8 @@ AbstractFileDao.prototype.prepareNewObj = function(obj){
     obj.lastModify = obj.createTime;
     return obj;
 };
-AbstractFileDao.prototype.insertOne = function(data,next){
+
+AbstractDao.prototype.insertOne = function(data,next){
     data = this.prepareNewObj(data);
     this.dataCollection.insert(data,function(err,result){
         if(err){
@@ -28,4 +29,16 @@ AbstractFileDao.prototype.insertOne = function(data,next){
     })
 };
 
-module.exports = AbstractFileDao;
+AbstractDao.prototype.findOne = function(data,next){
+    this.dataCollection.findOne(data,function(err,data){
+        if(err){
+            next(message.genSimpFailedMsg(err.message, err.stack));
+        }else{
+            next(message.genSimpSuccessMsg(null, data));
+        }
+    })
+
+};
+
+
+module.exports = AbstractDao;
