@@ -5,6 +5,7 @@ var socket = require('socket.io');
 var io=null;
 var pathRoom = {};
 //var pathArr = [];
+var userRoom = {};
 exports.getSocketIo = function(){
     return socket;
 };
@@ -15,10 +16,16 @@ exports.startSocketIo = function(server){
         //console.log('connection start');
         var room;
         socket.on('room',function(data){
-            room=data;
+            room=data.roomId;
             if(pathRoom[room]===null||pathRoom[room]===undefined)
                 pathRoom[room]=[];
             socket.join(room);
+            if(userRoom[room]===null||userRoom[room]===undefined){
+                userRoom[room]=[];
+            }
+            userRoom[room].push(data);
+            io.sockets.in(room).emit('userInfo', userRoom[room]);
+            //socket.broadcast.to(room).emit('userInfo', userRoom);
         });
         socket.emit('allPath', pathRoom);
         socket.on('clearAll',function(data,fn){

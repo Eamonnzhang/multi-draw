@@ -6,10 +6,26 @@ var Communication = function(){
 
 };
 
+Communication.prototype.sendAjaxRequest = function(requestType,url,data,dataType,suc_callback){
+    $.ajax({
+        type: requestType,
+        url: url,
+        data: data,
+        dataType: dataType,
+        success: suc_callback
+    });
+};
+
 Communication.prototype.genQueryStrFromObj = function (obj, isWithQuestMark) {
     var parts = [], queryStr = "";
     for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
+            if(obj[key] instanceof Array){
+                if(obj[key][0] instanceof Object){
+                    var objString = JSON.stringify(obj[key]);
+                    obj[key] = objString;
+                }
+            }
             parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
         }
     }
@@ -37,11 +53,10 @@ Communication.prototype.genQueryStrFromObjs = function (obj, isWithQuestMark) {
 };
 
 Communication.prototype.savaData = function(data,next){
-    console.log(data);
-  new mxXmlRequest('/save',this.genQueryStrFromObj(data,false),'post',true).send(function(req){
-      //console.log(req);
-      next();
-  })
+    this.sendAjaxRequest('POST','/save',this.genQueryStrFromObj(data,false),'json',function(res){
+        if(res.success)
+            next(res);
+    });
 };
 
 Communication.prototype.deleteData = function(){

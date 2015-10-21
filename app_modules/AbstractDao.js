@@ -40,5 +40,16 @@ AbstractDao.prototype.findOne = function(data,next){
 
 };
 
+AbstractDao.prototype.updateOneRecord = function(query,update, next) {
+    this.dataCollection.updateOne(query, {
+        $set: update
+    }, function (err, data) {
+        if (err) {
+            next(message.genSimpFailedMsg(err.message, err.stack));
+        } else {
+            next(message.genSimpSuccessMsg(null, data));
+        }
+    });
+};
 
 module.exports = AbstractDao;

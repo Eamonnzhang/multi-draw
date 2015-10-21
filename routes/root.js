@@ -7,10 +7,15 @@ var message = require('../app_modules/_utils/messageGenerator.js');
 module.exports = function(app){
     app.get('/',function(req,res){
         if (req.session.userData) {
-            res.render('app', {
-                userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
-                apiKey: req.session.userData.apiKey,title:'MultiDraw'
-            });
+            if(req.query.room){
+                res.render('app', {
+                    userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
+                    userId: req.session.userData.id,
+                    apiKey: req.session.userData.apiKey,title:'MultiDraw'
+                });
+            }else{
+                res.redirect('/start');
+            }
         }else{
             res.redirect('/login');
         }
@@ -26,6 +31,12 @@ module.exports = function(app){
 
     app.post('/loginHandle',function(req,res){
         userController.isExist(req,res);
+    });
+
+    app.get('/logout', function (req, res) {
+        delete req.session.userData;
+        userController.removeUserApi(req);
+        res.redirect('/');
     });
 
     app.get('/users',function(req,res){

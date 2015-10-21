@@ -6,9 +6,13 @@
     var doc = $(document);
     var url = 'http://192.168.1.81:4500';
     var drawing = false;
-    var isFirstMove = true;
+    var isFirstDraw = false;
     var socket = io.connect(url);
     var roomId = decodeURI(urlParams(window.location.href)['room']);
+    var onlineUsers = null;
+    var canvasData = {};
+    canvasData.pathData = [];
+    canvasData.usersId = [];
     var drawingModeEl = _('drawing-mode'),
         drawingOptionsEl = _('drawing-mode-options'),
         drawingColorEl = _('drawing-color'),
@@ -36,13 +40,17 @@
         else{
             canvas.setWidth($(window).width()-60);
         }
-        canvas.setHeight(window.innerHeight-185);
+        canvas.setHeight(window.innerHeight-210);
     }
     resizeCanvas();
     fabric.Object.prototype.transparentCorners = false;
     var pathToSerializable = function(data,id){
         var option={};
         option.id=id;
+        option.userId = userId;
+        option.userName = userName;
+        option.createTime = new Date();
+        option.lastModify = option.createTime;
         option.path = data.path;
         option.stroke = data.stroke;
         option.strokeWidth = data.strokeWidth;
@@ -82,7 +90,11 @@
     };
 
     if(roomId){
-        socket.emit('room', roomId);
+        var userInfo = {};
+        userInfo.roomId = roomId;
+        userInfo.userId = apiKey;
+        userInfo.userName = userName;
+        socket.emit('room', userInfo);
         roomDiv.innerHTML='房间：'+roomId;
     }
 
@@ -98,28 +110,25 @@
     };
 //testbutton
     test.onclick = function(){
-        //if(canvas.getActiveObject()){
-        //    console.log(canvas.getActiveObject().toObject());
-        //    //canvas.add(canvas.getActiveObject().toObject());
-        //}
         var obj = canvas.getActiveGroup();
-        //var obj = canvas.getObjects();
-        //console.log(obj);
         obj.forEachObject(function(x){
-            //x.selectable=false;
             x.selectable  = false;
         });
         //canvas.setActiveObject(canvas.item(0));
         //canvas.setActiveGroup();
-
     };
 
     if(roomId){
         socket.on('allPath',function(data){
             if(data[roomId]){
                 data[roomId].forEach(function(x){
+                    canvasData.pathData.push(x);
+                    if(canvasData.usersId.indexOf(x.userId) === -1){
+                        canvasData.usersId.push(x.userId);
+                    }
                     canvas.add(new fabric.Path(x.path,x));
                 });
+                console.log(canvasData);
             }
         });
     }
@@ -129,6 +138,11 @@
         var id = generateId(8,32);
         path.id=id;
         var data = pathToSerializable(path,id);
+        canvasData.pathData.push(data);
+        if(canvasData.usersId.indexOf(data.userId) === -1){
+            canvasData.usersId.push(data.userId);
+        }
+        console.log(canvasData);
         socket.emit('path', data);
     });
     var isMouseDown = false;
@@ -237,6 +251,12 @@
         })
     });
 
+    socket.on('userInfo',function(data){
+        if(data){
+                //console.log(data);
+        }
+    });
+
     socket.on('stateChange',function(data){
         canvas.deactivateAll();
         var myObjArr = getMyObjArr(canvas.getObjects());
@@ -276,6 +296,7 @@
 
     socket.on('clearAll',function(data){
         if(data == 'clearAll'){
+            canvasData.pathData = [];
             canvas.clear();
         }
     });
@@ -287,21 +308,42 @@
                 canvas.remove(a);
             }
         });
+        for(var i =0;i<canvasData.pathData.length;i++) {
+            if (idArr.indexOf(canvasData.pathData[i].id) !== -1) {
+                canvasData.pathData.splice(i, 1);
+                i--;
+            }
+        }
     });
+
+    socket.on('path',function(data){
+        canvasData.pathData.push(data);
+        if(canvasData.usersId.indexOf(data.userId) === -1){
+            canvasData.usersId.push(data.userId);
+        }
+        console.log(canvasData);
+        canvas.add(new fabric.Path(data.path,data));
+    });
+
+    saveBtn.onclick = function () {
+
+    };
 
     confirmSaveBtn.onclick = function(){
         //prompt('请输入文件名');
         var fileName = _('filename').value;
-        var data ={};
-        data.fileName =fileName;
-        //console.log(data);
-        communication.savaData(data,function(){
+        canvasData.fileName = fileName;
+        if(canvasData.id){
+            canvasData.isSaveNew = false;
+        }else{
+            canvasData.isSaveNew = true;
+        }
+        communication.savaData(canvasData,function(data){
+            console.log(data);
         });
     };
 
-    socket.on('path',function(data){
-        canvas.add(new fabric.Path(data.path,data));
-    });
+
 
     clearEl.onclick = function() {
         var idArr = [];
@@ -316,6 +358,12 @@
         //var id = canvas.getActiveObject().id;
         //console.log(idArr);
         socket.emit('clearSelected',idArr,function(){
+            for(var i =0;i<canvasData.pathData.length;i++) {
+                if (idArr.indexOf(canvasData.pathData[i].id) !== -1) {
+                    canvasData.pathData.splice(i, 1);
+                    i--;
+                }
+            }
             if (canvas.getActiveGroup()) {
                 canvas.getActiveGroup().forEachObject(function(a) {
                     canvas.remove(a);
@@ -334,23 +382,21 @@
         });
     };
 
-    drawingModeEl.onclick = function() {
+    drawingModeEl.onclick =  function() {
         canvas.isDrawingMode = !canvas.isDrawingMode;
         if (canvas.isDrawingMode) {
             drawingModeEl.innerHTML = '进入编辑模式';
             drawingModeEl.setAttribute('class','btn btn-default');
             consoleInfo.setAttribute('disabled','disabled');
-            //clearE2.setAttribute('disabled','disabled');
             clearEl.setAttribute('disabled','disabled');
-            drawingOptionsEl.style.display = '';
+            drawingOptionsEl.setAttribute('style','display: ');
         }
         else {
             drawingModeEl.innerHTML = '进入绘画模式';
             drawingModeEl.setAttribute('class','btn btn-info');
             consoleInfo.removeAttribute('disabled');
-            //clearE2.removeAttribute('disabled');
             clearEl.removeAttribute('disabled');
-            drawingOptionsEl.style.display = 'none';
+            drawingOptionsEl.setAttribute('style','display:none');
         }
     };
 
@@ -436,7 +482,7 @@
         texturePatternBrush.source = img;
     }
 
-    $('drawing-mode-selector').onchange = function() {
+    _('drawing-mode-selector').onchange = function() {
 
         if (this.value === 'hline') {
             canvas.freeDrawingBrush = vLinePatternBrush;
