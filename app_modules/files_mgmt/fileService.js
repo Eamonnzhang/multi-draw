@@ -25,3 +25,19 @@ exports.update = function(query,updateData,next){
         }
     });
 };
+
+exports.loadAllFiles= function(user,next){
+    fileDao.loadAllFileUnderAccount(user, function (data) {
+        if(data){
+            next(data);
+        }
+    });
+};
+
+exports.loadFile= function(id,user,next){
+    fileDao.loadFileByIdUnderAccount(id,user, function (data) {
+        if(data){
+            next(data);
+        }
+    });
+};

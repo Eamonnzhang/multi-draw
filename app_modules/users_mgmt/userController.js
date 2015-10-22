@@ -15,7 +15,7 @@ exports.addUser = function (user, req, res) {
 exports.isExist = function(req,res){
     var username = req.body.username;
     var password = req.body.password;
-    console.log('')
+    //console.log('')
     userService.isExist(username, password, function (message) {
         //console.log(data);
         if (message.success === true) {
@@ -33,6 +33,10 @@ exports.isExist = function(req,res){
     });
 };
 
+exports.getUserApi = function () {
+    return api;
+};
+
 exports.removeUserApi = function (req) {
     var apiKey = req.param('apiKey');
     console.log(apiKey);
@@ -48,3 +52,5 @@ exports.removeUserApi = function (req) {
     }
     api.pop();
 };
+
+

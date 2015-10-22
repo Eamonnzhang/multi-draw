@@ -39,6 +39,8 @@ module.exports = function(app){
         res.redirect('/');
     });
 
+
+
     app.get('/users',function(req,res){
 
     });
@@ -61,6 +63,15 @@ module.exports = function(app){
 
     app.post('/save',function(req,res){
         fileController.save(req,res);
+    });
+
+    app.get('/loadAllFiles',function(req,res){
+        fileController.loadAllFiles(req,res);
+    });
+
+    app.get('/loadAllFiles',function(req,res){
+        var userApi = userController.getUserApi();
+        fileController.loadFile(userApi,req,res);
     });
 
     // catch 404 and forward to error handler

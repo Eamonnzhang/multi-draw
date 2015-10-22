@@ -1,94 +1,33 @@
 /**
  * Created by Eamonn on 2015/9/26.
  */
-(function() {
-    var _ = function(id){return document.getElementById(id)};
-    var doc = $(document);
-    var url = 'http://192.168.1.81:4500';
-    var drawing = false;
-    var isFirstDraw = false;
-    var socket = io.connect(url);
-    var roomId = decodeURI(urlParams(window.location.href)['room']);
-    var onlineUsers = null;
-    var canvasData = {};
-    canvasData.pathData = [];
-    canvasData.usersId = [];
+var EditBoard = function (callback){
+    var socket = io.connect('http://192.168.1.81:4500');
+    var roomId = decodeURI(Utils.urlParams(window.location.href)['room']);
     var drawingModeEl = _('drawing-mode'),
-        drawingOptionsEl = _('drawing-mode-options'),
-        drawingColorEl = _('drawing-color'),
-        drawingShadowColorEl = _('drawing-shadow-color'),
-        drawingLineWidthEl = _('drawing-line-width'),
-        drawingShadowWidth = _('drawing-shadow-width'),
-        drawingShadowOffset = _('drawing-shadow-offset'),
         clearEl = _('clear-selected-canvas'),
-        consoleInfo = _('console-info'),
+        clearAllEl = _('clear-all-canvas'),
         test = _('test'),
         roomDiv = _('roomId'),
-        deleteBtn = _('delete'),
-        saveBtn = _('save'),
+        deleteBtn= _('delete'),
         confirmSaveBtn = _('confirmSave'),
-        clearAllEl = _('clear-all-canvas');
-    var communication = new Communication();
+        saveBtn = _('save'),
+        consoleInfo = _('console-info'),
+        drawingOptionsEl= _('drawing-mode-options');
+    this.__drawingColorEl= _('drawing-color');
+    this.__drawingShadowColorEl= _('drawing-shadow-color');
+    this.__drawingLineWidthEl= _('drawing-line-width');
+    this.__drawingShadowWidth= _('drawing-shadow-width');
+    this.__drawingShadowOffset= _('drawing-shadow-offset');
+    this.communication = new Communication();
+    this.serializeShapes = new SerializeShapes();
     var canvas = this.__canvas = new fabric.Canvas('c', {
         isDrawingMode: true
     });
-    window.onresize=resizeCanvas;
-    function resizeCanvas(){
-        if ($(window).width() > 768){
-            canvas.setWidth($(window).width()-$("#sidebar-collapse").width()-60);
-        }
-        else{
-            canvas.setWidth($(window).width()-60);
-        }
-        canvas.setHeight(window.innerHeight-210);
-    }
-    resizeCanvas();
+    var configBoard = new ConfigBoard(this);
+    window.onresize = configBoard.resizeCanvas;
+    configBoard.resizeCanvas();
     fabric.Object.prototype.transparentCorners = false;
-    var pathToSerializable = function(data,id){
-        var option={};
-        option.id=id;
-        option.userId = userId;
-        option.userName = userName;
-        option.createTime = new Date();
-        option.lastModify = option.createTime;
-        option.path = data.path;
-        option.stroke = data.stroke;
-        option.strokeWidth = data.strokeWidth;
-        option.strokeLineCap = data.strokeLineCap;
-        option.strokeLineJoin = data.strokeLineJoin;
-        option.originX = data.originX;
-        option.originY = data.originY;
-        option.fill = data.fill;
-        return option;
-    };
-    var groupToSerializable = function(group){
-        var obj={};
-        var objArr = [];
-        var idArr = [];
-        group.forEachObject(function(x){
-            var path = {
-                id : x.id,
-                left : x.left,
-                top : x.top
-            };
-            objArr.push(path);
-            idArr.push(x.id);
-        });
-        obj.objArr = objArr;
-        obj.idArr = idArr;
-        obj.top = group.top;
-        obj.left = group.left;
-        obj.angle= group.angle;
-        obj.scaleX = group.scaleX;
-        obj.scaleY = group.scaleY;
-        obj.width = group.width;
-        obj.height = group.height;
-        return obj;
-    };
-    var getMyObjArr = function(o_arr){
-        return o_arr.concat('');
-    };
-
     if(roomId){
         var userInfo = {};
         userInfo.roomId = roomId;
@@ -117,7 +56,9 @@
         //canvas.setActiveObject(canvas.item(0));
         //canvas.setActiveGroup();
     };
-
+    var canvasData = {};
+    canvasData.pathData = [];
+    canvasData.usersId = [];
     if(roomId){
         socket.on('allPath',function(data){
             if(data[roomId]){
@@ -132,19 +73,17 @@
             }
         });
     }
-    canvas.on('path:created',function(e){
-        //console.log(e.path);
+    canvas.on('path:created',Utils.bind(this,function(e){
         var path = e.path;
-        var id = generateId(8,32);
-        path.id=id;
-        var data = pathToSerializable(path,id);
+        var data = this.serializeShapes.serializePath(path);
+        path.id = data.id;
         canvasData.pathData.push(data);
         if(canvasData.usersId.indexOf(data.userId) === -1){
             canvasData.usersId.push(data.userId);
         }
-        console.log(canvasData);
+        //console.log(canvasData);
         socket.emit('path', data);
-    });
+    }));
     var isMouseDown = false;
     canvas.on('mouse:down',function(e){
         //console.log(e);
@@ -154,7 +93,7 @@
         }
     });
 
-    canvas.on('mouse:up',function(e){
+    canvas.on('mouse:up',Utils.bind(this,function(e){
         //console.log(e);
         if(isMouseDown){
             isMouseDown = !isMouseDown;
@@ -174,7 +113,7 @@
                     socket.emit('unlockStates',obj.id);
                 }
                 if(canvas.getActiveGroup()){
-                    var group = groupToSerializable(canvas.getActiveGroup());
+                    var group = this.serializeShapes.serializeGroupOfPath(canvas.getActiveGroup());
                     socket.emit('groupChange',group);
                     socket.emit('unlockState',group.idArr);
                 }
@@ -183,7 +122,7 @@
             }
         }
 
-    });
+    }));
 
     canvas.on('mouse:move',function(e){
         if(isMouseDown&&canvas.getActiveObject()){
@@ -243,7 +182,7 @@
     //});
 
     socket.on('unlockState',function(data){
-        var myObjArr = getMyObjArr(canvas.getObjects());
+        var myObjArr = Utils.cloneArray(canvas.getObjects());
         myObjArr.forEach(function(x){
             if(data.indexOf(x.id)!==-1 ){
                 x.selectable = true;
@@ -259,7 +198,7 @@
 
     socket.on('stateChange',function(data){
         canvas.deactivateAll();
-        var myObjArr = getMyObjArr(canvas.getObjects());
+        var myObjArr = Utils.cloneArray(canvas.getObjects());
         myObjArr.forEach(function(a){
             if(a.id === data.id){
                 //console.log(data);
@@ -275,7 +214,7 @@
     });
 
     socket.on('groupChange',function(group){
-        var myObjArr = getMyObjArr(canvas.getObjects());
+        var myObjArr = Utils.cloneArray(canvas.getObjects());
         var selectObjs = [];
         myObjArr.forEach(function(a){
             if(group.idArr.indexOf(a.id) !== -1){
@@ -302,7 +241,7 @@
     });
 
     socket.on('clearSelected',function(idArr){
-        var myObjArr = getMyObjArr(canvas.getObjects());
+        var myObjArr = Utils.cloneArray(canvas.getObjects());
         myObjArr.forEach(function(a){
             if(idArr.indexOf(a.id)!==-1){
                 canvas.remove(a);
@@ -338,7 +277,7 @@
         }else{
             canvasData.isSaveNew = true;
         }
-        communication.savaData(canvasData,function(data){
+        this.communication.savaData(canvasData,function(data){
             console.log(data);
         });
     };
@@ -378,6 +317,7 @@
 
     clearAllEl.onclick = function() {
         socket.emit('clearAll','clearAll',function(){
+            canvasData.pathData = [];
             canvas.clear();
         });
     };
@@ -399,141 +339,4 @@
             drawingOptionsEl.setAttribute('style','display:none');
         }
     };
-
-    if (fabric.PatternBrush) {
-        var vLinePatternBrush = new fabric.PatternBrush(canvas);
-        vLinePatternBrush.getPatternSrc = function() {
-
-            var patternCanvas = fabric.document.createElement('canvas');
-            patternCanvas.width = patternCanvas.height = 10;
-            var ctx = patternCanvas.getContext('2d');
-
-            ctx.strokeStyle = this.color;
-            ctx.lineWidth = 5;
-            ctx.beginPath();
-            ctx.moveTo(0, 5);
-            ctx.lineTo(10, 5);
-            ctx.closePath();
-            ctx.stroke();
-
-            return patternCanvas;
-        };
-
-        var hLinePatternBrush = new fabric.PatternBrush(canvas);
-        hLinePatternBrush.getPatternSrc = function() {
-
-            var patternCanvas = fabric.document.createElement('canvas');
-            patternCanvas.width = patternCanvas.height = 10;
-            var ctx = patternCanvas.getContext('2d');
-
-            ctx.strokeStyle = this.color;
-            ctx.lineWidth = 5;
-            ctx.beginPath();
-            ctx.moveTo(5, 0);
-            ctx.lineTo(5, 10);
-            ctx.closePath();
-            ctx.stroke();
-
-            return patternCanvas;
-        };
-
-        var squarePatternBrush = new fabric.PatternBrush(canvas);
-        squarePatternBrush.getPatternSrc = function() {
-
-            var squareWidth = 10, squareDistance = 2;
-
-            var patternCanvas = fabric.document.createElement('canvas');
-            patternCanvas.width = patternCanvas.height = squareWidth + squareDistance;
-            var ctx = patternCanvas.getContext('2d');
-
-            ctx.fillStyle = this.color;
-            ctx.fillRect(0, 0, squareWidth, squareWidth);
-
-            return patternCanvas;
-        };
-
-        var diamondPatternBrush = new fabric.PatternBrush(canvas);
-        diamondPatternBrush.getPatternSrc = function() {
-
-            var squareWidth = 10, squareDistance = 5;
-            var patternCanvas = fabric.document.createElement('canvas');
-            var rect = new fabric.Rect({
-                width: squareWidth,
-                height: squareWidth,
-                angle: 45,
-                fill: this.color
-            });
-
-            var canvasWidth = rect.getBoundingRectWidth();
-
-            patternCanvas.width = patternCanvas.height = canvasWidth + squareDistance;
-            rect.set({ left: canvasWidth / 2, top: canvasWidth / 2 });
-
-            var ctx = patternCanvas.getContext('2d');
-            rect.render(ctx);
-
-            return patternCanvas;
-        };
-
-        var img = new Image();
-        img.src = '/images/bg.png';
-
-        var texturePatternBrush = new fabric.PatternBrush(canvas);
-        texturePatternBrush.source = img;
-    }
-
-    _('drawing-mode-selector').onchange = function() {
-
-        if (this.value === 'hline') {
-            canvas.freeDrawingBrush = vLinePatternBrush;
-        }
-        else if (this.value === 'vline') {
-            canvas.freeDrawingBrush = hLinePatternBrush;
-        }
-        else if (this.value === 'square') {
-            canvas.freeDrawingBrush = squarePatternBrush;
-        }
-        else if (this.value === 'diamond') {
-            canvas.freeDrawingBrush = diamondPatternBrush;
-        }
-        else if (this.value === 'texture') {
-            canvas.freeDrawingBrush = texturePatternBrush;
-        }
-        else {
-            canvas.freeDrawingBrush = new fabric[this.value + 'Brush'](canvas);
-        }
-
-        if (canvas.freeDrawingBrush) {
-            canvas.freeDrawingBrush.color = drawingColorEl.value;
-            canvas.freeDrawingBrush.width = parseInt(drawingLineWidthEl.value, 10) || 1;
-            canvas.freeDrawingBrush.shadowBlur = parseInt(drawingShadowWidth.value, 10) || 0;
-        }
-    };
-
-    drawingColorEl.onchange = function() {
-        canvas.freeDrawingBrush.color = this.value;
-    };
-    drawingShadowColorEl.onchange = function() {
-        canvas.freeDrawingBrush.shadowColor = this.value;
-    };
-    drawingLineWidthEl.onchange = function() {
-        canvas.freeDrawingBrush.width = parseInt(this.value, 10) || 1;
-        this.previousSibling.innerHTML = this.value;
-    };
-    drawingShadowWidth.onchange = function() {
-        canvas.freeDrawingBrush.shadowBlur = parseInt(this.value, 10) || 0;
-        this.previousSibling.innerHTML = this.value;
-    };
-    drawingShadowOffset.onchange = function() {
-        canvas.freeDrawingBrush.shadowOffsetX =
-            canvas.freeDrawingBrush.shadowOffsetY = parseInt(this.value, 10) || 0;
-        this.previousSibling.innerHTML = this.value;
-    };
-
-    if (canvas.freeDrawingBrush) {
-        canvas.freeDrawingBrush.color = drawingColorEl.value;
-        canvas.freeDrawingBrush.width = parseInt(drawingLineWidthEl.value, 10) || 1;
-        canvas.freeDrawingBrush.shadowBlur = 0;
-    }
-
-})();
+};

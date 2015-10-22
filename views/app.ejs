@@ -297,7 +297,6 @@
         var apiKey='<%= apiKey%>';
         var userName ='<%= userName%>';
         var userId ='<%= userId%>';
-//		console.log(apikey);
 	</script>
 	<script src='/app_3th_js/jquery-1.11.3.min.js'></script>
 	<script src='/app_3th_js/bootstrap.js'></script>
@@ -305,7 +304,9 @@
 	<script src='/app_3th_js/fabric.min.js'></script>
 	<script src='/app_util_js/util.js'></script>
 	<script src='/app_ui_js/Communication.js'></script>
-	<script src='/app_ui_js/freeDraw.js'></script>
+	<script src='/app_ui_js/SerializeShapes.js'></script>
+    <script src='/app_ui_js/ConfigBoard.js'></script>
+    <script src='/app_ui_js/EditBoard.js'></script>
 	<script>
 		!function ($) {
 			$(document).on("click","ul.nav li.parent > a > span.icon", function(){
@@ -321,6 +322,8 @@
 		$(window).on('resize', function () {
 			if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 		});
+        var _ = function(id){return document.getElementById(id)};
+		var editBoard = new EditBoard();
 	</script>
 </body>
 
