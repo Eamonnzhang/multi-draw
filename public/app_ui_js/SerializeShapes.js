@@ -9,7 +9,7 @@ SerializeShapes.prototype.prepareSerialize = function () {
 
 SerializeShapes.prototype.serializePath = function(data){
     var option={};
-    option.id = Utils.generateId(8,32);;
+    option.id = Utils.generateId(8,32);
     option.userId = userId;
     option.userName = userName;
     option.createTime = new Date();

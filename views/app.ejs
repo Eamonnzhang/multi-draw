@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="kitchensink">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><%= title %></title>
 <link href="/css/bootstrap.min.css" rel="stylesheet">
 <link href="/css/styles.css" rel="stylesheet">
+<link href="/css/kitchensink.css" rel="stylesheet">
 <!--[if lt IE 9]>
 <script src="/app_3th_js/html5shiv.js"></script>
 <script src="/app_3th_js/respond.min.js"></script>
 <![endif]-->
 </head>
 <body>
+
+<div id="bd-wrapper" ng-controller="CanvasControls">
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -65,8 +68,24 @@
 			<li role="presentation" class="divider"></li>
 			<!--<li><a href="login.html"><span class="glyphicon glyphicon-user"></span> Login Page</a></li>-->
 		</ul>
+
         <div id='optionDiv' style=" margin-left: 10px">
-            <div id="drawing-mode-options" style="margin-right: 20px">
+            <p style="font-weight: 700;color: black">添加：</p>
+            <div class="btn-group" role="group" aria-label="..." style="margin-bottom: 10px">
+                <button type="button"  ng-click="addText()" class="btn btn-default"  data-toggle="tooltip" data-placement="left" title="添加文字" ><span class="glyphicon glyphicon-text-size"></span></button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-picture"></span></button>
+                <button type="button" class="btn btn-default"  data-toggle="tooltip" data-placement="left" title="添加视频"><span class="glyphicon glyphicon-facetime-video"></span></button>
+                <ul class="dropdown-menu">
+                    <li type="button" ng-click="addRect()" class="btn" style="margin-left: 16px">矩形</li>
+                    <li type="button" ng-click="addTriangle()" class="btn">三角形</li>
+                    <li type="button" ng-click="addCircle()" class="btn" style="margin-left: 16px">圆形</li>
+                    <li type="button" ng-click="addPolygon()" class="btn">多边形</li>
+                    <li type="button" ng-click="addLine()" class="btn" style="margin-left: 16px">直线</li>
+                    <li type="button" class="btn">自选</li>
+                </ul>
+            </div>
+            <div id="drawing-mode-options" style="display: none">
+                <p style="font-weight: 700;color: black">笔画样式：</p>
                 <label for="drawing-mode-selector">Mode:</label>
                 <select id="drawing-mode-selector">
                     <option>Pencil</option>
@@ -95,8 +114,110 @@
                 <label for="drawing-shadow-offset">Shadow Offset:</label>
                 <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-offset"><br>
             </div>
-            <button id="console-info" class="btn btn-default btn-sm" style="margin-top: 10px" disabled="disabled">Console Info</button>
-            <button id="test" class="btn btn-default btn-sm" style="margin-top: 10px" >test</button><br>
+
+            <!--配置透明度-->
+            <div id="color-opacity-controls" ng-show="canvas.getActiveObject()">
+
+                <label for="opacity">透明度: </label>
+                <input value="100" type="range" bind-value-to="opacity">
+
+                <label for="color">填充色: </label>
+                <input type="color" style="width:40px" bind-value-to="fill">
+            </div><!--配置透明度-->
+
+            <!--编辑文字-->
+            <div id="text-wrapper" style="margin-top: 10px" ng-show="getText()">
+
+                <textarea bind-value-to="text" style="height: 100px;width: 200px"></textarea>
+
+                <div id="text-controls">
+                    <label for="font-family" style="display:inline-block">字体样式:</label>
+                    <select id="font-family" class="btn-object-action" bind-value-to="fontFamily">
+                        <option value="arial">Arial</option>
+                        <option value="helvetica" selected>Helvetica</option>
+                        <option value="myriad pro">Myriad Pro</option>
+                        <option value="delicious">Delicious</option>
+                        <option value="verdana">Verdana</option>
+                        <option value="georgia">Georgia</option>
+                        <option value="courier">Courier</option>
+                        <option value="comic sans ms">Comic Sans MS</option>
+                        <option value="impact">Impact</option>
+                        <option value="monaco">Monaco</option>
+                        <option value="optima">Optima</option>
+                        <option value="hoefler text">Hoefler Text</option>
+                        <option value="plaster">Plaster</option>
+                        <option value="engagement">Engagement</option>
+                    </select>
+                    <br>
+                    <label for="text-align" style="display:inline-block">对齐方式:</label>
+                    <select id="text-align" class="btn-object-action" bind-value-to="textAlign">
+                        <option>左对齐</option>
+                        <option>居中</option>
+                        <option>右对齐</option>
+                        <option>自适应</option>
+                    </select>
+                    <div>
+                        <label for="text-bg-color">背景颜色:</label>
+                        <input type="color" value="" id="text-bg-color" size="10" class="btn-object-action"
+                               bind-value-to="bgColor">
+                    </div>
+                    <div>
+                        <label for="text-lines-bg-color">文本背景颜色:</label>
+                        <input type="color" value="" id="text-lines-bg-color" size="10" class="btn-object-action"
+                               bind-value-to="textBgColor">
+                    </div>
+                    <div>
+                        <label for="text-stroke-color">Stroke color:</label>
+                        <input type="color" value="" id="text-stroke-color" class="btn-object-action"
+                               bind-value-to="strokeColor">
+                    </div>
+                    <div>
+                        <label for="text-stroke-width">Stroke width:</label>
+                        <input type="range" value="1" min="1" max="5" id="text-stroke-width" class="btn-object-action"
+                               bind-value-to="strokeWidth">
+                    </div>
+                    <div>
+                        <label for="text-font-size">字体大小:</label>
+                        <input type="range" value="" min="1" max="120" step="1" id="text-font-size" class="btn-object-action"
+                               bind-value-to="fontSize">
+                    </div>
+                    <div>
+                        <label for="text-line-height">行间距:</label>
+                        <input type="range" value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
+                               bind-value-to="lineHeight">
+                    </div>
+                </div>
+                <div id="text-controls-additional">
+                    <button type="button" class="btn btn-object-action"
+                            ng-click="toggleBold()"
+                            ng-class="{'btn-inverse': isBold()}">
+                        Bold
+                    </button>
+                    <button type="button" class="btn btn-object-action" id="text-cmd-italic"
+                            ng-click="toggleItalic()"
+                            ng-class="{'btn-inverse': isItalic()}">
+                        Italic
+                    </button>
+                    <button type="button" class="btn btn-object-action" id="text-cmd-underline"
+                            ng-click="toggleUnderline()"
+                            ng-class="{'btn-inverse': isUnderline()}">
+                        Underline
+                    </button>
+                    <button type="button" class="btn btn-object-action" id="text-cmd-linethrough"
+                            ng-click="toggleLinethrough()"
+                            ng-class="{'btn-inverse': isLinethrough()}">
+                        Linethrough
+                    </button>
+                    <button type="button" class="btn btn-object-action" id="text-cmd-overline"
+                            ng-click="toggleOverline()"
+                            ng-class="{'btn-inverse': isOverline()}">
+                        Overline
+                    </button>
+                </div>
+            </div>
+        </div><!--编辑文字-->
+            <button id="console-info" class="btn btn-default btn-sm" disabled="disabled">Console Info</button>
+            <button id="test" class="btn btn-default btn-sm">test</button><br>
         </div>
 	</div><!--/.sidebar-->
 		
@@ -113,168 +234,22 @@
 			<div class="col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-                        <button id="drawing-mode" class="btn btn-default">进入编辑模式</button>
-                        <button id="clear-selected-canvas" class="btn btn-warning" disabled="disabled" >清除选中</button>
+                        <button id="drawing-mode" class="btn btn-primary">进入绘画模式</button>
+                        <button id="clear-selected-canvas" class="btn btn-warning">清除选中</button>
 						<button id="delete" class="btn btn-danger" style="float:right;margin-top: 5px">删除</button>
                         <button id="save" class="btn btn-primary"  data-toggle="modal" data-target="#myModal" style="float:right;margin-top: 5px;margin-right: 5px">保存</button>
 						<button id="clear-all-canvas" class="btn btn-warning" style="float:right;margin-top: 5px;margin-right: 5px">清空</button>
                     </div>
 					<div class="panel-body">
-						<div class="canvas-wrapper" style="border: solid 1px;">
+                        <div class="canvas-wrapper" style="border: solid 1px;">
 							<canvas id="c" height="800"></canvas>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div><!--/.row-->
-
-        <!--聊天和待办事项row-->
-		<!--<div class="row">-->
-            <!--&lt;!&ndash;聊天占8列&ndash;&gt;-->
-			<!--<div class="col-md-8">-->
-				<!--<div class="panel panel-default chat">-->
-					<!--<div class="panel-heading" id="accordion"><span class="glyphicon glyphicon-comment"></span> 聊天</div>-->
-					<!--<div class="panel-body">-->
-						<!--<ul>-->
-							<!--<li class="left clearfix">-->
-								<!--<span class="chat-img pull-left">-->
-									<!--<img src="http://placehold.it/80/30a5ff/fff" alt="User Avatar" class="img-circle" />-->
-								<!--</span>-->
-								<!--<div class="chat-body clearfix">-->
-									<!--<div class="header">-->
-										<!--<strong class="primary-font">John Doe</strong> <small class="text-muted">32 mins ago</small>-->
-									<!--</div>-->
-									<!--<p>-->
-										<!--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, rutrum ut ullamcorper sed, dapibus ac nunc. Vivamus luctus convallis mauris, eu gravida tortor aliquam ultricies.-->
-									<!--</p>-->
-								<!--</div>-->
-							<!--</li>-->
-							<!--<li class="right clearfix">-->
-								<!--<span class="chat-img pull-right">-->
-									<!--<img src="http://placehold.it/80/dde0e6/5f6468" alt="User Avatar" class="img-circle" />-->
-								<!--</span>-->
-								<!--<div class="chat-body clearfix">-->
-									<!--<div class="header">-->
-										<!--<strong class="pull-left primary-font">Jane Doe</strong> <small class="text-muted">6 mins ago</small>-->
-									<!--</div>-->
-									<!--<p>-->
-										<!--Mauris dignissim porta enim, sed commodo sem blandit non. Ut scelerisque sapien eu mauris faucibus ultrices. Nulla ac odio nisl. Proin est metus, interdum scelerisque quam eu, eleifend pretium nunc. Suspendisse finibus auctor lectus, eu interdum sapien.-->
-									<!--</p>-->
-								<!--</div>-->
-							<!--</li>-->
-							<!--<li class="left clearfix">-->
-								<!--<span class="chat-img pull-left">-->
-									<!--<img src="http://placehold.it/80/30a5ff/fff" alt="User Avatar" class="img-circle" />-->
-								<!--</span>-->
-								<!--<div class="chat-body clearfix">-->
-									<!--<div class="header">-->
-										<!--<strong class="primary-font">John Doe</strong> <small class="text-muted">32 mins ago</small>-->
-									<!--</div>-->
-									<!--<p>-->
-										<!--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, rutrum ut ullamcorper sed, dapibus ac nunc. Vivamus luctus convallis mauris, eu gravida tortor aliquam ultricies.-->
-									<!--</p>-->
-								<!--</div>-->
-							<!--</li>-->
-						<!--</ul>-->
-					<!--</div>-->
-
-					<!--<div class="panel-footer">-->
-						<!--<div class="input-group">-->
-							<!--<input id="btn-input" type="text" class="form-control input-md" placeholder="Type your message here..." />-->
-							<!--<span class="input-group-btn">-->
-								<!--<button class="btn btn-success btn-md" id="btn-chat">Send</button>-->
-							<!--</span>-->
-						<!--</div>-->
-					<!--</div>-->
-				<!--</div>-->
-			<!--</div>&lt;!&ndash;/.col&ndash;&gt;-->
-			<!--&lt;!&ndash;待办占4列&ndash;&gt;-->
-			<!--<div class="col-md-4">-->
-				<!--<div class="panel panel-blue">-->
-					<!--<div class="panel-heading dark-overlay"><span class="glyphicon glyphicon-check"></span>待办事项</div>-->
-					<!--<div class="panel-body">-->
-						<!--<ul class="todo-list">-->
-                            <!--<li class="todo-list-item">-->
-                                <!--<div class="checkbox">-->
-                                    <!--<input type="checkbox" id="checkbox" />-->
-                                    <!--<label for="checkbox">Make a plan for today</label>-->
-                                <!--</div>-->
-                                <!--<div class="pull-right action-buttons">-->
-                                    <!--<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>-->
-                                    <!--<a href="#" class="flag"><span class="glyphicon glyphicon-flag"></span></a>-->
-                                    <!--<a href="#" class="trash"><span class="glyphicon glyphicon-trash"></span></a>-->
-                                <!--</div>-->
-                            <!--</li>-->
-							<!--<li class="todo-list-item">-->
-								<!--<div class="checkbox">-->
-									<!--<input type="checkbox" id="checkbox" />-->
-									<!--<label for="checkbox">Update Basecamp</label>-->
-								<!--</div>-->
-								<!--<div class="pull-right action-buttons">-->
-									<!--<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>-->
-									<!--<a href="#" class="flag"><span class="glyphicon glyphicon-flag"></span></a>-->
-									<!--<a href="#" class="trash"><span class="glyphicon glyphicon-trash"></span></a>-->
-								<!--</div>-->
-							<!--</li>-->
-							<!--<li class="todo-list-item">-->
-								<!--<div class="checkbox">-->
-									<!--<input type="checkbox" id="checkbox" />-->
-									<!--<label for="checkbox">Send email to Jane</label>-->
-								<!--</div>-->
-								<!--<div class="pull-right action-buttons">-->
-									<!--<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>-->
-									<!--<a href="#" class="flag"><span class="glyphicon glyphicon-flag"></span></a>-->
-									<!--<a href="#" class="trash"><span class="glyphicon glyphicon-trash"></span></a>-->
-								<!--</div>-->
-							<!--</li>-->
-							<!--<li class="todo-list-item">-->
-								<!--<div class="checkbox">-->
-									<!--<input type="checkbox" id="checkbox" />-->
-									<!--<label for="checkbox">Drink coffee</label>-->
-								<!--</div>-->
-								<!--<div class="pull-right action-buttons">-->
-									<!--<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>-->
-									<!--<a href="#" class="flag"><span class="glyphicon glyphicon-flag"></span></a>-->
-									<!--<a href="#" class="trash"><span class="glyphicon glyphicon-trash"></span></a>-->
-								<!--</div>-->
-							<!--</li>-->
-							<!--<li class="todo-list-item">-->
-								<!--<div class="checkbox">-->
-									<!--<input type="checkbox" id="checkbox" />-->
-									<!--<label for="checkbox">Do some work</label>-->
-								<!--</div>-->
-								<!--<div class="pull-right action-buttons">-->
-									<!--<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>-->
-									<!--<a href="#" class="flag"><span class="glyphicon glyphicon-flag"></span></a>-->
-									<!--<a href="#" class="trash"><span class="glyphicon glyphicon-trash"></span></a>-->
-								<!--</div>-->
-							<!--</li>-->
-							<!--<li class="todo-list-item">-->
-								<!--<div class="checkbox">-->
-									<!--<input type="checkbox" id="checkbox" />-->
-									<!--<label for="checkbox">Tidy up workspace</label>-->
-								<!--</div>-->
-								<!--<div class="pull-right action-buttons">-->
-									<!--<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>-->
-									<!--<a href="#" class="flag"><span class="glyphicon glyphicon-flag"></span></a>-->
-									<!--<a href="#" class="trash"><span class="glyphicon glyphicon-trash"></span></a>-->
-								<!--</div>-->
-							<!--</li>-->
-						<!--</ul>-->
-					<!--</div>-->
-					<!--<div class="panel-footer">-->
-						<!--<div class="input-group">-->
-							<!--<input id="btn-input" type="text" class="form-control input-md" placeholder="Add new task" />-->
-							<!--<span class="input-group-btn">-->
-								<!--<button class="btn btn-primary btn-md" id="btn-todo">Add</button>-->
-							<!--</span>-->
-						<!--</div>-->
-					<!--</div>-->
-				<!--</div>-->
-			<!--</div>&lt;!&ndash;/.col&ndash;&gt;-->
-		<!--</div>&lt;!&ndash;/.row&ndash;&gt;-->
-        <!--聊天和待办事项row结束-->
 	</div>	<!--/.main-->
+
     <!-- Modal -->
     <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-sm" role="document">
@@ -298,10 +273,14 @@
         var userName ='<%= userName%>';
         var userId ='<%= userId%>';
 	</script>
+
 	<script src='/app_3th_js/jquery-1.11.3.min.js'></script>
+	<script src='/app_3th_js/angular.min.js'></script>
 	<script src='/app_3th_js/bootstrap.js'></script>
 	<script src='/socket.io/socket.io.js'></script>
 	<script src='/app_3th_js/fabric.min.js'></script>
+    <script src="/app_ui_js/utils.js"></script>
+    <script src="/app_ui_js/app_config.js"></script>
 	<script src='/app_util_js/util.js'></script>
 	<script src='/app_ui_js/Communication.js'></script>
 	<script src='/app_ui_js/SerializeShapes.js'></script>
@@ -324,7 +303,11 @@
 		});
         var _ = function(id){return document.getElementById(id)};
 		var editBoard = new EditBoard();
+        var canvas = editBoard.__canvas;
 	</script>
+    <script src="/app_ui_js/controller.js"></script>
+
+</div>
 </body>
 
 </html>

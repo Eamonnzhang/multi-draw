@@ -52,13 +52,18 @@ Communication.prototype.genQueryStrFromObjs = function (obj, isWithQuestMark) {
     return queryStr;
 };
 
-Communication.prototype.savaData = function(data,next){
-    this.sendAjaxRequest('POST','/save',this.genQueryStrFromObj(data,false),'json',function(res){
+Communication.prototype.saveFile = function(data,next){
+    this.sendAjaxRequest('POST','/saveFile',this.genQueryStrFromObj(data,false),'json',function(res){
         if(res.success)
             next(res);
     });
 };
 
-Communication.prototype.deleteData = function(){
 
+Communication.prototype.loadFile = function(data,next){
+    this.sendAjaxRequest('GET','/loadFile'+this.genQueryStrFromObj(data),null,'json',function(res){
+        if(res.success){
+            next(res.data);
+        }
+    });
 };

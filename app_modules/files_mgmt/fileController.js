@@ -4,7 +4,7 @@
 var fileService = require('./fileService.js');
 
 exports.save = function(req,res){
-    console.log(req.body);
+    //console.log(req.body);
     var id = req.body.id;
     var fileName = req.body.fileName;
     var usersId = req.body.usersId;

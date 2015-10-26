@@ -61,7 +61,7 @@ module.exports = function(app){
 
     });
 
-    app.post('/save',function(req,res){
+    app.post('/saveFile',function(req,res){
         fileController.save(req,res);
     });
 
@@ -69,7 +69,7 @@ module.exports = function(app){
         fileController.loadAllFiles(req,res);
     });
 
-    app.get('/loadAllFiles',function(req,res){
+    app.get('/loadFile',function(req,res){
         var userApi = userController.getUserApi();
         fileController.loadFile(userApi,req,res);
     });

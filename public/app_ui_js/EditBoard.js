@@ -13,6 +13,7 @@ var EditBoard = function (callback){
         confirmSaveBtn = _('confirmSave'),
         saveBtn = _('save'),
         consoleInfo = _('console-info'),
+        textWrapper = _('text-wrapper'),
         drawingOptionsEl= _('drawing-mode-options');
     this.__drawingColorEl= _('drawing-color');
     this.__drawingShadowColorEl= _('drawing-shadow-color');
@@ -21,13 +22,20 @@ var EditBoard = function (callback){
     this.__drawingShadowOffset= _('drawing-shadow-offset');
     this.communication = new Communication();
     this.serializeShapes = new SerializeShapes();
+    var kitchensink = { };
     var canvas = this.__canvas = new fabric.Canvas('c', {
-        isDrawingMode: true
+        isDrawingMode: false
     });
     var configBoard = new ConfigBoard(this);
     window.onresize = configBoard.resizeCanvas;
     configBoard.resizeCanvas();
     fabric.Object.prototype.transparentCorners = false;
+
+
+    var canvasData = {};
+    canvasData.pathData = [];
+    canvasData.usersId = [];
+
     if(roomId){
         var userInfo = {};
         userInfo.roomId = roomId;
@@ -35,31 +43,6 @@ var EditBoard = function (callback){
         userInfo.userName = userName;
         socket.emit('room', userInfo);
         roomDiv.innerHTML='房间：'+roomId;
-    }
-
-    consoleInfo.onclick = function(){
-        if(canvas.getActiveObject()){
-            console.log(canvas.getActiveObject());
-        }
-        if(canvas.getActiveGroup()){
-            canvas.getActiveGroup().forEachObject(function(a) {
-                console.log(a);
-            });
-        }
-    };
-//testbutton
-    test.onclick = function(){
-        var obj = canvas.getActiveGroup();
-        obj.forEachObject(function(x){
-            x.selectable  = false;
-        });
-        //canvas.setActiveObject(canvas.item(0));
-        //canvas.setActiveGroup();
-    };
-    var canvasData = {};
-    canvasData.pathData = [];
-    canvasData.usersId = [];
-    if(roomId){
         socket.on('allPath',function(data){
             if(data[roomId]){
                 data[roomId].forEach(function(x){
@@ -88,9 +71,6 @@ var EditBoard = function (callback){
     canvas.on('mouse:down',function(e){
         //console.log(e);
         isMouseDown = true;
-        if(e.target){
-
-        }
     });
 
     canvas.on('mouse:up',Utils.bind(this,function(e){
@@ -127,9 +107,6 @@ var EditBoard = function (callback){
     canvas.on('mouse:move',function(e){
         if(isMouseDown&&canvas.getActiveObject()){
             //console.log(e);
-        }
-        if(e.target){
-
         }
     });
 
@@ -192,7 +169,7 @@ var EditBoard = function (callback){
 
     socket.on('userInfo',function(data){
         if(data){
-                //console.log(data);
+
         }
     });
 
@@ -201,7 +178,6 @@ var EditBoard = function (callback){
         var myObjArr = Utils.cloneArray(canvas.getObjects());
         myObjArr.forEach(function(a){
             if(a.id === data.id){
-                //console.log(data);
                 a.setTop(data.top);
                 a.setLeft(data.left);
                 a.setAngle(data.angle);
@@ -268,7 +244,7 @@ var EditBoard = function (callback){
 
     };
 
-    confirmSaveBtn.onclick = function(){
+    confirmSaveBtn.onclick = Utils.bind(this,function(){
         //prompt('请输入文件名');
         var fileName = _('filename').value;
         canvasData.fileName = fileName;
@@ -277,10 +253,10 @@ var EditBoard = function (callback){
         }else{
             canvasData.isSaveNew = true;
         }
-        this.communication.savaData(canvasData,function(data){
+        this.communication.saveFile(canvasData,function(data){
             console.log(data);
         });
-    };
+    });
 
 
 
@@ -325,18 +301,42 @@ var EditBoard = function (callback){
     drawingModeEl.onclick =  function() {
         canvas.isDrawingMode = !canvas.isDrawingMode;
         if (canvas.isDrawingMode) {
-            drawingModeEl.innerHTML = '进入编辑模式';
+            drawingModeEl.innerHTML = '退出绘画模式';
             drawingModeEl.setAttribute('class','btn btn-default');
             consoleInfo.setAttribute('disabled','disabled');
             clearEl.setAttribute('disabled','disabled');
             drawingOptionsEl.setAttribute('style','display: ');
+            textWrapper.setAttribute('style','display:none ');
+
         }
         else {
             drawingModeEl.innerHTML = '进入绘画模式';
-            drawingModeEl.setAttribute('class','btn btn-info');
+            drawingModeEl.setAttribute('class','btn btn-primary');
             consoleInfo.removeAttribute('disabled');
             clearEl.removeAttribute('disabled');
             drawingOptionsEl.setAttribute('style','display:none');
+            textWrapper.setAttribute('style','display: ');
         }
     };
+    consoleInfo.onclick = function(){
+        if(canvas.getActiveObject()){
+            console.log(canvas.getActiveObject());
+        }
+        if(canvas.getActiveGroup()){
+            canvas.getActiveGroup().forEachObject(function(a) {
+                console.log(a);
+            });
+        }
+    };
+
+    test.onclick = function(){
+        var obj = canvas.getActiveGroup();
+        obj.forEachObject(function(x){
+            x.selectable  = false;
+        });
+    };
+};
+
+EditBoard.prototype.init= function () {
+
 };

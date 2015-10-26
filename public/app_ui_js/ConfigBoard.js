@@ -114,8 +114,7 @@ var ConfigBoard = function (editBoard) {
     };
 
     this.editBoard.__drawingColorEl.onchange = function() {
-        var me = this;
-        editBoard.__canvas.freeDrawingBrush.color = me.value;
+        editBoard.__canvas.freeDrawingBrush.color = this.value;
     };
     this.editBoard.__drawingShadowColorEl.onchange = function() {
         editBoard.__canvas.freeDrawingBrush.shadowColor = this.value;
