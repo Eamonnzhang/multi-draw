@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html ng-app="kitchensink">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title><%= title %></title>
-<link href="/css/bootstrap.min.css" rel="stylesheet">
-<link href="/css/styles.css" rel="stylesheet">
-<link href="/css/kitchensink.css" rel="stylesheet">
-<!--[if lt IE 9]>
-<script src="/app_3th_js/html5shiv.js"></script>
-<script src="/app_3th_js/respond.min.js"></script>
-<![endif]-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= title %></title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/app-styles.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="/app_3th_js/html5shiv.js"></script>
+    <script src="/app_3th_js/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
 
@@ -54,7 +54,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="" href="">
+                        <a class="" href="/filelist">
                             <span class="glyphicon glyphicon-open-file"></span> 打开
                         </a>
                     </li>
@@ -128,7 +128,7 @@
             <!--编辑文字-->
             <div id="text-wrapper" style="margin-top: 10px" ng-show="getText()">
 
-                <textarea bind-value-to="text" style="height: 100px;width: 200px"></textarea>
+                <textarea bind-value-to="text" style="height: 100px;"></textarea>
 
                 <div id="text-controls">
                     <label for="font-family" style="display:inline-block">字体样式:</label>
@@ -302,7 +302,18 @@
 			if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 		});
         var _ = function(id){return document.getElementById(id)};
-		var editBoard = new EditBoard();
+        var editBoard = new EditBoard();
+        var urlParams = Utils.urlParams(window.location.href);
+//            console.log(urlParams['id']);
+        if(urlParams['id']){
+            var queryObj = {
+                id: urlParams['id'],
+                userKey: apiKey
+            };
+//            console.log('aa');
+            editBoard.communication.loadFile(queryObj, Utils.bind(editBoard,editBoard.resetBoard));
+        }
+
         var canvas = editBoard.__canvas;
 	</script>
     <script src="/app_ui_js/controller.js"></script>

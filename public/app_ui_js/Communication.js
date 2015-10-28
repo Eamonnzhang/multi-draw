@@ -61,9 +61,7 @@ Communication.prototype.saveFile = function(data,next){
 
 
 Communication.prototype.loadFile = function(data,next){
-    this.sendAjaxRequest('GET','/loadFile'+this.genQueryStrFromObj(data),null,'json',function(res){
-        if(res.success){
-            next(res.data);
-        }
+    this.sendAjaxRequest('GET','/loadFile'+ this.genQueryStrFromObj(data),null,'json',function(res){
+            next(res);
     });
 };

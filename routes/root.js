@@ -7,7 +7,7 @@ var message = require('../app_modules/_utils/messageGenerator.js');
 module.exports = function(app){
     app.get('/',function(req,res){
         if (req.session.userData) {
-            if(req.query.room){
+            if(req.query.room||req.query.fileName){
                 res.render('app', {
                     userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
                     userId: req.session.userData.id,
@@ -27,6 +27,10 @@ module.exports = function(app){
 
     app.get('/login',function(req,res){
         res.render('login',{title:'MultiDraw'});
+    });
+
+    app.get('/filelist',function(req,res){
+        res.render('file_list');
     });
 
     app.post('/loginHandle',function(req,res){

@@ -79,5 +79,19 @@ var Utils = {
 
     cloneArray : function(o_arr){
         return o_arr.concat('');
+    },
+
+    convertJSONToQueryStr: function (obj, isWithQuestMark) {
+        var parts = [], queryStr = "";
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+            }
+        }
+        queryStr = parts.join('&');
+        if (isWithQuestMark === undefined || isWithQuestMark) {
+            queryStr = '?' + queryStr;
+        }
+        return queryStr;
     }
 };

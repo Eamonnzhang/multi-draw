@@ -244,10 +244,9 @@ function addAccessors($scope) {
   };
 
   $scope.addText = function() {
-    var text = 'Lorem ipsum dolor sit amet,\nconsectetur adipisicing elit,\nsed do eiusmod tempor incididunt\nut labore et dolore magna aliqua.\n' +
-      'Ut enim ad minim veniam,\nquis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat.';
+    var text = '点击编辑文字';
 
-    var textSample = new fabric.Text(text.slice(0, getRandomInt(0, text.length)), {
+    var textSample = new fabric.Text(text, {
       left: getRandomInt(350, 400),
       top: getRandomInt(350, 400),
       fontFamily: 'helvetica',
@@ -710,7 +709,7 @@ function addAccessors($scope) {
     canvas.add(iText, iText2);
   }
 
-  addTexts();
+  //addTexts();
 
 
   $scope.getFreeDrawingMode = function() {
@@ -793,16 +792,16 @@ function addAccessors($scope) {
     }
   };
 
-  function initBrushes() {
-    if (!fabric.PatternBrush) return;
-
-    initVLinePatternBrush();
-    initHLinePatternBrush();
-    initSquarePatternBrush();
-    initDiamondPatternBrush();
-    initImagePatternBrush();
-  }
-  initBrushes();
+  //function initBrushes() {
+  //  if (!fabric.PatternBrush) return;
+  //
+  //  initVLinePatternBrush();
+  //  initHLinePatternBrush();
+  //  initSquarePatternBrush();
+  //  initDiamondPatternBrush();
+  //  initImagePatternBrush();
+  //}
+  //initBrushes();
 
   function initImagePatternBrush() {
     var img = new Image();

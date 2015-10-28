@@ -10,6 +10,7 @@ exports.save = function(fileName,usersId,user,pathData,next){
     drawData.fileName = fileName;
     drawData.usersId = usersId;
     drawData.createUserId = user.id;
+    drawData.createUserName = user.name;
     drawData.pathData = pathData;
     fileDao.insertOne(drawData, function (data) {
         if(data){

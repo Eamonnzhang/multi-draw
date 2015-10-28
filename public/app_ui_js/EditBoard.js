@@ -1,7 +1,7 @@
 /**
  * Created by Eamonn on 2015/9/26.
  */
-var EditBoard = function (callback){
+var EditBoard = function (){
     var socket = io.connect('http://192.168.1.81:4500');
     var roomId = decodeURI(Utils.urlParams(window.location.href)['room']);
     var drawingModeEl = _('drawing-mode'),
@@ -248,6 +248,7 @@ var EditBoard = function (callback){
         //prompt('请输入文件名');
         var fileName = _('filename').value;
         canvasData.fileName = fileName;
+        //canvasData.ceateUserName = userName;
         if(canvasData.id){
             canvasData.isSaveNew = false;
         }else{
@@ -337,6 +338,9 @@ var EditBoard = function (callback){
     };
 };
 
-EditBoard.prototype.init= function () {
-
+EditBoard.prototype.resetBoard= function (data) {
+    //console.log(data);
+    data.pathData.forEach(function(x){
+        canvas.add(new fabric.Path(x.path,x));
+    });
 };
