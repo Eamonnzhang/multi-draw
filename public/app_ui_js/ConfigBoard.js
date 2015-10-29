@@ -142,10 +142,10 @@ var ConfigBoard = function (editBoard) {
 
 ConfigBoard.prototype.resizeCanvas = function () {
     if ($(window).width() > 768){
-        this.editBoard.__canvas.setWidth($(window).width()-$("#sidebar-collapse").width()-60);
+            this.editBoard.__canvas.setWidth($(window).width()-$("#optionDiv").width()-$("#controls").width()-90);
     }
     else{
         this.editBoard.__canvas.setWidth($(window).width()-60);
     }
-    this.editBoard.__canvas.setHeight(window.innerHeight-210);
+    this.editBoard.__canvas.setHeight(800);
 };

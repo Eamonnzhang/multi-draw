@@ -521,10 +521,10 @@ a.bg-danger:hover {
 /* Sidebar */
 
 .sidebar {
-	display: block;
+	/*display: block;*/
 	background-color: #fff;
 	padding: 0;
-	display: none;
+	/*display: none;*/
 }
 
 .sidebar form {

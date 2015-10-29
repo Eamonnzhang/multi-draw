@@ -22,10 +22,10 @@ var EditBoard = function (){
     this.__drawingShadowOffset= _('drawing-shadow-offset');
     this.communication = new Communication();
     this.serializeShapes = new SerializeShapes();
-    var kitchensink = { };
     var canvas = this.__canvas = new fabric.Canvas('c', {
         isDrawingMode: false
     });
+    //console.log(canvas);
     var configBoard = new ConfigBoard(this);
     window.onresize = configBoard.resizeCanvas;
     configBoard.resizeCanvas();
@@ -249,7 +249,7 @@ var EditBoard = function (){
         var fileName = _('filename').value;
         canvasData.fileName = fileName;
         //canvasData.ceateUserName = userName;
-        if(canvasData.id){
+        if(Utils.urlParams[window.location.href]['id']){
             canvasData.isSaveNew = false;
         }else{
             canvasData.isSaveNew = true;

@@ -41,7 +41,6 @@ kitchensink.directive('objectButtonsEnabled', function() {
 
     link: function ($scope, $element, $attrs) {
       $scope.$watch($attrs.objectButtonsEnabled, function(newVal) {
-
         $($element).find('.btn-object-action')
           .prop('disabled', !newVal);
       });
