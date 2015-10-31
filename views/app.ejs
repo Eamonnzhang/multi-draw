@@ -4,386 +4,387 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= title %></title>
-    <link href="/css/bootstrap.css" rel="stylesheet">
-    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="/css/font_awesome/font-awesome.css" rel="stylesheet">
+    <!--<link href="/css/styles.css" rel="stylesheet">-->
+    <link href="/css/my-style.css" rel="stylesheet">
     <link href="/css/app-styles.css" rel="stylesheet">
     <!--[if lt IE 9]>
-    <script src="/app_3th_js/html5shiv.js"></script>
-    <script src="/app_3th_js/respond.min.js"></script>
+    <script src="/app_3th_js/forIE/html5shiv.js"></script>
+    <script src="/app_3th_js/forIE/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
 
 <div id="bd-wrapper" ng-controller="CanvasControls">
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container-fluid">
-			<div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href=""><span>Multi</span>Draw</a>
-                <ul class="user-menu" style="float:right">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <ol class="breadcrumb">
+                    <li class="brand-title"><i class="fa fa-paint-brush  fa-lg"></i>&nbsp;MutiDraw</li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">文件<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href=""><span class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;&nbsp;新建</a></li>
+                            <li><a href="/filelist"><span class="glyphicon glyphicon-open-file"></span>&nbsp;&nbsp;&nbsp;打开</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">插入<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-text-size"></span>&nbsp;&nbsp;&nbsp;文字</a></li>
+                            <li><a  href="javascript:void(0)" ng-click="addImage1()" ><span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;&nbsp;图片</a></li>
+                            <li><a  href="javascript:void(0)" ng-click="" ><span class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;&nbsp;视频</a></li>
+                            <li type="button" ng-click="addRect()" class="btn" style="margin-left: 33px">矩形</li>
+                            <li type="button" ng-click="addTriangle()" class="btn" style="margin-left: 33px">三角形</li>
+                            <li type="button" ng-click="addCircle()" class="btn" style="margin-left: 33px">圆形</li>
+                            <li type="button" ng-click="addPolygon()" class="btn" style="margin-left: 33px">多边形</li>
+                            <li type="button" ng-click="addLine()" class="btn" style="margin-left: 33px">直线</li>
+                        </ul>
+                    </li>
                     <li class="dropdown pull-right">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
+                        <a style="line-height: 27px" href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href=""><span class="glyphicon glyphicon-user"></span> Profile</a></li>
                             <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
                             <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                         </ul>
                     </li>
-                </ul>
-                <div id="roomId" style="float: right;height:50px;line-height:50px;color: #30A5FF;margin-right: 10px" ></div>
-            </div>
-		</div><!-- /.container-fluid -->
-	</nav>
-    <!--<div class="row">-->
-
-        <!--<div class="col-md-12 col-lg-12 col-sm-12">-->
-            <!--top bar-->
-        <!--</div>-->
-
-    <!--</div>-->
-    <!--<div class="row">-->
-	<!--<div id="sidebar-collapse" class="col-sm-2 col-lg-2 col-md-2 sidebar">-->
-		<!--<ul class="nav menu">-->
-			<!--&lt;!&ndash;<li class="active"><a href=""><span class="glyphicon glyphicon-dashboard"></span>自由画板</a></li>&ndash;&gt;-->
-
-			<!--<li role="presentation" class="divider"></li>-->
-			<!--&lt;!&ndash;<li><a href="login.html"><span class="glyphicon glyphicon-user"></span> Login Page</a></li>&ndash;&gt;-->
-		<!--</ul>-->
-
-        <!--</div>-->
-        <!--</div>-->
-	<!--/.sidebar-->
-		
-	<!--<div class="col-sm-10 col-sm-offset-2 col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2 ">-->
-	<!--<div class="col-sm-12 col-lg-12  col-md-12 ">-->
-
-		<div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <ol class="breadcrumb">
-                    <li><a href=""><span class="glyphicon glyphicon-home"></span></a></li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">文件<span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href=""><span class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;&nbsp;新建</a></li>
-                            <li><a href="/filelist"><span class="glyphicon glyphicon-open-file"></span>&nbsp;&nbsp;&nbsp;打开</a></li>
-                            <!--<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>-->
-                        </ul>
-                    </li>
-
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">插入<span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-text-size"></span>&nbsp;&nbsp;&nbsp;文字</a></li>
-                            <li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;&nbsp;图片</a></li>
-                            <li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;&nbsp;视频</a></li>
-                            <li type="button" ng-click="addRect()" class="btn" style="margin-left: 16px">矩形</li>
-                            <li type="button" ng-click="addTriangle()" class="btn">三角形</li>
-                            <li type="button" ng-click="addCircle()" class="btn" style="margin-left: 16px">圆形</li>
-                            <li type="button" ng-click="addPolygon()" class="btn">多边形</li>
-                            <li type="button" ng-click="addLine()" class="btn" style="margin-left: 16px">直线</li>
-                        </ul>
-                    </li>
+                    <li id="roomId" style="line-height: 27px; float:right;color:cornflowerblue"></li>
                 </ol>
-		    </div>
+            </div>
         </div><!--/.row-->
-		<div class="row">
-            <div class="col-lg-2 col-md-2 col-sm-3" id="controls">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        控制选项:
+    </nav>
+    <div class="row toolbar">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="btn-group object-controls" object-buttons-enabled="getSelected()" role="group" aria-label="...">
+                <button  id="drawing-mode" type="button" class="btn btn-info">
+                    <i class="fa fa-paint-brush"></i>&nbsp;绘画
+                </button>
+                <button id="save" type="button" class="btn btn-default"  data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-save fa-lg"></i>
+                    &nbsp;保存
+                </button>
+
+                <button id="clear-all-canvas" type="button" class="btn btn-default">
+                    <i class="fa fa-trash-o fa-lg"></i>&nbsp;清空
+                </button>
+                <button id="clear-selected-canvas" type="button" class="btn btn-default">
+                    <i class="fa fa-trash fa-lg"></i>&nbsp;清除选中
+                </button>
+                <!--<button class="btn btn-default btn-lock btn-object-action"-->
+                        <!--ng-click="setHorizontalLock(!getHorizontalLock())"-->
+                        <!--ng-class="{'active': getHorizontalLock()}">-->
+                    <!--&lt;!&ndash;{[ getHorizontalLock() ? <i class="fa fa-trash fa-lg"></i> : '锁定水平方向移动' ]}&ndash;&gt;-->
+                    <!--<i class="fa fa-lock fa-lg"></i>&nbsp;锁定-->
+                <!--</button>-->
+                <!--<button class="btn btn-default btn-lock btn-object-action"-->
+                        <!--ng-click=""-->
+                        <!--ng-class="">-->
+                    <!--&lt;!&ndash;{[ getHorizontalLock() ? <i class="fa fa-trash fa-lg"></i> : '锁定水平方向移动' ]}&ndash;&gt;-->
+                    <!--<i class="fa fa-align-left fa-lg"></i>&nbsp;相对位置-->
+                <!--</button>-->
+                <button id="send-backwards" class="btn btn-default btn-lock btn-object-action"
+                        ng-click="sendBackwards()">
+                    <!--{[ getHorizontalLock() ? <i class="fa fa-trash fa-lg"></i> : '锁定水平方向移动' ]}-->
+                    <i class="fa fa-angle-down fa-lg"></i>&nbsp;下移
+                </button>
+                <button id="send-to-back" class="btn btn-default btn-lock btn-object-action"
+                        ng-click="sendToBack()">
+                    <!--{[ getHorizontalLock() ? <i class="fa fa-trash fa-lg"></i> : '锁定水平方向移动' ]}-->
+                    <i class="fa fa-angle-double-down fa-lg"></i>&nbsp;置底
+                </button>
+                <button id="bring-forward" class="btn btn-default btn-lock btn-object-action"
+                        ng-click="bringForward()">
+                    <!--{[ getHorizontalLock() ? <i class="fa fa-trash fa-lg"></i> : '锁定水平方向移动' ]}-->
+                    <i class="fa fa-angle-up fa-lg"></i>&nbsp;上移
+                </button>
+                <button id="bring-to-front" class="btn btn-default btn-lock btn-object-action"
+                        ng-click="bringToFront()">
+                    <!--{[ getHorizontalLock() ? <i class="fa fa-trash fa-lg"></i> : '锁定水平方向移动' ]}-->
+                    <i class="fa fa-angle-double-up fa-lg"></i>&nbsp;置顶
+                </button>
+                <button id="clip" class="btn btn-default btn-lock btn-object-action"
+                        ng-click="clip()">
+                    <!--{[ getHorizontalLock() ? <i class="fa fa-trash fa-lg"></i> : '锁定水平方向移动' ]}-->
+                    <i class="fa fa-scissors fa-lg"></i>&nbsp;修剪
+                </button>
+
+            </div>
+        </div>
+    </div>
+		<!--<div class="row">-->
+            <!--<div class="col-lg-2 col-md-2 col-sm-3" id="controls">-->
+                <!--<div class="panel panel-default">-->
+                    <!--<div class="panel-heading">-->
+                        <!--控制选项:-->
+                    <!--</div>-->
+                    <!--<div class="panel-body">-->
+                        <!--<div class="object-controls" object-buttons-enabled="getSelected()">-->
+                            <!--<div style="margin-top:10px;">-->
+                                <!--<p>-->
+                                    <!--&lt;!&ndash;<button class="btn btn-danger">清空</button>&ndash;&gt;-->
+
+                                    <!--<button class="btn btn-warning btn-object-action" id="clear-selected-canvas"-->
+                                            <!--ng-click="removeSelected()">-->
+                                        <!--<i class="fa fa-trash"></i> fa-camera-retro-->
+                                    <!--</button>-->
+
+                                <!--</p>-->
+                                <!--<button class="btn btn-warning btn-lock btn-object-action"-->
+                                        <!--ng-click="setHorizontalLock(!getHorizontalLock())"-->
+                                        <!--ng-class="{'active': getHorizontalLock()}">-->
+                                    <!--{[ getHorizontalLock() ?'解锁水平方向移动' : '锁定水平方向移动' ]}-->
+                                <!--</button>-->
+                                <!--<br>-->
+                                <!--<button class="btn btn-warning btn-lock btn-object-action"-->
+                                        <!--ng-click="setVerticalLock(!getVerticalLock())"-->
+                                        <!--ng-class="{'active': getVerticalLock()}">-->
+                                    <!--{[ getVerticalLock() ? '解锁垂直方向移动' : '锁定垂直方向移动' ]}-->
+                                <!--</button>-->
+                                <!--<br>-->
+                                <!--<button class="btn btn-warning btn-lock btn-object-action"-->
+                                        <!--ng-click="setScaleLockX(!getScaleLockX())"-->
+                                        <!--ng-class="{'active': getScaleLockX()}">-->
+                                    <!--{[ getScaleLockX() ? '解锁水平方向放大' : '锁定水平方向放大' ]}-->
+                                <!--</button>-->
+                                <!--<br>-->
+                                <!--<button class="btn btn-warning btn-lock btn-object-action"-->
+                                        <!--ng-click="setScaleLockY(!getScaleLockY())"-->
+                                        <!--ng-class="{'active': getScaleLockY()}">-->
+                                    <!--{[ getScaleLockY() ? '解锁垂直方向放大' : '锁定垂直方向放大' ]}-->
+                                <!--</button>-->
+                                <!--<br>-->
+                                <!--<button class="btn btn-warning btn-lock btn-object-action"-->
+                                        <!--ng-click="setRotationLock(!getRotationLock())"-->
+                                        <!--ng-class="{'active': getRotationLock()}">-->
+                                    <!--{[ getRotationLock() ? '解锁旋转' : '锁定旋转' ]}-->
+                                <!--</button>-->
+                            <!--</div>-->
+
+                            <!--<div style="margin-top:10px">-->
+                                <!--<p>-->
+                                    <!--<span style="margin-right: 10px">Origin X: </span>-->
+                                    <!--<label>-->
+                                        <!--Left-->
+                                        <!--<input type="radio" name="origin-x" class="origin-x btn-object-action" value="left"-->
+                                               <!--bind-value-to="originX">-->
+                                    <!--</label>-->
+                                    <!--<label>-->
+                                        <!--Center-->
+                                        <!--<input type="radio" name="origin-x" class="origin-x btn-object-action" value="center"-->
+                                               <!--bind-value-to="originX">-->
+                                    <!--</label>-->
+                                    <!--<label>-->
+                                        <!--Right-->
+                                        <!--<input type="radio" name="origin-x" class="origin-x btn-object-action" value="right"-->
+                                               <!--bind-value-to="originX">-->
+                                    <!--</label>-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--<span style="margin-right: 10px">Origin Y: </span>-->
+                                    <!--<label>-->
+                                        <!--Top-->
+                                        <!--<input type="radio" name="origin-y" class="origin-y btn-object-action" value="top"-->
+                                               <!--bind-value-to="originY">-->
+                                    <!--</label>-->
+                                    <!--<label>-->
+                                        <!--Center-->
+                                        <!--<input type="radio" name="origin-y" class="origin-y btn-object-action" value="center"-->
+                                               <!--bind-value-to="originY">-->
+                                    <!--</label>-->
+                                    <!--<label>-->
+                                        <!--Bottom-->
+                                        <!--<input type="radio" name="origin-y" class="origin-y btn-object-action" value="bottom"-->
+                                               <!--bind-value-to="originY">-->
+                                    <!--</label>-->
+                                <!--</p>-->
+                            <!--</div>-->
+
+                            <!--<div style="margin-top:10px;">-->
+                                <!--<button id="send-backwards" class="btn btn-info btn-object-action"-->
+                                        <!--ng-click="sendBackwards()">下移</button>-->
+                                <!--<button id="send-to-back" class="btn btn-info btn-object-action"-->
+                                        <!--ng-click="sendToBack()">置于最下层</button>-->
+                            <!--</div>-->
+
+                            <!--<div style="margin-top:4px;">-->
+                                <!--<button id="bring-forward" class="btn btn-info btn-object-action"-->
+                                        <!--ng-click="bringForward()">上移</button>-->
+                                <!--<button id="bring-to-front" class="btn btn-info btn-object-action"-->
+                                        <!--ng-click="bringToFront()">置于最顶层</button>-->
+                            <!--</div>-->
+
+                            <!--<div style="margin-top:10px;">-->
+                                <!--<button id="gradientify" class="btn btn-info btn-object-action" ng-click="gradientify()">-->
+                                    <!--Gradientify-->
+                                <!--</button>-->
+                                <!--<button id="shadowify" class="btn btn-info btn-object-action" ng-click="shadowify()">-->
+                                    <!--Shadowify-->
+                                <!--</button>-->
+                            <!--</div>-->
+                            <!--<div style="margin-top:4px;">-->
+                                <!--<button id="patternify" class="btn btn-info btn-object-action" ng-click="patternify()">-->
+                                    <!--Patternify-->
+                                <!--</button>-->
+                                <!--<button id="clip" class="btn btn-info btn-object-action" ng-click="clip()">-->
+                                    <!--Clip-->
+                                <!--</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+    <div  id="controls" class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="margin-top:70px;margin-left: 20px;padding:0px">
+        <div id='optionDiv'>
+            <div id="drawing-mode-options" style="display: none">
+                <p style="font-weight: 700;color: black">笔画样式：</p>
+                <label for="drawing-mode-selector">Mode:</label>
+                <select id="drawing-mode-selector">
+                    <option>Pencil</option>
+                    <option>Circle</option>
+                    <option>Spray</option>
+                    <option>Pattern</option>
+
+                    <option>hline</option>
+                    <option>vline</option>
+                    <option>square</option>
+                    <option>diamond</option>
+                    <option>texture</option>
+                </select><br>
+                <label for="drawing-line-width">Width:</label>
+                <span class="info">2</span><input type="range" value="2" min="0" max="150"  data-orientation="vertical" id="drawing-line-width"><br>
+
+                <label for="drawing-color">Color:</label>
+                <input type="color" value="#30A5FF" id="drawing-color"><br>
+
+                <label for="drawing-shadow-color">Shadow Color:</label>
+                <input type="color" value="#30A5FF" id="drawing-shadow-color"><br>
+
+                <label for="drawing-shadow-width">Shadow Width:</label>
+                <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-width"><br>
+
+                <label for="drawing-shadow-offset">Shadow Offset:</label>
+                <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-offset"><br>
+            </div>
+
+            <!--配置透明度-->
+            <div id="color-opacity-controls" ng-show="canvas.getActiveObject()">
+
+                <label for="opacity">透明度: </label>
+                <input value="100" type="range" bind-value-to="opacity">
+
+                <label for="color">填充色: </label>
+                <input type="color" style="width:40px" bind-value-to="fill">
+            </div><!--配置透明度-->
+
+            <!--编辑文字-->
+            <div id="text-wrapper" style="margin-top: 10px" ng-show="getText()">
+
+                <textarea bind-value-to="text" style="height: 80px;width: 100px"></textarea>
+
+                <div id="text-controls">
+                    <label for="font-family" style="display:inline-block">字体类型:</label>
+                    <select id="font-family" class="btn-object-action" bind-value-to="fontFamily">
+                        <option value="arial">Arial</option>
+                        <option value="helvetica" selected>Helvetica</option>
+                        <option value="myriad pro">Myriad Pro</option>
+                        <option value="delicious">Delicious</option>
+                        <option value="verdana">Verdana</option>
+                        <option value="georgia">Georgia</option>
+                        <option value="courier">Courier</option>
+                        <option value="comic sans ms">Comic Sans MS</option>
+                        <option value="impact">Impact</option>
+                        <option value="monaco">Monaco</option>
+                        <option value="optima">Optima</option>
+                        <option value="hoefler text">Hoefler Text</option>
+                        <option value="plaster">Plaster</option>
+                        <option value="engagement">Engagement</option>
+                    </select>
+                    <br>
+                    <!--<label for="text-align" style="display:inline-block">对齐方式:</label>-->
+                    <!--<select id="text-align" class="btn-object-action" bind-value-to="textAlign">-->
+                        <!--<option>左对齐</option>-->
+                        <!--<option>居中</option>-->
+                        <!--<option>右对齐</option>-->
+                        <!--<option>自适应</option>-->
+                    <!--</select>-->
+                    <div>
+                        <label for="text-bg-color">背景颜色:</label>
+                        <input type="color" value="" id="text-bg-color" size="10" class="btn-object-action"
+                               bind-value-to="bgColor">
                     </div>
-                    <div class="panel-body">
-                        <div class="object-controls" object-buttons-enabled="getSelected()">
-                            <div style="margin-top:10px;">
-                                <p>
-                                    <button id="clear-all-canvas" class="btn btn-danger">清空</button>
-
-                                    <button class="btn btn-warning btn-object-action" id="clear-selected-canvas"
-                                            ng-click="removeSelected()">
-                                            清除选中
-                                    </button>
-
-                                </p>
-                                <button class="btn btn-warning btn-lock btn-object-action"
-                                        ng-click="setHorizontalLock(!getHorizontalLock())"
-                                        ng-class="{'active': getHorizontalLock()}">
-                                    {[ getHorizontalLock() ?'解锁水平方向移动' : '锁定水平方向移动' ]}
-                                </button>
-                                <br>
-                                <button class="btn btn-warning btn-lock btn-object-action"
-                                        ng-click="setVerticalLock(!getVerticalLock())"
-                                        ng-class="{'active': getVerticalLock()}">
-                                    {[ getVerticalLock() ? '解锁垂直方向移动' : '锁定垂直方向移动' ]}
-                                </button>
-                                <br>
-                                <button class="btn btn-warning btn-lock btn-object-action"
-                                        ng-click="setScaleLockX(!getScaleLockX())"
-                                        ng-class="{'active': getScaleLockX()}">
-                                    {[ getScaleLockX() ? '解锁水平方向放大' : '锁定水平方向放大' ]}
-                                </button>
-                                <br>
-                                <button class="btn btn-warning btn-lock btn-object-action"
-                                        ng-click="setScaleLockY(!getScaleLockY())"
-                                        ng-class="{'active': getScaleLockY()}">
-                                    {[ getScaleLockY() ? '解锁垂直方向放大' : '锁定垂直方向放大' ]}
-                                </button>
-                                <br>
-                                <button class="btn btn-warning btn-lock btn-object-action"
-                                        ng-click="setRotationLock(!getRotationLock())"
-                                        ng-class="{'active': getRotationLock()}">
-                                    {[ getRotationLock() ? '解锁旋转' : '锁定旋转' ]}
-                                </button>
-                            </div>
-
-                            <div style="margin-top:10px">
-                                <p>
-                                    <span style="margin-right: 10px">Origin X: </span>
-                                    <label>
-                                        Left
-                                        <input type="radio" name="origin-x" class="origin-x btn-object-action" value="left"
-                                               bind-value-to="originX">
-                                    </label>
-                                    <label>
-                                        Center
-                                        <input type="radio" name="origin-x" class="origin-x btn-object-action" value="center"
-                                               bind-value-to="originX">
-                                    </label>
-                                    <label>
-                                        Right
-                                        <input type="radio" name="origin-x" class="origin-x btn-object-action" value="right"
-                                               bind-value-to="originX">
-                                    </label>
-                                </p>
-                                <p>
-                                    <span style="margin-right: 10px">Origin Y: </span>
-                                    <label>
-                                        Top
-                                        <input type="radio" name="origin-y" class="origin-y btn-object-action" value="top"
-                                               bind-value-to="originY">
-                                    </label>
-                                    <label>
-                                        Center
-                                        <input type="radio" name="origin-y" class="origin-y btn-object-action" value="center"
-                                               bind-value-to="originY">
-                                    </label>
-                                    <label>
-                                        Bottom
-                                        <input type="radio" name="origin-y" class="origin-y btn-object-action" value="bottom"
-                                               bind-value-to="originY">
-                                    </label>
-                                </p>
-                            </div>
-
-                            <div style="margin-top:10px;">
-                                <button id="send-backwards" class="btn btn-info btn-object-action"
-                                        ng-click="sendBackwards()">下移</button>
-                                <button id="send-to-back" class="btn btn-info btn-object-action"
-                                        ng-click="sendToBack()">置于最下层</button>
-                            </div>
-
-                            <div style="margin-top:4px;">
-                                <button id="bring-forward" class="btn btn-info btn-object-action"
-                                        ng-click="bringForward()">上移</button>
-                                <button id="bring-to-front" class="btn btn-info btn-object-action"
-                                        ng-click="bringToFront()">置于最顶层</button>
-                            </div>
-
-                            <div style="margin-top:10px;">
-                                <button id="gradientify" class="btn btn-info btn-object-action" ng-click="gradientify()">
-                                    Gradientify
-                                </button>
-                                <button id="shadowify" class="btn btn-info btn-object-action" ng-click="shadowify()">
-                                    Shadowify
-                                </button>
-                            </div>
-                            <div style="margin-top:4px;">
-                                <button id="patternify" class="btn btn-info btn-object-action" ng-click="patternify()">
-                                    Patternify
-                                </button>
-                                <button id="clip" class="btn btn-info btn-object-action" ng-click="clip()">
-                                    Clip
-                                </button>
-                            </div>
-                        </div>
+                    <div>
+                        <label for="text-lines-bg-color">文本背景颜色:</label>
+                        <input type="color" value="" id="text-lines-bg-color" size="10" class="btn-object-action"
+                               bind-value-to="textBgColor">
+                    </div>
+                    <div>
+                        <label for="text-stroke-color">Stroke color:</label>
+                        <input type="color" value="" id="text-stroke-color" class="btn-object-action"
+                               bind-value-to="strokeColor">
+                    </div>
+                    <div>
+                        <label for="text-stroke-width">Stroke width:</label>
+                        <input type="range" value="1" min="1" max="5" id="text-stroke-width" class="btn-object-action"
+                               bind-value-to="strokeWidth">
+                    </div>
+                    <div>
+                        <label for="text-font-size">字体大小:</label>
+                        <input type="range" value="" min="1" max="120" step="1" id="text-font-size" class="btn-object-action"
+                               bind-value-to="fontSize">
+                    </div>
+                    <div>
+                        <label for="text-line-height">行间距:</label>
+                        <input type="range" value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
+                               bind-value-to="lineHeight">
                     </div>
                 </div>
-
-
-            </div>
-			<div class="col-lg-8 col-md-8 col-sm-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-                        <button id="drawing-mode" class="btn btn-primary">进入绘画模式</button>
-                        <!--<button id="clear-selected-canvas" class="btn btn-warning">清除选中</button>-->
-                        <button id="save" class="btn btn-primary"  data-toggle="modal" data-target="#myModal" style="float:right;margin-top: 5px;margin-right: 5px">保存</button>
+                <div id="text-controls-additional">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default btn-sm btn-object-action"
+                                ng-click="toggleBold()"
+                                ng-class="{'active': isBold()}">
+                            <i class="fa fa-bold"></i>
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm btn-object-action" id="text-cmd-italic"
+                                ng-click="toggleItalic()"
+                                ng-class="{'active': isItalic()}">
+                            <i class="fa fa-italic"></i>
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm btn-object-action" id="text-cmd-underline"
+                                ng-click="toggleUnderline()"
+                                ng-class="{'active': isUnderline()}">
+                           <i class="fa fa-underline"></i>
+                        </button>
+                        </div>
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default btn-sm btn-object-action" id="text-cmd-linethrough"
+                                ng-click="toggleLinethrough()"
+                                ng-class="{'active': isLinethrough()}">
+                            <i class="fa fa-strikethrough"></i>
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm btn-object-action" id="text-cmd-overline"
+                                ng-click="toggleOverline()"
+                                ng-class="{'active': isOverline()}">
+                            O
+                        </button>
                     </div>
-					<div class="panel-body">
-                        <div class="canvas-wrapper">
-							<canvas id="c" height="400" style="border: solid 1px;"></canvas>
-						</div>
-					</div>
-				</div>
+                </div>
+                </div>
+        </div><!--编辑文字-->
+    </div><!--controller-->
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="margin-top: 70px;margin-left: 15px;">
+                <div class="canvas-wrapper">
+                    <canvas id="c" style="border: solid 2px;"></canvas>
+                </div>
 			</div>
-            <!--controller-->
-            <div class="col-lg-2 col-md-2 col-sm-3" id="controls">
-                <div id='optionDiv' style=" margin-left: 10px">
-                    <!--<p style="font-weight: 700;color: black">添加：</p>-->
-                    <!--<div class="btn-group" role="group" aria-label="..." style="margin-bottom: 10px">-->
-                    <!--<button type="button"  ng-click="addText()" class="btn btn-default"  data-toggle="tooltip" data-placement="left" title="添加文字" ><span class="glyphicon glyphicon-text-size"></span></button>-->
-                    <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-picture"></span></button>-->
-                    <!--<button type="button" class="btn btn-default"  data-toggle="tooltip" data-placement="left" title="添加视频"><span class="glyphicon glyphicon-facetime-video"></span></button>-->
-                    <!--<ul class="dropdown-menu">-->
-                    <!--<li type="button" ng-click="addRect()" class="btn" style="margin-left: 16px">矩形</li>-->
-                    <!--<li type="button" ng-click="addTriangle()" class="btn">三角形</li>-->
-                    <!--<li type="button" ng-click="addCircle()" class="btn" style="margin-left: 16px">圆形</li>-->
-                    <!--<li type="button" ng-click="addPolygon()" class="btn">多边形</li>-->
-                    <!--<li type="button" ng-click="addLine()" class="btn" style="margin-left: 16px">直线</li>-->
-                    <!--<li type="button" class="btn">自选</li>-->
-                    <!--</ul>-->
-                    <!--</div>-->
-                    <div id="drawing-mode-options" style="display: none">
-                        <p style="font-weight: 700;color: black">笔画样式：</p>
-                        <label for="drawing-mode-selector">Mode:</label>
-                        <select id="drawing-mode-selector">
-                            <option>Pencil</option>
-                            <option>Circle</option>
-                            <option>Spray</option>
-                            <option>Pattern</option>
-
-                            <option>hline</option>
-                            <option>vline</option>
-                            <option>square</option>
-                            <option>diamond</option>
-                            <option>texture</option>
-                        </select><br>
-                        <label for="drawing-line-width">Width:</label>
-                        <span class="info">2</span><input type="range" value="2" min="0" max="150"  data-orientation="vertical" id="drawing-line-width"><br>
-
-                        <label for="drawing-color">Color:</label>
-                        <input type="color" value="#30A5FF" id="drawing-color"><br>
-
-                        <label for="drawing-shadow-color">Shadow Color:</label>
-                        <input type="color" value="#30A5FF" id="drawing-shadow-color"><br>
-
-                        <label for="drawing-shadow-width">Shadow Width:</label>
-                        <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-width"><br>
-
-                        <label for="drawing-shadow-offset">Shadow Offset:</label>
-                        <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-offset"><br>
-                    </div>
-
-                    <!--配置透明度-->
-                    <div id="color-opacity-controls" ng-show="canvas.getActiveObject()">
-
-                        <label for="opacity">透明度: </label>
-                        <input value="100" type="range" bind-value-to="opacity">
-
-                        <label for="color">填充色: </label>
-                        <input type="color" style="width:40px" bind-value-to="fill">
-                    </div><!--配置透明度-->
-
-                    <!--编辑文字-->
-                    <div id="text-wrapper" style="margin-top: 10px" ng-show="getText()">
-
-                        <textarea bind-value-to="text" style="height: 100px;"></textarea>
-
-                        <div id="text-controls">
-                            <label for="font-family" style="display:inline-block">字体样式:</label>
-                            <select id="font-family" class="btn-object-action" bind-value-to="fontFamily">
-                                <option value="arial">Arial</option>
-                                <option value="helvetica" selected>Helvetica</option>
-                                <option value="myriad pro">Myriad Pro</option>
-                                <option value="delicious">Delicious</option>
-                                <option value="verdana">Verdana</option>
-                                <option value="georgia">Georgia</option>
-                                <option value="courier">Courier</option>
-                                <option value="comic sans ms">Comic Sans MS</option>
-                                <option value="impact">Impact</option>
-                                <option value="monaco">Monaco</option>
-                                <option value="optima">Optima</option>
-                                <option value="hoefler text">Hoefler Text</option>
-                                <option value="plaster">Plaster</option>
-                                <option value="engagement">Engagement</option>
-                            </select>
-                            <br>
-                            <label for="text-align" style="display:inline-block">对齐方式:</label>
-                            <select id="text-align" class="btn-object-action" bind-value-to="textAlign">
-                                <option>左对齐</option>
-                                <option>居中</option>
-                                <option>右对齐</option>
-                                <option>自适应</option>
-                            </select>
-                            <div>
-                                <label for="text-bg-color">背景颜色:</label>
-                                <input type="color" value="" id="text-bg-color" size="10" class="btn-object-action"
-                                       bind-value-to="bgColor">
-                            </div>
-                            <div>
-                                <label for="text-lines-bg-color">文本背景颜色:</label>
-                                <input type="color" value="" id="text-lines-bg-color" size="10" class="btn-object-action"
-                                       bind-value-to="textBgColor">
-                            </div>
-                            <div>
-                                <label for="text-stroke-color">Stroke color:</label>
-                                <input type="color" value="" id="text-stroke-color" class="btn-object-action"
-                                       bind-value-to="strokeColor">
-                            </div>
-                            <div>
-                                <label for="text-stroke-width">Stroke width:</label>
-                                <input type="range" value="1" min="1" max="5" id="text-stroke-width" class="btn-object-action"
-                                       bind-value-to="strokeWidth">
-                            </div>
-                            <div>
-                                <label for="text-font-size">字体大小:</label>
-                                <input type="range" value="" min="1" max="120" step="1" id="text-font-size" class="btn-object-action"
-                                       bind-value-to="fontSize">
-                            </div>
-                            <div>
-                                <label for="text-line-height">行间距:</label>
-                                <input type="range" value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
-                                       bind-value-to="lineHeight">
-                            </div>
-                        </div>
-                        <div id="text-controls-additional">
-                            <button type="button" class="btn btn-default btn-object-action"
-                                    ng-click="toggleBold()"
-                                    ng-class="{'active': isBold()}">
-                                Bold
-                            </button>
-                            <button type="button" class="btn btn-default btn-object-action" id="text-cmd-italic"
-                                    ng-click="toggleItalic()"
-                                    ng-class="{'active': isItalic()}">
-                                Italic
-                            </button>
-                            <button type="button" class="btn btn-default btn-object-action" id="text-cmd-underline"
-                                    ng-click="toggleUnderline()"
-                                    ng-class="{'active': isUnderline()}">
-                                Underline
-                            </button>
-                            <button type="button" class="btn btn-default btn-object-action" id="text-cmd-linethrough"
-                                    ng-click="toggleLinethrough()"
-                                    ng-class="{'active': isLinethrough()}">
-                                Linethrough
-                            </button>
-                            <button type="button" class="btn btn-default btn-object-action" id="text-cmd-overline"
-                                    ng-click="toggleOverline()"
-                                    ng-class="{'active': isOverline()}">
-                                Overline
-                            </button>
-                        </div>
-                    </div>
-                </div><!--编辑文字-->
-            </div><!--controller-->
-            <button id="console-info" class="btn btn-default btn-sm" disabled="disabled">Console Info</button>
-            <button id="test" class="btn btn-default btn-sm">test</button><br>
+            <button id="console-info" class="btn btn-default btn-sm" disabled="disabled" style="display: none">Console Info</button>
+            <button id="test" class="btn btn-default btn-sm"  style="display: none">test</button><br>
 		</div><!--/.row-->
 	</div>	<!--/.main-->
 <!--</div>-->
+
     <!-- Modal -->
     <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-sm" role="document">
@@ -397,7 +398,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button id='confirmSave' type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+                    <button id='confirmSave' type="button" class="btn btn-info" data-dismiss="modal">保存</button>
                 </div>
             </div>
         </div>
@@ -409,12 +410,12 @@
         var userId ='<%= userId%>';
 	</script>
 
-	<script src='/app_3th_js/jquery-1.11.3.min.js'></script>
+	<script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
 	<!--<script src='/app_3th_js/jquery.mousewheel.min.js'></script>-->
-	<script src='/app_3th_js/angular.min.js'></script>
-	<script src='/app_3th_js/bootstrap.js'></script>
+	<script src='/app_3th_js/angular/angular.min.js'></script>
+	<script src='/app_3th_js/bootstrap/bootstrap.js'></script>
 	<script src='/socket.io/socket.io.js'></script>
-	<script src='/app_3th_js/fabric.min.js'></script>
+	<script src='/app_3th_js/fabric/fabric.min.js'></script>
     <script src="/app_ui_js/utils.js"></script>
     <script src="/app_ui_js/app_config.js"></script>
 	<script src='/app_util_js/util.js'></script>

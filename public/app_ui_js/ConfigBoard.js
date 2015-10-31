@@ -141,11 +141,11 @@ var ConfigBoard = function (editBoard) {
 };
 
 ConfigBoard.prototype.resizeCanvas = function () {
-    if ($(window).width() > 768){
-            this.editBoard.__canvas.setWidth($(window).width()-$("#optionDiv").width()-$("#controls").width()-90);
+    if ($(window).width() > 1200){
+            this.editBoard.__canvas.setWidth($(window).width()-$("#controls").width()-150);
     }
     else{
-        this.editBoard.__canvas.setWidth($(window).width()-60);
+        this.editBoard.__canvas.setWidth($(window).width()+85-$("#controls").width()-150);
     }
-    this.editBoard.__canvas.setHeight(800);
+    this.editBoard.__canvas.setHeight(700);
 };

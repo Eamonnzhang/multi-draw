@@ -23,7 +23,8 @@ var EditBoard = function (){
     this.communication = new Communication();
     this.serializeShapes = new SerializeShapes();
     var canvas = this.__canvas = new fabric.Canvas('c', {
-        isDrawingMode: false
+        isDrawingMode: false,
+        backgroundColor :"#fff"
     });
     //console.log(canvas);
     var configBoard = new ConfigBoard(this);
@@ -249,7 +250,9 @@ var EditBoard = function (){
         var fileName = _('filename').value;
         canvasData.fileName = fileName;
         //canvasData.ceateUserName = userName;
-        if(Utils.urlParams[window.location.href]['id']){
+        var parmArr = Utils.urlParams(window.location.href);
+        var id = parmArr['id'];
+        if(id){
             canvasData.isSaveNew = false;
         }else{
             canvasData.isSaveNew = true;
@@ -302,7 +305,7 @@ var EditBoard = function (){
     drawingModeEl.onclick =  function() {
         canvas.isDrawingMode = !canvas.isDrawingMode;
         if (canvas.isDrawingMode) {
-            drawingModeEl.innerHTML = '退出绘画模式';
+            drawingModeEl.innerHTML = ' <i class="fa fa-mouse-pointer"></i>&nbsp;选中';
             drawingModeEl.setAttribute('class','btn btn-default');
             consoleInfo.setAttribute('disabled','disabled');
             clearEl.setAttribute('disabled','disabled');
@@ -311,8 +314,8 @@ var EditBoard = function (){
 
         }
         else {
-            drawingModeEl.innerHTML = '进入绘画模式';
-            drawingModeEl.setAttribute('class','btn btn-primary');
+            drawingModeEl.innerHTML = ' <i class="fa fa-paint-brush "></i>&nbsp;绘画';
+            drawingModeEl.setAttribute('class','btn btn-info');
             consoleInfo.removeAttribute('disabled');
             clearEl.removeAttribute('disabled');
             drawingOptionsEl.setAttribute('style','display:none');

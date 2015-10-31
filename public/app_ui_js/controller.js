@@ -297,7 +297,7 @@ function addAccessors($scope) {
   function addImage(imageName, minScale, maxScale) {
     var coord = getRandomLeftTop();
 
-    fabric.Image.fromURL('../assets/' + imageName, function(image) {
+    fabric.Image.fromURL('../images/' + imageName, function(image) {
 
       image.set({
         left: coord.left,
@@ -312,16 +312,16 @@ function addAccessors($scope) {
   };
 
   $scope.addImage1 = function() {
-    addImage('pug.jpg', 0.1, 0.25);
+    addImage('logo.png', 1, 0.5);
   };
 
-  $scope.addImage2 = function() {
-    addImage('logo.png', 0.1, 1);
-  };
-
-  $scope.addImage3 = function() {
-    addImage('printio.png', 0.5, 0.75);
-  };
+  //$scope.addImage2 = function() {
+  //  addImage('logo.png', 0.1, 1);
+  //};
+  //
+  //$scope.addImage3 = function() {
+  //  addImage('printio.png', 0.5, 0.75);
+  //};
 
   $scope.confirmClear = function() {
     if (confirm('Are you sure?')) {
@@ -709,7 +709,7 @@ function addAccessors($scope) {
     canvas.add(iText, iText2);
   }
 
-  //addTexts();
+  addTexts();
 
 
   $scope.getFreeDrawingMode = function() {
