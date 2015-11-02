@@ -225,7 +225,7 @@ function addAccessors($scope) {
     canvas.add(new fabric.Line([ 50, 100, 200, 200], {
       left: coord.left,
       top: coord.top,
-      stroke: '#' + getRandomColor()
+      stroke: '#' + 000000
     }));
   };
 
@@ -247,10 +247,10 @@ function addAccessors($scope) {
     var text = '点击编辑文字';
 
     var textSample = new fabric.Text(text, {
-      left: getRandomInt(350, 400),
-      top: getRandomInt(350, 400),
+      left: getRandomInt(0, 200),
+      top: getRandomInt(0, 200),
       fontFamily: 'helvetica',
-      angle: getRandomInt(-10, 10),
+      angle: getRandomInt(0, 0),
       fill: '#' + getRandomColor(),
       scaleX: 0.5,
       scaleY: 0.5,

@@ -145,7 +145,16 @@ ConfigBoard.prototype.resizeCanvas = function () {
             this.editBoard.__canvas.setWidth($(window).width()-$("#controls").width()-150);
     }
     else{
-        this.editBoard.__canvas.setWidth($(window).width()+85-$("#controls").width()-150);
+        if($(window).width() <340 ){
+            this.editBoard.__canvas.setWidth($(window).width()-15);
+        }else{
+            this.editBoard.__canvas.setWidth($(window).width()+85-$("#controls").width()-150);
+        }
     }
     this.editBoard.__canvas.setHeight(700);
+    if($(window).height()<790){
+        _('optionDiv').setAttribute('style','height:500px;overflow-y:auto;position:fixed; ');
+    }else{
+        _('optionDiv').setAttribute('style','position:fixed');
+    }
 };

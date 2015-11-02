@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title><%= title %></title>
     <link rel='stylesheet' href='/css/bootstrap/bootstrap.min.css' />
+    <link href="/css/app-style.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/forIE/html5shiv.js"></script>
     <script src="js/forIE/respond.min.js"></script>
@@ -11,13 +12,13 @@
 </head>
 <body>
 <div align="center" style="margin-top: 10px">
-    <h3>Welcome to MultiDraw</h3>
+    <h3>自由画板</h3>
     <form class="form-inline" action="/" method="get">
         <div class="form-group">
-            <label>RoomId:</label>
-            <input type="text" class="form-control" name="room" placeholder="Create or Enter">
+            <label>房间名:</label>
+            <input type="text" class="form-control" name="room" placeholder="创建或进入">
         </div>
-        <button id='start-draw' type="submit" class="btn btn-info">Start Drawing</button>
+        <button id='start-draw' type="submit" class="btn btn-info">进入</button>
     </form>
 </div>
 </body>
