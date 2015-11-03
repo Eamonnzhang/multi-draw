@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="kitchensink">
+<html ng-app="app">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,8 +12,8 @@
     <script src="/app_3th_js/forIE/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
-<div id="bd-wrapper" ng-controller="CanvasControls">
+<body ng-controller="CanvasControls">
+<div id="bd-wrapper">
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="row" style="background-color:#ffffff;">
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -49,13 +49,14 @@
                     </li>
                     <li id="roomId" style="line-height: 27px; float:right;color:cornflowerblue"></li>
                 </ol>
-            </div>
+            </div><!--col-->
         </div><!--/.row navbar-->
     </nav>
     <div class="row toolbar">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="btn-group object-controls" object-buttons-enabled="getSelected()" role="group" aria-label="...">
-                <button  id="drawing-mode" type="button" class="btn btn-info">
+                <button  id="drawing-mode" type="button" class="btn btn-info"
+                         ng-click="setFreeDrawingMode(!getFreeDrawingMode())">
                     <i class="fa fa-paint-brush"></i>&nbsp;绘画
                 </button>
                 <button id="save" type="button" class="btn btn-default"  data-toggle="modal" data-target="#myModal">
@@ -66,7 +67,8 @@
                 <button id="clear-all-canvas" type="button" class="btn btn-default">
                     <i class="fa fa-trash-o fa-lg"></i>&nbsp;清空
                 </button>
-                <button id="clear-selected-canvas" type="button" class="btn btn-default">
+                <button id="clear-selected-canvas" type="button" class="btn btn-default"
+                        ng-click="removeSelected()">
                     <i class="fa fa-trash fa-lg"></i>&nbsp;清除选中
                 </button>
                 <!--<button class="btn btn-default btn-lock btn-object-action"-->
@@ -101,9 +103,8 @@
                         <!--ng-click="clip()">-->
                     <!--<i class="fa fa-scissors fa-lg"></i>&nbsp;修剪-->
                 <!--</button>-->
-
-            </div>
-        </div>
+            </div><!--btn group-->
+        </div><!--col-->
     </div><!--row toolbar-->
 		<!--<div class="row">-->
             <!--<div class="col-lg-2 col-md-2 col-sm-3" id="controls">-->
@@ -229,42 +230,42 @@
             <!--</div>-->
     <div  id="controls" class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="margin-top:70px;margin-left: 20px;padding:0px">
         <div id='optionDiv'>
-            <div id="drawing-mode-options" style="display: none">
+            <div id="drawing-mode-options" ng-show="getFreeDrawingMode()">
                 <p style="font-weight: 700;color: black">笔画样式：</p>
                 <label for="drawing-mode-selector">模式:</label><br>
-                <select id="drawing-mode-selector">
-                    <option>铅笔</option>
-                    <option>圆圈</option>
-                    <option>喷雾</option>
-                    <option>圆圈图案</option>
+                <select id="drawing-mode-selector" bind-value-to="drawingMode">
+                    <option>Pencil</option>
+                    <option>Circle</option>
+                    <option>Spray</option>
+                    <option>Pattern</option>
 
-                    <option>水平线图案</option>
-                    <option>竖直线图案</option>
-                    <option>正方形图案</option>
-                    <option>钻石图案</option>
-                    <option>图片图案</option>
+                    <option>vline</option>
+                    <option>hline</option>
+                    <option>square</option>
+                    <option>diamond</option>
+                    <option>texture</option>
                 </select><br>
                 <label for="drawing-line-width">线宽:</label>
-                <span class="info">2</span><input type="range" value="2" min="0" max="150"  data-orientation="vertical" id="drawing-line-width">
+                <span class="info">2</span><input type="range" value="" min="0" max="150"  data-orientation="vertical" bind-value-to="drawingLineWidth">
 
                 <label for="drawing-color">颜色:</label><br>
-                <input type="color" value="#30A5FF" id="drawing-color"><br>
+                <input type="color" value="#30A5FF" bind-value-to="drawingLineColor"><br>
 
                 <label for="drawing-shadow-color">阴影颜色:</label><br>
-                <input type="color" value="#30A5FF" id="drawing-shadow-color"><br>
+                <input type="color" value="#30A5FF" bind-value-to="drawingLineShadowColor"><br>
 
                 <label for="drawing-shadow-width">阴影宽度:</label>
-                <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-width">
+                <span class="info">0</span><input type="range" value="0" min="0" max="50" bind-value-to="drawingLineShadowWidth">
 
-                <label for="drawing-shadow-offset">阴影偏移:</label>
-                <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-offset"><br>
+                <!--<label for="drawing-shadow-offset">阴影偏移:</label>-->
+                <!--<span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-offset"><br>-->
             </div>
 
             <!--配置透明度-->
             <div id="color-opacity-controls"  ng-show="canvas.getActiveObject()">
 
                 <label for="opacity">透明度: </label>
-                <input value="100" type="range" bind-value-to="opacity">
+                <span class="info">100</span><input value="100" type="range" bind-value-to="opacity">
 
                 <label for="color">填充色: </label><br>
                 <input type="color"  bind-value-to="fill"><br>
@@ -275,7 +276,7 @@
             </div><!--配置透明度-->
 
             <!--编辑文字-->
-            <div id="text-wrapper" ng-show="getText()">
+            <div id="text-wrapper" ng-show="getText()&&!getFreeDrawingMode()">
                 <textarea bind-value-to="text"></textarea>
                 <div id="text-controls">
                     <label for="font-family">字体类型:</label><br>
@@ -319,18 +320,18 @@
                                <!--bind-value-to="strokeColor">-->
                     <!--</div>-->
                     <div>
-                        <label for="text-stroke-width">线条宽度:</label><br>
-                        <input type="range" style="width:120px" value="1" min="1" max="5" id="text-stroke-width" class="btn-object-action"
+                        <label for="text-stroke-width">线条宽度:</label>
+                        <span class="info">1</span><input type="range" style="width:120px" value="1" min="1" max="5" id="text-stroke-width" class="btn-object-action"
                                bind-value-to="strokeWidth">
                     </div>
                     <div>
-                        <label for="text-font-size">字体大小:</label><br>
-                        <input type="range" style="width:120px" value="" min="1" max="120" step="1" id="text-font-size" class="btn-object-action"
+                        <label for="text-font-size">字体大小:</label>
+                        <span class="info">100</span><input type="range" style="width:120px" value="" min="1" max="120" step="1" id="text-font-size" class="btn-object-action"
                                bind-value-to="fontSize">
                     </div>
                     <div>
-                        <label for="text-line-height">行间距:</label><br>
-                        <input type="range" style="width:120px" value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
+                        <label for="text-line-height">行间距:</label>
+                        <span class="info">100</span><input type="range" style="width:120px" value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
                                bind-value-to="lineHeight">
                     </div>
                 </div>
@@ -368,9 +369,7 @@
             </div><!--optionDiv-->
         </div><!--controls-->
         <div id="canvas-col" class="col-lg-8 col-md-8  col-sm-8 col-xs-8">
-            <!--<div class="canvas-wrapper">-->
-                <canvas id="c"></canvas>
-            <!--</div>-->
+            <canvas id="c"></canvas>
         </div>
         <div id="canvas-background">
             <label for="canvas-background-picker">画板背景色:</label>
@@ -380,7 +379,7 @@
             <button id="console-info" class="btn btn-default btn-sm" disabled="disabled">Console Info</button>
             <button id="test" class="btn btn-default btn-sm">test</button><br>
         </div>
-</div><!--/bd--wrapper-->
+    </div><!--/bd--wrapper-->
 
     <!-- Modal -->
     <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -400,41 +399,25 @@
             </div>
         </div>
     </div>
-
+</body>
 	<script>
         var apiKey='<%= apiKey%>';
         var userName ='<%= userName%>';
         var userId ='<%= userId%>';
 	</script>
-
 	<script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
-	<!--<script src='/app_3th_js/jquery.mousewheel.min.js'></script>-->
 	<script src='/app_3th_js/angular/angular.min.js'></script>
 	<script src='/app_3th_js/bootstrap/bootstrap.js'></script>
 	<script src='/socket.io/socket.io.js'></script>
 	<script src='/app_3th_js/fabric/fabric.min.js'></script>
     <script src="/app_ui_js/utils.js"></script>
-    <script src="/app_ui_js/app_config.js"></script>
+    <script src="/app_ui_js/app.js"></script>
 	<script src='/app_util_js/util.js'></script>
 	<script src='/app_ui_js/Communication.js'></script>
 	<script src='/app_ui_js/SerializeShapes.js'></script>
     <script src='/app_ui_js/ConfigBoard.js'></script>
     <script src='/app_ui_js/EditBoard.js'></script>
 	<script>
-		!function ($) {
-			$(document).on("click","ul.nav li.parent > a > span.icon", function(){
-				$(this).find('em:first').toggleClass("glyphicon-minus");
-			});
-			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
-		}(window.jQuery);
-
-		$(window).on('resize', function () {
-			if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
-		});
-
-		$(window).on('resize', function () {
-			if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
-		});
         var _ = function(id){return document.getElementById(id)};
         var editBoard = new EditBoard();
         var urlParams = Utils.urlParams(window.location.href);
@@ -445,10 +428,8 @@
             };
             editBoard.communication.loadFile(queryObj, Utils.bind(editBoard,editBoard.resetBoard));
         }
-
         var canvas = editBoard.__canvas;
+        var socket = editBoard.__socket;
 	</script>
-    <script src="/app_ui_js/controller.js"></script>
-</body>
-
+    <script src="/app_ui_js/controller/canvasController.js"></script>
 </html>

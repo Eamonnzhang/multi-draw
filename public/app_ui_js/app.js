@@ -1,12 +1,12 @@
-var kitchensink = angular.module('kitchensink', []);
+var app = angular.module('app', ['CanvasModule']);
 
-kitchensink.config(function($interpolateProvider) {
+app.config(function($interpolateProvider) {
   $interpolateProvider
     .startSymbol('{[')
     .endSymbol(']}');
 });
 
-kitchensink.directive('bindValueTo', function() {
+app.directive('bindValueTo', function() {
   return {
     restrict: 'A',
 
@@ -18,6 +18,7 @@ kitchensink.directive('bindValueTo', function() {
 
       $element.on('change keyup select', function() {
         $scope[setter] && $scope[setter](this.value);
+        this.previousSibling.innerHTML = this.value;
       });
 
       $scope.$watch($scope[getter], function(newVal) {
@@ -26,8 +27,9 @@ kitchensink.directive('bindValueTo', function() {
           for (var i = 0, len = radioGroup.length; i < len; i++) {
             radioGroup[i].checked = radioGroup[i].value === newVal;
           }
-        }
-        else {
+        } else{
+          //console.log($element[0].type+newVal);
+          $element[0].previousSibling.innerHTML = newVal;
           $element.val(newVal);
         }
       });
@@ -35,7 +37,8 @@ kitchensink.directive('bindValueTo', function() {
   };
 });
 
-kitchensink.directive('objectButtonsEnabled', function() {
+
+app.directive('objectButtonsEnabled', function() {
   return {
     restrict: 'A',
 

@@ -2,7 +2,7 @@
  * Created by Eamonn on 2015/9/26.
  */
 var EditBoard = function (){
-    var socket = io.connect('http://192.168.1.81:4500');
+    var socket = this.__socket = io.connect('http://192.168.1.81:4500');
     var roomId = decodeURI(Utils.urlParams(window.location.href)['room']);
     var drawingModeEl = _('drawing-mode'),
         clearEl = _('clear-selected-canvas'),
@@ -15,15 +15,9 @@ var EditBoard = function (){
         consoleInfo = _('console-info'),
         textWrapper = _('text-wrapper'),
         drawingOptionsEl= _('drawing-mode-options');
-    this.__drawingColorEl= _('drawing-color');
-    this.__drawingShadowColorEl= _('drawing-shadow-color');
-    this.__drawingLineWidthEl= _('drawing-line-width');
-    this.__drawingShadowWidth= _('drawing-shadow-width');
-    this.__drawingShadowOffset= _('drawing-shadow-offset');
     this.communication = new Communication();
     this.serializeShapes = new SerializeShapes();
     var canvas = this.__canvas = new fabric.Canvas('c', {
-        isDrawingMode: false,
         backgroundColor :"#fff"
     });
     //console.log(canvas);
@@ -264,36 +258,36 @@ var EditBoard = function (){
 
 
 
-    clearEl.onclick = function() {
-        var idArr = [];
-        if(canvas.getActiveObject()){
-            idArr.push(canvas.getActiveObject().id);
-        }
-        if(canvas.getActiveGroup()){
-            canvas.getActiveGroup().forEachObject(function(a) {
-                idArr.push(a.id);
-            });
-        }
-        //var id = canvas.getActiveObject().id;
-        //console.log(idArr);
-        socket.emit('clearSelected',idArr,function(){
-            for(var i =0;i<canvasData.pathData.length;i++) {
-                if (idArr.indexOf(canvasData.pathData[i].id) !== -1) {
-                    canvasData.pathData.splice(i, 1);
-                    i--;
-                }
-            }
-            if (canvas.getActiveGroup()) {
-                canvas.getActiveGroup().forEachObject(function(a) {
-                    canvas.remove(a);
-                });
-                canvas.discardActiveGroup();
-            }
-            if (canvas.getActiveObject()) {
-                canvas.remove(canvas.getActiveObject());
-            }
-        });
-    };
+    //clearEl.onclick = function() {
+    //    var idArr = [];
+    //    if(canvas.getActiveObject()){
+    //        idArr.push(canvas.getActiveObject().id);
+    //    }
+    //    if(canvas.getActiveGroup()){
+    //        canvas.getActiveGroup().forEachObject(function(a) {
+    //            idArr.push(a.id);
+    //        });
+    //    }
+    //    //var id = canvas.getActiveObject().id;
+    //    //console.log(idArr);
+    //    socket.emit('clearSelected',idArr,function(){
+    //        for(var i =0;i<canvasData.pathData.length;i++) {
+    //            if (idArr.indexOf(canvasData.pathData[i].id) !== -1) {
+    //                canvasData.pathData.splice(i, 1);
+    //                i--;
+    //            }
+    //        }
+    //        if (canvas.getActiveGroup()) {
+    //            canvas.getActiveGroup().forEachObject(function(a) {
+    //                canvas.remove(a);
+    //            });
+    //            canvas.discardActiveGroup();
+    //        }
+    //        if (canvas.getActiveObject()) {
+    //            canvas.remove(canvas.getActiveObject());
+    //        }
+    //    });
+    //};
 
     clearAllEl.onclick = function() {
         socket.emit('clearAll','clearAll',function(){
@@ -303,23 +297,13 @@ var EditBoard = function (){
     };
 
     drawingModeEl.onclick =  function() {
-        canvas.isDrawingMode = !canvas.isDrawingMode;
-        if (canvas.isDrawingMode) {
+        if (!canvas.isDrawingMode) {
             drawingModeEl.innerHTML = ' <i class="fa fa-mouse-pointer"></i>&nbsp;选中';
             drawingModeEl.setAttribute('class','btn btn-default');
-            consoleInfo.setAttribute('disabled','disabled');
-            clearEl.setAttribute('disabled','disabled');
-            drawingOptionsEl.setAttribute('style','display: ');
-            textWrapper.setAttribute('style','display:none ');
-
         }
         else {
             drawingModeEl.innerHTML = ' <i class="fa fa-paint-brush "></i>&nbsp;绘画';
             drawingModeEl.setAttribute('class','btn btn-info');
-            consoleInfo.removeAttribute('disabled');
-            clearEl.removeAttribute('disabled');
-            drawingOptionsEl.setAttribute('style','display:none');
-            textWrapper.setAttribute('style','display: ');
         }
     };
     consoleInfo.onclick = function(){

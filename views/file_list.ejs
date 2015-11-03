@@ -5,20 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>文件列表</title>
         <link href="css/bootstrap/bootstrap.css" rel="stylesheet">
-        <link href="css/my-style.css" rel="stylesheet">
+        <link href="css/app-styles.css" rel="stylesheet">
         <script src="app_3th_js/angular/angular.min.js"></script>
         <script src="app_3th_js/jQuery/jquery-1.11.3.min.js"></script>
         <script src="app_util_js/util.js"></script>
-        <!--<link href="css/styles.css" rel="stylesheet">-->
     </head>
     <body>
-    <div class="row">
+    <div class="row" ng-app="filesApp">
         <div class="col-lg-12">
             <div class="panel panel-info col-lg-8 col-lg-offset-2">
                 <div class="panel-heading">
                     <h3 >文件列表:</h3>
                 </div>
-                <div class="panel-body"  ng-app="myApp" ng-controller="filesCtrl">
+                <div class="panel-body" ng-controller="filesCtrl">
                    <table class="table table-hover table-striped" >
                        <thead>
                            <tr>
@@ -42,20 +41,5 @@
         </div>
     </div>
     </body>
-    <script>
-        var app = angular.module('myApp', []);
-        app.controller('filesCtrl', function($scope, $http) {
-            $http.get("/loadAllFiles")
-                    .success(function (response) {
-                        if(response.success)
-                            $scope.files = response.data;
-                    });
-            $scope.loadFile = function () {
-                var queryObj = {};
-                queryObj.fileName = this.file.fileName;
-                queryObj.id = this.file.id;
-                window.open('/'+Utils.convertJSONToQueryStr(queryObj,true));
-            }
-        });
-    </script>
+    <script src="/app_ui_js/controller/filesController.js"></script>
 </html>
