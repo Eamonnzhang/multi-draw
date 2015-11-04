@@ -1,3 +1,8 @@
+
+var canvasData = {};
+canvasData.pathData = [];
+canvasData.usersId = [];
+
 function getActiveStyle(styleName, object) {
   object = object || canvas.getActiveObject();
   if (!object) return '';
@@ -721,6 +726,9 @@ function addAccessors($scope) {
             canvas.freeDrawingBrush.shadow.color = value;
         }
     };
+    $scope.getRoomId = function(){
+        return $scope.roomId;
+    }
 
   function initBrushes() {
     if (!fabric.PatternBrush) return;
@@ -825,23 +833,170 @@ function addAccessors($scope) {
 }
 
 function watchCanvas($scope) {
+    var isMouseDown = false;
 
-  function updateScope() {
-    $scope.$$phase || $scope.$digest();
-    canvas.renderAll();
-  }
+    function updateScope() {
+        $scope.$$phase || $scope.$digest();
+        canvas.renderAll();
+    }
 
-  canvas
+    function addPath(e){
+        updateScope();
+        var path = e.path;
+        var data = SerializeShapes.serializePath(path);
+        path.id = data.id;
+        canvasData.pathData.push(data);
+        if(canvasData.usersId.indexOf(data.userId) === -1){
+            canvasData.usersId.push(data.userId);
+        }
+        //console.log(canvasData);
+        socket.emit('path', data);
+
+    }
+    function changeState(e){
+        if(isMouseDown){
+            isMouseDown = !isMouseDown;
+            var obj = e.target;
+            if(obj){
+                if(canvas.getActiveObject()){
+                    //console.log(obj.top+','+obj.left);
+                    var data =SerializeShapes.serializePathState(obj);
+                    socket.emit('stateChange',data);
+                }
+                if(canvas.getActiveGroup()){
+                    var group = SerializeShapes.serializeGroupOfPath(canvas.getActiveGroup());
+                    socket.emit('groupChange',group);
+                }
+            }
+        }
+    }
+    function listenMouseClick(){
+        isMouseDown = true;
+    }
+
+    canvas
     .on('object:selected', updateScope)
     .on('group:selected', updateScope)
-    .on('path:created', updateScope)
+    .on('path:created', addPath)
+    .on('mouse:up', changeState)
+    .on('mouse:down', listenMouseClick)
     .on('selection:cleared', updateScope);
+}
+
+
+
+function initCanvas(){
+    var userInfo = {};
+    userInfo.roomId = roomId;
+    userInfo.userId = apiKey;
+    userInfo.userName = userName;
+    socket.emit('room', userInfo);
+    //监听在后台已经存在的path
+    socket.on('allPath',function(data){
+        if(data[roomId]){
+            data[roomId].forEach(function(x){
+                canvasData.pathData.push(x);
+                if(canvasData.usersId.indexOf(x.userId) === -1){
+                    canvasData.usersId.push(x.userId);
+                }
+                canvas.add(new fabric.Path(x.path,x));
+            });
+        }
+    });
+    //监听其他用户画完path
+    socket.on('path',function(data){
+        canvasData.pathData.push(data);
+        if(canvasData.usersId.indexOf(data.userId) === -1){
+            canvasData.usersId.push(data.userId);
+        }
+        console.log(canvasData);
+        canvas.add(new fabric.Path(data.path,data));
+    });
+    //监听全部清除操作
+    socket.on('clearAll',function(data){
+        if(data == 'clearAll'){
+            canvasData.pathData = [];
+            canvas.clear();
+        }
+    });
+    //监听清除选中操作
+    socket.on('clearSelected',function(idArr){
+        var myObjArr = Utils.cloneArray(canvas.getObjects());
+        myObjArr.forEach(function(a){
+            if(idArr.indexOf(a.id)!==-1){
+                canvas.remove(a);
+            }
+        });
+        for(var i =0;i<canvasData.pathData.length;i++) {
+            if (idArr.indexOf(canvasData.pathData[i].id) !== -1) {
+                canvasData.pathData.splice(i, 1);
+                i--;
+            }
+        }
+    });
+    //监听单个path状态改变操作
+    socket.on('stateChange',function(data){
+        canvas.deactivateAll();
+        var myObjArr = Utils.cloneArray(canvas.getObjects());
+        myObjArr.forEach(function(a){
+            if(a.id === data.id){
+                a.setTop(data.top);
+                a.setLeft(data.left);
+                a.setAngle(data.angle);
+                a.setScaleX(data.scaleX);
+                a.setScaleY(data.scaleY);
+                //a.setCoords();
+                canvas.renderAll();
+            }
+        });
+    });
+    //监听成组path状态改变操作
+    socket.on('groupChange',function(group){
+        var myObjArr = Utils.cloneArray(canvas.getObjects());
+        var selectObjs = [];
+        myObjArr.forEach(function(a){
+            if(group.idArr.indexOf(a.id) !== -1){
+                selectObjs.push(a);
+            }
+        });
+        var opt ={};
+        opt.top = group.top;
+        opt.left =group.left;
+        opt.angle=group.angle;
+        opt.scaleX = group.scaleX;
+        opt.scaleY = group.scaleY;
+        var objGroup = new fabric.Group(selectObjs,opt);
+        canvas.setActiveGroup(objGroup);
+        //objGroup.setObjectsCoords();
+        canvas.renderAll();
+    });
+}
+
+function httpOpt($scope){
+    $scope.saveFile = function () {
+        var fileName = _('filename').value;
+        canvasData.fileName = fileName;
+        //canvasData.ceateUserName = userName;
+        var paramArr = Utils.urlParams(window.location.href);
+        var id = paramArr['id'];
+        if(id){
+            canvasData.isSaveNew = false;
+        }else{
+            canvasData.isSaveNew = true;
+        }
+        Communication.saveFile(canvasData,function(data){
+            console.log(data);
+        });
+    }
 }
 
 var canvasModule = angular.module('CanvasModule', []);
 canvasModule.controller('CanvasCtrl', function($scope) {
-  $scope.canvas = canvas;
-  $scope.getActiveStyle = getActiveStyle;
-  addAccessors($scope);
-  watchCanvas($scope);
+    $scope.roomId = roomId;
+    $scope.canvas = canvas;
+    $scope.getActiveStyle = getActiveStyle;
+    addAccessors($scope);
+    initCanvas();
+    watchCanvas($scope);
+    httpOpt($scope);
 });

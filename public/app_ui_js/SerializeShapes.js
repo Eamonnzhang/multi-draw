@@ -25,6 +25,18 @@ SerializeShapes.prototype.serializePath = function(data){
     return option;
 };
 
+SerializeShapes.prototype.serializePathState = function(obj){
+    var option={
+        id : obj.id,
+        top: obj.top,
+        left:obj.left,
+        angle:obj.angle,
+        scaleX:obj.scaleX,
+        scaleY:obj.scaleY
+    };
+    return option;
+};
+
 SerializeShapes.prototype.serializeGroupOfPath = function(group){
     var obj={};
     var objArr = [];

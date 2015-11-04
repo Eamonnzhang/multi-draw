@@ -28,9 +28,12 @@ app.directive('bindValueTo', function() {
             radioGroup[i].checked = radioGroup[i].value === newVal;
           }
         } else{
-          //console.log($element[0].type+newVal);
-          $element[0].previousSibling.innerHTML = newVal;
-          $element.val(newVal);
+          if(!$element[0].type){
+              $element[0].innerHTML += newVal;
+          }else{
+            $element[0].previousSibling.innerHTML = newVal;
+            $element.val(newVal);
+          }
         }
       });
     }
