@@ -893,16 +893,16 @@ function initCanvas(){
     socket.emit('room', userInfo);
     //监听在后台已经存在的path
     socket.on('allPath',function(data){
-        if(data[roomId]){
-            data[roomId].forEach(function(x){
-                canvasData.pathData.push(x);
-                if(canvasData.usersId.indexOf(x.userId) === -1){
-                    canvasData.usersId.push(x.userId);
-                }
-                canvas.add(new fabric.Path(x.path,x));
-            });
+    if(data[roomId]){
+      data[roomId].forEach(function(x){
+        canvasData.pathData.push(x);
+        if(canvasData.usersId.indexOf(x.userId) === -1){
+          canvasData.usersId.push(x.userId);
         }
-    });
+        canvas.add(new fabric.Path(x.path,x));
+      });
+    }
+  });
     //监听其他用户画完path
     socket.on('path',function(data){
         canvasData.pathData.push(data);

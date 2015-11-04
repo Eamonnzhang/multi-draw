@@ -2,7 +2,7 @@
  * Created by Eamonn on 2015/9/26.
  */
 var EditBoard = function (){
-    this.__socket = io.connect('http://192.168.1.81:4500');
+    this.__socket = io.connect('http://localhost:4500');
     var drawingModeEl = _('drawing-mode'),
         test = _('test'),
         confirmSaveBtn = _('confirmSave'),

@@ -14,7 +14,7 @@
 </head>
 <body ng-controller="CanvasCtrl">
     <div id="bd-wrapper">
-        <nav class="navbar navbar-default my-navbar">
+        <nav class="navbar navbar-default navbar-fixed-top my-navbar">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -285,17 +285,17 @@
                         </div>
                         <div>
                             <label for="text-stroke-width">线条宽度:</label>
-                            <span class="info">1</span><input type="range" style="width:120px" value="1" min="1" max="5" id="text-stroke-width" class="btn-object-action"
+                            <span class="info">1</span><input type="range" value="1" min="1" max="5" id="text-stroke-width" class="btn-object-action"
                                    bind-value-to="strokeWidth">
                         </div>
                         <div>
                             <label for="text-font-size">字体大小:</label>
-                            <span class="info">100</span><input type="range" style="width:120px" value="" min="1" max="120" step="1" id="text-font-size" class="btn-object-action"
+                            <span class="info">100</span><input type="range" value="" min="1" max="120" step="1" id="text-font-size" class="btn-object-action"
                                    bind-value-to="fontSize">
                         </div>
                         <div>
                             <label for="text-line-height">行间距:</label>
-                            <span class="info">100</span><input type="range" style="width:120px" value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
+                            <span class="info">100</span><input type="range"  value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
                                    bind-value-to="lineHeight">
                         </div>
                     </div><!--text control-->
@@ -399,7 +399,7 @@
 //        canvasData.usersId = [];
         var canvas = editBoard.__canvas;
         var socket = editBoard.__socket;
-        var roomId = editBoard.__roomId;
+        var roomId = urlParams['room'];
         var SerializeShapes = editBoard.serializeShapes;
         var Communication = editBoard.communication;
 	</script>

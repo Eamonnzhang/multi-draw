@@ -1,4 +1,4 @@
-body{  margin: 0;background: #F4F6F8;}
+body{  margin: 0;background: #F4F6F8;margin-top:50px}
 #bd-wrapper {position: relative; }
 ul { margin-left: 0; }
 label { display: inline-block; margin-right: 8px; }
@@ -6,13 +6,13 @@ button.selected { font-weight: bold; vertical-align: top }
 textarea { font-family: monospace; }
 input[type=color] { width: 40px; padding: 0; margin: 0; height: 20px; position: relative; top: 2px;}
 input[type=radio] { margin-top: -3px; }
-canvas{  border: solid 2px;  }
-#canvas-background { display: inline-block; position: absolute; top: 125px; right: 40px; }
+canvas{  border: solid 2px;margin-top:20px;  }
+#canvas-background { display: inline-block; position: absolute; top: 65px; right: 40px; }
 #roomId{color:#5BC0DE;}
 .testBtn{  display: none;  margin: 10px;  }
 .brand-title{  font-family:Times New Roman;  font-style:italic;  font-size: 14pt;  }
 .my-navbar {  background-color: #ffffff;  }
-.toolbar{margin-left:20px; width:100%;  position:fixed;  z-index:99;  }
+.toolbar{margin-left:20px; width:100%; margin-top:20px;position:fixed;  z-index:99;  }
 .overflow{  overflow-y:hidden;  }
 .breadcrumb {
     border-radius: 0;

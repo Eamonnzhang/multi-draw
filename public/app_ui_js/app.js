@@ -28,7 +28,8 @@ app.directive('bindValueTo', function() {
             radioGroup[i].checked = radioGroup[i].value === newVal;
           }
         } else{
-          if(!$element[0].type){
+          if(!$element[0].type&&newVal){
+              //console.log(newVal);
               $element[0].innerHTML += newVal;
           }else{
             $element[0].previousSibling.innerHTML = newVal;
