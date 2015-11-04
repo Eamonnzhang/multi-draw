@@ -326,7 +326,10 @@ function addAccessors($scope) {
 
   $scope.confirmClear = function() {
     if (confirm('Are you sure?')) {
-      canvas.clear();
+      socket.emit('clearAll','clearAll',function(){
+        canvasData.pathData = [];
+        canvas.clear();
+      });
     }
   };
 
@@ -836,7 +839,7 @@ function watchCanvas($scope) {
 }
 
 var canvasModule = angular.module('CanvasModule', []);
-canvasModule.controller('CanvasControls', function($scope) {
+canvasModule.controller('CanvasCtrl', function($scope) {
   $scope.canvas = canvas;
   $scope.getActiveStyle = getActiveStyle;
   addAccessors($scope);

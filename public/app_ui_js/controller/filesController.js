@@ -1,8 +1,8 @@
 /**
  * Created by Eamonn on 2015/11/3.
  */
-var filesApp = angular.module('filesApp', []);
-filesApp.controller('filesCtrl', function($scope, $http) {
+var fileListModule = angular.module('FileListModule', []);
+fileListModule.controller('FileListCtrl', function($scope, $http) {
     $http.get("/loadAllFiles")
         .success(function (response) {
             if(response.success)

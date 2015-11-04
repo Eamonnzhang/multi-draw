@@ -1,4 +1,4 @@
-body{  margin:0;background: #FFFAFA;color: #5f6468;padding-top:50px}
+body{  margin: 0;background: #FFFAFA;color: #5f6468;}
 #bd-wrapper {position: relative; }
 ul { margin-left: 0; }
 label { display: inline-block; margin-right: 8px; }
@@ -7,11 +7,12 @@ textarea { font-family: monospace; }
 input[type=color] { width: 40px; padding: 0; margin: 0; height: 20px; position: relative; top: 2px;}
 input[type=radio] { margin-top: -3px; }
 canvas{  border: solid 2px;  }
-#canvas-background { display: inline-block; position: absolute; top: 40px; right: 40px; }
+#canvas-background { display: inline-block; position: absolute; top: 125px; right: 40px; }
+#roomId{color:cornflowerblue;}
 .testBtn{  display: none;  margin: 10px;  }
 .brand-title{  font-family:Times New Roman;  font-style:italic;  font-size: 14pt;  }
 .my-navbar {  background-color: #ffffff;  }
-.toolbar{  margin:10px 0;  width:100%;  position:fixed;  z-index:99;  }
+.toolbar{margin-left:20px;width:100%;  position:fixed;  z-index:99;  }
 .overflow{  overflow-y:hidden;  }
 .breadcrumb {
     border-radius: 0;
