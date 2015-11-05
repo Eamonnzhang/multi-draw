@@ -201,7 +201,7 @@
         <div  id="controls" class="col-lg-2 col-md-2 col-sm-2 col-xs-2" >
             <div id='optionDiv'>
                 <div id="drawing-mode-options" ng-show="getFreeDrawingMode()">
-                    <p style="font-weight: 700;color: black">笔画样式：</p>
+                    <p style="font-weight: 700;">笔画样式：</p>
                     <label for="drawing-mode-selector">模式:</label><br>
                     <select id="drawing-mode-selector" bind-value-to="drawingMode">
                         <option>Pencil</option>
@@ -216,16 +216,16 @@
                         <option>texture</option>
                     </select><br>
                     <label for="drawing-line-width">线宽:</label>
-                    <span class="info">2</span><input type="range" value="" min="0" max="150"  data-orientation="vertical" bind-value-to="drawingLineWidth">
+                    <span class="info">1</span><input type="range" min="0" max="150"  data-orientation="vertical" bind-value-to="drawingLineWidth">
 
                     <label for="drawing-color">颜色:</label><br>
-                    <input type="color" value="#30A5FF" bind-value-to="drawingLineColor"><br>
+                    <input type="color" bind-value-to="drawingLineColor"><br>
 
                     <label for="drawing-shadow-color">阴影颜色:</label><br>
-                    <input type="color" value="#30A5FF" bind-value-to="drawingLineShadowColor"><br>
+                    <input type="color" bind-value-to="drawingLineShadowColor"><br>
 
                     <label for="drawing-shadow-width">阴影宽度:</label>
-                    <span class="info">0</span><input type="range" value="0" min="0" max="50" bind-value-to="drawingLineShadowWidth">
+                    <span class="info"></span><input type="range" min="0" max="50" bind-value-to="drawingLineShadowWidth">
                     <!--<label for="drawing-shadow-offset">阴影偏移:</label>-->
                     <!--<span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-offset"><br>-->
                 </div>
@@ -240,7 +240,7 @@
                     <input type="color"  bind-value-to="fill"><br>
 
                     <label for="text-stroke-color">线条颜色:</label><br>
-                    <input  type="color" value="" id="text-stroke-color" class="btn-object-action"
+                    <input  type="color" id="text-stroke-color" class="btn-object-action"
                             bind-value-to="strokeColor">
                 </div><!--配置透明度-->
 
@@ -275,12 +275,12 @@
                         <!--</select>-->
                         <div>
                             <label for="text-bg-color">背景颜色:</label><br>
-                            <input type="color" value="" id="text-bg-color" size="10" class="btn-object-action"
+                            <input type="color"  id="text-bg-color" size="10" class="btn-object-action"
                                    bind-value-to="bgColor">
                         </div>
                         <div>
                             <label for="text-lines-bg-color">文本背景颜色:</label><br>
-                            <input type="color" value="" id="text-lines-bg-color" size="10" class="btn-object-action"
+                            <input type="color" id="text-lines-bg-color" size="10" class="btn-object-action"
                                    bind-value-to="textBgColor">
                         </div>
                         <div>
@@ -394,9 +394,6 @@
             };
             editBoard.communication.loadFile(queryObj, Utils.bind(editBoard,editBoard.resetBoard));
         }
-//        var canvasData = {};
-//        canvasData.pathData = [];
-//        canvasData.usersId = [];
         var canvas = editBoard.__canvas;
         var socket = editBoard.__socket;
         var roomId = urlParams['room'];

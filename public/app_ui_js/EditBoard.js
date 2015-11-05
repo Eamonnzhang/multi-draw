@@ -2,7 +2,7 @@
  * Created by Eamonn on 2015/9/26.
  */
 var EditBoard = function (){
-    this.__socket = io.connect('http://localhost:4500');
+    this.__socket = io.connect('http://192.168.1.81:4500');
     var drawingModeEl = _('drawing-mode'),
         test = _('test'),
         confirmSaveBtn = _('confirmSave'),
@@ -11,7 +11,7 @@ var EditBoard = function (){
     this.communication = new Communication();
     this.serializeShapes = new SerializeShapes();
     var canvas = this.__canvas = new fabric.Canvas('c', {
-        backgroundColor :"#fff"
+        backgroundColor :"#ffffff"
     });
     //console.log(canvas);
     var configBoard = new ConfigBoard(this);
@@ -25,23 +25,6 @@ var EditBoard = function (){
     saveBtn.onclick = function () {
 
     };
-
-    //confirmSaveBtn.onclick = Utils.bind(this,function(){
-    //    //prompt('请输入文件名');
-    //    var fileName = _('filename').value;
-    //    canvasData.fileName = fileName;
-    //    //canvasData.ceateUserName = userName;
-    //    var parmArr = Utils.urlParams(window.location.href);
-    //    var id = parmArr['id'];
-    //    if(id){
-    //        canvasData.isSaveNew = false;
-    //    }else{
-    //        canvasData.isSaveNew = true;
-    //    }
-    //    this.communication.saveFile(canvasData,function(data){
-    //        console.log(data);
-    //    });
-    //});
 
     drawingModeEl.onclick =  function() {
         if (!canvas.isDrawingMode) {

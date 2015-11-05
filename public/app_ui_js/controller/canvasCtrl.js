@@ -1,4 +1,3 @@
-
 var canvasData = {};
 canvasData.pathData = [];
 canvasData.usersId = [];
@@ -59,6 +58,7 @@ function addAccessors($scope) {
     return getActiveStyle('fill');
   };
   $scope.setFill = function(value) {
+      console.log('setFill');
     setActiveStyle('fill', value);
   };
 
@@ -565,7 +565,7 @@ function addAccessors($scope) {
       left: 100,
       top: 150,
       fontFamily: 'Helvetica',
-      fill: '#333',
+      fill: '#333333',
       styles: {
         0: {
           0: { fill: 'red', fontSize: 20 },
@@ -597,11 +597,11 @@ function addAccessors($scope) {
           7: { fontFamily: 'Courier', textDecoration: 'line-through' }
         },
         3: {
-          0: { fontFamily: 'Impact', fill: '#666', textDecoration: 'line-through' },
-          1: { fontFamily: 'Impact', fill: '#666', textDecoration: 'line-through' },
-          2: { fontFamily: 'Impact', fill: '#666', textDecoration: 'line-through' },
-          3: { fontFamily: 'Impact', fill: '#666', textDecoration: 'line-through' },
-          4: { fontFamily: 'Impact', fill: '#666', textDecoration: 'line-through' }
+          0: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
+          1: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
+          2: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
+          3: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
+          4: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' }
         }
       }
     });
@@ -610,7 +610,7 @@ function addAccessors($scope) {
       left: 400,
       top: 150,
       fontFamily: 'Helvetica',
-      fill: '#333',
+      fill: '#333333',
       styles: {
         0: {
           0: { fill: 'red' },
@@ -669,15 +669,15 @@ function addAccessors($scope) {
 
     $scope.$$phase || $scope.$digest();
   };
-
-  $scope.getDrawingLineWidth = function() {
+    canvas.freeDrawingBrush.width = 3;
+    $scope.getDrawingLineWidth = function() {
     if (canvas.freeDrawingBrush) {
       return canvas.freeDrawingBrush.width;
     }
-  };
+    };
   $scope.setDrawingLineWidth = function(value) {
     if (canvas.freeDrawingBrush) {
-      canvas.freeDrawingBrush.width = parseInt(value, 10) || 1;
+      canvas.freeDrawingBrush.width = parseInt(value, 10)||1;
     }
   };
 
@@ -728,7 +728,7 @@ function addAccessors($scope) {
     };
     $scope.getRoomId = function(){
         return $scope.roomId;
-    }
+    };
 
   function initBrushes() {
     if (!fabric.PatternBrush) return;
@@ -862,15 +862,34 @@ function watchCanvas($scope) {
                     //console.log(obj.top+','+obj.left);
                     var data =SerializeShapes.serializePathState(obj);
                     socket.emit('stateChange',data);
+                    //socket.emit('unlockState',obj.id);
                 }
                 if(canvas.getActiveGroup()){
                     var group = SerializeShapes.serializeGroupOfPath(canvas.getActiveGroup());
                     socket.emit('groupChange',group);
+                    //socket.emit('unlockState',group.idArr);
                 }
             }
         }
     }
-    function listenMouseClick(){
+    function listenMouseDown(e){
+        console.log(e);
+        var obj = e.target;
+        if(obj){
+            if(obj._objects){
+                if(obj._objects[0].selectable){
+                    var idArr = [];
+                    obj._objects.forEach(function (a) {
+                        idArr.push(a.id);
+                    });
+                    console.log('send group lock');
+                    socket.emit('lockState',idArr);
+                }
+            }else if(obj.selectable){
+                console.log('send lock');
+                socket.emit('lockState',obj.id);
+            }
+        }
         isMouseDown = true;
     }
 
@@ -879,13 +898,13 @@ function watchCanvas($scope) {
     .on('group:selected', updateScope)
     .on('path:created', addPath)
     .on('mouse:up', changeState)
-    .on('mouse:down', listenMouseClick)
+    .on('mouse:down', listenMouseDown)
     .on('selection:cleared', updateScope);
 }
 
 
 
-function initCanvas(){
+function initCanvasSocket(){
     var userInfo = {};
     userInfo.roomId = roomId;
     userInfo.userId = apiKey;
@@ -894,15 +913,15 @@ function initCanvas(){
     //监听在后台已经存在的path
     socket.on('allPath',function(data){
     if(data[roomId]){
-      data[roomId].forEach(function(x){
-        canvasData.pathData.push(x);
-        if(canvasData.usersId.indexOf(x.userId) === -1){
-          canvasData.usersId.push(x.userId);
+        data[roomId].forEach(function(x){
+            canvasData.pathData.push(x);
+            if(canvasData.usersId.indexOf(x.userId) === -1){
+                canvasData.usersId.push(x.userId);
+            }
+            canvas.add(new fabric.Path(x.path,x));
+          });
         }
-        canvas.add(new fabric.Path(x.path,x));
-      });
-    }
-  });
+    });
     //监听其他用户画完path
     socket.on('path',function(data){
         canvasData.pathData.push(data);
@@ -945,7 +964,10 @@ function initCanvas(){
                 a.setAngle(data.angle);
                 a.setScaleX(data.scaleX);
                 a.setScaleY(data.scaleY);
-                //a.setCoords();
+                a.selectable = true;
+                a.hasControls = true;
+                a.setCoords();
+                console.log(a.id+'has unlocked');
                 canvas.renderAll();
             }
         });
@@ -956,6 +978,10 @@ function initCanvas(){
         var selectObjs = [];
         myObjArr.forEach(function(a){
             if(group.idArr.indexOf(a.id) !== -1){
+                a.selectable = true;
+                a.hasControls = true;
+                a.setCoords();
+                console.log(a.id+' has unlocked');
                 selectObjs.push(a);
             }
         });
@@ -967,7 +993,34 @@ function initCanvas(){
         opt.scaleY = group.scaleY;
         var objGroup = new fabric.Group(selectObjs,opt);
         canvas.setActiveGroup(objGroup);
-        //objGroup.setObjectsCoords();
+        objGroup.setObjectsCoords();
+        canvas.renderAll();
+        canvas.discardActiveGroup() ;
+    });
+    //监听其他用户操作对象时锁定该对象
+    socket.on('lockState', function (data) {
+        var myObjArr = Utils.cloneArray(canvas.getObjects());
+        if(typeof data === 'string'){
+            myObjArr.forEach(function (a) {
+                if(a.id === data){
+                    a.selectable = false;
+                    a.hasControls = false;
+                    a.setCoords();
+                    console.log(a);
+                    console.log('locked');
+                }
+            });
+        }else{
+           myObjArr.forEach(function (a) {
+                //canvas.remove(object);
+                if(data.indexOf(a.id)!== -1){
+                    a.selectable = false;
+                    a.hasControls = false;
+                    a.setCoords();
+                    console.log(a.id+'locked');
+                }
+            });
+        }
         canvas.renderAll();
     });
 }
@@ -996,7 +1049,7 @@ canvasModule.controller('CanvasCtrl', function($scope) {
     $scope.canvas = canvas;
     $scope.getActiveStyle = getActiveStyle;
     addAccessors($scope);
-    initCanvas();
+    initCanvasSocket();
     watchCanvas($scope);
     httpOpt($scope);
 });
