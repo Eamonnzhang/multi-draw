@@ -40,7 +40,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">插入 <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-text-size"></span>&nbsp;&nbsp;&nbsp;文字</a></li>
-                                <li><a  href="javascript:void(0)" ng-click="addImage1()" ><span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;&nbsp;图片</a></li>
+                                <li><a  href="javascript:void(0)" ><span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;&nbsp;图片</a></li>
                                 <li><a  href="javascript:void(0)" ng-click="" ><span class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;&nbsp;视频</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li type="button" ng-click="addRect()" class="btn" style="margin-left: 33px">矩形</li>
@@ -201,8 +201,7 @@
         <div  id="controls" class="col-lg-2 col-md-2 col-sm-2 col-xs-2" >
             <div id='optionDiv'>
                 <div id="drawing-mode-options" ng-show="getFreeDrawingMode()">
-                    <p style="font-weight: 700;">笔画样式：</p>
-                    <label for="drawing-mode-selector">模式:</label><br>
+                    <label for="drawing-mode-selector">画笔:</label><br>
                     <select id="drawing-mode-selector" bind-value-to="drawingMode">
                         <option>Pencil</option>
                         <option>Circle</option>

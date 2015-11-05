@@ -7,6 +7,7 @@ var EditBoard = function (){
         test = _('test'),
         confirmSaveBtn = _('confirmSave'),
         saveBtn = _('save'),
+        test = _('test'),
         consoleInfo = _('console-info');
     this.communication = new Communication();
     this.serializeShapes = new SerializeShapes();
@@ -14,6 +15,9 @@ var EditBoard = function (){
         backgroundColor :"#ffffff"
     });
     //console.log(canvas);
+    $('#test').on('closed.bs.alert', function () {
+        // do something…
+    })
     var configBoard = new ConfigBoard(this);
 
     window.onresize = configBoard.resizeCanvas;
@@ -47,12 +51,12 @@ var EditBoard = function (){
         }
     };
 
-    test.onclick = function(){
-        var obj = canvas.getActiveGroup();
-        obj.forEachObject(function(x){
-            x.selectable  = false;
-        });
-    };
+    //test.onclick = function(){
+    //    var obj = canvas.getActiveGroup();
+    //    obj.forEachObject(function(x){
+    //        x.selectable  = false;
+    //    });
+    //};
 };
 
 EditBoard.prototype.resetBoard= function (data) {

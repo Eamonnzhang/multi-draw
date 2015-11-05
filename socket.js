@@ -46,7 +46,7 @@ exports.startSocketIo = function(server){
             fn();
         });
         socket.on('path',function(data){
-            console.log('data');
+            //console.log('data');
             pathRoom[room].push(data);
             socket.broadcast.to(room).emit('path', data);
         });

@@ -629,7 +629,7 @@ function addAccessors($scope) {
     canvas.add(iText, iText2);
   }
 
-  addTexts();
+  //addTexts();
 
 
   $scope.getFreeDrawingMode = function() {
