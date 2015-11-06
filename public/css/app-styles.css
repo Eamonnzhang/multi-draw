@@ -9,7 +9,7 @@ input[type=radio] { margin-top: -3px; }
 canvas{  border: solid 2px;margin-top:20px;  }
 #canvas-background { display: inline-block; position: absolute; top: 65px; right: 40px; }
 #roomId{color:#5BC0DE;}
-/*.testBtn{  display:none ;  margin: 10px;  }*/
+.testBtn{  display:none;}
 .brand-title{  font-family:Times New Roman;  font-style:italic;  font-size: 14pt;  }
 .my-navbar {  background-color: #ffffff;  }
 .toolbar{margin-left:20px; width:100%; margin-top:20px;position:fixed;  z-index:99;  }
@@ -38,3 +38,44 @@ canvas{  border: solid 2px;margin-top:20px;  }
 /*.tabs li, .tabs li a { display: inline-block; }*/
 /*.btn-lock { margin-bottom: 3px; }*/
 /*#color-opacity-controls { display: inline-block; vertical-align: top; margin-bottom: 5px;margin-right: 20px; }*/
+.dropdown-submenu {
+    position: relative;
+}
+.dropdown-submenu > .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+}
+.dropdown-submenu > a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+.dropdown-submenu:hover > a:after {
+    border-left-color: #fff;
+}
+.dropdown-submenu.pull-left {
+    float: none;
+}
+.dropdown-submenu.pull-left > .dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}

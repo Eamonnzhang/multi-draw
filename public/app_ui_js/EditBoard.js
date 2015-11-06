@@ -3,10 +3,7 @@
  */
 var EditBoard = function (){
     this.__socket = io.connect('http://192.168.1.81:4500');
-    var drawingModeEl = _('drawing-mode'),
-        test = _('test'),
-        confirmSaveBtn = _('confirmSave'),
-        saveBtn = _('save'),
+    var drawingModeEl =this.__drawingModeEl= _('drawing-mode'),
         test = _('test'),
         consoleInfo = _('console-info');
     this.communication = new Communication();
@@ -14,22 +11,13 @@ var EditBoard = function (){
     var canvas = this.__canvas = new fabric.Canvas('c', {
         backgroundColor :"#ffffff"
     });
-    //console.log(canvas);
-    $('#test').on('closed.bs.alert', function () {
-        // do something…
-    })
     var configBoard = new ConfigBoard(this);
 
     window.onresize = configBoard.resizeCanvas;
-
+    configBoard.initKeyBoard();
     configBoard.resizeCanvas();
 
     fabric.Object.prototype.transparentCorners = false;
-
-    saveBtn.onclick = function () {
-
-    };
-
     drawingModeEl.onclick =  function() {
         if (!canvas.isDrawingMode) {
             drawingModeEl.innerHTML = ' <i class="fa fa-mouse-pointer"></i>&nbsp;选中';
@@ -51,12 +39,12 @@ var EditBoard = function (){
         }
     };
 
-    //test.onclick = function(){
-    //    var obj = canvas.getActiveGroup();
-    //    obj.forEachObject(function(x){
-    //        x.selectable  = false;
-    //    });
-    //};
+    test.onclick = function(){
+        var obj = canvas.getActiveGroup();
+        obj.forEachObject(function(x){
+            x.selectable  = false;
+        });
+    };
 };
 
 EditBoard.prototype.resetBoard= function (data) {
