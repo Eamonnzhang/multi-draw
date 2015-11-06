@@ -8,18 +8,18 @@ var ConfigBoard = function (editBoard) {
 ConfigBoard.prototype.resizeCanvas = function () {
 
     //resize canvas
-    this.editBoard.__canvas.setHeight(640);
-    if($(window).width() > 1550){                                      // width > 1550
-        this.editBoard.__canvas.setWidth($(window).width()-$("#controls").width()-150);
-        _('canvas-col').setAttribute('class','col-lg-8 col-md-8  col-sm-8 col-xs-8 col-lg-pull-1');
-        _('canvas-col').setAttribute('style','margin-left:55px;margin-top:80px;');
-    }else if ($(window).width() <= 1550 &&$(window).width() >=1200){   // 1200 <= width <= 1550
-        this.editBoard.__canvas.setWidth($(window).width()-$("#controls").width()-150);
-        _('canvas-col').setAttribute('class','col-lg-8 col-md-8  col-sm-8 col-xs-8');
-    }else if($(window).width() <340 ){                                 // width < 340
-        this.editBoard.__canvas.setWidth($(window).width()-35);
-    }else                                                              // 340 <= width <= 1550
-        this.editBoard.__canvas.setWidth($(window).width()+85-$("#controls").width()-150);
+    //this.editBoard.__canvas.setHeight(640);
+    //if($(window).width() > 1550){                                      // width > 1550
+    //    this.editBoard.__canvas.setWidth($(window).width()-$("#controls").width()-150);
+    //    _('canvas-col').setAttribute('class','col-lg-8 col-md-8  col-sm-8 col-xs-8 col-lg-pull-1');
+    //    _('canvas-col').setAttribute('style','margin-left:55px;margin-top:80px;');
+    //}else if ($(window).width() <= 1550 &&$(window).width() >=1200){   // 1200 <= width <= 1550
+    //    this.editBoard.__canvas.setWidth($(window).width()-$("#controls").width()-150);
+    //    _('canvas-col').setAttribute('class','col-lg-8 col-md-8  col-sm-8 col-xs-8');
+    //}else if($(window).width() <340 ){                                 // width < 340
+    //    this.editBoard.__canvas.setWidth($(window).width()-35);
+    //}else                                                              // 340 <= width <= 1550
+    //    this.editBoard.__canvas.setWidth($(window).width()+85-$("#controls").width()-150);
     _('canvas-col').setAttribute('style','margin-top:80px;');
 
     //resize sideBar
@@ -34,6 +34,7 @@ ConfigBoard.prototype.resizeCanvas = function () {
         _('optionDiv').setAttribute('style','position:fixed');
 };
 
+
 ConfigBoard.prototype.initKeyBoard = function () {
     var ie;
     if (document.all)
@@ -41,6 +42,7 @@ ConfigBoard.prototype.initKeyBoard = function () {
     else
         ie = false; //判断是否IE
     document.onkeydown = KeyPress;
+    document.onkeyup = KeyUp;
     var me = this;
     //设置键盘事件函数
     function KeyPress(){
@@ -60,6 +62,18 @@ ConfigBoard.prototype.initKeyBoard = function () {
                 me.editBoard.__drawingModeEl.innerHTML = ' <i class="fa fa-paint-brush "></i>&nbsp;绘画';
                 me.editBoard.__drawingModeEl.setAttribute('class','btn btn-info');
             }
+        }
+        if(key === 17){
+            if(!spaceKeyDown){
+                spaceKeyDown = true;
+            }
+        }
+    }
+    function KeyUp(){
+        var key = event.keyCode;
+        if(key === 17){
+            if(spaceKeyDown)
+                spaceKeyDown = false;
         }
     }
 };

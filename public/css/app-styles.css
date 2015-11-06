@@ -1,5 +1,8 @@
 body{  margin: 0;background: #F4F6F8;margin-top:50px}
 #bd-wrapper {position: relative; }
+#canvasContainer{
+    position: absolute;
+}
 ul { margin-left: 0; }
 label { display: inline-block; margin-right: 8px; }
 button.selected { font-weight: bold; vertical-align: top }

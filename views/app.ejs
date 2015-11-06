@@ -348,7 +348,9 @@
             </div><!--optionDiv-->
         </div><!--controls-->
         <div id="canvas-col" class="col-lg-8 col-md-8  col-sm-8 col-xs-8">
-            <canvas id="c"></canvas>
+            <div id="canvasContainer">
+                <canvas id="c"></canvas>
+            </div>
         </div>
         <div id="canvas-background">
             <label for="canvas-background-picker">画板背景色:</label>
@@ -413,8 +415,20 @@
     <script src='/app_ui_js/ConfigBoard.js'></script>
     <script src='/app_ui_js/EditBoard.js'></script>
 	<script>
+        var spaceKeyDown = false,
+                panning = false,
+                mouseXOnPan = 0,
+                mouseX = 0,
+                mouseY = 0,
+                oldMouseX = 0,
+                oldMouseY = 0,
+                mouseYOnPan = 0,
+                canvasXOnPan = 0,
+                canvasYOnPan = 0;
         var _ = function(id){return document.getElementById(id)};
         var editBoard = new EditBoard();
+//        var canvasContainer = document.getElementsByClassName('canvas-container');
+//        console.log();
         var urlParams = Utils.urlParams(window.location.href);
         if(urlParams['id']){
             var queryObj = {
@@ -424,6 +438,7 @@
             editBoard.communication.loadFile(queryObj, Utils.bind(editBoard,editBoard.resetBoard));
         }
         var canvas = editBoard.__canvas;
+        var canvasCtn = _('canvasContainer');
         var socket = editBoard.__socket;
         var roomId = urlParams['room'];
         var SerializeShapes = editBoard.serializeShapes;

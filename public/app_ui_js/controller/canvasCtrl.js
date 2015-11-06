@@ -850,19 +850,22 @@ function watchCanvas($scope) {
         console.log(e.target);
     }
     function addPath(e){
-        updateScope();
-        var path = e.path;
-        var data = SerializeShapes.serializePath(path);
-        path.id = data.id;
-        canvasData.pathData.push(data);
-        if(canvasData.usersId.indexOf(data.userId) === -1){
-            canvasData.usersId.push(data.userId);
+        if(!spaceKeyDown){
+            updateScope();
+            var path = e.path;
+            var data = SerializeShapes.serializePath(path);
+            path.id = data.id;
+            canvasData.pathData.push(data);
+            if(canvasData.usersId.indexOf(data.userId) === -1){
+                canvasData.usersId.push(data.userId);
+            }
+            console.log(canvasData);
+            socket.emit('path', data);
         }
-        console.log(canvasData);
-        socket.emit('path', data);
-
     }
     function changeState(e){
+        panning = false;
+        console.log('mouse up');
         if(isMouseDown){
             isMouseDown = !isMouseDown;
             var obj = e.target;
@@ -882,27 +885,50 @@ function watchCanvas($scope) {
         }
     }
     function listenMouseDown(e){
-        var obj = e.target;
-        if(obj){
-            if(obj._objects){
-                if(obj._objects[0].selectable){
-                    var idArr = [];
-                    obj._objects.forEach(function (a) {
-                        idArr.push(a.id);
-                    });
-                    //console.log('send group lock');
-                    socket.emit('lockState',idArr);
-                }else{
-                    console.log(obj);
-                }
-            }else if(obj.selectable){
+        console.log('mouse down');
+        if(spaceKeyDown){
+            if(canvas.isDrawingMode){
+                //isMouseDown = false;
+                console.log('no drag');
+            }else{
+                panning = true;
+                mouseXOnPan = event.clientX;
+                mouseYOnPan = event.clientY;
+                canvasXOnPan = canvasCtn.offsetLeft;
+                canvasYOnPan = canvasCtn.offsetTop;
+            }
+        }else {
+            var obj = e.target;
+            if (obj) {
+                if (obj._objects) {
+                    if (obj._objects[0].selectable) {
+                        var idArr = [];
+                        obj._objects.forEach(function (a) {
+                            idArr.push(a.id);
+                        });
+                        //console.log('send group lock');
+                        socket.emit('lockState', idArr);
+                    }
+                }else if (obj.selectable) {
                     //console.log('send lock');
-                    socket.emit('lockState',obj.id);
-                }else{
-                    console.log(obj);
+                    socket.emit('lockState', obj.id);
                 }
+                console.log(obj);
+            }
         }
         isMouseDown = true;
+    }
+
+    function moveCanvas(){
+
+        if ( panning && spaceKeyDown) {
+            //console.log('aaa');
+            canvasCtn.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
+            canvasCtn.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan ) + 'px';
+            //canvas.renderAll();
+            //container.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
+            //container.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan ) + 'px';
+        }
     }
 
     canvas
@@ -911,6 +937,7 @@ function watchCanvas($scope) {
     .on('path:created', addPath)
     .on('mouse:up', changeState)
     .on('mouse:down', listenMouseDown)
+    .on('mouse:move', moveCanvas)
     .on('selection:cleared', updateScope);
 }
 
