@@ -7,15 +7,15 @@ var message = require('../app_modules/_utils/messageGenerator.js');
 module.exports = function(app){
     app.get('/',function(req,res){
         if (req.session.userData) {
-            if(req.query.room||req.query.fileName){
+            //if(req.query.room||req.query.fileName){
                 res.render('app', {
                     userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
                     userId: req.session.userData.id,
                     apiKey: req.session.userData.apiKey,title:'MultiDraw'
                 });
-            }else{
-                res.redirect('/start');
-            }
+            //}else{
+            //    res.redirect('/start');
+            //}
         }else{
             res.redirect('/login');
         }

@@ -26,7 +26,7 @@ exports.isExist = function(req,res){
             api.push(userApi);
             req.session.userData.apiKey = userApi.apiKey;
             delete req.session.userData.password;
-            res.redirect('/start');
+            res.redirect('/');
         } else {
             res.redirect('/login');
         }

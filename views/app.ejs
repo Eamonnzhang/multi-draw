@@ -74,7 +74,7 @@
                         <!--<button type="submit" class="btn btn-default">Submit</button>-->
                     <!--</form>-->
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a id="roomId" bind-value-to="roomId">房间：</a></li>
+                        <li><a id="roomId" bind-value-to="roomId"></a></li>
                         <li class="dropdown">
                             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
@@ -386,7 +386,7 @@
                     <h4 class="modal-title" id="myModalLabel">请输入文件名：</h4>
                 </div>
                 <div class="modal-body">
-                    <input id='filename' type='text' size="30" bind-value-to="fileName">
+                    <input id='filename' type='text' size="30">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -440,7 +440,7 @@
         var canvas = editBoard.__canvas;
         var canvasCtn = _('canvasContainer');
         var socket = editBoard.__socket;
-        var roomId = urlParams['room'];
+        if(urlParams['room']) var roomId = urlParams['room'];
         var SerializeShapes = editBoard.serializeShapes;
         var Communication = editBoard.communication;
 	</script>

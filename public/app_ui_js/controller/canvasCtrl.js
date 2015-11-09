@@ -677,48 +677,48 @@ function addAccessors($scope) {
   };
     canvas.freeDrawingBrush.width = 3;
     $scope.getDrawingLineWidth = function() {
-    if (canvas.freeDrawingBrush) {
-      return canvas.freeDrawingBrush.width;
-    }
+        if (canvas.freeDrawingBrush) {
+          return canvas.freeDrawingBrush.width;
+        }
     };
-  $scope.setDrawingLineWidth = function(value) {
-    if (canvas.freeDrawingBrush) {
-      canvas.freeDrawingBrush.width = parseInt(value, 10)||1;
-    }
-  };
+    $scope.setDrawingLineWidth = function(value) {
+        if (canvas.freeDrawingBrush) {
+          canvas.freeDrawingBrush.width = parseInt(value, 10)||1;
+        }
+    };
 
 
 
-  $scope.getDrawingLineColor = function() {
-    if (canvas.freeDrawingBrush) {
-      return canvas.freeDrawingBrush.color;
-    }
-  };
-  $scope.setDrawingLineColor = function(value) {
-    if (canvas.freeDrawingBrush) {
-      canvas.freeDrawingBrush.color = value;
-    }
-  };
+    $scope.getDrawingLineColor = function() {
+        if (canvas.freeDrawingBrush) {
+          return canvas.freeDrawingBrush.color;
+        }
+    };
+    $scope.setDrawingLineColor = function(value) {
+        if (canvas.freeDrawingBrush) {
+          canvas.freeDrawingBrush.color = value;
+        }
+    };
 
-  $scope.getDrawingLineShadowWidth = function() {
-    if (canvas.freeDrawingBrush && canvas.freeDrawingBrush.shadow) {
-      return canvas.freeDrawingBrush.shadow.blur || 1;
-    }
-    else {
-      return 0
-    }
-  };
-  $scope.setDrawingLineShadowWidth = function(value) {
-    if (canvas.freeDrawingBrush) {
-      var blur = parseInt(value, 10) || 1;
-      if (blur > 0) {
-        canvas.freeDrawingBrush.shadow = new fabric.Shadow({blur: blur, offsetX: 10, offsetY: 10}) ;
-      }
-      else {
-        canvas.freeDrawingBrush.shadow = null;
-      }
-    }
-  };
+    $scope.getDrawingLineShadowWidth = function() {
+        if (canvas.freeDrawingBrush && canvas.freeDrawingBrush.shadow) {
+          return canvas.freeDrawingBrush.shadow.blur || 1;
+        }
+        else {
+          return 0
+        }
+    };
+    $scope.setDrawingLineShadowWidth = function(value) {
+        if (canvas.freeDrawingBrush) {
+            var blur = parseInt(value, 10) || 1;
+            if (blur > 0) {
+                canvas.freeDrawingBrush.shadow = new fabric.Shadow({blur: blur, offsetX: 10, offsetY: 10}) ;
+            }
+            else {
+                canvas.freeDrawingBrush.shadow = null;
+            }
+        }
+    };
     $scope.getDrawingLineShadowColor = function(){
         if (canvas.freeDrawingBrush && canvas.freeDrawingBrush.shadow) {
             return canvas.freeDrawingBrush.shadow.color || 1;
@@ -733,7 +733,11 @@ function addAccessors($scope) {
         }
     };
     $scope.getRoomId = function(){
-        return $scope.roomId;
+        if($scope.roomId){
+            return $scope.roomId;
+        }
+        else
+            return null;
     };
 
   function initBrushes() {
@@ -1081,7 +1085,7 @@ function httpOpt($scope){
 
 var canvasModule = angular.module('CanvasModule', []);
 canvasModule.controller('CanvasCtrl', function($scope) {
-    $scope.roomId = roomId;
+    if(roomId) $scope.roomId = roomId;
     $scope.canvas = canvas;
     $scope.getActiveStyle = getActiveStyle;
     addAccessors($scope);

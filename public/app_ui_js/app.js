@@ -28,12 +28,16 @@ app.directive('bindValueTo', function() {
             radioGroup[i].checked = radioGroup[i].value === newVal;
           }
         } else{
-          if(!$element[0].type&&newVal){
-              //console.log(newVal);
-              $element[0].innerHTML += newVal;
-          }else{
-            $element[0].previousSibling.innerHTML = newVal;
-            $element.val(newVal);
+          if(newVal == null){
+              $element[0].innerHTML = '<span class="glyphicon glyphicon-share"></span>&nbsp;分享';
+              $element[0].setAttribute('class','share');
+              //console.log($element[0]);
+          }else if(!$element[0].type&&newVal){
+              $element[0].innerHTML = '房间：'+newVal;
+              $element[0].setAttribute('class','room');
+          } else{
+              $element[0].previousSibling.innerHTML = newVal;
+              $element.val(newVal);
           }
         }
       });
