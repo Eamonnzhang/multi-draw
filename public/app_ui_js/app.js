@@ -17,8 +17,10 @@ app.directive('bindValueTo', function() {
           setter = 'set' + prop;
 
       $element.on('change keyup select', function() {
-        $scope[setter] && $scope[setter](this.value);
-        this.previousSibling.innerHTML = this.value;
+         if(this.getAttribute('class')!=='share'&&this.getAttribute('class')!=='room'){
+            $scope[setter] && $scope[setter](this.value);
+            this.previousSibling.innerHTML = this.value;
+         }
       });
 
       $scope.$watch($scope[getter], function(newVal) {
@@ -29,12 +31,18 @@ app.directive('bindValueTo', function() {
           }
         } else{
           if(newVal == null){
-              $element[0].innerHTML = '<span class="glyphicon glyphicon-share"></span>&nbsp;分享';
+              $element[0].innerHTML = '<span class="glyphicon glyphicon-share"></span>&nbsp;分享画板';
               $element[0].setAttribute('class','share');
+              $element[0].onclick = function () {
+                  console.log('share');
+              };
               //console.log($element[0]);
           }else if(!$element[0].type&&newVal){
               $element[0].innerHTML = '房间：'+newVal;
               $element[0].setAttribute('class','room');
+              $element[0].onclick = function () {
+                  console.log('room');
+              };
           } else{
               $element[0].previousSibling.innerHTML = newVal;
               $element.val(newVal);

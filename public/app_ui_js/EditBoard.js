@@ -5,8 +5,7 @@ var EditBoard = function (){
     this.__socket = io.connect('http://192.168.1.81:4500');
     var drawingModeEl =this.__drawingModeEl= _('drawing-mode'),
         test = _('test'),
-        roomEl = _('roomId'),
-        canvasEl = this.__canvasEl= _('c'),
+        //canvasEl = this.__canvasEl= _('c'),
         consoleInfo = _('console-info');
     this.communication = new Communication();
     this.serializeShapes = new SerializeShapes();

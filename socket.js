@@ -16,17 +16,21 @@ exports.startSocketIo = function(server){
         //console.log('connection start');
         var room;
         socket.on('room',function(data){
-            room=data.roomId;
-            if(pathRoom[room]===null||pathRoom[room]===undefined)
-                pathRoom[room]=[];
-            socket.join(room);
-            if(userRoom[room]===null||userRoom[room]===undefined){
-                userRoom[room]=[];
+            if(data.roomId){ //多人模式
+                room=data.roomId;
+                if(pathRoom[room]===null||pathRoom[room]===undefined)
+                    pathRoom[room]=[];
+                socket.join(room);
+                if(userRoom[room]===null||userRoom[room]===undefined){
+                    userRoom[room]=[];
+                }
+                userRoom[room].push(data);
+                io.sockets.in(room).emit('userInfo', userRoom[room]);
+            }else{ //单人模式
+
             }
-            userRoom[room].push(data);
-            io.sockets.in(room).emit('userInfo', userRoom[room]);
-            //socket.broadcast.to(room).emit('userInfo', userRoom);
         });
+        //优化为只发送当前房间的path数据
         socket.emit('allPath', pathRoom);
         socket.on('clearAll',function(data,fn){
             pathRoom[room] = [];

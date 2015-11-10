@@ -35,7 +35,7 @@
                                 <li><a href=""><span class="fa fa-file" style="padding-right: 15px"></span>新建</a></li>
                                 <li><a href="/filelist"><span class="fa fa-folder-open" style="padding-right: 12px"></span>打开</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="javascript:void(0)" data-toggle="modal" data-target="#myModal" ><span class="glyphicon glyphicon-save" style="padding-right: 13px"></span>保存</a></li>
+                                <li><a href='' data-toggle="modal" data-target="#myModal" ><span class="glyphicon glyphicon-save" style="padding-right: 13px"></span>保存</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-submenu">
                                     <a tabindex="-1" href="#"><span class="fa fa-share" style="padding-right: 12px"></span>导出为</a>
@@ -74,7 +74,7 @@
                         <!--<button type="submit" class="btn btn-default">Submit</button>-->
                     <!--</form>-->
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a id="roomId" bind-value-to="roomId"></a></li>
+                        <li><a href='' id="roomId" bind-value-to="roomId"></a></li>
                         <li class="dropdown">
                             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
@@ -408,7 +408,7 @@
 	<script src='/socket.io/socket.io.js'></script>
 	<script src='/app_3th_js/fabric/fabric.min.js'></script>
     <script src="/app_ui_js/utils.js"></script>
-    <script src="/app_ui_js/app.js"></script>
+
 	<script src='/app_util_js/util.js'></script>
 	<script src='/app_ui_js/Communication.js'></script>
 	<script src='/app_ui_js/SerializeShapes.js'></script>
@@ -426,10 +426,9 @@
                 canvasXOnPan = 0,
                 canvasYOnPan = 0;
         var _ = function(id){return document.getElementById(id)};
-        var editBoard = new EditBoard();
-//        var canvasContainer = document.getElementsByClassName('canvas-container');
-//        console.log();
         var urlParams = Utils.urlParams(window.location.href);
+        if(urlParams['room']) var roomId = urlParams['room'];
+        var editBoard = new EditBoard();
         if(urlParams['id']){
             var queryObj = {
                 id: urlParams['id'],
@@ -437,12 +436,12 @@
             };
             editBoard.communication.loadFile(queryObj, Utils.bind(editBoard,editBoard.resetBoard));
         }
-        var canvas = editBoard.__canvas;
         var canvasCtn = _('canvasContainer');
+        var canvas = editBoard.__canvas;
         var socket = editBoard.__socket;
-        if(urlParams['room']) var roomId = urlParams['room'];
         var SerializeShapes = editBoard.serializeShapes;
         var Communication = editBoard.communication;
 	</script>
+    <script src="/app_ui_js/app.js"></script>
     <script src="/app_ui_js/controller/canvasCtrl.js"></script>
 </html>

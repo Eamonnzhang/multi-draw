@@ -391,7 +391,7 @@ function addAccessors($scope) {
               canvas.remove(activeObject);
           }
       });
-  }
+  };
 
   $scope.getHorizontalLock = function() {
     return getActiveProp('lockMovementX');
@@ -870,23 +870,23 @@ function watchCanvas($scope) {
     function changeState(e){
         panning = false;
         console.log('mouse up');
-        if(isMouseDown){
-            isMouseDown = !isMouseDown;
-            var obj = e.target;
-            if(obj){
-                if(canvas.getActiveObject()){
-                    //console.log(obj.top+','+obj.left);
-                    var data =SerializeShapes.serializePathState(obj);
-                    socket.emit('stateChange',data);
-                    //socket.emit('unlockState',obj.id);
-                }
-                if(canvas.getActiveGroup()){
-                    var group = SerializeShapes.serializeGroupOfPath(canvas.getActiveGroup());
-                    socket.emit('groupChange',group);
-                    //socket.emit('unlockState',group.idArr);
+            if(isMouseDown){
+                isMouseDown = !isMouseDown;
+                var obj = e.target;
+                if(obj){
+                    if(canvas.getActiveObject()){
+                        //console.log(obj.top+','+obj.left);
+                        var data =SerializeShapes.serializePathState(obj);
+                        socket.emit('stateChange',data);
+                        //socket.emit('unlockState',obj.id);
+                    }
+                    if(canvas.getActiveGroup()){
+                        var group = SerializeShapes.serializeGroupOfPath(canvas.getActiveGroup());
+                        socket.emit('groupChange',group);
+                        //socket.emit('unlockState',group.idArr);
+                    }
                 }
             }
-        }
     }
     function listenMouseDown(e){
         console.log('mouse down');
@@ -904,29 +904,27 @@ function watchCanvas($scope) {
         }else {
             var obj = e.target;
             if (obj) {
-                if (obj._objects) {
-                    if (obj._objects[0].selectable) {
-                        var idArr = [];
-                        obj._objects.forEach(function (a) {
-                            idArr.push(a.id);
-                        });
-                        //console.log('send group lock');
-                        socket.emit('lockState', idArr);
+                    if (obj._objects) {
+                        if (obj._objects[0].selectable) {
+                            var idArr = [];
+                            obj._objects.forEach(function (a) {
+                                idArr.push(a.id);
+                            });
+                            //console.log('send group lock');
+                            socket.emit('lockState', idArr);
+                        }
+                    }else if (obj.selectable) {
+                        //console.log('send lock');
+                        socket.emit('lockState', obj.id);
                     }
-                }else if (obj.selectable) {
-                    //console.log('send lock');
-                    socket.emit('lockState', obj.id);
+                    console.log(obj);
                 }
-                console.log(obj);
             }
-        }
         isMouseDown = true;
     }
 
-    function moveCanvas(){
-
+    function dragCanvas(){
         if ( panning && spaceKeyDown) {
-            //console.log('aaa');
             canvasCtn.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
             canvasCtn.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan ) + 'px';
             //canvas.renderAll();
@@ -941,7 +939,7 @@ function watchCanvas($scope) {
     .on('path:created', addPath)
     .on('mouse:up', changeState)
     .on('mouse:down', listenMouseDown)
-    .on('mouse:move', moveCanvas)
+    .on('mouse:move', dragCanvas)
     .on('selection:cleared', updateScope);
 }
 
@@ -949,7 +947,7 @@ function watchCanvas($scope) {
 
 function initCanvasSocket(){
     var userInfo = {};
-    userInfo.roomId = roomId;
+    if(roomId) userInfo.roomId = roomId;
     userInfo.userId = apiKey;
     userInfo.userName = userName;
     socket.emit('room', userInfo);
@@ -1063,6 +1061,10 @@ function initCanvasSocket(){
         }
         canvas.renderAll();
     });
+}
+
+function initCanvas(){
+    console.log(canvasData);
 }
 
 function httpOpt($scope){
