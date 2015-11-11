@@ -330,10 +330,13 @@ function addAccessors($scope) {
   //};
 
   $scope.confirmClear = function() {
-      socket.emit('clearAll','clearAll',function(){
-        canvasData.pathData = [];
+    if(roomId)
+        socket.emit('clearAll','clearAll',function(){
+          canvasData.pathData = [];
+          canvas.clear();
+        });
+    else
         canvas.clear();
-      });
   };
 
   $scope.rasterize = function() {
@@ -370,16 +373,29 @@ function addAccessors($scope) {
   $scope.removeSelected = function() {
       var activeObject = canvas.getActiveObject(),
           activeGroup = canvas.getActiveGroup();
-      var idArr = [];
-      if (activeObject) {
-          idArr.push(activeObject.id);
-      }
-      if (activeGroup) {
-          activeGroup.forEachObject(function (a) {
-              idArr.push(a.id);
+      if(roomId){
+          var idArr = [];
+          if (activeObject) {
+              idArr.push(activeObject.id);
+          }
+          if (activeGroup) {
+              activeGroup.forEachObject(function (a) {
+                  idArr.push(a.id);
+              });
+          }
+          socket.emit('clearSelected', idArr, function () {
+              if (activeGroup) {
+                  var objectsInGroup = activeGroup.getObjects();
+                  canvas.discardActiveGroup();
+                  objectsInGroup.forEach(function (object) {
+                      canvas.remove(object);
+                  });
+              }
+              else if (activeObject) {
+                  canvas.remove(activeObject);
+              }
           });
-      }
-      socket.emit('clearSelected', idArr, function () {
+      }else{
           if (activeGroup) {
               var objectsInGroup = activeGroup.getObjects();
               canvas.discardActiveGroup();
@@ -390,7 +406,8 @@ function addAccessors($scope) {
           else if (activeObject) {
               canvas.remove(activeObject);
           }
-      });
+      }
+
   };
 
   $scope.getHorizontalLock = function() {

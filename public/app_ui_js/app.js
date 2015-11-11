@@ -33,23 +33,28 @@ app.directive('bindValueTo', function() {
           if(newVal == null){
               $element[0].innerHTML = '<span class="glyphicon glyphicon-share"></span>&nbsp;分享画板';
               $element[0].setAttribute('class','share');
-              $element[0].setAttribute('data-target','#collapseShareRoom');
-              //$('#roomId').popover({
-              //    title:"分享标题",
-              //    content:"我是弹出框的内容",
-              //    template:'<div class="popover" role="tooltip">'+
-              //    '<div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
-              //    placement:"bottom"
-              //});
-              //$('#roomId').collapse();
+              //$element[0].setAttribute('data-target','#collapseShareRoom');
+              $('#roomId').popover({
+                  //title:"起一个房间名让大家更容易找到你哦~",
+                  content:"正在紧急修复中呢~",
+                  //template:'<div class="popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>',
+                  placement:"bottom",
+                  trigger:'focus'
+              });
+              $('#roomId').collapse();
           }else if(!$element[0].type&&newVal){
               $element[0].innerHTML = '房间：'+newVal;
               $element[0].setAttribute('class','room');
+              $element[0].onclick = function () {
+
+              };
               $('#roomId').popover({
-                  title:"房间用户",
-                  content:"我是弹出框的内容",
-                  placement:"bottom"
+                  //title:"房间用户",
+                  content:"正在紧急修复中呢~",
+                  placement:"bottom",
+                  trigger:'focus'
               });
+
           } else{
               $element[0].previousSibling.innerHTML = newVal;
               $element.val(newVal);

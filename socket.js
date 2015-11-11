@@ -52,6 +52,11 @@ exports.startSocketIo = function(server){
             socket.emit('allPath', pathRoom[room]);
         });
 
+        socket.on('queryUsers', function (data) {
+            var users = userRoom[data];
+            //console.log(users);
+            socket.emit('queryUsers',users);
+        });
         socket.on('addUser', function (userName) {
             socket.userName = userName;
             userRoom[room][userName]= userName;
