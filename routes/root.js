@@ -5,7 +5,7 @@ var fileController = require('../app_modules/files_mgmt/fileController.js');
 var userController = require('../app_modules/users_mgmt/userController.js');
 var message = require('../app_modules/_utils/messageGenerator.js');
 module.exports = function(app){
-    app.get('/',function(req,res){
+    app.get('/board',function(req,res){
         if (req.session.userData) {
             //if(req.query.room||req.query.fileName){
                 res.render('app', {
@@ -20,9 +20,11 @@ module.exports = function(app){
             res.redirect('/login');
         }
     });
-
     app.get('/index',function(req,res){
         res.render('index',{title:'MultiDraw'});
+    });
+    app.get('/', function (req,res) {
+        res.redirect('/board');
     });
 
     app.get('/login',function(req,res){
@@ -40,7 +42,7 @@ module.exports = function(app){
     app.get('/logout', function (req, res) {
         delete req.session.userData;
         userController.removeUserApi(req);
-        res.redirect('/');
+        res.redirect('/board');
     });
 
 

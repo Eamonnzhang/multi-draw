@@ -63,7 +63,7 @@ ConfigBoard.prototype.initKeyBoard = function () {
                 me.editBoard.__drawingModeEl.setAttribute('class','btn btn-info');
             }
         }
-        if(key === 17){
+        if(key === 17){ //实际上为Ctrl键
             if(!spaceKeyDown){
                 spaceKeyDown = true;
             }

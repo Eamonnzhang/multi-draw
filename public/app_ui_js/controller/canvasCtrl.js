@@ -892,7 +892,6 @@ function watchCanvas($scope) {
         console.log('mouse down');
         if(spaceKeyDown){
             if(canvas.isDrawingMode){
-                //isMouseDown = false;
                 console.log('no drag');
             }else{
                 panning = true;
@@ -946,22 +945,20 @@ function watchCanvas($scope) {
 
 
 function initCanvasSocket(){
-    var userInfo = {};
-    if(roomId) userInfo.roomId = roomId;
-    userInfo.userId = apiKey;
-    userInfo.userName = userName;
-    socket.emit('room', userInfo);
-    //监听在后台已经存在的path
+    if(roomId){
+        socket.emit('room', roomId);
+        socket.emit('addUser', userName);
+    }
     socket.on('allPath',function(data){
-    if(data[roomId]){
-        data[roomId].forEach(function(x){
-            canvasData.pathData.push(x);
-            if(canvasData.usersId.indexOf(x.userId) === -1){
-                canvasData.usersId.push(x.userId);
-            }
-            canvas.add(new fabric.Path(x.path,x));
-          });
-        }
+      if(data) {
+          data.forEach(function (x) {
+              canvasData.pathData.push(x);
+              if (canvasData.usersId.indexOf(x.userId) === -1) {
+                  canvasData.usersId.push(x.userId);
+              }
+              canvas.add(new fabric.Path(x.path, x));
+          })
+      }
     });
     //监听其他用户画完path
     socket.on('path',function(data){
@@ -971,6 +968,16 @@ function initCanvasSocket(){
         }
         console.log(canvasData);
         canvas.add(new fabric.Path(data.path,data));
+    });
+
+    socket.on('userJoined',function(data){
+        console.log(data.userName+' has joined in this room');
+        console.log('now there\'re '+data.numUsers+' participant')
+    });
+
+    socket.on('userLeft', function (data) {
+       console.log(data.userName+' has left from this room');
+       console.log('now there\'re '+data.numUsers+' participant');
     });
     //监听全部清除操作
     socket.on('clearAll',function(data){
@@ -1071,7 +1078,6 @@ function httpOpt($scope){
     $scope.saveFile = function () {
         var fileName = _('filename').value;
         canvasData.fileName = fileName;
-        //canvasData.ceateUserName = userName;
         var paramArr = Utils.urlParams(window.location.href);
         var id = paramArr['id'];
         if(id){

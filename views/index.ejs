@@ -17,14 +17,14 @@
 <div align='center' style="margin-top: 10px">
     <span class="brand-title" style="display: block;font-size: 19pt"> <i class="fa fa-paint-brush"></i>&nbsp;MultiDraw</span><br>
     <div id="modeBtn">
-        <a href="/"><button id='alone-draw' type="submit" class="btn btn-info"><i class="fa fa-user"></i>&nbsp;&nbsp;单人模式</button></a>
+        <a href="/board"><button id='alone-draw' type="submit" class="btn btn-info"><i class="fa fa-user"></i>&nbsp;&nbsp;单人模式</button></a>
         <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseEnterRoom" aria-expanded="false" aria-controls="collapseEnterRoom">
             <i class="fa fa-users"></i>&nbsp;&nbsp;多人模式
         </button>
     </div>
     <div class="collapse" id="collapseEnterRoom" style="width:380px" >
         <div class="well">
-            <form class="form-inline" action="/" method="get">
+            <form class="form-inline" action="/board" method="get">
                 <div class="form-group">
                     <label>房间名:</label>
                     <input type="text" class="form-control" name="room" placeholder="创建或进入">
