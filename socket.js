@@ -4,7 +4,7 @@
 var socket = require('socket.io');
 var io=null;
 var pathRoom = {};
-//var pathArr = [];
+var textRoom = {};
 var userRoom = {};
 exports.getSocketIo = function(){
     return socket;
@@ -15,31 +15,6 @@ exports.startSocketIo = function(server){
     io = socket(server);
     io.on('connection', function (socket) {
         var addedUser = false;
-        //console.log('connection start');
-        //socket.on('room',function(data){
-        //    if(data.roomId){ //多人模式
-        //        room=data.roomId; //记录房间ID
-        //        socket.join(room); //将此socket加入room组
-        //        ++numUsers;
-        //        socket.user = data;
-        //        if(userRoom[room]===null||userRoom[room]===undefined){
-        //            userRoom[room]=[];
-        //        } //记录该房间的user用户信息
-        //        userRoom[room].push(data);
-        //        io.sockets.in(room).emit('userJoined', {
-        //            userName:data.userName,
-        //            numUsers:numUsers
-        //        });
-        //    }else{
-        //        room=data.userId;
-        //        socket.userId = data.userId;
-        //        console.log(room+' draw alone');
-        //    }
-        //    if(pathRoom[room]===null||pathRoom[room]===undefined)
-        //        pathRoom[room]=[];
-        //    socket.emit('allPath', pathRoom[room]);
-        //});
-
         socket.on('room',function(roomId){
             room = roomId;
             socket.join(room);
@@ -50,7 +25,10 @@ exports.startSocketIo = function(server){
             }
             if(pathRoom[room]===null||pathRoom[room]===undefined)
                 pathRoom[room]=[];
+            if(textRoom[room]===null||textRoom[room]===undefined)
+                textRoom[room]=[];
             socket.emit('allPath', pathRoom[room]);
+            socket.emit('allText', textRoom[room]);
         });
 
         socket.on('queryUsers', function (data) {
@@ -73,8 +51,8 @@ exports.startSocketIo = function(server){
 
         socket.on('clearAll',function(data,fn){
             pathRoom[room] = [];
+            textRoom[room] = [];
             socket.broadcast.to(room).emit('clearAll', data);
-            fn();
         });
         socket.on('clearSelected',function(data,fn){
             for(var i =0;i<pathRoom[room].length;i++) {
@@ -84,12 +62,15 @@ exports.startSocketIo = function(server){
                 }
             }
             socket.broadcast.to(room).emit('clearSelected', data);
-            fn();
         });
-        socket.on('path',function(data){
-            //console.log('data');
+        socket.on('addPath',function(data){
             pathRoom[room].push(data);
-            socket.broadcast.to(room).emit('path', data);
+            socket.broadcast.to(room).emit('addPath', data);
+        });
+
+        socket.on('addText',function(data){
+            textRoom[room].push(data);
+            socket.broadcast.to(room).emit('addText', data);
         });
 
         socket.on('stateChange',function(data){
@@ -102,6 +83,15 @@ exports.startSocketIo = function(server){
                     pathRoom[room][i].scaleY = data.scaleY;
                 }
             }
+            for(var i =0;i<textRoom[room].length;i++) {
+                if (data.id === textRoom[room][i].id) {
+                    textRoom[room][i].left = data.left;
+                    textRoom[room][i].top = data.top;
+                    textRoom[room][i].angle = data.angle;
+                    textRoom[room][i].scaleX = data.scaleX;
+                    textRoom[room][i].scaleY = data.scaleY;
+                }
+            }
             socket.broadcast.to(room).emit('stateChange', data);
         });
 
@@ -112,7 +102,15 @@ exports.startSocketIo = function(server){
                 }
             }
             socket.broadcast.to(room).emit('styleChange', data);
-            fn();
+        });
+
+        socket.on('propChange', function (data,fn) {
+            for(var i =0;i<textRoom[room].length;i++) {
+                if (data.id === textRoom[room][i].id) {
+                    textRoom[room][i][data.name] = data.value;
+                }
+            }
+            socket.broadcast.to(room).emit('propChange', data);
         });
 
         socket.on('groupChange',function(group){

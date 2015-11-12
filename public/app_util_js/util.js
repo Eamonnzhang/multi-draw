@@ -78,7 +78,7 @@ var Utils = {
     },
 
     cloneArray : function(o_arr){
-        return o_arr.concat('');
+        return o_arr.slice(0);
     },
 
     convertJSONToQueryStr: function (obj, isWithQuestMark) {
