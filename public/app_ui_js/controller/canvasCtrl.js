@@ -300,6 +300,7 @@ function addAccessors($scope) {
         if(roomId){
             socket.emit('addText',text);
         }
+        setITextFire(textSample,this);
         canvas.add(textSample);
     };
 
@@ -972,7 +973,7 @@ function initCanvasSocket($scope){
               if (canvasData.usersId.indexOf(x.userId) === -1) {
                   canvasData.usersId.push(x.userId);
               }
-              var iText = new fabric.IText(x.text, x)
+              var iText = new fabric.IText(x.text, x);
               setITextFire(iText,$scope);
               canvas.add(iText);
               //canvas.add(new fabric.IText(x.text, x));
@@ -993,7 +994,9 @@ function initCanvasSocket($scope){
         if(canvasData.usersId.indexOf(data.userId) === -1){
             canvasData.usersId.push(data.userId);
         }
-        canvas.add(new fabric.IText(data.text,data));
+        var iText = new fabric.IText(data.text,data);
+        setITextFire(iText,$scope);
+        canvas.add(iText);
     });
 
     socket.on('userJoined',function(data){
@@ -1058,12 +1061,9 @@ function initCanvasSocket($scope){
     //监听angular监控的属性（字体大小、类型等）变化
     socket.on('propChange', function (data) {
         var myObjArr = Utils.cloneArray(canvas.getObjects());
-        console.log(myObjArr);
         myObjArr.forEach(function (a) {
-            console.log(data);
             if (a.id === data.id) {
                 a.set(data.name,data.value).setCoords();
-                console.log(a[data.name]);
                 canvas.renderAll();
             }
         });
