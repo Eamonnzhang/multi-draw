@@ -14,6 +14,7 @@ function setITextFire(iText,$scope){
     });
     iText.on('selection:changed', function () {
         $scope.$$phase || $scope.$digest();
+        $scope.setText($scope.getText());
         canvas.renderAll();
     });
 }
