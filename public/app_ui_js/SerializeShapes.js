@@ -16,6 +16,7 @@ SerializeShapes.prototype.serializePath = function(data){
     option.lastModify = option.createTime;
     option.path = data.path;
     option.stroke = data.stroke;
+    option.opacity = data.opacity;
     option.strokeWidth = data.strokeWidth;
     option.strokeLineCap = data.strokeLineCap;
     option.strokeLineJoin = data.strokeLineJoin;

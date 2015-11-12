@@ -46,6 +46,7 @@ exports.startSocketIo = function(server){
             if(userRoom[room]===null||userRoom[room]===undefined){
                 userRoom[room]=[];
                 userRoom[room].numUsers = 0;
+                userRoom[room].users = [];
             }
             if(pathRoom[room]===null||pathRoom[room]===undefined)
                 pathRoom[room]=[];
@@ -53,13 +54,15 @@ exports.startSocketIo = function(server){
         });
 
         socket.on('queryUsers', function (data) {
-            var users = userRoom[data];
+            var users={};
+            users.numUsers = userRoom[data].numUsers;
+            users.userNames = userRoom[data].users;
             //console.log(users);
             socket.emit('queryUsers',users);
         });
         socket.on('addUser', function (userName) {
             socket.userName = userName;
-            userRoom[room][userName]= userName;
+            userRoom[room].users.push(userName);
             ++userRoom[room].numUsers;
             addedUser = true;
             io.sockets.in(room).emit('userJoined', {
@@ -102,6 +105,16 @@ exports.startSocketIo = function(server){
             socket.broadcast.to(room).emit('stateChange', data);
         });
 
+        socket.on('styleChange', function (data,fn) {
+            for(var i =0;i<pathRoom[room].length;i++) {
+                if (data.id === pathRoom[room][i].id) {
+                    pathRoom[room][i][data.styleName] = data.value;
+                }
+            }
+            socket.broadcast.to(room).emit('styleChange', data);
+            fn();
+        });
+
         socket.on('groupChange',function(group){
             socket.broadcast.to(room).emit('groupChange', group);
             for(var i =0;i<pathRoom[room].length;i++) {
@@ -128,8 +141,10 @@ exports.startSocketIo = function(server){
             //pathRoom[socket.userId] = [];
             if(room){
                 if(addedUser){
-                    delete userRoom[room][socket.userName];
+                    //delete userRoom[room][socket.userName];
+                    userRoom[room].users.splice(userRoom[room].users.indexOf(socket.userName,1));
                     --userRoom[room].numUsers;
+                    console.log(userRoom[room]);
                 }
                 io.sockets.in(room).emit('userLeft', {
                     userName:socket.userName,

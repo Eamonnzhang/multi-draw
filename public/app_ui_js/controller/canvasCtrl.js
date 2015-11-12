@@ -12,21 +12,28 @@ function getActiveStyle(styleName, object) {
 }
 
 function setActiveStyle(styleName, value, object) {
-  object = object || canvas.getActiveObject();
-  if (!object) return;
+    object = object || canvas.getActiveObject();
+    if (!object) return;
 
-  if (object.setSelectionStyles && object.isEditing) {
-    var style = { };
-    style[styleName] = value;
-    object.setSelectionStyles(style);
-    object.setCoords();
-  }
-  else {
-    object[styleName] = value;
-  }
-
-  object.setCoords();
-  canvas.renderAll();
+    if (object.setSelectionStyles && object.isEditing) {
+        var style = { };
+        style[styleName] = value;
+        object.setSelectionStyles(style);
+        object.setCoords();
+    }
+    else {
+        object[styleName] = value;
+    }
+    if(roomId){
+        var obj = {};
+        obj.id = object.id;
+        obj.styleName = styleName;
+        obj.value = value;
+        socket.emit('styleChange',obj, function () {
+            object.setCoords();
+            canvas.renderAll();
+        });
+    }
 }
 
 function getActiveProp(name) {
@@ -147,6 +154,7 @@ function addAccessors($scope) {
   $scope.getStrokeColor = function() {
     return getActiveStyle('stroke');
   };
+
   $scope.setStrokeColor = function(value) {
     setActiveStyle('stroke', value);
   };
@@ -868,7 +876,7 @@ function watchCanvas($scope) {
     }
     function getObjInfo(e){
         updateScope();
-        console.log(e.target);
+        //console.log(e.target);
     }
     function addPath(e){
         if(!spaceKeyDown){
@@ -881,32 +889,33 @@ function watchCanvas($scope) {
                 canvasData.usersId.push(data.userId);
             }
             console.log(canvasData);
+            if(roomId)
             socket.emit('path', data);
         }
     }
     function changeState(e){
         panning = false;
-        console.log('mouse up');
             if(isMouseDown){
                 isMouseDown = !isMouseDown;
-                var obj = e.target;
-                if(obj){
-                    if(canvas.getActiveObject()){
-                        //console.log(obj.top+','+obj.left);
-                        var data =SerializeShapes.serializePathState(obj);
-                        socket.emit('stateChange',data);
-                        //socket.emit('unlockState',obj.id);
-                    }
-                    if(canvas.getActiveGroup()){
-                        var group = SerializeShapes.serializeGroupOfPath(canvas.getActiveGroup());
-                        socket.emit('groupChange',group);
-                        //socket.emit('unlockState',group.idArr);
-                    }
+                if(roomId){
+                  var obj = e.target;
+                  if(obj){
+                      if(canvas.getActiveObject()){
+                          //console.log(obj.top+','+obj.left);
+                          var data =SerializeShapes.serializePathState(obj);
+                          socket.emit('stateChange',data);
+                          //socket.emit('unlockState',obj.id);
+                      }
+                      if(canvas.getActiveGroup()){
+                          var group = SerializeShapes.serializeGroupOfPath(canvas.getActiveGroup());
+                          socket.emit('groupChange',group);
+                          //socket.emit('unlockState',group.idArr);
+                      }
+                  }
                 }
             }
     }
     function listenMouseDown(e){
-        console.log('mouse down');
         if(spaceKeyDown){
             if(canvas.isDrawingMode){
                 console.log('no drag');
@@ -983,7 +992,7 @@ function initCanvasSocket(){
         if(canvasData.usersId.indexOf(data.userId) === -1){
             canvasData.usersId.push(data.userId);
         }
-        console.log(canvasData);
+        //console.log(canvasData);
         canvas.add(new fabric.Path(data.path,data));
     });
 
@@ -1037,6 +1046,17 @@ function initCanvasSocket(){
             }
         });
     });
+
+    socket.on('styleChange', function (data) {
+        var myObjArr = Utils.cloneArray(canvas.getObjects());
+        myObjArr.forEach(function (a) {
+            if (a.id === data.id) {
+                a[data.styleName] = data.value;
+                a.setCoords();
+                canvas.renderAll();
+            }
+        });
+    });
     //监听成组path状态改变操作
     socket.on('groupChange',function(group){
         var myObjArr = Utils.cloneArray(canvas.getObjects());
@@ -1085,10 +1105,6 @@ function initCanvasSocket(){
         }
         canvas.renderAll();
     });
-}
-
-function initCanvas(){
-    console.log(canvasData);
 }
 
 function httpOpt($scope){
