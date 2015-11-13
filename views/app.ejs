@@ -42,7 +42,7 @@
                                     <ul class="dropdown-menu">
                                         <li><a href="javascript:void(0)" ng-click="rasterize()"><span class="fa fa-image" style="padding-right: 13px"></span>PNG</a></li>
                                         <li><a href="javascript:void(0)" ng-click="rasterizeSVG()"><span class="fa fa-file-excel-o" style="padding-right: 15px"></span>SVG</a></li>
-                                        <li><a href="javascript:void(0)" ng-click="rasterizeJSON()"><span class="fa fa-file-code-o" style="padding-right: 14px"></span>JSON</a></li>
+                                        <li><a href="" type="button" data-toggle="modal" data-target="#JsonModal" ng-click="rasterizeJSON()"><span class="fa fa-file-code-o" style="padding-right: 14px"></span>JSON</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -384,7 +384,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">请输入文件名：</h4>
+                    <h4 class="modal-title" style="font-family: 微软雅黑; font-size: 13pt">文件名：</h4>
                 </div>
                 <div class="modal-body">
                     <input id='filename' type='text' size="30">
@@ -407,6 +407,24 @@
                 </div>
                 <button id='start-draw' type="submit" class="btn btn-primary" style="margin-left: 10px"><i class="fa fa-paper-plane"></i></button>
             </form>
+        </div>
+    </div>
+<!--JSON Model-->
+    <div class="modal fade" id="JsonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" style="font-family: 微软雅黑; font-size: 13pt">JSON Code</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="json-value" style="overflow: auto" bind-value-to="consoleJSON"> </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">复制</button>
+                </div>
+            </div>
         </div>
     </div>
 </body>

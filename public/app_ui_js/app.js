@@ -24,15 +24,16 @@ app.directive('bindValueTo', function() {
       });
 
       $scope.$watch($scope[getter], function(newVal) {
-        if ($element[0].type === 'radio') {
+          console.log($element[0]);
+          if ($element[0].type === 'radio') {
           var radioGroup = document.getElementsByName($element[0].name);
           for (var i = 0, len = radioGroup.length; i < len; i++) {
             radioGroup[i].checked = radioGroup[i].value === newVal;
           }
-        } else{
-          if(newVal == null){
+          }else if($element[0].getAttribute('class') =='json-value'){
+              $element[0].innerHTML = newVal;
+          }else if(newVal == null){
               $element[0].innerHTML = '<span class="glyphicon glyphicon-share"></span>&nbsp;分享画板';
-              $element[0].setAttribute('class','share');
               //$element[0].setAttribute('data-target','#collapseShareRoom');
               $('#roomId').popover({
                   content:"正在紧急修复中呢~",
@@ -42,7 +43,6 @@ app.directive('bindValueTo', function() {
               $('#roomId').collapse();
           }else if(!$element[0].type&&newVal){
               $element[0].innerHTML = '房间：'+newVal;
-              $element[0].setAttribute('class','room');
               $element[0].onclick = function () {
                   socket.emit('queryUsers', newVal);
               };
@@ -62,7 +62,6 @@ app.directive('bindValueTo', function() {
               $element[0].previousSibling.innerHTML = newVal;
               $element.val(newVal);
           }
-        }
       });
     }
   };
