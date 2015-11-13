@@ -12,6 +12,6 @@ fileListModule.controller('FileListCtrl', function($scope, $http) {
         var queryObj = {};
         queryObj.fileName = this.file.fileName;
         queryObj.id = this.file.id;
-        window.open('/'+Utils.convertJSONToQueryStr(queryObj,true));
+        window.open('/board'+Utils.convertJSONToQueryStr(queryObj,true));
     }
 });

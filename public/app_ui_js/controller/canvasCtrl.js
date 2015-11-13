@@ -1,6 +1,7 @@
 var canvasData = {};
 canvasData.pathData = [];
 canvasData.textData = [];
+canvasData.geometryData = [];
 canvasData.usersId = [];
 
 function setITextFire(iText,$scope){
@@ -13,10 +14,30 @@ function setITextFire(iText,$scope){
         console.log('editing:exited');
     });
     iText.on('selection:changed', function () {
-        $scope.$$phase || $scope.$digest();
+        //$scope.$$phase || $scope.$digest();
         $scope.setText($scope.getText());
         canvas.renderAll();
     });
+}
+
+function addUsers(obj){
+    if (canvasData.usersId.indexOf(obj.userId) === -1) {
+        canvasData.usersId.push(obj.userId);
+    }
+}
+
+function addGeometryToCanvas(obj){
+    canvasData.geometryData.push(obj);
+    addUsers(obj);
+    if(obj.type === 'circle')
+        var gmt = new fabric.Circle(obj);
+    if(obj.type === 'triangle')
+        var gmt = new fabric.Triangle(obj);
+    if(obj.type === 'rect')
+        var gmt = new fabric.Rect(obj);
+    if(obj.type === 'line')
+        var gmt = new fabric.Line(obj);
+    canvas.add(gmt);
 }
 
 function getActiveStyle(styleName, object) {
@@ -223,65 +244,82 @@ function addAccessors($scope) {
 
     $scope.addRect = function() {
         var coord = getRandomLeftTop();
-
-        canvas.add(new fabric.Rect({
-          left: coord.left,
-          top: coord.top,
-          fill: '#' + getRandomColor(),
-          width: 50,
-          height: 50,
-          opacity: 0.8
-        }));
+        var rect = new fabric.Rect({
+            left: coord.left,
+            top: coord.top,
+            fill: '#' + getRandomColor(),
+            width: 50,
+            height: 50
+        });
+        var sRect = SerializeShapes.serializeRect(rect);
+        rect.id = sRect.id;
+        canvas.add(rect);
+        if(roomId){
+            socket.emit('addGeometry',sRect);
+        }
     };
 
     $scope.addCircle = function() {
         var coord = getRandomLeftTop();
-
-        canvas.add(new fabric.Circle({
-          left: coord.left,
-          top: coord.top,
-          fill: '#' + getRandomColor(),
-          radius: 50,
-          opacity: 0.8
-        }));
+        var circle = new fabric.Circle({
+            left: coord.left,
+            top: coord.top,
+            fill: '#' + getRandomColor(),
+            radius: 50
+        });
+        var sCircle = SerializeShapes.serializeCircle(circle);
+        circle.id = sCircle.id;
+        canvas.add(circle);
+        if(roomId){
+            socket.emit('addGeometry',sCircle);
+        }
     };
 
     $scope.addTriangle = function() {
         var coord = getRandomLeftTop();
-
-        canvas.add(new fabric.Triangle({
-          left: coord.left,
-          top: coord.top,
-          fill: '#' + getRandomColor(),
-          width: 50,
-          height: 50,
-          opacity: 0.8
-        }));
+        var triangle = new fabric.Triangle({
+            left: coord.left,
+            top: coord.top,
+            fill: '#' + getRandomColor(),
+            width: 50,
+            height: 50
+        });
+        var sTriangle = SerializeShapes.serializeTriangle(triangle);
+        triangle.id = sTriangle.id;
+        canvas.add(triangle);
+        if(roomId){
+            socket.emit('addGeometry',sTriangle);
+        }
     };
 
     $scope.addLine = function() {
         var coord = getRandomLeftTop();
-
-        canvas.add(new fabric.Line([ 50, 100, 200, 200], {
-          left: coord.left,
-          top: coord.top,
-          stroke: '#' + 000000
-        }));
-    };
-
-    $scope.addPolygon = function() {
-        var coord = getRandomLeftTop();
-
-        this.canvas.add(new fabric.Polygon([
-          {x: 185, y: 0},
-          {x: 250, y: 100},
-          {x: 385, y: 170},
-          {x: 0, y: 245} ], {
+        var line = new fabric.Line([ 50, 100, 200, 200], {
             left: coord.left,
             top: coord.top,
-            fill: '#' + getRandomColor()
-          }));
+            stroke: '#' + 000000
+        });
+        var sLine = SerializeShapes.serializeLine(line);
+        line.id = sLine.id;
+        canvas.add(line);
+        if(roomId){
+            socket.emit('addGeometry',sLine);
+        }
     };
+
+    //$scope.addPolygon = function() {
+    //    var coord = getRandomLeftTop();
+    //
+    //    canvas.add(new fabric.Polygon([
+    //      {x: 185, y: 0},
+    //      {x: 250, y: 20},
+    //      {x: 385, y: 170},
+    //      {x: 0, y: 245} ], {
+    //        left: coord.left,
+    //        top: coord.top,
+    //        fill: '#' + getRandomColor()
+    //      }));
+    //};
 
     $scope.addText = function() {
         var text = '点击编辑文字';
@@ -880,7 +918,7 @@ function watchCanvas($scope) {
                   var obj = e.target;
                   if(obj){
                       if(canvas.getActiveObject()){
-                          var data =SerializeShapes.serializePathState(obj);
+                          var data =SerializeShapes.serializeState(obj);
                           socket.emit('stateChange',data);
                       }
                       if(canvas.getActiveGroup()){
@@ -957,9 +995,7 @@ function initCanvasSocket($scope){
       if(data) {
           data.forEach(function (x) {
               canvasData.pathData.push(x);
-              if (canvasData.usersId.indexOf(x.userId) === -1) {
-                  canvasData.usersId.push(x.userId);
-              }
+              addUsers(x);
               canvas.add(new fabric.Path(x.path, x));
           })
       }
@@ -967,46 +1003,50 @@ function initCanvasSocket($scope){
 
     socket.on('allText',function(data){
       if(data) {
-          console.log(data);
           data.forEach(function (x) {
               canvasData.textData.push(x);
-              if (canvasData.usersId.indexOf(x.userId) === -1) {
-                  canvasData.usersId.push(x.userId);
-              }
+              addUsers(x);
               var iText = new fabric.IText(x.text, x);
               setITextFire(iText,$scope);
               canvas.add(iText);
-              //canvas.add(new fabric.IText(x.text, x));
+          });
+      }
+    });
+
+    socket.on('allGeometry',function(data){
+      if(data) {
+          data.forEach(function (x) {
+              addGeometryToCanvas(x);
           });
       }
     });
     //监听其他用户画完path
     socket.on('addPath',function(data){
-        canvasData.textData.push(data);
-        if(canvasData.usersId.indexOf(data.userId) === -1){
-            canvasData.usersId.push(data.userId);
-        }
+        canvasData.pathData.push(data);
+        addUsers(data);
         canvas.add(new fabric.Path(data.path,data));
     });
 
     socket.on('addText',function(data){
         canvasData.textData.push(data);
-        if(canvasData.usersId.indexOf(data.userId) === -1){
-            canvasData.usersId.push(data.userId);
-        }
+        addUsers(data);
         var iText = new fabric.IText(data.text,data);
         setITextFire(iText,$scope);
         canvas.add(iText);
     });
 
+    socket.on('addGeometry', function (data) {
+        addGeometryToCanvas(data);
+    });
+
     socket.on('userJoined',function(data){
         console.log(data.userName+' has joined in this room');
-        console.log('now there\'re '+data.numUsers+' participant')
+        console.log('now there\'re '+data.numUsers+' participants')
     });
 
     socket.on('userLeft', function (data) {
        console.log(data.userName+' has left from this room');
-       console.log('now there\'re '+data.numUsers+' participant');
+       console.log('now there\'re '+data.numUsers+' participants');
     });
     //监听全部清除操作
     socket.on('clearAll',function(data){
@@ -1068,7 +1108,7 @@ function initCanvasSocket($scope){
             }
         });
     });
-    //监听成组path状态改变操作
+    //监听成组obj状态改变操作
     socket.on('groupChange',function(group){
         var myObjArr = Utils.cloneArray(canvas.getObjects());
         var selectObjs = [];

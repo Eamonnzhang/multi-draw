@@ -5,6 +5,7 @@ var socket = require('socket.io');
 var io=null;
 var pathRoom = {};
 var textRoom = {};
+var geometryRoom = {};
 var userRoom = {};
 exports.getSocketIo = function(){
     return socket;
@@ -27,8 +28,11 @@ exports.startSocketIo = function(server){
                 pathRoom[room]=[];
             if(textRoom[room]===null||textRoom[room]===undefined)
                 textRoom[room]=[];
+            if(geometryRoom[room]===null||geometryRoom[room]===undefined)
+                geometryRoom[room]=[];
             socket.emit('allPath', pathRoom[room]);
             socket.emit('allText', textRoom[room]);
+            socket.emit('allGeometry', geometryRoom[room]);
         });
 
         socket.on('queryUsers', function (data) {
@@ -71,6 +75,11 @@ exports.startSocketIo = function(server){
         socket.on('addText',function(data){
             textRoom[room].push(data);
             socket.broadcast.to(room).emit('addText', data);
+        });
+
+        socket.on('addGeometry',function(data){
+            geometryRoom[room].push(data);
+            socket.broadcast.to(room).emit('addGeometry', data);
         });
 
         socket.on('stateChange',function(data){

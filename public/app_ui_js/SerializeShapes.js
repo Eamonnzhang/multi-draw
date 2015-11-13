@@ -1,6 +1,4 @@
 var SerializeShapes = function(){
-
-
 };
 
 SerializeShapes.prototype.prepareSerialize = function (obj) {
@@ -10,17 +8,35 @@ SerializeShapes.prototype.prepareSerialize = function (obj) {
     option.userName = userName;
     option.createTime = new Date();
     option.lastModify = option.createTime;
-    option.opacity = obj.opacity;
     option.fill = obj.fill;
-    option.originX = obj.originX;
-    option.originY = obj.originY;
+    //option.opacity = obj.opacity;
     return option;
+};
+
+SerializeShapes.prototype.prepareSerializePosShapes = function (obj) {
+    var opt = this.prepareSerialize(obj);
+    opt.left = obj.left;
+    opt.top = obj.top;
+    return opt;
+};
+
+SerializeShapes.prototype.serializeState = function(obj){
+    var opt={};
+    opt.id = obj.id;
+    opt.top= obj.top;
+    opt.left = obj.left;
+    opt.angle = obj.angle;
+    opt.scaleX = obj.scaleX;
+    opt.scaleY = obj.scaleY;
+    return opt;
 };
 
 SerializeShapes.prototype.serializePath = function(obj){
     var opt=this.prepareSerialize(obj);
     opt.path = obj.path;
     opt.stroke = obj.stroke;
+    opt.originX = obj.originX;
+    opt.originY = obj.originY;
     opt.strokeWidth = obj.strokeWidth;
     opt.strokeLineCap = obj.strokeLineCap;
     opt.strokeLineJoin = obj.strokeLineJoin;
@@ -28,28 +44,52 @@ SerializeShapes.prototype.serializePath = function(obj){
 };
 
 SerializeShapes.prototype.serializeText = function(obj){
-    var opt = this.prepareSerialize(obj);
+    var opt = this.prepareSerializePosShapes(obj);
     opt.text = obj.text;
-    opt.left = obj.left;
-    opt.top = obj.top;
     opt.fontFamily = obj.fontFamily;
     opt.fontWeight = obj.fontWeight;
-    opt.hasRotatingPoint = obj.hasRotatingPoint;
-    opt.centerTransform = obj.centerTransform;
+    //opt.hasRotatingPoint = obj.hasRotatingPoint;
+    //opt.centerTransform = obj.centerTransform;
     return opt;
 };
 
-SerializeShapes.prototype.serializePathState = function(obj){
-    var option={
-        id : obj.id,
-        top: obj.top,
-        left:obj.left,
-        angle:obj.angle,
-        scaleX:obj.scaleX,
-        scaleY:obj.scaleY
-    };
-    return option;
+SerializeShapes.prototype.serializeCircle = function(obj){
+    var opt = this.prepareSerializePosShapes(obj);
+    opt.radius = obj.radius;
+    opt.type = "circle";
+    return opt;
 };
+
+SerializeShapes.prototype.serializeRect = function(obj){
+    var opt = this.prepareSerializePosShapes(obj);
+    opt.width = obj.width;
+    opt.height = obj.height;
+    opt.type = "rect";
+    return opt;
+};
+
+SerializeShapes.prototype.serializeTriangle = function(obj){
+    var opt = this.prepareSerializePosShapes(obj);
+    opt.width = obj.width;
+    opt.height = obj.height;
+    opt.type = "triangle";
+    return opt;
+};
+
+SerializeShapes.prototype.serializeLine = function(obj){
+    var opt = this.prepareSerializePosShapes(obj);
+    opt.stroke = obj.stroke;
+    opt.type = "line";
+    return opt;
+};
+
+//SerializeShapes.prototype.serializePolygon = function(obj){
+//    var opt = this.prepareSerializePosShapes(obj);
+//    opt.points = obj.points;
+//    return opt;
+//};
+
+
 
 SerializeShapes.prototype.serializeGroupOfPath = function(group){
     var obj={};
