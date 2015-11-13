@@ -18,8 +18,8 @@ canvas{  border: solid 2px;margin-top:20px;  }
 .my-navbar {  background-color: #ffffff;  }
 .toolbar{margin-left:20px; width:100%; margin-top:20px;position:fixed;  z-index:99;  }
 .overflow{  overflow-y:hidden;  }
-.modal-title{font-family: Î¢ÈíÑÅºÚ; font-size: 13pt}
-/*button {font-family: Î¢ÈíÑÅºÚ}*/
+#json-value{overflow: auto}
+.my-font {font-family: Î¢ÈíÑÅºÚ}
 #controls{margin-top:70px;margin-left: 20px;padding:0px}
 #color-opacity-controls label{margin-top:10px}
 #text-wrapper textarea {width:120px;height: 80px;margin-top:10px }

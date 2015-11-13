@@ -149,7 +149,7 @@ exports.startSocketIo = function(server){
             if(room){
                 if(addedUser){
                     //delete userRoom[room][socket.userName];
-                    userRoom[room].users.splice(userRoom[room].users.indexOf(socket.userName,1));
+                    userRoom[room].users.splice(userRoom[room].users.indexOf(socket.userName),1);
                     --userRoom[room].numUsers;
                     console.log(userRoom[room]);
                 }

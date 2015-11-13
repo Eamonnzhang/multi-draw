@@ -24,13 +24,12 @@ app.directive('bindValueTo', function() {
       });
 
       $scope.$watch($scope[getter], function(newVal) {
-          console.log($element[0]);
           if ($element[0].type === 'radio') {
           var radioGroup = document.getElementsByName($element[0].name);
           for (var i = 0, len = radioGroup.length; i < len; i++) {
             radioGroup[i].checked = radioGroup[i].value === newVal;
           }
-          }else if($element[0].getAttribute('class') =='json-value'){
+          }else if($element[0].getAttribute('id') =='json-value'){
               $element[0].innerHTML = newVal;
           }else if(newVal == null){
               $element[0].innerHTML = '<span class="glyphicon glyphicon-share"></span>&nbsp;分享画板';
@@ -49,7 +48,6 @@ app.directive('bindValueTo', function() {
               socket.on('queryUsers', function (data) {
                   obj = data;
                   console.log(obj);
-
               });
               $('#roomId').popover({
                   //title:"房间用户信息",

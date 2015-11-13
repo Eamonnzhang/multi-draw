@@ -407,7 +407,6 @@ function addAccessors($scope) {
         $scope.setConsoleJSON(JSON.stringify(canvas));
     };
     $scope.getConsoleJSON = function() {
-        console.log('getConsoleJSON');
         return consoleJSONValue;
     };
     $scope.setConsoleJSON = function(value) {

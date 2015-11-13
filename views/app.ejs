@@ -378,6 +378,13 @@
             </div>
         </div>
     </div>
+    <div class="modal fade bs-example-modal-sm" id="myUnsptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div align="center" class="alert alert-warning alert-dismissible fade in" role="alert">
+                <p class="my-font" style="font-family: 微软雅黑">您的浏览器可能<strong>不支持</strong>此操作！</p>
+            </div>
+        </div>
+    </div>
     <!--Save Model-->
     <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-sm" role="document">
@@ -418,11 +425,11 @@
                     <h4 class="modal-title" style="font-family: 微软雅黑; font-size: 13pt">JSON Code</h4>
                 </div>
                 <div class="modal-body">
-                    <p class="json-value" style="overflow: auto" bind-value-to="consoleJSON"> </p>
+                    <p id="json-value" bind-value-to="consoleJSON"> </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">复制</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="copy-value">复制</button>
                 </div>
             </div>
         </div>
