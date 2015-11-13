@@ -53,15 +53,28 @@ exports.startSocketIo = function(server){
             });
         });
 
-        socket.on('clearAll',function(data,fn){
+        socket.on('clearAll',function(data){
             pathRoom[room] = [];
             textRoom[room] = [];
+            geometryRoom[room] = [];
             socket.broadcast.to(room).emit('clearAll', data);
         });
-        socket.on('clearSelected',function(data,fn){
+        socket.on('clearSelected',function(data){
             for(var i =0;i<pathRoom[room].length;i++) {
                 if (data.indexOf(pathRoom[room][i].id) !== -1) {
                     pathRoom[room].splice(i, 1);
+                    i--;
+                }
+            }
+            for(var i =0;i<textRoom[room].length;i++) {
+                if (data.indexOf(textRoom[room][i].id) !== -1) {
+                    textRoom[room].splice(i, 1);
+                    i--;
+                }
+            }
+            for(var i =0;i<geometryRoom[room].length;i++) {
+                if (data.indexOf(geometryRoom[room][i].id) !== -1) {
+                    geometryRoom[room].splice(i, 1);
                     i--;
                 }
             }
@@ -85,35 +98,48 @@ exports.startSocketIo = function(server){
         socket.on('stateChange',function(data){
             for(var i =0;i<pathRoom[room].length;i++) {
                 if (data.id === pathRoom[room][i].id) {
-                    pathRoom[room][i].left = data.left;
-                    pathRoom[room][i].top = data.top;
-                    pathRoom[room][i].angle = data.angle;
-                    pathRoom[room][i].scaleX = data.scaleX;
-                    pathRoom[room][i].scaleY = data.scaleY;
+                    for(var p in data){
+                        pathRoom[room][i][p] = data[p];
+                    }
                 }
             }
             for(var i =0;i<textRoom[room].length;i++) {
                 if (data.id === textRoom[room][i].id) {
-                    textRoom[room][i].left = data.left;
-                    textRoom[room][i].top = data.top;
-                    textRoom[room][i].angle = data.angle;
-                    textRoom[room][i].scaleX = data.scaleX;
-                    textRoom[room][i].scaleY = data.scaleY;
+                    for(var p in data){
+                        textRoom[room][i][p] = data[p];
+                    }
+                }
+            }
+            for(var i =0;i<geometryRoom[room].length;i++) {
+                if (data.id === geometryRoom[room][i].id) {
+                    for(var p in data){
+                        geometryRoom[room][i][p] = data[p];
+                    }
                 }
             }
             socket.broadcast.to(room).emit('stateChange', data);
         });
 
-        socket.on('styleChange', function (data,fn) {
+        socket.on('styleChange', function (data) {
             for(var i =0;i<pathRoom[room].length;i++) {
                 if (data.id === pathRoom[room][i].id) {
                     pathRoom[room][i][data.styleName] = data.value;
                 }
             }
+            for(var i =0;i<textRoom[room].length;i++) {
+                if (data.id === textRoom[room][i].id) {
+                    textRoom[room][i][data.styleName] = data.value;
+                }
+            }
+            for(var i =0;i<geometryRoom[room].length;i++) {
+                if (data.id === geometryRoom[room][i].id) {
+                    geometryRoom[room][i][data.styleName] = data.value;
+                }
+            }
             socket.broadcast.to(room).emit('styleChange', data);
         });
 
-        socket.on('propChange', function (data,fn) {
+        socket.on('propChange', function (data) {
             for(var i =0;i<textRoom[room].length;i++) {
                 if (data.id === textRoom[room][i].id) {
                     textRoom[room][i][data.name] = data.value;
@@ -137,18 +163,14 @@ exports.startSocketIo = function(server){
             }
         });
         socket.on('lockState',function(data){
-            //console.log(data);
             socket.broadcast.to(room).emit('lockState', data);
         });
         socket.on('unlockState',function(data){
-            //console.log(data);
             socket.broadcast.to(room).emit('unlockState', data);
         });
         socket.on('disconnect',function(){
-            //pathRoom[socket.userId] = [];
             if(room){
                 if(addedUser){
-                    //delete userRoom[room][socket.userName];
                     userRoom[room].users.splice(userRoom[room].users.indexOf(socket.userName),1);
                     --userRoom[room].numUsers;
                     console.log(userRoom[room]);

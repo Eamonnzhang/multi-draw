@@ -36,7 +36,7 @@ function addGeometryToCanvas(obj){
     if(obj.type === 'rect')
         var gmt = new fabric.Rect(obj);
     if(obj.type === 'line')
-        var gmt = new fabric.Line(obj);
+        var gmt = new fabric.Line([obj.x1,obj.y1,obj.x2,obj.y2],obj);
     canvas.add(gmt);
 }
 
@@ -410,7 +410,7 @@ function addAccessors($scope) {
         return consoleJSONValue;
     };
     $scope.setConsoleJSON = function(value) {
-        console.log(value);
+        //console.log(value);
         consoleJSONValue = value;
     };
 
@@ -916,11 +916,11 @@ function watchCanvas($scope) {
                   var obj = e.target;
                   if(obj){
                       if(canvas.getActiveObject()){
-                          var data =SerializeShapes.serializeState(obj);
+                          var data =SerializeShapes.serializeSingleState(obj);
                           socket.emit('stateChange',data);
                       }
                       if(canvas.getActiveGroup()){
-                          var group = SerializeShapes.serializeGroupOfPath(canvas.getActiveGroup());
+                          var group = SerializeShapes.serializeGroupState(canvas.getActiveGroup());
                           socket.emit('groupChange',group);
                       }
                   }

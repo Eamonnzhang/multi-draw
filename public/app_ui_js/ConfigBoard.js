@@ -24,12 +24,12 @@ ConfigBoard.prototype.resizeCanvas = function () {
 
     //resize sideBar
     var sideBarHeight= $(window).height()-150;
-    if($(window).height()<870&&$(window).width()>900){ //less height
+    if($(window).height()<870&&$(window).width()>950){ //less height
         _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;width:160px;overflow-y:auto;overflow-x:hidden;position:fixed;');
-    }else if($(window).height()>=870&&$(window).width()<=900){ //less width
-        _('optionDiv').setAttribute('style','width:100px;overflow-x:auto;overflow-y:hidden;position:fixed;margin-top:20px;');
-    }else if($(window).height()<870&&$(window).width()<=900){ //both less
-        _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;width:100px;overflow-x:auto;overflow-y:auto;position:fixed;margin-top:20px;');
+    }else if($(window).height()>=870&&$(window).width()<=950){ //less width
+        _('optionDiv').setAttribute('style','width:100px;overflow-x:auto;overflow-y:hidden;position:fixed;margin-top:30px;');
+    }else if($(window).height()<870&&$(window).width()<=950){ //both less
+        _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;width:100px;overflow-x:auto;overflow-y:auto;position:fixed;margin-top:30px;');
     }else //normal
         _('optionDiv').setAttribute('style','position:fixed');
 };

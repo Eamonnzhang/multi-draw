@@ -20,10 +20,9 @@ SerializeShapes.prototype.prepareSerializePosShapes = function (obj) {
     return opt;
 };
 
-SerializeShapes.prototype.serializeState = function(obj){
-    var opt={};
-    opt.id = obj.id;
-    opt.top= obj.top;
+SerializeShapes.prototype.prepareState = function (obj) {
+    var opt = {};
+    opt.top = obj.top;
     opt.left = obj.left;
     opt.angle = obj.angle;
     opt.scaleX = obj.scaleX;
@@ -31,8 +30,14 @@ SerializeShapes.prototype.serializeState = function(obj){
     return opt;
 };
 
+SerializeShapes.prototype.serializeSingleState = function(obj){
+    var opt = this.prepareState(obj);
+    opt.id = obj.id;
+    return opt;
+};
+
 SerializeShapes.prototype.serializePath = function(obj){
-    var opt=this.prepareSerialize(obj);
+    var opt = this.prepareSerialize(obj);
     opt.path = obj.path;
     opt.stroke = obj.stroke;
     opt.originX = obj.originX;
@@ -78,6 +83,10 @@ SerializeShapes.prototype.serializeTriangle = function(obj){
 
 SerializeShapes.prototype.serializeLine = function(obj){
     var opt = this.prepareSerializePosShapes(obj);
+    opt.x1 = obj.x1;
+    opt.x2 = obj.x2;
+    opt.y1 = obj.y1;
+    opt.y2 = obj.y2;
     opt.stroke = obj.stroke;
     opt.type = "line";
     return opt;
@@ -89,10 +98,8 @@ SerializeShapes.prototype.serializeLine = function(obj){
 //    return opt;
 //};
 
-
-
-SerializeShapes.prototype.serializeGroupOfPath = function(group){
-    var obj={};
+SerializeShapes.prototype.serializeGroupState = function(group){
+    var obj = this.prepareState(group);
     var objArr = [];
     var idArr = [];
     group.forEachObject(function(x){
@@ -106,11 +113,6 @@ SerializeShapes.prototype.serializeGroupOfPath = function(group){
     });
     obj.objArr = objArr;
     obj.idArr = idArr;
-    obj.top = group.top;
-    obj.left = group.left;
-    obj.angle= group.angle;
-    obj.scaleX = group.scaleX;
-    obj.scaleY = group.scaleY;
     obj.width = group.width;
     obj.height = group.height;
     return obj;
