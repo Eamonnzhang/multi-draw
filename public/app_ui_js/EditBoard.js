@@ -12,8 +12,9 @@ var EditBoard = function (){
     this.serializeShapes = new SerializeShapes();
     var canvas = this.__canvas = new fabric.Canvas('c', {
         backgroundColor :"#ffffff",
-        width:1024,
-        height:700
+        width:640,
+        height:480,
+        allowTouchScrolling:true
     });
     var configBoard = new ConfigBoard(this);
 

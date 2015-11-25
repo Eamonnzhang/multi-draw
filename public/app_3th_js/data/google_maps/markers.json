@@ -1,0 +1,17 @@
+{
+	"markers": [
+		{
+			"latitude": 57.698920689483,
+			"longitude": 11.983367179871,
+			"title": "Learning, Inc",
+			"description": "10000 Main Street Boulevard, Los Angeles, California, 90030, United States",
+			"template": "map-infobox-simple",
+			"icon": "building-02",
+			"open": true,
+			"options": {
+				"bound": true,
+				"tags": ["Building"]
+			}
+		}
+	]
+}

@@ -1,0 +1,107 @@
+.messages-container .messages-list {
+  width: 250px;
+}
+.messages-container .messages-list .list-group-item {
+  padding: 0;
+}
+.messages-container .messages-list .list-group-item a {
+  color: #212121;
+  display: block;
+  text-decoration: none;
+}
+.messages-container .messages-list .list-group-item:hover {
+  background: #f9f9f9;
+}
+.messages-container .messages-list .list-group-item.active:hover {
+  background: #42a5f5;
+}
+.messages-container .messages-list .list-group-item .media-body {
+  padding-right: 16px;
+}
+.messages-container .messages-list .list-group-item .media-body .user {
+  font-weight: 500;
+}
+.messages-container .messages-list .list-group-item .media-body .date {
+  float: right;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.4;
+}
+.messages-container .messages-list .list-group-item .media-body .message {
+  opacity: 0.8;
+}
+.messages-container .messages-list .list-group-item.active .media-body {
+  color: #fff;
+}
+.messages-container .messages-list .list-group-item.active .media-body .text-light {
+  color: rgba(255, 255, 255, 0.3);
+}
+.messages-container .media-body {
+  height: 100%;
+}
+.messages-container .media-body .media {
+  margin-bottom: 16px;
+}
+@media (max-width: 480px) {
+  .messages-container .messages-list {
+    width: 100%;
+    height: 50px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .messages-container .messages-list .panel.panel-default {
+    position: relative;
+    overflow-x: auto;
+    background: none;
+    border: 0;
+    height: 50px;
+  }
+  .messages-container .messages-list .panel.panel-default ul {
+    height: 50px;
+  }
+  .messages-container .messages-list .list-group-item {
+    width: 50px;
+    border: 0;
+    float: left;
+  }
+  .messages-container .messages-list .list-group-item .media-left {
+    padding: 0;
+  }
+  .messages-container .messages-list .list-group-item .media-body {
+    display: none;
+  }
+  .messages-container .messages-list .list-group-item .media .media-left {
+    opacity: 0.6;
+  }
+  .messages-container .messages-list .list-group-item .media .media-left:hover {
+    opacity: 1;
+  }
+  .messages-container .messages-list .list-group-item.active {
+    opacity: 1;
+  }
+}
+@media (min-width: 480px) and (max-width: 768px) {
+  .messages-container .messages-list {
+    width: auto;
+  }
+  .messages-container .messages-list .list-group-item .media .media-left {
+    padding: 0;
+  }
+  .messages-container .messages-list .list-group-item .media .media-body {
+    display: none;
+  }
+  .messages-container .messages-list .list-group-item .media .media-left {
+    opacity: 0.6;
+  }
+  .messages-container .messages-list .list-group-item .media .media-left:hover {
+    opacity: 1;
+  }
+  .messages-container .messages-list .list-group-item.active .media .media-left {
+    opacity: 1;
+  }
+}
+.media-clearfix-xs-min > .media-body [class*="media"] .media-object {
+  width: 50px !important;
+}

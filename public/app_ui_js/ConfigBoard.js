@@ -20,9 +20,14 @@ ConfigBoard.prototype.resizeCanvas = function () {
     //    this.editBoard.__canvas.setWidth($(window).width()-35);
     //}else                                                              // 340 <= width <= 1550
     //    this.editBoard.__canvas.setWidth($(window).width()+85-$("#controls").width()-150);
-    _('canvas-col').setAttribute('style','margin-top:80px;');
-
+    //_('canvas-col').setAttribute('style','margin-top:80px;');
     //resize sideBar
+    var e = $('.canvas-container');
+    e.css('margin','auto');
+    e.css('margin-top','200px');
+    //e.attr('margin','auto');
+    //console.log(e);
+    //e.attr({position:'absolute',left:'300px', right:'240px', top:'300px'});
     var sideBarHeight= $(window).height()-150;
     if($(window).height()<870&&$(window).width()>950){ //less height
         _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;width:160px;overflow-y:auto;overflow-x:hidden;position:fixed;');
@@ -31,7 +36,7 @@ ConfigBoard.prototype.resizeCanvas = function () {
     }else if($(window).height()<870&&$(window).width()<=950){ //both less
         _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;width:100px;overflow-x:auto;overflow-y:auto;position:fixed;margin-top:30px;');
     }else //normal
-        _('optionDiv').setAttribute('style','position:fixed');
+        _('optionDiv').setAttribute('style','position:fixed;top:90px;');
 };
 
 

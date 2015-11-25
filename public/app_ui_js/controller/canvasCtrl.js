@@ -238,6 +238,7 @@ function addAccessors($scope) {
         return canvas.backgroundColor;
     };
     $scope.setCanvasBgColor = function(value) {
+        socket.emit('canvasBgColor',value);
         canvas.backgroundColor = value;
         canvas.renderAll();
     };
@@ -1153,6 +1154,10 @@ function initCanvasSocket($scope){
         }
         canvas.renderAll();
     });
+    socket.on('canvasBgColor', function (value) {
+        canvas.backgroundColor = value;
+        canvas.renderAll();
+    })
 }
 
 function httpOpt($scope){

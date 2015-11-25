@@ -67,12 +67,6 @@
                             </ul>
                         </li>
                     </ul>
-                    <!--<form class="navbar-form navbar-left" role="search">-->
-                        <!--<div class="form-group">-->
-                            <!--<input type="text" class="form-control" placeholder="Search">-->
-                        <!--</div>-->
-                        <!--<button type="submit" class="btn btn-default">Submit</button>-->
-                    <!--</form>-->
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href='' id="roomId" bind-value-to="roomId" data-toggle="collapse"></a></li>
                         <li class="dropdown">
@@ -92,11 +86,6 @@
                      ng-click="setFreeDrawingMode(!getFreeDrawingMode())">
                 <i class="fa fa-paint-brush"></i>&nbsp;绘画
             </button>
-            <!--<button id="save" type="button" class="btn btn-default"  data-toggle="modal" data-target="#myModal">-->
-                <!--<i class="fa fa-save fa-lg"></i>-->
-                <!--&nbsp;保存-->
-            <!--</button>-->
-
             <button id="clear-all-canvas" type="button" class="btn btn-default" data-toggle="modal" data-target="#myAlertModal">
                 <i class="fa fa-trash-o fa-lg"></i>&nbsp;清空
             </button>
@@ -161,59 +150,8 @@
                     ng-click="clip()">
                 <i class="fa fa-scissors fa-lg"></i>&nbsp;修剪
             </button>
-
-            <button id="gradientify" class="btn btn-default btn-lock btn-object-action"
-                    ng-click="gradientify()">
-                    Gradientify
-            </button>
-            <button id="shadowify" class="btn btn-default btn-lock btn-object-action"
-                    ng-click="shadowify()">
-                    Shadowify
-            </button>
-                <button id="patternify" class="btn btn-default btn-lock btn-object-action"
-                    ng-click="patternify()">
-                    Patternify
-            </button>
         </div><!--toolbar btn group-->
-        <!--<div style="margin-top:10px">-->
-        <!--<p>-->
-            <!--<span style="margin-right: 10px">Origin X: </span>-->
-            <!--<label>-->
-                <!--Left-->
-                <!--<input type="radio" name="origin-x" class="origin-x btn-object-action" value="left"-->
-                       <!--bind-value-to="originX">-->
-            <!--</label>-->
-            <!--<label>-->
-                <!--Center-->
-                <!--<input type="radio" name="origin-x" class="origin-x btn-object-action" value="center"-->
-                       <!--bind-value-to="originX">-->
-            <!--</label>-->
-            <!--<label>-->
-                <!--Right-->
-                <!--<input type="radio" name="origin-x" class="origin-x btn-object-action" value="right"-->
-                       <!--bind-value-to="originX">-->
-            <!--</label>-->
-        <!--</p>-->
-        <!--<p>-->
-            <!--<span style="margin-right: 10px">Origin Y: </span>-->
-            <!--<label>-->
-                <!--Top-->
-                <!--<input type="radio" name="origin-y" class="origin-y btn-object-action" value="top"-->
-                       <!--bind-value-to="originY">-->
-            <!--</label>-->
-            <!--<label>-->
-                <!--Center-->
-                <!--<input type="radio" name="origin-y" class="origin-y btn-object-action" value="center"-->
-                       <!--bind-value-to="originY">-->
-            <!--</label>-->
-            <!--<label>-->
-                <!--Bottom-->
-                <!--<input type="radio" name="origin-y" class="origin-y btn-object-action" value="bottom"-->
-                       <!--bind-value-to="originY">-->
-            <!--</label>-->
-        <!--</p>-->
-        <!--</div>-->
-        <div  id="controls" class="col-lg-2 col-md-2 col-sm-2 col-xs-2" >
+        <div  id="controls">
             <div id='optionDiv'>
                 <div id="drawing-mode-options" ng-show="getFreeDrawingMode()">
                     <label for="drawing-mode-selector">画笔:</label><br>
@@ -240,8 +178,6 @@
 
                     <label for="drawing-shadow-width">阴影宽度:</label>
                     <span class="info"></span><input type="range" min="0" max="50" bind-value-to="drawingLineShadowWidth">
-                    <!--<label for="drawing-shadow-offset">阴影偏移:</label>-->
-                    <!--<span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-offset"><br>-->
                 </div>
 
                 <!--配置透明度-->
@@ -265,29 +201,16 @@
                         <label for="font-family">字体类型:</label><br>
                         <select id="font-family" class="btn-object-action" bind-value-to="fontFamily">
                             <option value="arial">Arial</option>
-                            <!--<option value="helvetica" selected>Helvetica</option>-->
                             <option value="myriad pro">Myriad Pro</option>
-                            <!--<option value="delicious">Delicious</option>-->
                             <option value="verdana">Verdana</option>
                             <option value="georgia">Georgia</option>
                             <option value="courier">Courier</option>
                             <option value="comic sans ms">Comic Sans MS</option>
                             <option value="impact">Impact</option>
                             <option value="monaco">Monaco</option>
-                            <!--<option value="optima">Optima</option>-->
-                            <!--<option value="hoefler text">Hoefler Text</option>-->
-                            <!--<option value="plaster">Plaster</option>-->
-                            <!--<option value="engagement">Engagement</option>-->
                             <option value="微软雅黑">微软雅黑</option>
                         </select>
                         <br>
-                        <!--<label for="text-align" style="display:inline-block">对齐方式:</label>-->
-                        <!--<select id="text-align" class="btn-object-action" bind-value-to="textAlign">-->
-                            <!--<option>左对齐</option>-->
-                            <!--<option>居中</option>-->
-                            <!--<option>右对齐</option>-->
-                            <!--<option>自适应</option>-->
-                        <!--</select>-->
                         <div>
                             <label for="text-bg-color">背景颜色:</label><br>
                             <input type="color"  id="text-bg-color" size="10" class="btn-object-action"
@@ -348,9 +271,9 @@
                 </div><!--编辑文字-->
             </div><!--optionDiv-->
         </div><!--controls-->
-        <div id="canvas-col" class="col-lg-8 col-md-8  col-sm-8 col-xs-8">
-            <div id="canvasContainer">
-                <canvas id="c"></canvas>
+        <div id="canvas-col">
+            <div id="canvasCtn">
+                <canvas id="c" style="margin: auto"></canvas>
             </div>
         </div>
         <div id="canvas-background">
@@ -367,7 +290,6 @@
     <div class="modal fade bs-example-modal-sm" id="myAlertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-sm" role="document">
             <div align="center" class="alert alert-danger alert-dismissible fade in" role="alert">
-                <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
                 <h4>Are you sure to do this?!</h4>
                 <!--<p>清空后将不可恢复</p>-->
                 <br>

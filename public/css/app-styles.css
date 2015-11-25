@@ -1,7 +1,18 @@
-body{  margin: 0;background: #F4F6F8;margin-top:50px}
+body{  font-family:微软雅黑 ;background: #F4F6F8;}
 #bd-wrapper {position: relative; }
-#canvasContainer{
-    position: absolute;
+#canvas-col{
+    margin-right: 100px;
+    margin-left: 300px;
+    overflow:scroll;
+    width: 1400px;
+    height: 900px;
+    background-color:#E1E3EF ;
+    margin-top:60px;
+
+}
+#canvasCtn{
+    width: 1500px;
+    height: 1000px;
 }
 ul { margin-left: 0; }
 label { display: inline-block; margin-right: 8px; }
@@ -9,18 +20,18 @@ button.selected { font-weight: bold; vertical-align: top }
 textarea { font-family: monospace; }
 input[type=color] { width: 40px; padding: 0; margin: 0; height: 20px; position: relative; top: 2px;}
 input[type=radio] { margin-top: -3px; }
-canvas{  border: solid 2px;margin-top:20px;  }
-#canvas-background { display: inline-block; position: absolute; top: 65px; right: 40px; }
+/*canvas{  border: solid 2px;margin-top:20px;  }*/
+#canvas-background { position: absolute; top: 69px; right: 40px; }
 #roomId{color:#5BC0DE;}
 #modeBtn button{margin:10px}
 .testBtn{  display:none;}
 .brand-title{  font-family:Times New Roman;  font-style:italic;  font-size: 15pt;  }
-.my-navbar {  background-color: #ffffff;  }
-.toolbar{margin-left:20px; width:100%; margin-top:20px;position:fixed;  z-index:99;  }
+.my-navbar {  background-color: #ffffff;  margin-bottom: 0px}
+.toolbar{width:100%;position:fixed;z-index:99;top:50px}
 .overflow{  overflow-y:hidden;  }
 #json-value{overflow: auto}
-.my-font {font-family: ΢���ź�}
-#controls{margin-top:70px;margin-left: 20px;padding:0px}
+.my-font {font-family: ΢微软雅黑}
+#controls{margin-left: 20px;padding:0px;}
 #color-opacity-controls label{margin-top:10px}
 #text-wrapper textarea {width:120px;height: 80px;margin-top:10px }
 #font-family {width:100px}
@@ -28,22 +39,9 @@ canvas{  border: solid 2px;margin-top:20px;  }
 #drawing-mode-options { margin-right: 30px}
 #drawing-mode-options label {margin-top:10px}
 #text-cmd-overline { text-decoration: overline; }
-/*#text-cmd-italic { font-style: italic; }*/
-/*#text-cmd-shadow { text-shadow: rgb(100,100,100) 1px 1px 3px; }*/
-/*#svg-console, #canvas-console, #json-console { width: 430px; height: 500px; display: block; }*/
-/*#text { position: relative; width: 300px; height: 200px; }*/
-/*#text-cmd-linethrough { text-decoration: line-through; }*/
-/*#text-cmd-underline { text-decoration: underline; }*/
-/*#fps { position: absolute; left: 1px; top: 0; background: rgb(200,200,200); width: 70px; z-index: 1000; }*/
-/*#commands { float: left; font-size: 14px; margin-left: 15px; }*/
-/*#commands ul { list-style: none; padding-left: 0; }*/
-/*#complexity { clear: both; padding-top: 10px; }*/
-/*#object-controls-pane { width: 450px }*/
-/*.svg-shapes { overflow: hidden; width: 450px; margin-left: 0; }*/
-/*.svg-shapes li { display: inline-block; margin-bottom: 5px; }*/
-/*.tabs li, .tabs li a { display: inline-block; }*/
-/*.btn-lock { margin-bottom: 3px; }*/
-/*#color-opacity-controls { display: inline-block; vertical-align: top; margin-bottom: 5px;margin-right: 20px; }*/
+
+/*三级菜单相关CSS*/
+
 .dropdown-submenu {
     position: relative;
 }

@@ -148,6 +148,10 @@ exports.startSocketIo = function(server){
             socket.broadcast.to(room).emit('propChange', data);
         });
 
+        socket.on('canvasBgColor', function (value) {
+            socket.broadcast.to(room).emit('canvasBgColor', value);
+        });
+
         socket.on('groupChange',function(group){
             socket.broadcast.to(room).emit('groupChange', group);
             for(var i =0;i<pathRoom[room].length;i++) {

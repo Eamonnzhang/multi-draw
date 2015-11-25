@@ -1,0 +1,4272 @@
+.datepicker-inline table tr td.day,
+.datepicker-inline table tr td .month,
+.datepicker-inline table tr td .year {
+  color: rgba(0, 0, 0, 0.4);
+}
+.datepicker-inline table thead tr {
+  color: #ffffff;
+}
+.datepicker-inline table thead tr th.datepicker-switch:hover,
+.datepicker-inline table thead tr th.next:hover,
+.datepicker-inline table thead tr th.prev:hover {
+  color: #fff;
+}
+.datepicker-inline table tr td.day.active,
+.datepicker-inline table tr td .month.active,
+.datepicker-inline table tr td .year.active {
+  color: #fff;
+}
+.datepicker-inline table tr td.day:hover,
+.datepicker-inline table tr td .month:hover,
+.datepicker-inline table tr td .year:hover {
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+}
+.datepicker-inline table tr td.day.new,
+.datepicker-inline table tr td .month.new,
+.datepicker-inline table tr td .year.new {
+  color: rgba(0, 0, 0, 0.2);
+}
+[class^="bg-"] .datepicker-inline {
+  padding: 4px;
+}
+[class^="bg-"] .datepicker-inline table tr td.day,
+[class^="bg-"] .datepicker-inline table tr td .month,
+[class^="bg-"] .datepicker-inline table tr td .year {
+  color: #ffffff;
+}
+[class^="bg-"] .datepicker-inline table tr td.day.old,
+[class^="bg-"] .datepicker-inline table tr td .month.old,
+[class^="bg-"] .datepicker-inline table tr td .year.old {
+  color: rgba(255, 255, 255, 0.4);
+}
+.datepicker.calendar-amber-100 table thead tr {
+  background: #ffecb3 !important;
+}
+.datepicker.calendar-amber-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-amber-100 table thead tr th.next:hover,
+.datepicker.calendar-amber-100 table thead tr th.prev:hover {
+  background: #ffdf80;
+}
+.datepicker.calendar-amber-100 table tr td.day.active,
+.datepicker.calendar-amber-100 table tr td .month.active,
+.datepicker.calendar-amber-100 table tr td .year.active {
+  background-color: #ffecb3 !important;
+}
+.datepicker.calendar-amber-100 table tr td.day:hover,
+.datepicker.calendar-amber-100 table tr td .month:hover,
+.datepicker.calendar-amber-100 table tr td .year:hover {
+  background: #ffdf80;
+}
+.datepicker.calendar-amber-200 table thead tr {
+  background: #ffe082 !important;
+}
+.datepicker.calendar-amber-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-amber-200 table thead tr th.next:hover,
+.datepicker.calendar-amber-200 table thead tr th.prev:hover {
+  background: #ffd34f;
+}
+.datepicker.calendar-amber-200 table tr td.day.active,
+.datepicker.calendar-amber-200 table tr td .month.active,
+.datepicker.calendar-amber-200 table tr td .year.active {
+  background-color: #ffe082 !important;
+}
+.datepicker.calendar-amber-200 table tr td.day:hover,
+.datepicker.calendar-amber-200 table tr td .month:hover,
+.datepicker.calendar-amber-200 table tr td .year:hover {
+  background: #ffd34f;
+}
+.datepicker.calendar-amber-300 table thead tr {
+  background: #ffd54f !important;
+}
+.datepicker.calendar-amber-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-amber-300 table thead tr th.next:hover,
+.datepicker.calendar-amber-300 table thead tr th.prev:hover {
+  background: #ffc91c;
+}
+.datepicker.calendar-amber-300 table tr td.day.active,
+.datepicker.calendar-amber-300 table tr td .month.active,
+.datepicker.calendar-amber-300 table tr td .year.active {
+  background-color: #ffd54f !important;
+}
+.datepicker.calendar-amber-300 table tr td.day:hover,
+.datepicker.calendar-amber-300 table tr td .month:hover,
+.datepicker.calendar-amber-300 table tr td .year:hover {
+  background: #ffc91c;
+}
+.datepicker.calendar-amber-400 table thead tr {
+  background: #ffca28 !important;
+}
+.datepicker.calendar-amber-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-amber-400 table thead tr th.next:hover,
+.datepicker.calendar-amber-400 table thead tr th.prev:hover {
+  background: #f4b800;
+}
+.datepicker.calendar-amber-400 table tr td.day.active,
+.datepicker.calendar-amber-400 table tr td .month.active,
+.datepicker.calendar-amber-400 table tr td .year.active {
+  background-color: #ffca28 !important;
+}
+.datepicker.calendar-amber-400 table tr td.day:hover,
+.datepicker.calendar-amber-400 table tr td .month:hover,
+.datepicker.calendar-amber-400 table tr td .year:hover {
+  background: #f4b800;
+}
+.datepicker.calendar-amber-500 table thead tr {
+  background: #ffc107 !important;
+}
+.datepicker.calendar-amber-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-amber-500 table thead tr th.next:hover,
+.datepicker.calendar-amber-500 table thead tr th.prev:hover {
+  background: #d39e00;
+}
+.datepicker.calendar-amber-500 table tr td.day.active,
+.datepicker.calendar-amber-500 table tr td .month.active,
+.datepicker.calendar-amber-500 table tr td .year.active {
+  background-color: #ffc107 !important;
+}
+.datepicker.calendar-amber-500 table tr td.day:hover,
+.datepicker.calendar-amber-500 table tr td .month:hover,
+.datepicker.calendar-amber-500 table tr td .year:hover {
+  background: #d39e00;
+}
+.datepicker.calendar-amber-600 table thead tr {
+  background: #ffb300 !important;
+}
+.datepicker.calendar-amber-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-amber-600 table thead tr th.next:hover,
+.datepicker.calendar-amber-600 table thead tr th.prev:hover {
+  background: #cc8f00;
+}
+.datepicker.calendar-amber-600 table tr td.day.active,
+.datepicker.calendar-amber-600 table tr td .month.active,
+.datepicker.calendar-amber-600 table tr td .year.active {
+  background-color: #ffb300 !important;
+}
+.datepicker.calendar-amber-600 table tr td.day:hover,
+.datepicker.calendar-amber-600 table tr td .month:hover,
+.datepicker.calendar-amber-600 table tr td .year:hover {
+  background: #cc8f00;
+}
+.datepicker.calendar-amber-700 table thead tr {
+  background: #ffa000 !important;
+}
+.datepicker.calendar-amber-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-amber-700 table thead tr th.next:hover,
+.datepicker.calendar-amber-700 table thead tr th.prev:hover {
+  background: #cc8000;
+}
+.datepicker.calendar-amber-700 table tr td.day.active,
+.datepicker.calendar-amber-700 table tr td .month.active,
+.datepicker.calendar-amber-700 table tr td .year.active {
+  background-color: #ffa000 !important;
+}
+.datepicker.calendar-amber-700 table tr td.day:hover,
+.datepicker.calendar-amber-700 table tr td .month:hover,
+.datepicker.calendar-amber-700 table tr td .year:hover {
+  background: #cc8000;
+}
+.datepicker.calendar-amber-800 table thead tr {
+  background: #ff8f00 !important;
+}
+.datepicker.calendar-amber-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-amber-800 table thead tr th.next:hover,
+.datepicker.calendar-amber-800 table thead tr th.prev:hover {
+  background: #cc7200;
+}
+.datepicker.calendar-amber-800 table tr td.day.active,
+.datepicker.calendar-amber-800 table tr td .month.active,
+.datepicker.calendar-amber-800 table tr td .year.active {
+  background-color: #ff8f00 !important;
+}
+.datepicker.calendar-amber-800 table tr td.day:hover,
+.datepicker.calendar-amber-800 table tr td .month:hover,
+.datepicker.calendar-amber-800 table tr td .year:hover {
+  background: #cc7200;
+}
+.datepicker.calendar-amber-900 table thead tr {
+  background: #ff6f00 !important;
+}
+.datepicker.calendar-amber-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-amber-900 table thead tr th.next:hover,
+.datepicker.calendar-amber-900 table thead tr th.prev:hover {
+  background: #cc5900;
+}
+.datepicker.calendar-amber-900 table tr td.day.active,
+.datepicker.calendar-amber-900 table tr td .month.active,
+.datepicker.calendar-amber-900 table tr td .year.active {
+  background-color: #ff6f00 !important;
+}
+.datepicker.calendar-amber-900 table tr td.day:hover,
+.datepicker.calendar-amber-900 table tr td .month:hover,
+.datepicker.calendar-amber-900 table tr td .year:hover {
+  background: #cc5900;
+}
+.datepicker.calendar-amber-A100 table thead tr {
+  background: #ffe57f !important;
+}
+.datepicker.calendar-amber-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-amber-A100 table thead tr th.next:hover,
+.datepicker.calendar-amber-A100 table thead tr th.prev:hover {
+  background: #ffdb4c;
+}
+.datepicker.calendar-amber-A100 table tr td.day.active,
+.datepicker.calendar-amber-A100 table tr td .month.active,
+.datepicker.calendar-amber-A100 table tr td .year.active {
+  background-color: #ffe57f !important;
+}
+.datepicker.calendar-amber-A100 table tr td.day:hover,
+.datepicker.calendar-amber-A100 table tr td .month:hover,
+.datepicker.calendar-amber-A100 table tr td .year:hover {
+  background: #ffdb4c;
+}
+.datepicker.calendar-amber-A200 table thead tr {
+  background: #ffd740 !important;
+}
+.datepicker.calendar-amber-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-amber-A200 table thead tr th.next:hover,
+.datepicker.calendar-amber-A200 table thead tr th.prev:hover {
+  background: #ffcc0d;
+}
+.datepicker.calendar-amber-A200 table tr td.day.active,
+.datepicker.calendar-amber-A200 table tr td .month.active,
+.datepicker.calendar-amber-A200 table tr td .year.active {
+  background-color: #ffd740 !important;
+}
+.datepicker.calendar-amber-A200 table tr td.day:hover,
+.datepicker.calendar-amber-A200 table tr td .month:hover,
+.datepicker.calendar-amber-A200 table tr td .year:hover {
+  background: #ffcc0d;
+}
+.datepicker.calendar-amber-A400 table thead tr {
+  background: #ffc400 !important;
+}
+.datepicker.calendar-amber-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-amber-A400 table thead tr th.next:hover,
+.datepicker.calendar-amber-A400 table thead tr th.prev:hover {
+  background: #cc9d00;
+}
+.datepicker.calendar-amber-A400 table tr td.day.active,
+.datepicker.calendar-amber-A400 table tr td .month.active,
+.datepicker.calendar-amber-A400 table tr td .year.active {
+  background-color: #ffc400 !important;
+}
+.datepicker.calendar-amber-A400 table tr td.day:hover,
+.datepicker.calendar-amber-A400 table tr td .month:hover,
+.datepicker.calendar-amber-A400 table tr td .year:hover {
+  background: #cc9d00;
+}
+.datepicker.calendar-amber-A700 table thead tr {
+  background: #ffab00 !important;
+}
+.datepicker.calendar-amber-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-amber-A700 table thead tr th.next:hover,
+.datepicker.calendar-amber-A700 table thead tr th.prev:hover {
+  background: #cc8900;
+}
+.datepicker.calendar-amber-A700 table tr td.day.active,
+.datepicker.calendar-amber-A700 table tr td .month.active,
+.datepicker.calendar-amber-A700 table tr td .year.active {
+  background-color: #ffab00 !important;
+}
+.datepicker.calendar-amber-A700 table tr td.day:hover,
+.datepicker.calendar-amber-A700 table tr td .month:hover,
+.datepicker.calendar-amber-A700 table tr td .year:hover {
+  background: #cc8900;
+}
+.datepicker.calendar-blue-100 table thead tr {
+  background: #bbdefb !important;
+}
+.datepicker.calendar-blue-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-100 table thead tr th.next:hover,
+.datepicker.calendar-blue-100 table thead tr th.prev:hover {
+  background: #8bc7f8;
+}
+.datepicker.calendar-blue-100 table tr td.day.active,
+.datepicker.calendar-blue-100 table tr td .month.active,
+.datepicker.calendar-blue-100 table tr td .year.active {
+  background-color: #bbdefb !important;
+}
+.datepicker.calendar-blue-100 table tr td.day:hover,
+.datepicker.calendar-blue-100 table tr td .month:hover,
+.datepicker.calendar-blue-100 table tr td .year:hover {
+  background: #8bc7f8;
+}
+.datepicker.calendar-blue-200 table thead tr {
+  background: #90caf9 !important;
+}
+.datepicker.calendar-blue-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-200 table thead tr th.next:hover,
+.datepicker.calendar-blue-200 table thead tr th.prev:hover {
+  background: #60b3f6;
+}
+.datepicker.calendar-blue-200 table tr td.day.active,
+.datepicker.calendar-blue-200 table tr td .month.active,
+.datepicker.calendar-blue-200 table tr td .year.active {
+  background-color: #90caf9 !important;
+}
+.datepicker.calendar-blue-200 table tr td.day:hover,
+.datepicker.calendar-blue-200 table tr td .month:hover,
+.datepicker.calendar-blue-200 table tr td .year:hover {
+  background: #60b3f6;
+}
+.datepicker.calendar-blue-300 table thead tr {
+  background: #64b5f6 !important;
+}
+.datepicker.calendar-blue-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-300 table thead tr th.next:hover,
+.datepicker.calendar-blue-300 table thead tr th.prev:hover {
+  background: #349ef3;
+}
+.datepicker.calendar-blue-300 table tr td.day.active,
+.datepicker.calendar-blue-300 table tr td .month.active,
+.datepicker.calendar-blue-300 table tr td .year.active {
+  background-color: #64b5f6 !important;
+}
+.datepicker.calendar-blue-300 table tr td.day:hover,
+.datepicker.calendar-blue-300 table tr td .month:hover,
+.datepicker.calendar-blue-300 table tr td .year:hover {
+  background: #349ef3;
+}
+.datepicker.calendar-blue-400 table thead tr {
+  background: #42a5f5 !important;
+}
+.datepicker.calendar-blue-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-400 table thead tr th.next:hover,
+.datepicker.calendar-blue-400 table thead tr th.prev:hover {
+  background: #128ef2;
+}
+.datepicker.calendar-blue-400 table tr td.day.active,
+.datepicker.calendar-blue-400 table tr td .month.active,
+.datepicker.calendar-blue-400 table tr td .year.active {
+  background-color: #42a5f5 !important;
+}
+.datepicker.calendar-blue-400 table tr td.day:hover,
+.datepicker.calendar-blue-400 table tr td .month:hover,
+.datepicker.calendar-blue-400 table tr td .year:hover {
+  background: #128ef2;
+}
+.datepicker.calendar-blue-500 table thead tr {
+  background: #2196f3 !important;
+}
+.datepicker.calendar-blue-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-500 table thead tr th.next:hover,
+.datepicker.calendar-blue-500 table thead tr th.prev:hover {
+  background: #0c7cd5;
+}
+.datepicker.calendar-blue-500 table tr td.day.active,
+.datepicker.calendar-blue-500 table tr td .month.active,
+.datepicker.calendar-blue-500 table tr td .year.active {
+  background-color: #2196f3 !important;
+}
+.datepicker.calendar-blue-500 table tr td.day:hover,
+.datepicker.calendar-blue-500 table tr td .month:hover,
+.datepicker.calendar-blue-500 table tr td .year:hover {
+  background: #0c7cd5;
+}
+.datepicker.calendar-blue-600 table thead tr {
+  background: #1e88e5 !important;
+}
+.datepicker.calendar-blue-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-600 table thead tr th.next:hover,
+.datepicker.calendar-blue-600 table thead tr th.prev:hover {
+  background: #166dba;
+}
+.datepicker.calendar-blue-600 table tr td.day.active,
+.datepicker.calendar-blue-600 table tr td .month.active,
+.datepicker.calendar-blue-600 table tr td .year.active {
+  background-color: #1e88e5 !important;
+}
+.datepicker.calendar-blue-600 table tr td.day:hover,
+.datepicker.calendar-blue-600 table tr td .month:hover,
+.datepicker.calendar-blue-600 table tr td .year:hover {
+  background: #166dba;
+}
+.datepicker.calendar-blue-700 table thead tr {
+  background: #1976d2 !important;
+}
+.datepicker.calendar-blue-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-700 table thead tr th.next:hover,
+.datepicker.calendar-blue-700 table thead tr th.prev:hover {
+  background: #145ca4;
+}
+.datepicker.calendar-blue-700 table tr td.day.active,
+.datepicker.calendar-blue-700 table tr td .month.active,
+.datepicker.calendar-blue-700 table tr td .year.active {
+  background-color: #1976d2 !important;
+}
+.datepicker.calendar-blue-700 table tr td.day:hover,
+.datepicker.calendar-blue-700 table tr td .month:hover,
+.datepicker.calendar-blue-700 table tr td .year:hover {
+  background: #145ca4;
+}
+.datepicker.calendar-blue-800 table thead tr {
+  background: #1565c0 !important;
+}
+.datepicker.calendar-blue-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-800 table thead tr th.next:hover,
+.datepicker.calendar-blue-800 table thead tr th.prev:hover {
+  background: #104d92;
+}
+.datepicker.calendar-blue-800 table tr td.day.active,
+.datepicker.calendar-blue-800 table tr td .month.active,
+.datepicker.calendar-blue-800 table tr td .year.active {
+  background-color: #1565c0 !important;
+}
+.datepicker.calendar-blue-800 table tr td.day:hover,
+.datepicker.calendar-blue-800 table tr td .month:hover,
+.datepicker.calendar-blue-800 table tr td .year:hover {
+  background: #104d92;
+}
+.datepicker.calendar-blue-900 table thead tr {
+  background: #0d47a1 !important;
+}
+.datepicker.calendar-blue-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-900 table thead tr th.next:hover,
+.datepicker.calendar-blue-900 table thead tr th.prev:hover {
+  background: #093272;
+}
+.datepicker.calendar-blue-900 table tr td.day.active,
+.datepicker.calendar-blue-900 table tr td .month.active,
+.datepicker.calendar-blue-900 table tr td .year.active {
+  background-color: #0d47a1 !important;
+}
+.datepicker.calendar-blue-900 table tr td.day:hover,
+.datepicker.calendar-blue-900 table tr td .month:hover,
+.datepicker.calendar-blue-900 table tr td .year:hover {
+  background: #093272;
+}
+.datepicker.calendar-blue-A100 table thead tr {
+  background: #82b1ff !important;
+}
+.datepicker.calendar-blue-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-A100 table thead tr th.next:hover,
+.datepicker.calendar-blue-A100 table thead tr th.prev:hover {
+  background: #4f91ff;
+}
+.datepicker.calendar-blue-A100 table tr td.day.active,
+.datepicker.calendar-blue-A100 table tr td .month.active,
+.datepicker.calendar-blue-A100 table tr td .year.active {
+  background-color: #82b1ff !important;
+}
+.datepicker.calendar-blue-A100 table tr td.day:hover,
+.datepicker.calendar-blue-A100 table tr td .month:hover,
+.datepicker.calendar-blue-A100 table tr td .year:hover {
+  background: #4f91ff;
+}
+.datepicker.calendar-blue-A200 table thead tr {
+  background: #448aff !important;
+}
+.datepicker.calendar-blue-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-A200 table thead tr th.next:hover,
+.datepicker.calendar-blue-A200 table thead tr th.prev:hover {
+  background: #116aff;
+}
+.datepicker.calendar-blue-A200 table tr td.day.active,
+.datepicker.calendar-blue-A200 table tr td .month.active,
+.datepicker.calendar-blue-A200 table tr td .year.active {
+  background-color: #448aff !important;
+}
+.datepicker.calendar-blue-A200 table tr td.day:hover,
+.datepicker.calendar-blue-A200 table tr td .month:hover,
+.datepicker.calendar-blue-A200 table tr td .year:hover {
+  background: #116aff;
+}
+.datepicker.calendar-blue-A400 table thead tr {
+  background: #2979ff !important;
+}
+.datepicker.calendar-blue-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-A400 table thead tr th.next:hover,
+.datepicker.calendar-blue-A400 table thead tr th.prev:hover {
+  background: #005cf5;
+}
+.datepicker.calendar-blue-A400 table tr td.day.active,
+.datepicker.calendar-blue-A400 table tr td .month.active,
+.datepicker.calendar-blue-A400 table tr td .year.active {
+  background-color: #2979ff !important;
+}
+.datepicker.calendar-blue-A400 table tr td.day:hover,
+.datepicker.calendar-blue-A400 table tr td .month:hover,
+.datepicker.calendar-blue-A400 table tr td .year:hover {
+  background: #005cf5;
+}
+.datepicker.calendar-blue-A700 table thead tr {
+  background: #2962ff !important;
+}
+.datepicker.calendar-blue-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-A700 table thead tr th.next:hover,
+.datepicker.calendar-blue-A700 table thead tr th.prev:hover {
+  background: #0041f5;
+}
+.datepicker.calendar-blue-A700 table tr td.day.active,
+.datepicker.calendar-blue-A700 table tr td .month.active,
+.datepicker.calendar-blue-A700 table tr td .year.active {
+  background-color: #2962ff !important;
+}
+.datepicker.calendar-blue-A700 table tr td.day:hover,
+.datepicker.calendar-blue-A700 table tr td .month:hover,
+.datepicker.calendar-blue-A700 table tr td .year:hover {
+  background: #0041f5;
+}
+.datepicker.calendar-blue-grey-100 table thead tr {
+  background: #cfd8dc !important;
+}
+.datepicker.calendar-blue-grey-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-grey-100 table thead tr th.next:hover,
+.datepicker.calendar-blue-grey-100 table thead tr th.prev:hover {
+  background: #b2c0c6;
+}
+.datepicker.calendar-blue-grey-100 table tr td.day.active,
+.datepicker.calendar-blue-grey-100 table tr td .month.active,
+.datepicker.calendar-blue-grey-100 table tr td .year.active {
+  background-color: #cfd8dc !important;
+}
+.datepicker.calendar-blue-grey-100 table tr td.day:hover,
+.datepicker.calendar-blue-grey-100 table tr td .month:hover,
+.datepicker.calendar-blue-grey-100 table tr td .year:hover {
+  background: #b2c0c6;
+}
+.datepicker.calendar-blue-grey-200 table thead tr {
+  background: #b0bec5 !important;
+}
+.datepicker.calendar-blue-grey-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-grey-200 table thead tr th.next:hover,
+.datepicker.calendar-blue-grey-200 table thead tr th.prev:hover {
+  background: #93a6af;
+}
+.datepicker.calendar-blue-grey-200 table tr td.day.active,
+.datepicker.calendar-blue-grey-200 table tr td .month.active,
+.datepicker.calendar-blue-grey-200 table tr td .year.active {
+  background-color: #b0bec5 !important;
+}
+.datepicker.calendar-blue-grey-200 table tr td.day:hover,
+.datepicker.calendar-blue-grey-200 table tr td .month:hover,
+.datepicker.calendar-blue-grey-200 table tr td .year:hover {
+  background: #93a6af;
+}
+.datepicker.calendar-blue-grey-300 table thead tr {
+  background: #90a4ae !important;
+}
+.datepicker.calendar-blue-grey-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-grey-300 table thead tr th.next:hover,
+.datepicker.calendar-blue-grey-300 table thead tr th.prev:hover {
+  background: #738c98;
+}
+.datepicker.calendar-blue-grey-300 table tr td.day.active,
+.datepicker.calendar-blue-grey-300 table tr td .month.active,
+.datepicker.calendar-blue-grey-300 table tr td .year.active {
+  background-color: #90a4ae !important;
+}
+.datepicker.calendar-blue-grey-300 table tr td.day:hover,
+.datepicker.calendar-blue-grey-300 table tr td .month:hover,
+.datepicker.calendar-blue-grey-300 table tr td .year:hover {
+  background: #738c98;
+}
+.datepicker.calendar-blue-grey-400 table thead tr {
+  background: #78909c !important;
+}
+.datepicker.calendar-blue-grey-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-grey-400 table thead tr th.next:hover,
+.datepicker.calendar-blue-grey-400 table thead tr th.prev:hover {
+  background: #5f7682;
+}
+.datepicker.calendar-blue-grey-400 table tr td.day.active,
+.datepicker.calendar-blue-grey-400 table tr td .month.active,
+.datepicker.calendar-blue-grey-400 table tr td .year.active {
+  background-color: #78909c !important;
+}
+.datepicker.calendar-blue-grey-400 table tr td.day:hover,
+.datepicker.calendar-blue-grey-400 table tr td .month:hover,
+.datepicker.calendar-blue-grey-400 table tr td .year:hover {
+  background: #5f7682;
+}
+.datepicker.calendar-blue-grey-500 table thead tr {
+  background: #607d8b !important;
+}
+.datepicker.calendar-blue-grey-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-grey-500 table thead tr th.next:hover,
+.datepicker.calendar-blue-grey-500 table thead tr th.prev:hover {
+  background: #4b626d;
+}
+.datepicker.calendar-blue-grey-500 table tr td.day.active,
+.datepicker.calendar-blue-grey-500 table tr td .month.active,
+.datepicker.calendar-blue-grey-500 table tr td .year.active {
+  background-color: #607d8b !important;
+}
+.datepicker.calendar-blue-grey-500 table tr td.day:hover,
+.datepicker.calendar-blue-grey-500 table tr td .month:hover,
+.datepicker.calendar-blue-grey-500 table tr td .year:hover {
+  background: #4b626d;
+}
+.datepicker.calendar-blue-grey-600 table thead tr {
+  background: #546e7a !important;
+}
+.datepicker.calendar-blue-grey-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-grey-600 table thead tr th.next:hover,
+.datepicker.calendar-blue-grey-600 table thead tr th.prev:hover {
+  background: #3f535c;
+}
+.datepicker.calendar-blue-grey-600 table tr td.day.active,
+.datepicker.calendar-blue-grey-600 table tr td .month.active,
+.datepicker.calendar-blue-grey-600 table tr td .year.active {
+  background-color: #546e7a !important;
+}
+.datepicker.calendar-blue-grey-600 table tr td.day:hover,
+.datepicker.calendar-blue-grey-600 table tr td .month:hover,
+.datepicker.calendar-blue-grey-600 table tr td .year:hover {
+  background: #3f535c;
+}
+.datepicker.calendar-blue-grey-700 table thead tr {
+  background: #455a64 !important;
+}
+.datepicker.calendar-blue-grey-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-grey-700 table thead tr th.next:hover,
+.datepicker.calendar-blue-grey-700 table thead tr th.prev:hover {
+  background: #303f46;
+}
+.datepicker.calendar-blue-grey-700 table tr td.day.active,
+.datepicker.calendar-blue-grey-700 table tr td .month.active,
+.datepicker.calendar-blue-grey-700 table tr td .year.active {
+  background-color: #455a64 !important;
+}
+.datepicker.calendar-blue-grey-700 table tr td.day:hover,
+.datepicker.calendar-blue-grey-700 table tr td .month:hover,
+.datepicker.calendar-blue-grey-700 table tr td .year:hover {
+  background: #303f46;
+}
+.datepicker.calendar-blue-grey-800 table thead tr {
+  background: #37474f !important;
+}
+.datepicker.calendar-blue-grey-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-grey-800 table thead tr th.next:hover,
+.datepicker.calendar-blue-grey-800 table thead tr th.prev:hover {
+  background: #222c31;
+}
+.datepicker.calendar-blue-grey-800 table tr td.day.active,
+.datepicker.calendar-blue-grey-800 table tr td .month.active,
+.datepicker.calendar-blue-grey-800 table tr td .year.active {
+  background-color: #37474f !important;
+}
+.datepicker.calendar-blue-grey-800 table tr td.day:hover,
+.datepicker.calendar-blue-grey-800 table tr td .month:hover,
+.datepicker.calendar-blue-grey-800 table tr td .year:hover {
+  background: #222c31;
+}
+.datepicker.calendar-blue-grey-900 table thead tr {
+  background: #263238 !important;
+}
+.datepicker.calendar-blue-grey-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-blue-grey-900 table thead tr th.next:hover,
+.datepicker.calendar-blue-grey-900 table thead tr th.prev:hover {
+  background: #11171a;
+}
+.datepicker.calendar-blue-grey-900 table tr td.day.active,
+.datepicker.calendar-blue-grey-900 table tr td .month.active,
+.datepicker.calendar-blue-grey-900 table tr td .year.active {
+  background-color: #263238 !important;
+}
+.datepicker.calendar-blue-grey-900 table tr td.day:hover,
+.datepicker.calendar-blue-grey-900 table tr td .month:hover,
+.datepicker.calendar-blue-grey-900 table tr td .year:hover {
+  background: #11171a;
+}
+.datepicker.calendar-brown-100 table thead tr {
+  background: #d7ccc8 !important;
+}
+.datepicker.calendar-brown-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-brown-100 table thead tr th.next:hover,
+.datepicker.calendar-brown-100 table thead tr th.prev:hover {
+  background: #c2b1aa;
+}
+.datepicker.calendar-brown-100 table tr td.day.active,
+.datepicker.calendar-brown-100 table tr td .month.active,
+.datepicker.calendar-brown-100 table tr td .year.active {
+  background-color: #d7ccc8 !important;
+}
+.datepicker.calendar-brown-100 table tr td.day:hover,
+.datepicker.calendar-brown-100 table tr td .month:hover,
+.datepicker.calendar-brown-100 table tr td .year:hover {
+  background: #c2b1aa;
+}
+.datepicker.calendar-brown-200 table thead tr {
+  background: #bcaaa4 !important;
+}
+.datepicker.calendar-brown-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-brown-200 table thead tr th.next:hover,
+.datepicker.calendar-brown-200 table thead tr th.prev:hover {
+  background: #a68f87;
+}
+.datepicker.calendar-brown-200 table tr td.day.active,
+.datepicker.calendar-brown-200 table tr td .month.active,
+.datepicker.calendar-brown-200 table tr td .year.active {
+  background-color: #bcaaa4 !important;
+}
+.datepicker.calendar-brown-200 table tr td.day:hover,
+.datepicker.calendar-brown-200 table tr td .month:hover,
+.datepicker.calendar-brown-200 table tr td .year:hover {
+  background: #a68f87;
+}
+.datepicker.calendar-brown-300 table thead tr {
+  background: #a1887f !important;
+}
+.datepicker.calendar-brown-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-brown-300 table thead tr th.next:hover,
+.datepicker.calendar-brown-300 table thead tr th.prev:hover {
+  background: #896e64;
+}
+.datepicker.calendar-brown-300 table tr td.day.active,
+.datepicker.calendar-brown-300 table tr td .month.active,
+.datepicker.calendar-brown-300 table tr td .year.active {
+  background-color: #a1887f !important;
+}
+.datepicker.calendar-brown-300 table tr td.day:hover,
+.datepicker.calendar-brown-300 table tr td .month:hover,
+.datepicker.calendar-brown-300 table tr td .year:hover {
+  background: #896e64;
+}
+.datepicker.calendar-brown-400 table thead tr {
+  background: #8d6e63 !important;
+}
+.datepicker.calendar-brown-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-brown-400 table thead tr th.next:hover,
+.datepicker.calendar-brown-400 table thead tr th.prev:hover {
+  background: #6f574e;
+}
+.datepicker.calendar-brown-400 table tr td.day.active,
+.datepicker.calendar-brown-400 table tr td .month.active,
+.datepicker.calendar-brown-400 table tr td .year.active {
+  background-color: #8d6e63 !important;
+}
+.datepicker.calendar-brown-400 table tr td.day:hover,
+.datepicker.calendar-brown-400 table tr td .month:hover,
+.datepicker.calendar-brown-400 table tr td .year:hover {
+  background: #6f574e;
+}
+.datepicker.calendar-brown-500 table thead tr {
+  background: #795548 !important;
+}
+.datepicker.calendar-brown-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-brown-500 table thead tr th.next:hover,
+.datepicker.calendar-brown-500 table thead tr th.prev:hover {
+  background: #593f35;
+}
+.datepicker.calendar-brown-500 table tr td.day.active,
+.datepicker.calendar-brown-500 table tr td .month.active,
+.datepicker.calendar-brown-500 table tr td .year.active {
+  background-color: #795548 !important;
+}
+.datepicker.calendar-brown-500 table tr td.day:hover,
+.datepicker.calendar-brown-500 table tr td .month:hover,
+.datepicker.calendar-brown-500 table tr td .year:hover {
+  background: #593f35;
+}
+.datepicker.calendar-brown-600 table thead tr {
+  background: #6d4c41 !important;
+}
+.datepicker.calendar-brown-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-brown-600 table thead tr th.next:hover,
+.datepicker.calendar-brown-600 table thead tr th.prev:hover {
+  background: #4d362e;
+}
+.datepicker.calendar-brown-600 table tr td.day.active,
+.datepicker.calendar-brown-600 table tr td .month.active,
+.datepicker.calendar-brown-600 table tr td .year.active {
+  background-color: #6d4c41 !important;
+}
+.datepicker.calendar-brown-600 table tr td.day:hover,
+.datepicker.calendar-brown-600 table tr td .month:hover,
+.datepicker.calendar-brown-600 table tr td .year:hover {
+  background: #4d362e;
+}
+.datepicker.calendar-brown-700 table thead tr {
+  background: #5d4037 !important;
+}
+.datepicker.calendar-brown-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-brown-700 table thead tr th.next:hover,
+.datepicker.calendar-brown-700 table thead tr th.prev:hover {
+  background: #3d2a24;
+}
+.datepicker.calendar-brown-700 table tr td.day.active,
+.datepicker.calendar-brown-700 table tr td .month.active,
+.datepicker.calendar-brown-700 table tr td .year.active {
+  background-color: #5d4037 !important;
+}
+.datepicker.calendar-brown-700 table tr td.day:hover,
+.datepicker.calendar-brown-700 table tr td .month:hover,
+.datepicker.calendar-brown-700 table tr td .year:hover {
+  background: #3d2a24;
+}
+.datepicker.calendar-brown-800 table thead tr {
+  background: #4e342e !important;
+}
+.datepicker.calendar-brown-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-brown-800 table thead tr th.next:hover,
+.datepicker.calendar-brown-800 table thead tr th.prev:hover {
+  background: #2e1f1b;
+}
+.datepicker.calendar-brown-800 table tr td.day.active,
+.datepicker.calendar-brown-800 table tr td .month.active,
+.datepicker.calendar-brown-800 table tr td .year.active {
+  background-color: #4e342e !important;
+}
+.datepicker.calendar-brown-800 table tr td.day:hover,
+.datepicker.calendar-brown-800 table tr td .month:hover,
+.datepicker.calendar-brown-800 table tr td .year:hover {
+  background: #2e1f1b;
+}
+.datepicker.calendar-brown-900 table thead tr {
+  background: #3e2723 !important;
+}
+.datepicker.calendar-brown-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-brown-900 table thead tr th.next:hover,
+.datepicker.calendar-brown-900 table thead tr th.prev:hover {
+  background: #1d1211;
+}
+.datepicker.calendar-brown-900 table tr td.day.active,
+.datepicker.calendar-brown-900 table tr td .month.active,
+.datepicker.calendar-brown-900 table tr td .year.active {
+  background-color: #3e2723 !important;
+}
+.datepicker.calendar-brown-900 table tr td.day:hover,
+.datepicker.calendar-brown-900 table tr td .month:hover,
+.datepicker.calendar-brown-900 table tr td .year:hover {
+  background: #1d1211;
+}
+.datepicker.calendar-cyan-100 table thead tr {
+  background: #b2ebf2 !important;
+}
+.datepicker.calendar-cyan-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-cyan-100 table thead tr th.next:hover,
+.datepicker.calendar-cyan-100 table thead tr th.prev:hover {
+  background: #86e0eb;
+}
+.datepicker.calendar-cyan-100 table tr td.day.active,
+.datepicker.calendar-cyan-100 table tr td .month.active,
+.datepicker.calendar-cyan-100 table tr td .year.active {
+  background-color: #b2ebf2 !important;
+}
+.datepicker.calendar-cyan-100 table tr td.day:hover,
+.datepicker.calendar-cyan-100 table tr td .month:hover,
+.datepicker.calendar-cyan-100 table tr td .year:hover {
+  background: #86e0eb;
+}
+.datepicker.calendar-cyan-200 table thead tr {
+  background: #80deea !important;
+}
+.datepicker.calendar-cyan-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-cyan-200 table thead tr th.next:hover,
+.datepicker.calendar-cyan-200 table thead tr th.prev:hover {
+  background: #54d3e3;
+}
+.datepicker.calendar-cyan-200 table tr td.day.active,
+.datepicker.calendar-cyan-200 table tr td .month.active,
+.datepicker.calendar-cyan-200 table tr td .year.active {
+  background-color: #80deea !important;
+}
+.datepicker.calendar-cyan-200 table tr td.day:hover,
+.datepicker.calendar-cyan-200 table tr td .month:hover,
+.datepicker.calendar-cyan-200 table tr td .year:hover {
+  background: #54d3e3;
+}
+.datepicker.calendar-cyan-300 table thead tr {
+  background: #4dd0e1 !important;
+}
+.datepicker.calendar-cyan-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-cyan-300 table thead tr th.next:hover,
+.datepicker.calendar-cyan-300 table thead tr th.prev:hover {
+  background: #24c2d7;
+}
+.datepicker.calendar-cyan-300 table tr td.day.active,
+.datepicker.calendar-cyan-300 table tr td .month.active,
+.datepicker.calendar-cyan-300 table tr td .year.active {
+  background-color: #4dd0e1 !important;
+}
+.datepicker.calendar-cyan-300 table tr td.day:hover,
+.datepicker.calendar-cyan-300 table tr td .month:hover,
+.datepicker.calendar-cyan-300 table tr td .year:hover {
+  background: #24c2d7;
+}
+.datepicker.calendar-cyan-400 table thead tr {
+  background: #26c6da !important;
+}
+.datepicker.calendar-cyan-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-cyan-400 table thead tr th.next:hover,
+.datepicker.calendar-cyan-400 table thead tr th.prev:hover {
+  background: #1e9faf;
+}
+.datepicker.calendar-cyan-400 table tr td.day.active,
+.datepicker.calendar-cyan-400 table tr td .month.active,
+.datepicker.calendar-cyan-400 table tr td .year.active {
+  background-color: #26c6da !important;
+}
+.datepicker.calendar-cyan-400 table tr td.day:hover,
+.datepicker.calendar-cyan-400 table tr td .month:hover,
+.datepicker.calendar-cyan-400 table tr td .year:hover {
+  background: #1e9faf;
+}
+.datepicker.calendar-cyan-500 table thead tr {
+  background: #00bcd4 !important;
+}
+.datepicker.calendar-cyan-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-cyan-500 table thead tr th.next:hover,
+.datepicker.calendar-cyan-500 table thead tr th.prev:hover {
+  background: #008fa1;
+}
+.datepicker.calendar-cyan-500 table tr td.day.active,
+.datepicker.calendar-cyan-500 table tr td .month.active,
+.datepicker.calendar-cyan-500 table tr td .year.active {
+  background-color: #00bcd4 !important;
+}
+.datepicker.calendar-cyan-500 table tr td.day:hover,
+.datepicker.calendar-cyan-500 table tr td .month:hover,
+.datepicker.calendar-cyan-500 table tr td .year:hover {
+  background: #008fa1;
+}
+.datepicker.calendar-cyan-600 table thead tr {
+  background: #00acc1 !important;
+}
+.datepicker.calendar-cyan-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-cyan-600 table thead tr th.next:hover,
+.datepicker.calendar-cyan-600 table thead tr th.prev:hover {
+  background: #007f8e;
+}
+.datepicker.calendar-cyan-600 table tr td.day.active,
+.datepicker.calendar-cyan-600 table tr td .month.active,
+.datepicker.calendar-cyan-600 table tr td .year.active {
+  background-color: #00acc1 !important;
+}
+.datepicker.calendar-cyan-600 table tr td.day:hover,
+.datepicker.calendar-cyan-600 table tr td .month:hover,
+.datepicker.calendar-cyan-600 table tr td .year:hover {
+  background: #007f8e;
+}
+.datepicker.calendar-cyan-700 table thead tr {
+  background: #0097a7 !important;
+}
+.datepicker.calendar-cyan-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-cyan-700 table thead tr th.next:hover,
+.datepicker.calendar-cyan-700 table thead tr th.prev:hover {
+  background: #006974;
+}
+.datepicker.calendar-cyan-700 table tr td.day.active,
+.datepicker.calendar-cyan-700 table tr td .month.active,
+.datepicker.calendar-cyan-700 table tr td .year.active {
+  background-color: #0097a7 !important;
+}
+.datepicker.calendar-cyan-700 table tr td.day:hover,
+.datepicker.calendar-cyan-700 table tr td .month:hover,
+.datepicker.calendar-cyan-700 table tr td .year:hover {
+  background: #006974;
+}
+.datepicker.calendar-cyan-800 table thead tr {
+  background: #00838f !important;
+}
+.datepicker.calendar-cyan-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-cyan-800 table thead tr th.next:hover,
+.datepicker.calendar-cyan-800 table thead tr th.prev:hover {
+  background: #00545c;
+}
+.datepicker.calendar-cyan-800 table tr td.day.active,
+.datepicker.calendar-cyan-800 table tr td .month.active,
+.datepicker.calendar-cyan-800 table tr td .year.active {
+  background-color: #00838f !important;
+}
+.datepicker.calendar-cyan-800 table tr td.day:hover,
+.datepicker.calendar-cyan-800 table tr td .month:hover,
+.datepicker.calendar-cyan-800 table tr td .year:hover {
+  background: #00545c;
+}
+.datepicker.calendar-cyan-900 table thead tr {
+  background: #006064 !important;
+}
+.datepicker.calendar-cyan-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-cyan-900 table thead tr th.next:hover,
+.datepicker.calendar-cyan-900 table thead tr th.prev:hover {
+  background: #002f31;
+}
+.datepicker.calendar-cyan-900 table tr td.day.active,
+.datepicker.calendar-cyan-900 table tr td .month.active,
+.datepicker.calendar-cyan-900 table tr td .year.active {
+  background-color: #006064 !important;
+}
+.datepicker.calendar-cyan-900 table tr td.day:hover,
+.datepicker.calendar-cyan-900 table tr td .month:hover,
+.datepicker.calendar-cyan-900 table tr td .year:hover {
+  background: #002f31;
+}
+.datepicker.calendar-cyan-A100 table thead tr {
+  background: #84ffff !important;
+}
+.datepicker.calendar-cyan-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-cyan-A100 table thead tr th.next:hover,
+.datepicker.calendar-cyan-A100 table thead tr th.prev:hover {
+  background: #51ffff;
+}
+.datepicker.calendar-cyan-A100 table tr td.day.active,
+.datepicker.calendar-cyan-A100 table tr td .month.active,
+.datepicker.calendar-cyan-A100 table tr td .year.active {
+  background-color: #84ffff !important;
+}
+.datepicker.calendar-cyan-A100 table tr td.day:hover,
+.datepicker.calendar-cyan-A100 table tr td .month:hover,
+.datepicker.calendar-cyan-A100 table tr td .year:hover {
+  background: #51ffff;
+}
+.datepicker.calendar-cyan-A200 table thead tr {
+  background: #18ffff !important;
+}
+.datepicker.calendar-cyan-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-cyan-A200 table thead tr th.next:hover,
+.datepicker.calendar-cyan-A200 table thead tr th.prev:hover {
+  background: #00e4e4;
+}
+.datepicker.calendar-cyan-A200 table tr td.day.active,
+.datepicker.calendar-cyan-A200 table tr td .month.active,
+.datepicker.calendar-cyan-A200 table tr td .year.active {
+  background-color: #18ffff !important;
+}
+.datepicker.calendar-cyan-A200 table tr td.day:hover,
+.datepicker.calendar-cyan-A200 table tr td .month:hover,
+.datepicker.calendar-cyan-A200 table tr td .year:hover {
+  background: #00e4e4;
+}
+.datepicker.calendar-cyan-A400 table thead tr {
+  background: #00e5ff !important;
+}
+.datepicker.calendar-cyan-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-cyan-A400 table thead tr th.next:hover,
+.datepicker.calendar-cyan-A400 table thead tr th.prev:hover {
+  background: #00b7cc;
+}
+.datepicker.calendar-cyan-A400 table tr td.day.active,
+.datepicker.calendar-cyan-A400 table tr td .month.active,
+.datepicker.calendar-cyan-A400 table tr td .year.active {
+  background-color: #00e5ff !important;
+}
+.datepicker.calendar-cyan-A400 table tr td.day:hover,
+.datepicker.calendar-cyan-A400 table tr td .month:hover,
+.datepicker.calendar-cyan-A400 table tr td .year:hover {
+  background: #00b7cc;
+}
+.datepicker.calendar-cyan-A700 table thead tr {
+  background: #00b8d4 !important;
+}
+.datepicker.calendar-cyan-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-cyan-A700 table thead tr th.next:hover,
+.datepicker.calendar-cyan-A700 table thead tr th.prev:hover {
+  background: #008ca1;
+}
+.datepicker.calendar-cyan-A700 table tr td.day.active,
+.datepicker.calendar-cyan-A700 table tr td .month.active,
+.datepicker.calendar-cyan-A700 table tr td .year.active {
+  background-color: #00b8d4 !important;
+}
+.datepicker.calendar-cyan-A700 table tr td.day:hover,
+.datepicker.calendar-cyan-A700 table tr td .month:hover,
+.datepicker.calendar-cyan-A700 table tr td .year:hover {
+  background: #008ca1;
+}
+.datepicker.calendar-deep-orange-100 table thead tr {
+  background: #ffccbc !important;
+}
+.datepicker.calendar-deep-orange-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-orange-100 table thead tr th.next:hover,
+.datepicker.calendar-deep-orange-100 table thead tr th.prev:hover {
+  background: #ffa589;
+}
+.datepicker.calendar-deep-orange-100 table tr td.day.active,
+.datepicker.calendar-deep-orange-100 table tr td .month.active,
+.datepicker.calendar-deep-orange-100 table tr td .year.active {
+  background-color: #ffccbc !important;
+}
+.datepicker.calendar-deep-orange-100 table tr td.day:hover,
+.datepicker.calendar-deep-orange-100 table tr td .month:hover,
+.datepicker.calendar-deep-orange-100 table tr td .year:hover {
+  background: #ffa589;
+}
+.datepicker.calendar-deep-orange-200 table thead tr {
+  background: #ffab91 !important;
+}
+.datepicker.calendar-deep-orange-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-orange-200 table thead tr th.next:hover,
+.datepicker.calendar-deep-orange-200 table thead tr th.prev:hover {
+  background: #ff845e;
+}
+.datepicker.calendar-deep-orange-200 table tr td.day.active,
+.datepicker.calendar-deep-orange-200 table tr td .month.active,
+.datepicker.calendar-deep-orange-200 table tr td .year.active {
+  background-color: #ffab91 !important;
+}
+.datepicker.calendar-deep-orange-200 table tr td.day:hover,
+.datepicker.calendar-deep-orange-200 table tr td .month:hover,
+.datepicker.calendar-deep-orange-200 table tr td .year:hover {
+  background: #ff845e;
+}
+.datepicker.calendar-deep-orange-300 table thead tr {
+  background: #ff8a65 !important;
+}
+.datepicker.calendar-deep-orange-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-orange-300 table thead tr th.next:hover,
+.datepicker.calendar-deep-orange-300 table thead tr th.prev:hover {
+  background: #ff6332;
+}
+.datepicker.calendar-deep-orange-300 table tr td.day.active,
+.datepicker.calendar-deep-orange-300 table tr td .month.active,
+.datepicker.calendar-deep-orange-300 table tr td .year.active {
+  background-color: #ff8a65 !important;
+}
+.datepicker.calendar-deep-orange-300 table tr td.day:hover,
+.datepicker.calendar-deep-orange-300 table tr td .month:hover,
+.datepicker.calendar-deep-orange-300 table tr td .year:hover {
+  background: #ff6332;
+}
+.datepicker.calendar-deep-orange-400 table thead tr {
+  background: #ff7043 !important;
+}
+.datepicker.calendar-deep-orange-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-orange-400 table thead tr th.next:hover,
+.datepicker.calendar-deep-orange-400 table thead tr th.prev:hover {
+  background: #ff4910;
+}
+.datepicker.calendar-deep-orange-400 table tr td.day.active,
+.datepicker.calendar-deep-orange-400 table tr td .month.active,
+.datepicker.calendar-deep-orange-400 table tr td .year.active {
+  background-color: #ff7043 !important;
+}
+.datepicker.calendar-deep-orange-400 table tr td.day:hover,
+.datepicker.calendar-deep-orange-400 table tr td .month:hover,
+.datepicker.calendar-deep-orange-400 table tr td .year:hover {
+  background: #ff4910;
+}
+.datepicker.calendar-deep-orange-500 table thead tr {
+  background: #ff5722 !important;
+}
+.datepicker.calendar-deep-orange-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-orange-500 table thead tr th.next:hover,
+.datepicker.calendar-deep-orange-500 table thead tr th.prev:hover {
+  background: #ee3900;
+}
+.datepicker.calendar-deep-orange-500 table tr td.day.active,
+.datepicker.calendar-deep-orange-500 table tr td .month.active,
+.datepicker.calendar-deep-orange-500 table tr td .year.active {
+  background-color: #ff5722 !important;
+}
+.datepicker.calendar-deep-orange-500 table tr td.day:hover,
+.datepicker.calendar-deep-orange-500 table tr td .month:hover,
+.datepicker.calendar-deep-orange-500 table tr td .year:hover {
+  background: #ee3900;
+}
+.datepicker.calendar-deep-orange-600 table thead tr {
+  background: #f4511e !important;
+}
+.datepicker.calendar-deep-orange-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-orange-600 table thead tr th.next:hover,
+.datepicker.calendar-deep-orange-600 table thead tr th.prev:hover {
+  background: #d53b0a;
+}
+.datepicker.calendar-deep-orange-600 table tr td.day.active,
+.datepicker.calendar-deep-orange-600 table tr td .month.active,
+.datepicker.calendar-deep-orange-600 table tr td .year.active {
+  background-color: #f4511e !important;
+}
+.datepicker.calendar-deep-orange-600 table tr td.day:hover,
+.datepicker.calendar-deep-orange-600 table tr td .month:hover,
+.datepicker.calendar-deep-orange-600 table tr td .year:hover {
+  background: #d53b0a;
+}
+.datepicker.calendar-deep-orange-700 table thead tr {
+  background: #e64a19 !important;
+}
+.datepicker.calendar-deep-orange-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-orange-700 table thead tr th.next:hover,
+.datepicker.calendar-deep-orange-700 table thead tr th.prev:hover {
+  background: #b83b14;
+}
+.datepicker.calendar-deep-orange-700 table tr td.day.active,
+.datepicker.calendar-deep-orange-700 table tr td .month.active,
+.datepicker.calendar-deep-orange-700 table tr td .year.active {
+  background-color: #e64a19 !important;
+}
+.datepicker.calendar-deep-orange-700 table tr td.day:hover,
+.datepicker.calendar-deep-orange-700 table tr td .month:hover,
+.datepicker.calendar-deep-orange-700 table tr td .year:hover {
+  background: #b83b14;
+}
+.datepicker.calendar-deep-orange-800 table thead tr {
+  background: #d84315 !important;
+}
+.datepicker.calendar-deep-orange-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-orange-800 table thead tr th.next:hover,
+.datepicker.calendar-deep-orange-800 table thead tr th.prev:hover {
+  background: #aa3510;
+}
+.datepicker.calendar-deep-orange-800 table tr td.day.active,
+.datepicker.calendar-deep-orange-800 table tr td .month.active,
+.datepicker.calendar-deep-orange-800 table tr td .year.active {
+  background-color: #d84315 !important;
+}
+.datepicker.calendar-deep-orange-800 table tr td.day:hover,
+.datepicker.calendar-deep-orange-800 table tr td .month:hover,
+.datepicker.calendar-deep-orange-800 table tr td .year:hover {
+  background: #aa3510;
+}
+.datepicker.calendar-deep-orange-900 table thead tr {
+  background: #bf360c !important;
+}
+.datepicker.calendar-deep-orange-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-orange-900 table thead tr th.next:hover,
+.datepicker.calendar-deep-orange-900 table thead tr th.prev:hover {
+  background: #8f2809;
+}
+.datepicker.calendar-deep-orange-900 table tr td.day.active,
+.datepicker.calendar-deep-orange-900 table tr td .month.active,
+.datepicker.calendar-deep-orange-900 table tr td .year.active {
+  background-color: #bf360c !important;
+}
+.datepicker.calendar-deep-orange-900 table tr td.day:hover,
+.datepicker.calendar-deep-orange-900 table tr td .month:hover,
+.datepicker.calendar-deep-orange-900 table tr td .year:hover {
+  background: #8f2809;
+}
+.datepicker.calendar-deep-orange-A100 table thead tr {
+  background: #ff9e80 !important;
+}
+.datepicker.calendar-deep-orange-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-orange-A100 table thead tr th.next:hover,
+.datepicker.calendar-deep-orange-A100 table thead tr th.prev:hover {
+  background: #ff774d;
+}
+.datepicker.calendar-deep-orange-A100 table tr td.day.active,
+.datepicker.calendar-deep-orange-A100 table tr td .month.active,
+.datepicker.calendar-deep-orange-A100 table tr td .year.active {
+  background-color: #ff9e80 !important;
+}
+.datepicker.calendar-deep-orange-A100 table tr td.day:hover,
+.datepicker.calendar-deep-orange-A100 table tr td .month:hover,
+.datepicker.calendar-deep-orange-A100 table tr td .year:hover {
+  background: #ff774d;
+}
+.datepicker.calendar-deep-orange-A200 table thead tr {
+  background: #ff6e40 !important;
+}
+.datepicker.calendar-deep-orange-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-orange-A200 table thead tr th.next:hover,
+.datepicker.calendar-deep-orange-A200 table thead tr th.prev:hover {
+  background: #ff470d;
+}
+.datepicker.calendar-deep-orange-A200 table tr td.day.active,
+.datepicker.calendar-deep-orange-A200 table tr td .month.active,
+.datepicker.calendar-deep-orange-A200 table tr td .year.active {
+  background-color: #ff6e40 !important;
+}
+.datepicker.calendar-deep-orange-A200 table tr td.day:hover,
+.datepicker.calendar-deep-orange-A200 table tr td .month:hover,
+.datepicker.calendar-deep-orange-A200 table tr td .year:hover {
+  background: #ff470d;
+}
+.datepicker.calendar-deep-orange-A400 table thead tr {
+  background: #ff3d00 !important;
+}
+.datepicker.calendar-deep-orange-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-orange-A400 table thead tr th.next:hover,
+.datepicker.calendar-deep-orange-A400 table thead tr th.prev:hover {
+  background: #cc3100;
+}
+.datepicker.calendar-deep-orange-A400 table tr td.day.active,
+.datepicker.calendar-deep-orange-A400 table tr td .month.active,
+.datepicker.calendar-deep-orange-A400 table tr td .year.active {
+  background-color: #ff3d00 !important;
+}
+.datepicker.calendar-deep-orange-A400 table tr td.day:hover,
+.datepicker.calendar-deep-orange-A400 table tr td .month:hover,
+.datepicker.calendar-deep-orange-A400 table tr td .year:hover {
+  background: #cc3100;
+}
+.datepicker.calendar-deep-orange-A700 table thead tr {
+  background: #dd2c00 !important;
+}
+.datepicker.calendar-deep-orange-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-orange-A700 table thead tr th.next:hover,
+.datepicker.calendar-deep-orange-A700 table thead tr th.prev:hover {
+  background: #aa2200;
+}
+.datepicker.calendar-deep-orange-A700 table tr td.day.active,
+.datepicker.calendar-deep-orange-A700 table tr td .month.active,
+.datepicker.calendar-deep-orange-A700 table tr td .year.active {
+  background-color: #dd2c00 !important;
+}
+.datepicker.calendar-deep-orange-A700 table tr td.day:hover,
+.datepicker.calendar-deep-orange-A700 table tr td .month:hover,
+.datepicker.calendar-deep-orange-A700 table tr td .year:hover {
+  background: #aa2200;
+}
+.datepicker.calendar-deep-purple-100 table thead tr {
+  background: #d1c4e9 !important;
+}
+.datepicker.calendar-deep-purple-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-purple-100 table thead tr th.next:hover,
+.datepicker.calendar-deep-purple-100 table thead tr th.prev:hover {
+  background: #b49fdb;
+}
+.datepicker.calendar-deep-purple-100 table tr td.day.active,
+.datepicker.calendar-deep-purple-100 table tr td .month.active,
+.datepicker.calendar-deep-purple-100 table tr td .year.active {
+  background-color: #d1c4e9 !important;
+}
+.datepicker.calendar-deep-purple-100 table tr td.day:hover,
+.datepicker.calendar-deep-purple-100 table tr td .month:hover,
+.datepicker.calendar-deep-purple-100 table tr td .year:hover {
+  background: #b49fdb;
+}
+.datepicker.calendar-deep-purple-200 table thead tr {
+  background: #b39ddb !important;
+}
+.datepicker.calendar-deep-purple-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-purple-200 table thead tr th.next:hover,
+.datepicker.calendar-deep-purple-200 table thead tr th.prev:hover {
+  background: #9678cd;
+}
+.datepicker.calendar-deep-purple-200 table tr td.day.active,
+.datepicker.calendar-deep-purple-200 table tr td .month.active,
+.datepicker.calendar-deep-purple-200 table tr td .year.active {
+  background-color: #b39ddb !important;
+}
+.datepicker.calendar-deep-purple-200 table tr td.day:hover,
+.datepicker.calendar-deep-purple-200 table tr td .month:hover,
+.datepicker.calendar-deep-purple-200 table tr td .year:hover {
+  background: #9678cd;
+}
+.datepicker.calendar-deep-purple-300 table thead tr {
+  background: #9575cd !important;
+}
+.datepicker.calendar-deep-purple-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-purple-300 table thead tr th.next:hover,
+.datepicker.calendar-deep-purple-300 table thead tr th.prev:hover {
+  background: #7850bf;
+}
+.datepicker.calendar-deep-purple-300 table tr td.day.active,
+.datepicker.calendar-deep-purple-300 table tr td .month.active,
+.datepicker.calendar-deep-purple-300 table tr td .year.active {
+  background-color: #9575cd !important;
+}
+.datepicker.calendar-deep-purple-300 table tr td.day:hover,
+.datepicker.calendar-deep-purple-300 table tr td .month:hover,
+.datepicker.calendar-deep-purple-300 table tr td .year:hover {
+  background: #7850bf;
+}
+.datepicker.calendar-deep-purple-400 table thead tr {
+  background: #7e57c2 !important;
+}
+.datepicker.calendar-deep-purple-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-purple-400 table thead tr th.next:hover,
+.datepicker.calendar-deep-purple-400 table thead tr th.prev:hover {
+  background: #643da9;
+}
+.datepicker.calendar-deep-purple-400 table tr td.day.active,
+.datepicker.calendar-deep-purple-400 table tr td .month.active,
+.datepicker.calendar-deep-purple-400 table tr td .year.active {
+  background-color: #7e57c2 !important;
+}
+.datepicker.calendar-deep-purple-400 table tr td.day:hover,
+.datepicker.calendar-deep-purple-400 table tr td .month:hover,
+.datepicker.calendar-deep-purple-400 table tr td .year:hover {
+  background: #643da9;
+}
+.datepicker.calendar-deep-purple-500 table thead tr {
+  background: #673ab7 !important;
+}
+.datepicker.calendar-deep-purple-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-purple-500 table thead tr th.next:hover,
+.datepicker.calendar-deep-purple-500 table thead tr th.prev:hover {
+  background: #512e90;
+}
+.datepicker.calendar-deep-purple-500 table tr td.day.active,
+.datepicker.calendar-deep-purple-500 table tr td .month.active,
+.datepicker.calendar-deep-purple-500 table tr td .year.active {
+  background-color: #673ab7 !important;
+}
+.datepicker.calendar-deep-purple-500 table tr td.day:hover,
+.datepicker.calendar-deep-purple-500 table tr td .month:hover,
+.datepicker.calendar-deep-purple-500 table tr td .year:hover {
+  background: #512e90;
+}
+.datepicker.calendar-deep-purple-600 table thead tr {
+  background: #5e35b1 !important;
+}
+.datepicker.calendar-deep-purple-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-purple-600 table thead tr th.next:hover,
+.datepicker.calendar-deep-purple-600 table thead tr th.prev:hover {
+  background: #49298a;
+}
+.datepicker.calendar-deep-purple-600 table tr td.day.active,
+.datepicker.calendar-deep-purple-600 table tr td .month.active,
+.datepicker.calendar-deep-purple-600 table tr td .year.active {
+  background-color: #5e35b1 !important;
+}
+.datepicker.calendar-deep-purple-600 table tr td.day:hover,
+.datepicker.calendar-deep-purple-600 table tr td .month:hover,
+.datepicker.calendar-deep-purple-600 table tr td .year:hover {
+  background: #49298a;
+}
+.datepicker.calendar-deep-purple-700 table thead tr {
+  background: #512da8 !important;
+}
+.datepicker.calendar-deep-purple-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-purple-700 table thead tr th.next:hover,
+.datepicker.calendar-deep-purple-700 table thead tr th.prev:hover {
+  background: #3e2280;
+}
+.datepicker.calendar-deep-purple-700 table tr td.day.active,
+.datepicker.calendar-deep-purple-700 table tr td .month.active,
+.datepicker.calendar-deep-purple-700 table tr td .year.active {
+  background-color: #512da8 !important;
+}
+.datepicker.calendar-deep-purple-700 table tr td.day:hover,
+.datepicker.calendar-deep-purple-700 table tr td .month:hover,
+.datepicker.calendar-deep-purple-700 table tr td .year:hover {
+  background: #3e2280;
+}
+.datepicker.calendar-deep-purple-800 table thead tr {
+  background: #4527a0 !important;
+}
+.datepicker.calendar-deep-purple-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-purple-800 table thead tr th.next:hover,
+.datepicker.calendar-deep-purple-800 table thead tr th.prev:hover {
+  background: #331d77;
+}
+.datepicker.calendar-deep-purple-800 table tr td.day.active,
+.datepicker.calendar-deep-purple-800 table tr td .month.active,
+.datepicker.calendar-deep-purple-800 table tr td .year.active {
+  background-color: #4527a0 !important;
+}
+.datepicker.calendar-deep-purple-800 table tr td.day:hover,
+.datepicker.calendar-deep-purple-800 table tr td .month:hover,
+.datepicker.calendar-deep-purple-800 table tr td .year:hover {
+  background: #331d77;
+}
+.datepicker.calendar-deep-purple-900 table thead tr {
+  background: #311b92 !important;
+}
+.datepicker.calendar-deep-purple-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-purple-900 table thead tr th.next:hover,
+.datepicker.calendar-deep-purple-900 table thead tr th.prev:hover {
+  background: #231367;
+}
+.datepicker.calendar-deep-purple-900 table tr td.day.active,
+.datepicker.calendar-deep-purple-900 table tr td .month.active,
+.datepicker.calendar-deep-purple-900 table tr td .year.active {
+  background-color: #311b92 !important;
+}
+.datepicker.calendar-deep-purple-900 table tr td.day:hover,
+.datepicker.calendar-deep-purple-900 table tr td .month:hover,
+.datepicker.calendar-deep-purple-900 table tr td .year:hover {
+  background: #231367;
+}
+.datepicker.calendar-deep-purple-A100 table thead tr {
+  background: #b388ff !important;
+}
+.datepicker.calendar-deep-purple-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-purple-A100 table thead tr th.next:hover,
+.datepicker.calendar-deep-purple-A100 table thead tr th.prev:hover {
+  background: #9255ff;
+}
+.datepicker.calendar-deep-purple-A100 table tr td.day.active,
+.datepicker.calendar-deep-purple-A100 table tr td .month.active,
+.datepicker.calendar-deep-purple-A100 table tr td .year.active {
+  background-color: #b388ff !important;
+}
+.datepicker.calendar-deep-purple-A100 table tr td.day:hover,
+.datepicker.calendar-deep-purple-A100 table tr td .month:hover,
+.datepicker.calendar-deep-purple-A100 table tr td .year:hover {
+  background: #9255ff;
+}
+.datepicker.calendar-deep-purple-A200 table thead tr {
+  background: #7c4dff !important;
+}
+.datepicker.calendar-deep-purple-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-purple-A200 table thead tr th.next:hover,
+.datepicker.calendar-deep-purple-A200 table thead tr th.prev:hover {
+  background: #561aff;
+}
+.datepicker.calendar-deep-purple-A200 table tr td.day.active,
+.datepicker.calendar-deep-purple-A200 table tr td .month.active,
+.datepicker.calendar-deep-purple-A200 table tr td .year.active {
+  background-color: #7c4dff !important;
+}
+.datepicker.calendar-deep-purple-A200 table tr td.day:hover,
+.datepicker.calendar-deep-purple-A200 table tr td .month:hover,
+.datepicker.calendar-deep-purple-A200 table tr td .year:hover {
+  background: #561aff;
+}
+.datepicker.calendar-deep-purple-A400 table thead tr {
+  background: #651fff !important;
+}
+.datepicker.calendar-deep-purple-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-purple-A400 table thead tr th.next:hover,
+.datepicker.calendar-deep-purple-A400 table thead tr th.prev:hover {
+  background: #4900eb;
+}
+.datepicker.calendar-deep-purple-A400 table tr td.day.active,
+.datepicker.calendar-deep-purple-A400 table tr td .month.active,
+.datepicker.calendar-deep-purple-A400 table tr td .year.active {
+  background-color: #651fff !important;
+}
+.datepicker.calendar-deep-purple-A400 table tr td.day:hover,
+.datepicker.calendar-deep-purple-A400 table tr td .month:hover,
+.datepicker.calendar-deep-purple-A400 table tr td .year:hover {
+  background: #4900eb;
+}
+.datepicker.calendar-deep-purple-A700 table thead tr {
+  background: #6200ea !important;
+}
+.datepicker.calendar-deep-purple-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-deep-purple-A700 table thead tr th.next:hover,
+.datepicker.calendar-deep-purple-A700 table thead tr th.prev:hover {
+  background: #4d00b7;
+}
+.datepicker.calendar-deep-purple-A700 table tr td.day.active,
+.datepicker.calendar-deep-purple-A700 table tr td .month.active,
+.datepicker.calendar-deep-purple-A700 table tr td .year.active {
+  background-color: #6200ea !important;
+}
+.datepicker.calendar-deep-purple-A700 table tr td.day:hover,
+.datepicker.calendar-deep-purple-A700 table tr td .month:hover,
+.datepicker.calendar-deep-purple-A700 table tr td .year:hover {
+  background: #4d00b7;
+}
+.datepicker.calendar-green-100 table thead tr {
+  background: #c8e6c9 !important;
+}
+.datepicker.calendar-green-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-green-100 table thead tr th.next:hover,
+.datepicker.calendar-green-100 table thead tr th.prev:hover {
+  background: #a5d6a7;
+}
+.datepicker.calendar-green-100 table tr td.day.active,
+.datepicker.calendar-green-100 table tr td .month.active,
+.datepicker.calendar-green-100 table tr td .year.active {
+  background-color: #c8e6c9 !important;
+}
+.datepicker.calendar-green-100 table tr td.day:hover,
+.datepicker.calendar-green-100 table tr td .month:hover,
+.datepicker.calendar-green-100 table tr td .year:hover {
+  background: #a5d6a7;
+}
+.datepicker.calendar-green-200 table thead tr {
+  background: #a5d6a7 !important;
+}
+.datepicker.calendar-green-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-green-200 table thead tr th.next:hover,
+.datepicker.calendar-green-200 table thead tr th.prev:hover {
+  background: #82c685;
+}
+.datepicker.calendar-green-200 table tr td.day.active,
+.datepicker.calendar-green-200 table tr td .month.active,
+.datepicker.calendar-green-200 table tr td .year.active {
+  background-color: #a5d6a7 !important;
+}
+.datepicker.calendar-green-200 table tr td.day:hover,
+.datepicker.calendar-green-200 table tr td .month:hover,
+.datepicker.calendar-green-200 table tr td .year:hover {
+  background: #82c685;
+}
+.datepicker.calendar-green-300 table thead tr {
+  background: #81c784 !important;
+}
+.datepicker.calendar-green-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-green-300 table thead tr th.next:hover,
+.datepicker.calendar-green-300 table thead tr th.prev:hover {
+  background: #5eb762;
+}
+.datepicker.calendar-green-300 table tr td.day.active,
+.datepicker.calendar-green-300 table tr td .month.active,
+.datepicker.calendar-green-300 table tr td .year.active {
+  background-color: #81c784 !important;
+}
+.datepicker.calendar-green-300 table tr td.day:hover,
+.datepicker.calendar-green-300 table tr td .month:hover,
+.datepicker.calendar-green-300 table tr td .year:hover {
+  background: #5eb762;
+}
+.datepicker.calendar-green-400 table thead tr {
+  background: #66bb6a !important;
+}
+.datepicker.calendar-green-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-green-400 table thead tr th.next:hover,
+.datepicker.calendar-green-400 table thead tr th.prev:hover {
+  background: #49a54e;
+}
+.datepicker.calendar-green-400 table tr td.day.active,
+.datepicker.calendar-green-400 table tr td .month.active,
+.datepicker.calendar-green-400 table tr td .year.active {
+  background-color: #66bb6a !important;
+}
+.datepicker.calendar-green-400 table tr td.day:hover,
+.datepicker.calendar-green-400 table tr td .month:hover,
+.datepicker.calendar-green-400 table tr td .year:hover {
+  background: #49a54e;
+}
+.datepicker.calendar-green-500 table thead tr {
+  background: #4caf50 !important;
+}
+.datepicker.calendar-green-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-green-500 table thead tr th.next:hover,
+.datepicker.calendar-green-500 table thead tr th.prev:hover {
+  background: #3d8b40;
+}
+.datepicker.calendar-green-500 table tr td.day.active,
+.datepicker.calendar-green-500 table tr td .month.active,
+.datepicker.calendar-green-500 table tr td .year.active {
+  background-color: #4caf50 !important;
+}
+.datepicker.calendar-green-500 table tr td.day:hover,
+.datepicker.calendar-green-500 table tr td .month:hover,
+.datepicker.calendar-green-500 table tr td .year:hover {
+  background: #3d8b40;
+}
+.datepicker.calendar-green-600 table thead tr {
+  background: #43a047 !important;
+}
+.datepicker.calendar-green-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-green-600 table thead tr th.next:hover,
+.datepicker.calendar-green-600 table thead tr th.prev:hover {
+  background: #347c37;
+}
+.datepicker.calendar-green-600 table tr td.day.active,
+.datepicker.calendar-green-600 table tr td .month.active,
+.datepicker.calendar-green-600 table tr td .year.active {
+  background-color: #43a047 !important;
+}
+.datepicker.calendar-green-600 table tr td.day:hover,
+.datepicker.calendar-green-600 table tr td .month:hover,
+.datepicker.calendar-green-600 table tr td .year:hover {
+  background: #347c37;
+}
+.datepicker.calendar-green-700 table thead tr {
+  background: #388e3c !important;
+}
+.datepicker.calendar-green-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-green-700 table thead tr th.next:hover,
+.datepicker.calendar-green-700 table thead tr th.prev:hover {
+  background: #2a692d;
+}
+.datepicker.calendar-green-700 table tr td.day.active,
+.datepicker.calendar-green-700 table tr td .month.active,
+.datepicker.calendar-green-700 table tr td .year.active {
+  background-color: #388e3c !important;
+}
+.datepicker.calendar-green-700 table tr td.day:hover,
+.datepicker.calendar-green-700 table tr td .month:hover,
+.datepicker.calendar-green-700 table tr td .year:hover {
+  background: #2a692d;
+}
+.datepicker.calendar-green-800 table thead tr {
+  background: #2e7d32 !important;
+}
+.datepicker.calendar-green-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-green-800 table thead tr th.next:hover,
+.datepicker.calendar-green-800 table thead tr th.prev:hover {
+  background: #205823;
+}
+.datepicker.calendar-green-800 table tr td.day.active,
+.datepicker.calendar-green-800 table tr td .month.active,
+.datepicker.calendar-green-800 table tr td .year.active {
+  background-color: #2e7d32 !important;
+}
+.datepicker.calendar-green-800 table tr td.day:hover,
+.datepicker.calendar-green-800 table tr td .month:hover,
+.datepicker.calendar-green-800 table tr td .year:hover {
+  background: #205823;
+}
+.datepicker.calendar-green-900 table thead tr {
+  background: #1b5e20 !important;
+}
+.datepicker.calendar-green-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-green-900 table thead tr th.next:hover,
+.datepicker.calendar-green-900 table thead tr th.prev:hover {
+  background: #103613;
+}
+.datepicker.calendar-green-900 table tr td.day.active,
+.datepicker.calendar-green-900 table tr td .month.active,
+.datepicker.calendar-green-900 table tr td .year.active {
+  background-color: #1b5e20 !important;
+}
+.datepicker.calendar-green-900 table tr td.day:hover,
+.datepicker.calendar-green-900 table tr td .month:hover,
+.datepicker.calendar-green-900 table tr td .year:hover {
+  background: #103613;
+}
+.datepicker.calendar-green-A100 table thead tr {
+  background: #b9f6ca !important;
+}
+.datepicker.calendar-green-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-green-A100 table thead tr th.next:hover,
+.datepicker.calendar-green-A100 table thead tr th.prev:hover {
+  background: #8cf0a8;
+}
+.datepicker.calendar-green-A100 table tr td.day.active,
+.datepicker.calendar-green-A100 table tr td .month.active,
+.datepicker.calendar-green-A100 table tr td .year.active {
+  background-color: #b9f6ca !important;
+}
+.datepicker.calendar-green-A100 table tr td.day:hover,
+.datepicker.calendar-green-A100 table tr td .month:hover,
+.datepicker.calendar-green-A100 table tr td .year:hover {
+  background: #8cf0a8;
+}
+.datepicker.calendar-green-A200 table thead tr {
+  background: #69f0ae !important;
+}
+.datepicker.calendar-green-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-green-A200 table thead tr th.next:hover,
+.datepicker.calendar-green-A200 table thead tr th.prev:hover {
+  background: #3beb95;
+}
+.datepicker.calendar-green-A200 table tr td.day.active,
+.datepicker.calendar-green-A200 table tr td .month.active,
+.datepicker.calendar-green-A200 table tr td .year.active {
+  background-color: #69f0ae !important;
+}
+.datepicker.calendar-green-A200 table tr td.day:hover,
+.datepicker.calendar-green-A200 table tr td .month:hover,
+.datepicker.calendar-green-A200 table tr td .year:hover {
+  background: #3beb95;
+}
+.datepicker.calendar-green-A400 table thead tr {
+  background: #00e676 !important;
+}
+.datepicker.calendar-green-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-green-A400 table thead tr th.next:hover,
+.datepicker.calendar-green-A400 table thead tr th.prev:hover {
+  background: #00b35c;
+}
+.datepicker.calendar-green-A400 table tr td.day.active,
+.datepicker.calendar-green-A400 table tr td .month.active,
+.datepicker.calendar-green-A400 table tr td .year.active {
+  background-color: #00e676 !important;
+}
+.datepicker.calendar-green-A400 table tr td.day:hover,
+.datepicker.calendar-green-A400 table tr td .month:hover,
+.datepicker.calendar-green-A400 table tr td .year:hover {
+  background: #00b35c;
+}
+.datepicker.calendar-green-A700 table thead tr {
+  background: #00c853 !important;
+}
+.datepicker.calendar-green-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-green-A700 table thead tr th.next:hover,
+.datepicker.calendar-green-A700 table thead tr th.prev:hover {
+  background: #00953e;
+}
+.datepicker.calendar-green-A700 table tr td.day.active,
+.datepicker.calendar-green-A700 table tr td .month.active,
+.datepicker.calendar-green-A700 table tr td .year.active {
+  background-color: #00c853 !important;
+}
+.datepicker.calendar-green-A700 table tr td.day:hover,
+.datepicker.calendar-green-A700 table tr td .month:hover,
+.datepicker.calendar-green-A700 table tr td .year:hover {
+  background: #00953e;
+}
+.datepicker.calendar-grey-100 table thead tr {
+  background: #f5f5f5 !important;
+}
+.datepicker.calendar-grey-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-grey-100 table thead tr th.next:hover,
+.datepicker.calendar-grey-100 table thead tr th.prev:hover {
+  background: #dcdcdc;
+}
+.datepicker.calendar-grey-100 table tr td.day.active,
+.datepicker.calendar-grey-100 table tr td .month.active,
+.datepicker.calendar-grey-100 table tr td .year.active {
+  background-color: #f5f5f5 !important;
+}
+.datepicker.calendar-grey-100 table tr td.day:hover,
+.datepicker.calendar-grey-100 table tr td .month:hover,
+.datepicker.calendar-grey-100 table tr td .year:hover {
+  background: #dcdcdc;
+}
+.datepicker.calendar-grey-200 table thead tr {
+  background: #eeeeee !important;
+}
+.datepicker.calendar-grey-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-grey-200 table thead tr th.next:hover,
+.datepicker.calendar-grey-200 table thead tr th.prev:hover {
+  background: #d5d5d5;
+}
+.datepicker.calendar-grey-200 table tr td.day.active,
+.datepicker.calendar-grey-200 table tr td .month.active,
+.datepicker.calendar-grey-200 table tr td .year.active {
+  background-color: #eeeeee !important;
+}
+.datepicker.calendar-grey-200 table tr td.day:hover,
+.datepicker.calendar-grey-200 table tr td .month:hover,
+.datepicker.calendar-grey-200 table tr td .year:hover {
+  background: #d5d5d5;
+}
+.datepicker.calendar-grey-300 table thead tr {
+  background: #e0e0e0 !important;
+}
+.datepicker.calendar-grey-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-grey-300 table thead tr th.next:hover,
+.datepicker.calendar-grey-300 table thead tr th.prev:hover {
+  background: #c7c7c7;
+}
+.datepicker.calendar-grey-300 table tr td.day.active,
+.datepicker.calendar-grey-300 table tr td .month.active,
+.datepicker.calendar-grey-300 table tr td .year.active {
+  background-color: #e0e0e0 !important;
+}
+.datepicker.calendar-grey-300 table tr td.day:hover,
+.datepicker.calendar-grey-300 table tr td .month:hover,
+.datepicker.calendar-grey-300 table tr td .year:hover {
+  background: #c7c7c7;
+}
+.datepicker.calendar-grey-400 table thead tr {
+  background: #bdbdbd !important;
+}
+.datepicker.calendar-grey-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-grey-400 table thead tr th.next:hover,
+.datepicker.calendar-grey-400 table thead tr th.prev:hover {
+  background: #a4a4a4;
+}
+.datepicker.calendar-grey-400 table tr td.day.active,
+.datepicker.calendar-grey-400 table tr td .month.active,
+.datepicker.calendar-grey-400 table tr td .year.active {
+  background-color: #bdbdbd !important;
+}
+.datepicker.calendar-grey-400 table tr td.day:hover,
+.datepicker.calendar-grey-400 table tr td .month:hover,
+.datepicker.calendar-grey-400 table tr td .year:hover {
+  background: #a4a4a4;
+}
+.datepicker.calendar-grey-500 table thead tr {
+  background: #9e9e9e !important;
+}
+.datepicker.calendar-grey-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-grey-500 table thead tr th.next:hover,
+.datepicker.calendar-grey-500 table thead tr th.prev:hover {
+  background: #858585;
+}
+.datepicker.calendar-grey-500 table tr td.day.active,
+.datepicker.calendar-grey-500 table tr td .month.active,
+.datepicker.calendar-grey-500 table tr td .year.active {
+  background-color: #9e9e9e !important;
+}
+.datepicker.calendar-grey-500 table tr td.day:hover,
+.datepicker.calendar-grey-500 table tr td .month:hover,
+.datepicker.calendar-grey-500 table tr td .year:hover {
+  background: #858585;
+}
+.datepicker.calendar-grey-600 table thead tr {
+  background: #757575 !important;
+}
+.datepicker.calendar-grey-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-grey-600 table thead tr th.next:hover,
+.datepicker.calendar-grey-600 table thead tr th.prev:hover {
+  background: #5b5b5b;
+}
+.datepicker.calendar-grey-600 table tr td.day.active,
+.datepicker.calendar-grey-600 table tr td .month.active,
+.datepicker.calendar-grey-600 table tr td .year.active {
+  background-color: #757575 !important;
+}
+.datepicker.calendar-grey-600 table tr td.day:hover,
+.datepicker.calendar-grey-600 table tr td .month:hover,
+.datepicker.calendar-grey-600 table tr td .year:hover {
+  background: #5b5b5b;
+}
+.datepicker.calendar-grey-700 table thead tr {
+  background: #616161 !important;
+}
+.datepicker.calendar-grey-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-grey-700 table thead tr th.next:hover,
+.datepicker.calendar-grey-700 table thead tr th.prev:hover {
+  background: #484848;
+}
+.datepicker.calendar-grey-700 table tr td.day.active,
+.datepicker.calendar-grey-700 table tr td .month.active,
+.datepicker.calendar-grey-700 table tr td .year.active {
+  background-color: #616161 !important;
+}
+.datepicker.calendar-grey-700 table tr td.day:hover,
+.datepicker.calendar-grey-700 table tr td .month:hover,
+.datepicker.calendar-grey-700 table tr td .year:hover {
+  background: #484848;
+}
+.datepicker.calendar-grey-800 table thead tr {
+  background: #424242 !important;
+}
+.datepicker.calendar-grey-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-grey-800 table thead tr th.next:hover,
+.datepicker.calendar-grey-800 table thead tr th.prev:hover {
+  background: #292929;
+}
+.datepicker.calendar-grey-800 table tr td.day.active,
+.datepicker.calendar-grey-800 table tr td .month.active,
+.datepicker.calendar-grey-800 table tr td .year.active {
+  background-color: #424242 !important;
+}
+.datepicker.calendar-grey-800 table tr td.day:hover,
+.datepicker.calendar-grey-800 table tr td .month:hover,
+.datepicker.calendar-grey-800 table tr td .year:hover {
+  background: #292929;
+}
+.datepicker.calendar-grey-900 table thead tr {
+  background: #212121 !important;
+}
+.datepicker.calendar-grey-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-grey-900 table thead tr th.next:hover,
+.datepicker.calendar-grey-900 table thead tr th.prev:hover {
+  background: #080808;
+}
+.datepicker.calendar-grey-900 table tr td.day.active,
+.datepicker.calendar-grey-900 table tr td .month.active,
+.datepicker.calendar-grey-900 table tr td .year.active {
+  background-color: #212121 !important;
+}
+.datepicker.calendar-grey-900 table tr td.day:hover,
+.datepicker.calendar-grey-900 table tr td .month:hover,
+.datepicker.calendar-grey-900 table tr td .year:hover {
+  background: #080808;
+}
+.datepicker.calendar-indigo-100 table thead tr {
+  background: #c5cae9 !important;
+}
+.datepicker.calendar-indigo-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-indigo-100 table thead tr th.next:hover,
+.datepicker.calendar-indigo-100 table thead tr th.prev:hover {
+  background: #a0a8db;
+}
+.datepicker.calendar-indigo-100 table tr td.day.active,
+.datepicker.calendar-indigo-100 table tr td .month.active,
+.datepicker.calendar-indigo-100 table tr td .year.active {
+  background-color: #c5cae9 !important;
+}
+.datepicker.calendar-indigo-100 table tr td.day:hover,
+.datepicker.calendar-indigo-100 table tr td .month:hover,
+.datepicker.calendar-indigo-100 table tr td .year:hover {
+  background: #a0a8db;
+}
+.datepicker.calendar-indigo-200 table thead tr {
+  background: #9fa8da !important;
+}
+.datepicker.calendar-indigo-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-indigo-200 table thead tr th.next:hover,
+.datepicker.calendar-indigo-200 table thead tr th.prev:hover {
+  background: #7a87cc;
+}
+.datepicker.calendar-indigo-200 table tr td.day.active,
+.datepicker.calendar-indigo-200 table tr td .month.active,
+.datepicker.calendar-indigo-200 table tr td .year.active {
+  background-color: #9fa8da !important;
+}
+.datepicker.calendar-indigo-200 table tr td.day:hover,
+.datepicker.calendar-indigo-200 table tr td .month:hover,
+.datepicker.calendar-indigo-200 table tr td .year:hover {
+  background: #7a87cc;
+}
+.datepicker.calendar-indigo-300 table thead tr {
+  background: #7986cb !important;
+}
+.datepicker.calendar-indigo-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-indigo-300 table thead tr th.next:hover,
+.datepicker.calendar-indigo-300 table thead tr th.prev:hover {
+  background: #5465bd;
+}
+.datepicker.calendar-indigo-300 table tr td.day.active,
+.datepicker.calendar-indigo-300 table tr td .month.active,
+.datepicker.calendar-indigo-300 table tr td .year.active {
+  background-color: #7986cb !important;
+}
+.datepicker.calendar-indigo-300 table tr td.day:hover,
+.datepicker.calendar-indigo-300 table tr td .month:hover,
+.datepicker.calendar-indigo-300 table tr td .year:hover {
+  background: #5465bd;
+}
+.datepicker.calendar-indigo-400 table thead tr {
+  background: #5c6bc0 !important;
+}
+.datepicker.calendar-indigo-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-indigo-400 table thead tr th.next:hover,
+.datepicker.calendar-indigo-400 table thead tr th.prev:hover {
+  background: #4150a8;
+}
+.datepicker.calendar-indigo-400 table tr td.day.active,
+.datepicker.calendar-indigo-400 table tr td .month.active,
+.datepicker.calendar-indigo-400 table tr td .year.active {
+  background-color: #5c6bc0 !important;
+}
+.datepicker.calendar-indigo-400 table tr td.day:hover,
+.datepicker.calendar-indigo-400 table tr td .month:hover,
+.datepicker.calendar-indigo-400 table tr td .year:hover {
+  background: #4150a8;
+}
+.datepicker.calendar-indigo-500 table thead tr {
+  background: #3f51b5 !important;
+}
+.datepicker.calendar-indigo-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-indigo-500 table thead tr th.next:hover,
+.datepicker.calendar-indigo-500 table thead tr th.prev:hover {
+  background: #32408f;
+}
+.datepicker.calendar-indigo-500 table tr td.day.active,
+.datepicker.calendar-indigo-500 table tr td .month.active,
+.datepicker.calendar-indigo-500 table tr td .year.active {
+  background-color: #3f51b5 !important;
+}
+.datepicker.calendar-indigo-500 table tr td.day:hover,
+.datepicker.calendar-indigo-500 table tr td .month:hover,
+.datepicker.calendar-indigo-500 table tr td .year:hover {
+  background: #32408f;
+}
+.datepicker.calendar-indigo-600 table thead tr {
+  background: #3949ab !important;
+}
+.datepicker.calendar-indigo-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-indigo-600 table thead tr th.next:hover,
+.datepicker.calendar-indigo-600 table thead tr th.prev:hover {
+  background: #2c3985;
+}
+.datepicker.calendar-indigo-600 table tr td.day.active,
+.datepicker.calendar-indigo-600 table tr td .month.active,
+.datepicker.calendar-indigo-600 table tr td .year.active {
+  background-color: #3949ab !important;
+}
+.datepicker.calendar-indigo-600 table tr td.day:hover,
+.datepicker.calendar-indigo-600 table tr td .month:hover,
+.datepicker.calendar-indigo-600 table tr td .year:hover {
+  background: #2c3985;
+}
+.datepicker.calendar-indigo-700 table thead tr {
+  background: #303f9f !important;
+}
+.datepicker.calendar-indigo-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-indigo-700 table thead tr th.next:hover,
+.datepicker.calendar-indigo-700 table thead tr th.prev:hover {
+  background: #242f78;
+}
+.datepicker.calendar-indigo-700 table tr td.day.active,
+.datepicker.calendar-indigo-700 table tr td .month.active,
+.datepicker.calendar-indigo-700 table tr td .year.active {
+  background-color: #303f9f !important;
+}
+.datepicker.calendar-indigo-700 table tr td.day:hover,
+.datepicker.calendar-indigo-700 table tr td .month:hover,
+.datepicker.calendar-indigo-700 table tr td .year:hover {
+  background: #242f78;
+}
+.datepicker.calendar-indigo-800 table thead tr {
+  background: #283593 !important;
+}
+.datepicker.calendar-indigo-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-indigo-800 table thead tr th.next:hover,
+.datepicker.calendar-indigo-800 table thead tr th.prev:hover {
+  background: #1d276b;
+}
+.datepicker.calendar-indigo-800 table tr td.day.active,
+.datepicker.calendar-indigo-800 table tr td .month.active,
+.datepicker.calendar-indigo-800 table tr td .year.active {
+  background-color: #283593 !important;
+}
+.datepicker.calendar-indigo-800 table tr td.day:hover,
+.datepicker.calendar-indigo-800 table tr td .month:hover,
+.datepicker.calendar-indigo-800 table tr td .year:hover {
+  background: #1d276b;
+}
+.datepicker.calendar-indigo-900 table thead tr {
+  background: #1a237e !important;
+}
+.datepicker.calendar-indigo-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-indigo-900 table thead tr th.next:hover,
+.datepicker.calendar-indigo-900 table thead tr th.prev:hover {
+  background: #111754;
+}
+.datepicker.calendar-indigo-900 table tr td.day.active,
+.datepicker.calendar-indigo-900 table tr td .month.active,
+.datepicker.calendar-indigo-900 table tr td .year.active {
+  background-color: #1a237e !important;
+}
+.datepicker.calendar-indigo-900 table tr td.day:hover,
+.datepicker.calendar-indigo-900 table tr td .month:hover,
+.datepicker.calendar-indigo-900 table tr td .year:hover {
+  background: #111754;
+}
+.datepicker.calendar-indigo-A100 table thead tr {
+  background: #8c9eff !important;
+}
+.datepicker.calendar-indigo-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-indigo-A100 table thead tr th.next:hover,
+.datepicker.calendar-indigo-A100 table thead tr th.prev:hover {
+  background: #5973ff;
+}
+.datepicker.calendar-indigo-A100 table tr td.day.active,
+.datepicker.calendar-indigo-A100 table tr td .month.active,
+.datepicker.calendar-indigo-A100 table tr td .year.active {
+  background-color: #8c9eff !important;
+}
+.datepicker.calendar-indigo-A100 table tr td.day:hover,
+.datepicker.calendar-indigo-A100 table tr td .month:hover,
+.datepicker.calendar-indigo-A100 table tr td .year:hover {
+  background: #5973ff;
+}
+.datepicker.calendar-indigo-A200 table thead tr {
+  background: #536dfe !important;
+}
+.datepicker.calendar-indigo-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-indigo-A200 table thead tr th.next:hover,
+.datepicker.calendar-indigo-A200 table thead tr th.prev:hover {
+  background: #2042fe;
+}
+.datepicker.calendar-indigo-A200 table tr td.day.active,
+.datepicker.calendar-indigo-A200 table tr td .month.active,
+.datepicker.calendar-indigo-A200 table tr td .year.active {
+  background-color: #536dfe !important;
+}
+.datepicker.calendar-indigo-A200 table tr td.day:hover,
+.datepicker.calendar-indigo-A200 table tr td .month:hover,
+.datepicker.calendar-indigo-A200 table tr td .year:hover {
+  background: #2042fe;
+}
+.datepicker.calendar-indigo-A400 table thead tr {
+  background: #3d5afe !important;
+}
+.datepicker.calendar-indigo-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-indigo-A400 table thead tr th.next:hover,
+.datepicker.calendar-indigo-A400 table thead tr th.prev:hover {
+  background: #0a2ffe;
+}
+.datepicker.calendar-indigo-A400 table tr td.day.active,
+.datepicker.calendar-indigo-A400 table tr td .month.active,
+.datepicker.calendar-indigo-A400 table tr td .year.active {
+  background-color: #3d5afe !important;
+}
+.datepicker.calendar-indigo-A400 table tr td.day:hover,
+.datepicker.calendar-indigo-A400 table tr td .month:hover,
+.datepicker.calendar-indigo-A400 table tr td .year:hover {
+  background: #0a2ffe;
+}
+.datepicker.calendar-indigo-A700 table thead tr {
+  background: #304ffe !important;
+}
+.datepicker.calendar-indigo-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-indigo-A700 table thead tr th.next:hover,
+.datepicker.calendar-indigo-A700 table thead tr th.prev:hover {
+  background: #0127fa;
+}
+.datepicker.calendar-indigo-A700 table tr td.day.active,
+.datepicker.calendar-indigo-A700 table tr td .month.active,
+.datepicker.calendar-indigo-A700 table tr td .year.active {
+  background-color: #304ffe !important;
+}
+.datepicker.calendar-indigo-A700 table tr td.day:hover,
+.datepicker.calendar-indigo-A700 table tr td .month:hover,
+.datepicker.calendar-indigo-A700 table tr td .year:hover {
+  background: #0127fa;
+}
+.datepicker.calendar-light-blue-100 table thead tr {
+  background: #b3e5fc !important;
+}
+.datepicker.calendar-light-blue-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-blue-100 table thead tr th.next:hover,
+.datepicker.calendar-light-blue-100 table thead tr th.prev:hover {
+  background: #82d4fa;
+}
+.datepicker.calendar-light-blue-100 table tr td.day.active,
+.datepicker.calendar-light-blue-100 table tr td .month.active,
+.datepicker.calendar-light-blue-100 table tr td .year.active {
+  background-color: #b3e5fc !important;
+}
+.datepicker.calendar-light-blue-100 table tr td.day:hover,
+.datepicker.calendar-light-blue-100 table tr td .month:hover,
+.datepicker.calendar-light-blue-100 table tr td .year:hover {
+  background: #82d4fa;
+}
+.datepicker.calendar-light-blue-200 table thead tr {
+  background: #81d4fa !important;
+}
+.datepicker.calendar-light-blue-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-blue-200 table thead tr th.next:hover,
+.datepicker.calendar-light-blue-200 table thead tr th.prev:hover {
+  background: #50c3f8;
+}
+.datepicker.calendar-light-blue-200 table tr td.day.active,
+.datepicker.calendar-light-blue-200 table tr td .month.active,
+.datepicker.calendar-light-blue-200 table tr td .year.active {
+  background-color: #81d4fa !important;
+}
+.datepicker.calendar-light-blue-200 table tr td.day:hover,
+.datepicker.calendar-light-blue-200 table tr td .month:hover,
+.datepicker.calendar-light-blue-200 table tr td .year:hover {
+  background: #50c3f8;
+}
+.datepicker.calendar-light-blue-300 table thead tr {
+  background: #4fc3f7 !important;
+}
+.datepicker.calendar-light-blue-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-blue-300 table thead tr th.next:hover,
+.datepicker.calendar-light-blue-300 table thead tr th.prev:hover {
+  background: #1eb2f5;
+}
+.datepicker.calendar-light-blue-300 table tr td.day.active,
+.datepicker.calendar-light-blue-300 table tr td .month.active,
+.datepicker.calendar-light-blue-300 table tr td .year.active {
+  background-color: #4fc3f7 !important;
+}
+.datepicker.calendar-light-blue-300 table tr td.day:hover,
+.datepicker.calendar-light-blue-300 table tr td .month:hover,
+.datepicker.calendar-light-blue-300 table tr td .year:hover {
+  background: #1eb2f5;
+}
+.datepicker.calendar-light-blue-400 table thead tr {
+  background: #29b6f6 !important;
+}
+.datepicker.calendar-light-blue-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-blue-400 table thead tr th.next:hover,
+.datepicker.calendar-light-blue-400 table thead tr th.prev:hover {
+  background: #0a9fe2;
+}
+.datepicker.calendar-light-blue-400 table tr td.day.active,
+.datepicker.calendar-light-blue-400 table tr td .month.active,
+.datepicker.calendar-light-blue-400 table tr td .year.active {
+  background-color: #29b6f6 !important;
+}
+.datepicker.calendar-light-blue-400 table tr td.day:hover,
+.datepicker.calendar-light-blue-400 table tr td .month:hover,
+.datepicker.calendar-light-blue-400 table tr td .year:hover {
+  background: #0a9fe2;
+}
+.datepicker.calendar-light-blue-500 table thead tr {
+  background: #03a9f4 !important;
+}
+.datepicker.calendar-light-blue-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-blue-500 table thead tr th.next:hover,
+.datepicker.calendar-light-blue-500 table thead tr th.prev:hover {
+  background: #0286c2;
+}
+.datepicker.calendar-light-blue-500 table tr td.day.active,
+.datepicker.calendar-light-blue-500 table tr td .month.active,
+.datepicker.calendar-light-blue-500 table tr td .year.active {
+  background-color: #03a9f4 !important;
+}
+.datepicker.calendar-light-blue-500 table tr td.day:hover,
+.datepicker.calendar-light-blue-500 table tr td .month:hover,
+.datepicker.calendar-light-blue-500 table tr td .year:hover {
+  background: #0286c2;
+}
+.datepicker.calendar-light-blue-600 table thead tr {
+  background: #039be5 !important;
+}
+.datepicker.calendar-light-blue-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-blue-600 table thead tr th.next:hover,
+.datepicker.calendar-light-blue-600 table thead tr th.prev:hover {
+  background: #0279b3;
+}
+.datepicker.calendar-light-blue-600 table tr td.day.active,
+.datepicker.calendar-light-blue-600 table tr td .month.active,
+.datepicker.calendar-light-blue-600 table tr td .year.active {
+  background-color: #039be5 !important;
+}
+.datepicker.calendar-light-blue-600 table tr td.day:hover,
+.datepicker.calendar-light-blue-600 table tr td .month:hover,
+.datepicker.calendar-light-blue-600 table tr td .year:hover {
+  background: #0279b3;
+}
+.datepicker.calendar-light-blue-700 table thead tr {
+  background: #0288d1 !important;
+}
+.datepicker.calendar-light-blue-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-blue-700 table thead tr th.next:hover,
+.datepicker.calendar-light-blue-700 table thead tr th.prev:hover {
+  background: #02679e;
+}
+.datepicker.calendar-light-blue-700 table tr td.day.active,
+.datepicker.calendar-light-blue-700 table tr td .month.active,
+.datepicker.calendar-light-blue-700 table tr td .year.active {
+  background-color: #0288d1 !important;
+}
+.datepicker.calendar-light-blue-700 table tr td.day:hover,
+.datepicker.calendar-light-blue-700 table tr td .month:hover,
+.datepicker.calendar-light-blue-700 table tr td .year:hover {
+  background: #02679e;
+}
+.datepicker.calendar-light-blue-800 table thead tr {
+  background: #0277bd !important;
+}
+.datepicker.calendar-light-blue-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-blue-800 table thead tr th.next:hover,
+.datepicker.calendar-light-blue-800 table thead tr th.prev:hover {
+  background: #01578b;
+}
+.datepicker.calendar-light-blue-800 table tr td.day.active,
+.datepicker.calendar-light-blue-800 table tr td .month.active,
+.datepicker.calendar-light-blue-800 table tr td .year.active {
+  background-color: #0277bd !important;
+}
+.datepicker.calendar-light-blue-800 table tr td.day:hover,
+.datepicker.calendar-light-blue-800 table tr td .month:hover,
+.datepicker.calendar-light-blue-800 table tr td .year:hover {
+  background: #01578b;
+}
+.datepicker.calendar-light-blue-900 table thead tr {
+  background: #01579b !important;
+}
+.datepicker.calendar-light-blue-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-blue-900 table thead tr th.next:hover,
+.datepicker.calendar-light-blue-900 table thead tr th.prev:hover {
+  background: #013b68;
+}
+.datepicker.calendar-light-blue-900 table tr td.day.active,
+.datepicker.calendar-light-blue-900 table tr td .month.active,
+.datepicker.calendar-light-blue-900 table tr td .year.active {
+  background-color: #01579b !important;
+}
+.datepicker.calendar-light-blue-900 table tr td.day:hover,
+.datepicker.calendar-light-blue-900 table tr td .month:hover,
+.datepicker.calendar-light-blue-900 table tr td .year:hover {
+  background: #013b68;
+}
+.datepicker.calendar-light-blue-A100 table thead tr {
+  background: #80d8ff !important;
+}
+.datepicker.calendar-light-blue-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-blue-A100 table thead tr th.next:hover,
+.datepicker.calendar-light-blue-A100 table thead tr th.prev:hover {
+  background: #4dc8ff;
+}
+.datepicker.calendar-light-blue-A100 table tr td.day.active,
+.datepicker.calendar-light-blue-A100 table tr td .month.active,
+.datepicker.calendar-light-blue-A100 table tr td .year.active {
+  background-color: #80d8ff !important;
+}
+.datepicker.calendar-light-blue-A100 table tr td.day:hover,
+.datepicker.calendar-light-blue-A100 table tr td .month:hover,
+.datepicker.calendar-light-blue-A100 table tr td .year:hover {
+  background: #4dc8ff;
+}
+.datepicker.calendar-light-blue-A200 table thead tr {
+  background: #40c4ff !important;
+}
+.datepicker.calendar-light-blue-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-blue-A200 table thead tr th.next:hover,
+.datepicker.calendar-light-blue-A200 table thead tr th.prev:hover {
+  background: #0db4ff;
+}
+.datepicker.calendar-light-blue-A200 table tr td.day.active,
+.datepicker.calendar-light-blue-A200 table tr td .month.active,
+.datepicker.calendar-light-blue-A200 table tr td .year.active {
+  background-color: #40c4ff !important;
+}
+.datepicker.calendar-light-blue-A200 table tr td.day:hover,
+.datepicker.calendar-light-blue-A200 table tr td .month:hover,
+.datepicker.calendar-light-blue-A200 table tr td .year:hover {
+  background: #0db4ff;
+}
+.datepicker.calendar-light-blue-A400 table thead tr {
+  background: #00b0ff !important;
+}
+.datepicker.calendar-light-blue-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-blue-A400 table thead tr th.next:hover,
+.datepicker.calendar-light-blue-A400 table thead tr th.prev:hover {
+  background: #008dcc;
+}
+.datepicker.calendar-light-blue-A400 table tr td.day.active,
+.datepicker.calendar-light-blue-A400 table tr td .month.active,
+.datepicker.calendar-light-blue-A400 table tr td .year.active {
+  background-color: #00b0ff !important;
+}
+.datepicker.calendar-light-blue-A400 table tr td.day:hover,
+.datepicker.calendar-light-blue-A400 table tr td .month:hover,
+.datepicker.calendar-light-blue-A400 table tr td .year:hover {
+  background: #008dcc;
+}
+.datepicker.calendar-light-blue-A700 table thead tr {
+  background: #0091ea !important;
+}
+.datepicker.calendar-light-blue-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-blue-A700 table thead tr th.next:hover,
+.datepicker.calendar-light-blue-A700 table thead tr th.prev:hover {
+  background: #0071b7;
+}
+.datepicker.calendar-light-blue-A700 table tr td.day.active,
+.datepicker.calendar-light-blue-A700 table tr td .month.active,
+.datepicker.calendar-light-blue-A700 table tr td .year.active {
+  background-color: #0091ea !important;
+}
+.datepicker.calendar-light-blue-A700 table tr td.day:hover,
+.datepicker.calendar-light-blue-A700 table tr td .month:hover,
+.datepicker.calendar-light-blue-A700 table tr td .year:hover {
+  background: #0071b7;
+}
+.datepicker.calendar-light-green-100 table thead tr {
+  background: #dcedc8 !important;
+}
+.datepicker.calendar-light-green-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-green-100 table thead tr th.next:hover,
+.datepicker.calendar-light-green-100 table thead tr th.prev:hover {
+  background: #c4e0a2;
+}
+.datepicker.calendar-light-green-100 table tr td.day.active,
+.datepicker.calendar-light-green-100 table tr td .month.active,
+.datepicker.calendar-light-green-100 table tr td .year.active {
+  background-color: #dcedc8 !important;
+}
+.datepicker.calendar-light-green-100 table tr td.day:hover,
+.datepicker.calendar-light-green-100 table tr td .month:hover,
+.datepicker.calendar-light-green-100 table tr td .year:hover {
+  background: #c4e0a2;
+}
+.datepicker.calendar-light-green-200 table thead tr {
+  background: #c5e1a5 !important;
+}
+.datepicker.calendar-light-green-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-green-200 table thead tr th.next:hover,
+.datepicker.calendar-light-green-200 table thead tr th.prev:hover {
+  background: #acd47f;
+}
+.datepicker.calendar-light-green-200 table tr td.day.active,
+.datepicker.calendar-light-green-200 table tr td .month.active,
+.datepicker.calendar-light-green-200 table tr td .year.active {
+  background-color: #c5e1a5 !important;
+}
+.datepicker.calendar-light-green-200 table tr td.day:hover,
+.datepicker.calendar-light-green-200 table tr td .month:hover,
+.datepicker.calendar-light-green-200 table tr td .year:hover {
+  background: #acd47f;
+}
+.datepicker.calendar-light-green-300 table thead tr {
+  background: #aed581 !important;
+}
+.datepicker.calendar-light-green-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-green-300 table thead tr th.next:hover,
+.datepicker.calendar-light-green-300 table thead tr th.prev:hover {
+  background: #95c85b;
+}
+.datepicker.calendar-light-green-300 table tr td.day.active,
+.datepicker.calendar-light-green-300 table tr td .month.active,
+.datepicker.calendar-light-green-300 table tr td .year.active {
+  background-color: #aed581 !important;
+}
+.datepicker.calendar-light-green-300 table tr td.day:hover,
+.datepicker.calendar-light-green-300 table tr td .month:hover,
+.datepicker.calendar-light-green-300 table tr td .year:hover {
+  background: #95c85b;
+}
+.datepicker.calendar-light-green-400 table thead tr {
+  background: #9ccc65 !important;
+}
+.datepicker.calendar-light-green-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-green-400 table thead tr th.next:hover,
+.datepicker.calendar-light-green-400 table thead tr th.prev:hover {
+  background: #83bf3f;
+}
+.datepicker.calendar-light-green-400 table tr td.day.active,
+.datepicker.calendar-light-green-400 table tr td .month.active,
+.datepicker.calendar-light-green-400 table tr td .year.active {
+  background-color: #9ccc65 !important;
+}
+.datepicker.calendar-light-green-400 table tr td.day:hover,
+.datepicker.calendar-light-green-400 table tr td .month:hover,
+.datepicker.calendar-light-green-400 table tr td .year:hover {
+  background: #83bf3f;
+}
+.datepicker.calendar-light-green-500 table thead tr {
+  background: #8bc34a !important;
+}
+.datepicker.calendar-light-green-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-green-500 table thead tr th.next:hover,
+.datepicker.calendar-light-green-500 table thead tr th.prev:hover {
+  background: #71a436;
+}
+.datepicker.calendar-light-green-500 table tr td.day.active,
+.datepicker.calendar-light-green-500 table tr td .month.active,
+.datepicker.calendar-light-green-500 table tr td .year.active {
+  background-color: #8bc34a !important;
+}
+.datepicker.calendar-light-green-500 table tr td.day:hover,
+.datepicker.calendar-light-green-500 table tr td .month:hover,
+.datepicker.calendar-light-green-500 table tr td .year:hover {
+  background: #71a436;
+}
+.datepicker.calendar-light-green-600 table thead tr {
+  background: #7cb342 !important;
+}
+.datepicker.calendar-light-green-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-green-600 table thead tr th.next:hover,
+.datepicker.calendar-light-green-600 table thead tr th.prev:hover {
+  background: #628e34;
+}
+.datepicker.calendar-light-green-600 table tr td.day.active,
+.datepicker.calendar-light-green-600 table tr td .month.active,
+.datepicker.calendar-light-green-600 table tr td .year.active {
+  background-color: #7cb342 !important;
+}
+.datepicker.calendar-light-green-600 table tr td.day:hover,
+.datepicker.calendar-light-green-600 table tr td .month:hover,
+.datepicker.calendar-light-green-600 table tr td .year:hover {
+  background: #628e34;
+}
+.datepicker.calendar-light-green-700 table thead tr {
+  background: #689f38 !important;
+}
+.datepicker.calendar-light-green-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-green-700 table thead tr th.next:hover,
+.datepicker.calendar-light-green-700 table thead tr th.prev:hover {
+  background: #4f792b;
+}
+.datepicker.calendar-light-green-700 table tr td.day.active,
+.datepicker.calendar-light-green-700 table tr td .month.active,
+.datepicker.calendar-light-green-700 table tr td .year.active {
+  background-color: #689f38 !important;
+}
+.datepicker.calendar-light-green-700 table tr td.day:hover,
+.datepicker.calendar-light-green-700 table tr td .month:hover,
+.datepicker.calendar-light-green-700 table tr td .year:hover {
+  background: #4f792b;
+}
+.datepicker.calendar-light-green-800 table thead tr {
+  background: #558b2f !important;
+}
+.datepicker.calendar-light-green-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-green-800 table thead tr th.next:hover,
+.datepicker.calendar-light-green-800 table thead tr th.prev:hover {
+  background: #3e6522;
+}
+.datepicker.calendar-light-green-800 table tr td.day.active,
+.datepicker.calendar-light-green-800 table tr td .month.active,
+.datepicker.calendar-light-green-800 table tr td .year.active {
+  background-color: #558b2f !important;
+}
+.datepicker.calendar-light-green-800 table tr td.day:hover,
+.datepicker.calendar-light-green-800 table tr td .month:hover,
+.datepicker.calendar-light-green-800 table tr td .year:hover {
+  background: #3e6522;
+}
+.datepicker.calendar-light-green-900 table thead tr {
+  background: #33691e !important;
+}
+.datepicker.calendar-light-green-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-green-900 table thead tr th.next:hover,
+.datepicker.calendar-light-green-900 table thead tr th.prev:hover {
+  background: #204113;
+}
+.datepicker.calendar-light-green-900 table tr td.day.active,
+.datepicker.calendar-light-green-900 table tr td .month.active,
+.datepicker.calendar-light-green-900 table tr td .year.active {
+  background-color: #33691e !important;
+}
+.datepicker.calendar-light-green-900 table tr td.day:hover,
+.datepicker.calendar-light-green-900 table tr td .month:hover,
+.datepicker.calendar-light-green-900 table tr td .year:hover {
+  background: #204113;
+}
+.datepicker.calendar-light-green-A100 table thead tr {
+  background: #ccff90 !important;
+}
+.datepicker.calendar-light-green-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-green-A100 table thead tr th.next:hover,
+.datepicker.calendar-light-green-A100 table thead tr th.prev:hover {
+  background: #b5ff5d;
+}
+.datepicker.calendar-light-green-A100 table tr td.day.active,
+.datepicker.calendar-light-green-A100 table tr td .month.active,
+.datepicker.calendar-light-green-A100 table tr td .year.active {
+  background-color: #ccff90 !important;
+}
+.datepicker.calendar-light-green-A100 table tr td.day:hover,
+.datepicker.calendar-light-green-A100 table tr td .month:hover,
+.datepicker.calendar-light-green-A100 table tr td .year:hover {
+  background: #b5ff5d;
+}
+.datepicker.calendar-light-green-A200 table thead tr {
+  background: #b2ff59 !important;
+}
+.datepicker.calendar-light-green-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-green-A200 table thead tr th.next:hover,
+.datepicker.calendar-light-green-A200 table thead tr th.prev:hover {
+  background: #9aff26;
+}
+.datepicker.calendar-light-green-A200 table tr td.day.active,
+.datepicker.calendar-light-green-A200 table tr td .month.active,
+.datepicker.calendar-light-green-A200 table tr td .year.active {
+  background-color: #b2ff59 !important;
+}
+.datepicker.calendar-light-green-A200 table tr td.day:hover,
+.datepicker.calendar-light-green-A200 table tr td .month:hover,
+.datepicker.calendar-light-green-A200 table tr td .year:hover {
+  background: #9aff26;
+}
+.datepicker.calendar-light-green-A400 table thead tr {
+  background: #76ff03 !important;
+}
+.datepicker.calendar-light-green-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-green-A400 table thead tr th.next:hover,
+.datepicker.calendar-light-green-A400 table thead tr th.prev:hover {
+  background: #5ecf00;
+}
+.datepicker.calendar-light-green-A400 table tr td.day.active,
+.datepicker.calendar-light-green-A400 table tr td .month.active,
+.datepicker.calendar-light-green-A400 table tr td .year.active {
+  background-color: #76ff03 !important;
+}
+.datepicker.calendar-light-green-A400 table tr td.day:hover,
+.datepicker.calendar-light-green-A400 table tr td .month:hover,
+.datepicker.calendar-light-green-A400 table tr td .year:hover {
+  background: #5ecf00;
+}
+.datepicker.calendar-light-green-A700 table thead tr {
+  background: #64dd17 !important;
+}
+.datepicker.calendar-light-green-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-light-green-A700 table thead tr th.next:hover,
+.datepicker.calendar-light-green-A700 table thead tr th.prev:hover {
+  background: #4faf12;
+}
+.datepicker.calendar-light-green-A700 table tr td.day.active,
+.datepicker.calendar-light-green-A700 table tr td .month.active,
+.datepicker.calendar-light-green-A700 table tr td .year.active {
+  background-color: #64dd17 !important;
+}
+.datepicker.calendar-light-green-A700 table tr td.day:hover,
+.datepicker.calendar-light-green-A700 table tr td .month:hover,
+.datepicker.calendar-light-green-A700 table tr td .year:hover {
+  background: #4faf12;
+}
+.datepicker.calendar-lime-100 table thead tr {
+  background: #f0f4c3 !important;
+}
+.datepicker.calendar-lime-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-lime-100 table thead tr th.next:hover,
+.datepicker.calendar-lime-100 table thead tr th.prev:hover {
+  background: #e5ec98;
+}
+.datepicker.calendar-lime-100 table tr td.day.active,
+.datepicker.calendar-lime-100 table tr td .month.active,
+.datepicker.calendar-lime-100 table tr td .year.active {
+  background-color: #f0f4c3 !important;
+}
+.datepicker.calendar-lime-100 table tr td.day:hover,
+.datepicker.calendar-lime-100 table tr td .month:hover,
+.datepicker.calendar-lime-100 table tr td .year:hover {
+  background: #e5ec98;
+}
+.datepicker.calendar-lime-200 table thead tr {
+  background: #e6ee9c !important;
+}
+.datepicker.calendar-lime-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-lime-200 table thead tr th.next:hover,
+.datepicker.calendar-lime-200 table thead tr th.prev:hover {
+  background: #dbe770;
+}
+.datepicker.calendar-lime-200 table tr td.day.active,
+.datepicker.calendar-lime-200 table tr td .month.active,
+.datepicker.calendar-lime-200 table tr td .year.active {
+  background-color: #e6ee9c !important;
+}
+.datepicker.calendar-lime-200 table tr td.day:hover,
+.datepicker.calendar-lime-200 table tr td .month:hover,
+.datepicker.calendar-lime-200 table tr td .year:hover {
+  background: #dbe770;
+}
+.datepicker.calendar-lime-300 table thead tr {
+  background: #dce775 !important;
+}
+.datepicker.calendar-lime-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-lime-300 table thead tr th.next:hover,
+.datepicker.calendar-lime-300 table thead tr th.prev:hover {
+  background: #d1df4a;
+}
+.datepicker.calendar-lime-300 table tr td.day.active,
+.datepicker.calendar-lime-300 table tr td .month.active,
+.datepicker.calendar-lime-300 table tr td .year.active {
+  background-color: #dce775 !important;
+}
+.datepicker.calendar-lime-300 table tr td.day:hover,
+.datepicker.calendar-lime-300 table tr td .month:hover,
+.datepicker.calendar-lime-300 table tr td .year:hover {
+  background: #d1df4a;
+}
+.datepicker.calendar-lime-400 table thead tr {
+  background: #d4e157 !important;
+}
+.datepicker.calendar-lime-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-lime-400 table thead tr th.next:hover,
+.datepicker.calendar-lime-400 table thead tr th.prev:hover {
+  background: #c9d92c;
+}
+.datepicker.calendar-lime-400 table tr td.day.active,
+.datepicker.calendar-lime-400 table tr td .month.active,
+.datepicker.calendar-lime-400 table tr td .year.active {
+  background-color: #d4e157 !important;
+}
+.datepicker.calendar-lime-400 table tr td.day:hover,
+.datepicker.calendar-lime-400 table tr td .month:hover,
+.datepicker.calendar-lime-400 table tr td .year:hover {
+  background: #c9d92c;
+}
+.datepicker.calendar-lime-500 table thead tr {
+  background: #cddc39 !important;
+}
+.datepicker.calendar-lime-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-lime-500 table thead tr th.next:hover,
+.datepicker.calendar-lime-500 table thead tr th.prev:hover {
+  background: #b2c022;
+}
+.datepicker.calendar-lime-500 table tr td.day.active,
+.datepicker.calendar-lime-500 table tr td .month.active,
+.datepicker.calendar-lime-500 table tr td .year.active {
+  background-color: #cddc39 !important;
+}
+.datepicker.calendar-lime-500 table tr td.day:hover,
+.datepicker.calendar-lime-500 table tr td .month:hover,
+.datepicker.calendar-lime-500 table tr td .year:hover {
+  background: #b2c022;
+}
+.datepicker.calendar-lime-600 table thead tr {
+  background: #c0ca33 !important;
+}
+.datepicker.calendar-lime-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-lime-600 table thead tr th.next:hover,
+.datepicker.calendar-lime-600 table thead tr th.prev:hover {
+  background: #99a129;
+}
+.datepicker.calendar-lime-600 table tr td.day.active,
+.datepicker.calendar-lime-600 table tr td .month.active,
+.datepicker.calendar-lime-600 table tr td .year.active {
+  background-color: #c0ca33 !important;
+}
+.datepicker.calendar-lime-600 table tr td.day:hover,
+.datepicker.calendar-lime-600 table tr td .month:hover,
+.datepicker.calendar-lime-600 table tr td .year:hover {
+  background: #99a129;
+}
+.datepicker.calendar-lime-700 table thead tr {
+  background: #afb42b !important;
+}
+.datepicker.calendar-lime-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-lime-700 table thead tr th.next:hover,
+.datepicker.calendar-lime-700 table thead tr th.prev:hover {
+  background: #878b21;
+}
+.datepicker.calendar-lime-700 table tr td.day.active,
+.datepicker.calendar-lime-700 table tr td .month.active,
+.datepicker.calendar-lime-700 table tr td .year.active {
+  background-color: #afb42b !important;
+}
+.datepicker.calendar-lime-700 table tr td.day:hover,
+.datepicker.calendar-lime-700 table tr td .month:hover,
+.datepicker.calendar-lime-700 table tr td .year:hover {
+  background: #878b21;
+}
+.datepicker.calendar-lime-800 table thead tr {
+  background: #9e9d24 !important;
+}
+.datepicker.calendar-lime-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-lime-800 table thead tr th.next:hover,
+.datepicker.calendar-lime-800 table thead tr th.prev:hover {
+  background: #74741b;
+}
+.datepicker.calendar-lime-800 table tr td.day.active,
+.datepicker.calendar-lime-800 table tr td .month.active,
+.datepicker.calendar-lime-800 table tr td .year.active {
+  background-color: #9e9d24 !important;
+}
+.datepicker.calendar-lime-800 table tr td.day:hover,
+.datepicker.calendar-lime-800 table tr td .month:hover,
+.datepicker.calendar-lime-800 table tr td .year:hover {
+  background: #74741b;
+}
+.datepicker.calendar-lime-900 table thead tr {
+  background: #827717 !important;
+}
+.datepicker.calendar-lime-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-lime-900 table thead tr th.next:hover,
+.datepicker.calendar-lime-900 table thead tr th.prev:hover {
+  background: #574f0f;
+}
+.datepicker.calendar-lime-900 table tr td.day.active,
+.datepicker.calendar-lime-900 table tr td .month.active,
+.datepicker.calendar-lime-900 table tr td .year.active {
+  background-color: #827717 !important;
+}
+.datepicker.calendar-lime-900 table tr td.day:hover,
+.datepicker.calendar-lime-900 table tr td .month:hover,
+.datepicker.calendar-lime-900 table tr td .year:hover {
+  background: #574f0f;
+}
+.datepicker.calendar-lime-A100 table thead tr {
+  background: #f4ff81 !important;
+}
+.datepicker.calendar-lime-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-lime-A100 table thead tr th.next:hover,
+.datepicker.calendar-lime-A100 table thead tr th.prev:hover {
+  background: #f0ff4e;
+}
+.datepicker.calendar-lime-A100 table tr td.day.active,
+.datepicker.calendar-lime-A100 table tr td .month.active,
+.datepicker.calendar-lime-A100 table tr td .year.active {
+  background-color: #f4ff81 !important;
+}
+.datepicker.calendar-lime-A100 table tr td.day:hover,
+.datepicker.calendar-lime-A100 table tr td .month:hover,
+.datepicker.calendar-lime-A100 table tr td .year:hover {
+  background: #f0ff4e;
+}
+.datepicker.calendar-lime-A200 table thead tr {
+  background: #eeff41 !important;
+}
+.datepicker.calendar-lime-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-lime-A200 table thead tr th.next:hover,
+.datepicker.calendar-lime-A200 table thead tr th.prev:hover {
+  background: #e9ff0e;
+}
+.datepicker.calendar-lime-A200 table tr td.day.active,
+.datepicker.calendar-lime-A200 table tr td .month.active,
+.datepicker.calendar-lime-A200 table tr td .year.active {
+  background-color: #eeff41 !important;
+}
+.datepicker.calendar-lime-A200 table tr td.day:hover,
+.datepicker.calendar-lime-A200 table tr td .month:hover,
+.datepicker.calendar-lime-A200 table tr td .year:hover {
+  background: #e9ff0e;
+}
+.datepicker.calendar-lime-A400 table thead tr {
+  background: #c6ff00 !important;
+}
+.datepicker.calendar-lime-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-lime-A400 table thead tr th.next:hover,
+.datepicker.calendar-lime-A400 table thead tr th.prev:hover {
+  background: #9ecc00;
+}
+.datepicker.calendar-lime-A400 table tr td.day.active,
+.datepicker.calendar-lime-A400 table tr td .month.active,
+.datepicker.calendar-lime-A400 table tr td .year.active {
+  background-color: #c6ff00 !important;
+}
+.datepicker.calendar-lime-A400 table tr td.day:hover,
+.datepicker.calendar-lime-A400 table tr td .month:hover,
+.datepicker.calendar-lime-A400 table tr td .year:hover {
+  background: #9ecc00;
+}
+.datepicker.calendar-lime-A700 table thead tr {
+  background: #aeea00 !important;
+}
+.datepicker.calendar-lime-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-lime-A700 table thead tr th.next:hover,
+.datepicker.calendar-lime-A700 table thead tr th.prev:hover {
+  background: #88b700;
+}
+.datepicker.calendar-lime-A700 table tr td.day.active,
+.datepicker.calendar-lime-A700 table tr td .month.active,
+.datepicker.calendar-lime-A700 table tr td .year.active {
+  background-color: #aeea00 !important;
+}
+.datepicker.calendar-lime-A700 table tr td.day:hover,
+.datepicker.calendar-lime-A700 table tr td .month:hover,
+.datepicker.calendar-lime-A700 table tr td .year:hover {
+  background: #88b700;
+}
+.datepicker.calendar-orange-100 table thead tr {
+  background: #ffe0b2 !important;
+}
+.datepicker.calendar-orange-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-orange-100 table thead tr th.next:hover,
+.datepicker.calendar-orange-100 table thead tr th.prev:hover {
+  background: #ffcb7f;
+}
+.datepicker.calendar-orange-100 table tr td.day.active,
+.datepicker.calendar-orange-100 table tr td .month.active,
+.datepicker.calendar-orange-100 table tr td .year.active {
+  background-color: #ffe0b2 !important;
+}
+.datepicker.calendar-orange-100 table tr td.day:hover,
+.datepicker.calendar-orange-100 table tr td .month:hover,
+.datepicker.calendar-orange-100 table tr td .year:hover {
+  background: #ffcb7f;
+}
+.datepicker.calendar-orange-200 table thead tr {
+  background: #ffcc80 !important;
+}
+.datepicker.calendar-orange-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-orange-200 table thead tr th.next:hover,
+.datepicker.calendar-orange-200 table thead tr th.prev:hover {
+  background: #ffb84d;
+}
+.datepicker.calendar-orange-200 table tr td.day.active,
+.datepicker.calendar-orange-200 table tr td .month.active,
+.datepicker.calendar-orange-200 table tr td .year.active {
+  background-color: #ffcc80 !important;
+}
+.datepicker.calendar-orange-200 table tr td.day:hover,
+.datepicker.calendar-orange-200 table tr td .month:hover,
+.datepicker.calendar-orange-200 table tr td .year:hover {
+  background: #ffb84d;
+}
+.datepicker.calendar-orange-300 table thead tr {
+  background: #ffb74d !important;
+}
+.datepicker.calendar-orange-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-orange-300 table thead tr th.next:hover,
+.datepicker.calendar-orange-300 table thead tr th.prev:hover {
+  background: #ffa21a;
+}
+.datepicker.calendar-orange-300 table tr td.day.active,
+.datepicker.calendar-orange-300 table tr td .month.active,
+.datepicker.calendar-orange-300 table tr td .year.active {
+  background-color: #ffb74d !important;
+}
+.datepicker.calendar-orange-300 table tr td.day:hover,
+.datepicker.calendar-orange-300 table tr td .month:hover,
+.datepicker.calendar-orange-300 table tr td .year:hover {
+  background: #ffa21a;
+}
+.datepicker.calendar-orange-400 table thead tr {
+  background: #ffa726 !important;
+}
+.datepicker.calendar-orange-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-orange-400 table thead tr th.next:hover,
+.datepicker.calendar-orange-400 table thead tr th.prev:hover {
+  background: #f29000;
+}
+.datepicker.calendar-orange-400 table tr td.day.active,
+.datepicker.calendar-orange-400 table tr td .month.active,
+.datepicker.calendar-orange-400 table tr td .year.active {
+  background-color: #ffa726 !important;
+}
+.datepicker.calendar-orange-400 table tr td.day:hover,
+.datepicker.calendar-orange-400 table tr td .month:hover,
+.datepicker.calendar-orange-400 table tr td .year:hover {
+  background: #f29000;
+}
+.datepicker.calendar-orange-500 table thead tr {
+  background: #ff9800 !important;
+}
+.datepicker.calendar-orange-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-orange-500 table thead tr th.next:hover,
+.datepicker.calendar-orange-500 table thead tr th.prev:hover {
+  background: #cc7a00;
+}
+.datepicker.calendar-orange-500 table tr td.day.active,
+.datepicker.calendar-orange-500 table tr td .month.active,
+.datepicker.calendar-orange-500 table tr td .year.active {
+  background-color: #ff9800 !important;
+}
+.datepicker.calendar-orange-500 table tr td.day:hover,
+.datepicker.calendar-orange-500 table tr td .month:hover,
+.datepicker.calendar-orange-500 table tr td .year:hover {
+  background: #cc7a00;
+}
+.datepicker.calendar-orange-600 table thead tr {
+  background: #fb8c00 !important;
+}
+.datepicker.calendar-orange-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-orange-600 table thead tr th.next:hover,
+.datepicker.calendar-orange-600 table thead tr th.prev:hover {
+  background: #c87000;
+}
+.datepicker.calendar-orange-600 table tr td.day.active,
+.datepicker.calendar-orange-600 table tr td .month.active,
+.datepicker.calendar-orange-600 table tr td .year.active {
+  background-color: #fb8c00 !important;
+}
+.datepicker.calendar-orange-600 table tr td.day:hover,
+.datepicker.calendar-orange-600 table tr td .month:hover,
+.datepicker.calendar-orange-600 table tr td .year:hover {
+  background: #c87000;
+}
+.datepicker.calendar-orange-700 table thead tr {
+  background: #f57c00 !important;
+}
+.datepicker.calendar-orange-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-orange-700 table thead tr th.next:hover,
+.datepicker.calendar-orange-700 table thead tr th.prev:hover {
+  background: #c26200;
+}
+.datepicker.calendar-orange-700 table tr td.day.active,
+.datepicker.calendar-orange-700 table tr td .month.active,
+.datepicker.calendar-orange-700 table tr td .year.active {
+  background-color: #f57c00 !important;
+}
+.datepicker.calendar-orange-700 table tr td.day:hover,
+.datepicker.calendar-orange-700 table tr td .month:hover,
+.datepicker.calendar-orange-700 table tr td .year:hover {
+  background: #c26200;
+}
+.datepicker.calendar-orange-800 table thead tr {
+  background: #ef6c00 !important;
+}
+.datepicker.calendar-orange-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-orange-800 table thead tr th.next:hover,
+.datepicker.calendar-orange-800 table thead tr th.prev:hover {
+  background: #bc5500;
+}
+.datepicker.calendar-orange-800 table tr td.day.active,
+.datepicker.calendar-orange-800 table tr td .month.active,
+.datepicker.calendar-orange-800 table tr td .year.active {
+  background-color: #ef6c00 !important;
+}
+.datepicker.calendar-orange-800 table tr td.day:hover,
+.datepicker.calendar-orange-800 table tr td .month:hover,
+.datepicker.calendar-orange-800 table tr td .year:hover {
+  background: #bc5500;
+}
+.datepicker.calendar-orange-900 table thead tr {
+  background: #e65100 !important;
+}
+.datepicker.calendar-orange-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-orange-900 table thead tr th.next:hover,
+.datepicker.calendar-orange-900 table thead tr th.prev:hover {
+  background: #b33f00;
+}
+.datepicker.calendar-orange-900 table tr td.day.active,
+.datepicker.calendar-orange-900 table tr td .month.active,
+.datepicker.calendar-orange-900 table tr td .year.active {
+  background-color: #e65100 !important;
+}
+.datepicker.calendar-orange-900 table tr td.day:hover,
+.datepicker.calendar-orange-900 table tr td .month:hover,
+.datepicker.calendar-orange-900 table tr td .year:hover {
+  background: #b33f00;
+}
+.datepicker.calendar-orange-A100 table thead tr {
+  background: #ffd180 !important;
+}
+.datepicker.calendar-orange-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-orange-A100 table thead tr th.next:hover,
+.datepicker.calendar-orange-A100 table thead tr th.prev:hover {
+  background: #ffbf4d;
+}
+.datepicker.calendar-orange-A100 table tr td.day.active,
+.datepicker.calendar-orange-A100 table tr td .month.active,
+.datepicker.calendar-orange-A100 table tr td .year.active {
+  background-color: #ffd180 !important;
+}
+.datepicker.calendar-orange-A100 table tr td.day:hover,
+.datepicker.calendar-orange-A100 table tr td .month:hover,
+.datepicker.calendar-orange-A100 table tr td .year:hover {
+  background: #ffbf4d;
+}
+.datepicker.calendar-orange-A200 table thead tr {
+  background: #ffab40 !important;
+}
+.datepicker.calendar-orange-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-orange-A200 table thead tr th.next:hover,
+.datepicker.calendar-orange-A200 table thead tr th.prev:hover {
+  background: #ff950d;
+}
+.datepicker.calendar-orange-A200 table tr td.day.active,
+.datepicker.calendar-orange-A200 table tr td .month.active,
+.datepicker.calendar-orange-A200 table tr td .year.active {
+  background-color: #ffab40 !important;
+}
+.datepicker.calendar-orange-A200 table tr td.day:hover,
+.datepicker.calendar-orange-A200 table tr td .month:hover,
+.datepicker.calendar-orange-A200 table tr td .year:hover {
+  background: #ff950d;
+}
+.datepicker.calendar-orange-A400 table thead tr {
+  background: #ff9100 !important;
+}
+.datepicker.calendar-orange-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-orange-A400 table thead tr th.next:hover,
+.datepicker.calendar-orange-A400 table thead tr th.prev:hover {
+  background: #cc7400;
+}
+.datepicker.calendar-orange-A400 table tr td.day.active,
+.datepicker.calendar-orange-A400 table tr td .month.active,
+.datepicker.calendar-orange-A400 table tr td .year.active {
+  background-color: #ff9100 !important;
+}
+.datepicker.calendar-orange-A400 table tr td.day:hover,
+.datepicker.calendar-orange-A400 table tr td .month:hover,
+.datepicker.calendar-orange-A400 table tr td .year:hover {
+  background: #cc7400;
+}
+.datepicker.calendar-orange-A700 table thead tr {
+  background: #ff6d00 !important;
+}
+.datepicker.calendar-orange-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-orange-A700 table thead tr th.next:hover,
+.datepicker.calendar-orange-A700 table thead tr th.prev:hover {
+  background: #cc5700;
+}
+.datepicker.calendar-orange-A700 table tr td.day.active,
+.datepicker.calendar-orange-A700 table tr td .month.active,
+.datepicker.calendar-orange-A700 table tr td .year.active {
+  background-color: #ff6d00 !important;
+}
+.datepicker.calendar-orange-A700 table tr td.day:hover,
+.datepicker.calendar-orange-A700 table tr td .month:hover,
+.datepicker.calendar-orange-A700 table tr td .year:hover {
+  background: #cc5700;
+}
+.datepicker.calendar-pink-100 table thead tr {
+  background: #f8bbd0 !important;
+}
+.datepicker.calendar-pink-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-pink-100 table thead tr th.next:hover,
+.datepicker.calendar-pink-100 table thead tr th.prev:hover {
+  background: #f38db0;
+}
+.datepicker.calendar-pink-100 table tr td.day.active,
+.datepicker.calendar-pink-100 table tr td .month.active,
+.datepicker.calendar-pink-100 table tr td .year.active {
+  background-color: #f8bbd0 !important;
+}
+.datepicker.calendar-pink-100 table tr td.day:hover,
+.datepicker.calendar-pink-100 table tr td .month:hover,
+.datepicker.calendar-pink-100 table tr td .year:hover {
+  background: #f38db0;
+}
+.datepicker.calendar-pink-200 table thead tr {
+  background: #f48fb1 !important;
+}
+.datepicker.calendar-pink-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-pink-200 table thead tr th.next:hover,
+.datepicker.calendar-pink-200 table thead tr th.prev:hover {
+  background: #ef6191;
+}
+.datepicker.calendar-pink-200 table tr td.day.active,
+.datepicker.calendar-pink-200 table tr td .month.active,
+.datepicker.calendar-pink-200 table tr td .year.active {
+  background-color: #f48fb1 !important;
+}
+.datepicker.calendar-pink-200 table tr td.day:hover,
+.datepicker.calendar-pink-200 table tr td .month:hover,
+.datepicker.calendar-pink-200 table tr td .year:hover {
+  background: #ef6191;
+}
+.datepicker.calendar-pink-300 table thead tr {
+  background: #f06292 !important;
+}
+.datepicker.calendar-pink-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-pink-300 table thead tr th.next:hover,
+.datepicker.calendar-pink-300 table thead tr th.prev:hover {
+  background: #ec3372;
+}
+.datepicker.calendar-pink-300 table tr td.day.active,
+.datepicker.calendar-pink-300 table tr td .month.active,
+.datepicker.calendar-pink-300 table tr td .year.active {
+  background-color: #f06292 !important;
+}
+.datepicker.calendar-pink-300 table tr td.day:hover,
+.datepicker.calendar-pink-300 table tr td .month:hover,
+.datepicker.calendar-pink-300 table tr td .year:hover {
+  background: #ec3372;
+}
+.datepicker.calendar-pink-400 table thead tr {
+  background: #ec407a !important;
+}
+.datepicker.calendar-pink-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-pink-400 table thead tr th.next:hover,
+.datepicker.calendar-pink-400 table thead tr th.prev:hover {
+  background: #e2175b;
+}
+.datepicker.calendar-pink-400 table tr td.day.active,
+.datepicker.calendar-pink-400 table tr td .month.active,
+.datepicker.calendar-pink-400 table tr td .year.active {
+  background-color: #ec407a !important;
+}
+.datepicker.calendar-pink-400 table tr td.day:hover,
+.datepicker.calendar-pink-400 table tr td .month:hover,
+.datepicker.calendar-pink-400 table tr td .year:hover {
+  background: #e2175b;
+}
+.datepicker.calendar-pink-500 table thead tr {
+  background: #e91e63 !important;
+}
+.datepicker.calendar-pink-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-pink-500 table thead tr th.next:hover,
+.datepicker.calendar-pink-500 table thead tr th.prev:hover {
+  background: #c1134e;
+}
+.datepicker.calendar-pink-500 table tr td.day.active,
+.datepicker.calendar-pink-500 table tr td .month.active,
+.datepicker.calendar-pink-500 table tr td .year.active {
+  background-color: #e91e63 !important;
+}
+.datepicker.calendar-pink-500 table tr td.day:hover,
+.datepicker.calendar-pink-500 table tr td .month:hover,
+.datepicker.calendar-pink-500 table tr td .year:hover {
+  background: #c1134e;
+}
+.datepicker.calendar-pink-600 table thead tr {
+  background: #d81b60 !important;
+}
+.datepicker.calendar-pink-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-pink-600 table thead tr th.next:hover,
+.datepicker.calendar-pink-600 table thead tr th.prev:hover {
+  background: #ab154c;
+}
+.datepicker.calendar-pink-600 table tr td.day.active,
+.datepicker.calendar-pink-600 table tr td .month.active,
+.datepicker.calendar-pink-600 table tr td .year.active {
+  background-color: #d81b60 !important;
+}
+.datepicker.calendar-pink-600 table tr td.day:hover,
+.datepicker.calendar-pink-600 table tr td .month:hover,
+.datepicker.calendar-pink-600 table tr td .year:hover {
+  background: #ab154c;
+}
+.datepicker.calendar-pink-700 table thead tr {
+  background: #c2185b !important;
+}
+.datepicker.calendar-pink-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-pink-700 table thead tr th.next:hover,
+.datepicker.calendar-pink-700 table thead tr th.prev:hover {
+  background: #951246;
+}
+.datepicker.calendar-pink-700 table tr td.day.active,
+.datepicker.calendar-pink-700 table tr td .month.active,
+.datepicker.calendar-pink-700 table tr td .year.active {
+  background-color: #c2185b !important;
+}
+.datepicker.calendar-pink-700 table tr td.day:hover,
+.datepicker.calendar-pink-700 table tr td .month:hover,
+.datepicker.calendar-pink-700 table tr td .year:hover {
+  background: #951246;
+}
+.datepicker.calendar-pink-800 table thead tr {
+  background: #ad1457 !important;
+}
+.datepicker.calendar-pink-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-pink-800 table thead tr th.next:hover,
+.datepicker.calendar-pink-800 table thead tr th.prev:hover {
+  background: #7f0f40;
+}
+.datepicker.calendar-pink-800 table tr td.day.active,
+.datepicker.calendar-pink-800 table tr td .month.active,
+.datepicker.calendar-pink-800 table tr td .year.active {
+  background-color: #ad1457 !important;
+}
+.datepicker.calendar-pink-800 table tr td.day:hover,
+.datepicker.calendar-pink-800 table tr td .month:hover,
+.datepicker.calendar-pink-800 table tr td .year:hover {
+  background: #7f0f40;
+}
+.datepicker.calendar-pink-900 table thead tr {
+  background: #880e4f !important;
+}
+.datepicker.calendar-pink-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-pink-900 table thead tr th.next:hover,
+.datepicker.calendar-pink-900 table thead tr th.prev:hover {
+  background: #5a0934;
+}
+.datepicker.calendar-pink-900 table tr td.day.active,
+.datepicker.calendar-pink-900 table tr td .month.active,
+.datepicker.calendar-pink-900 table tr td .year.active {
+  background-color: #880e4f !important;
+}
+.datepicker.calendar-pink-900 table tr td.day:hover,
+.datepicker.calendar-pink-900 table tr td .month:hover,
+.datepicker.calendar-pink-900 table tr td .year:hover {
+  background: #5a0934;
+}
+.datepicker.calendar-pink-A100 table thead tr {
+  background: #ff80ab !important;
+}
+.datepicker.calendar-pink-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-pink-A100 table thead tr th.next:hover,
+.datepicker.calendar-pink-A100 table thead tr th.prev:hover {
+  background: #ff4d89;
+}
+.datepicker.calendar-pink-A100 table tr td.day.active,
+.datepicker.calendar-pink-A100 table tr td .month.active,
+.datepicker.calendar-pink-A100 table tr td .year.active {
+  background-color: #ff80ab !important;
+}
+.datepicker.calendar-pink-A100 table tr td.day:hover,
+.datepicker.calendar-pink-A100 table tr td .month:hover,
+.datepicker.calendar-pink-A100 table tr td .year:hover {
+  background: #ff4d89;
+}
+.datepicker.calendar-pink-A200 table thead tr {
+  background: #ff4081 !important;
+}
+.datepicker.calendar-pink-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-pink-A200 table thead tr th.next:hover,
+.datepicker.calendar-pink-A200 table thead tr th.prev:hover {
+  background: #ff0d5f;
+}
+.datepicker.calendar-pink-A200 table tr td.day.active,
+.datepicker.calendar-pink-A200 table tr td .month.active,
+.datepicker.calendar-pink-A200 table tr td .year.active {
+  background-color: #ff4081 !important;
+}
+.datepicker.calendar-pink-A200 table tr td.day:hover,
+.datepicker.calendar-pink-A200 table tr td .month:hover,
+.datepicker.calendar-pink-A200 table tr td .year:hover {
+  background: #ff0d5f;
+}
+.datepicker.calendar-pink-A400 table thead tr {
+  background: #f50057 !important;
+}
+.datepicker.calendar-pink-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-pink-A400 table thead tr th.next:hover,
+.datepicker.calendar-pink-A400 table thead tr th.prev:hover {
+  background: #c20045;
+}
+.datepicker.calendar-pink-A400 table tr td.day.active,
+.datepicker.calendar-pink-A400 table tr td .month.active,
+.datepicker.calendar-pink-A400 table tr td .year.active {
+  background-color: #f50057 !important;
+}
+.datepicker.calendar-pink-A400 table tr td.day:hover,
+.datepicker.calendar-pink-A400 table tr td .month:hover,
+.datepicker.calendar-pink-A400 table tr td .year:hover {
+  background: #c20045;
+}
+.datepicker.calendar-pink-A700 table thead tr {
+  background: #c51162 !important;
+}
+.datepicker.calendar-pink-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-pink-A700 table thead tr th.next:hover,
+.datepicker.calendar-pink-A700 table thead tr th.prev:hover {
+  background: #960d4b;
+}
+.datepicker.calendar-pink-A700 table tr td.day.active,
+.datepicker.calendar-pink-A700 table tr td .month.active,
+.datepicker.calendar-pink-A700 table tr td .year.active {
+  background-color: #c51162 !important;
+}
+.datepicker.calendar-pink-A700 table tr td.day:hover,
+.datepicker.calendar-pink-A700 table tr td .month:hover,
+.datepicker.calendar-pink-A700 table tr td .year:hover {
+  background: #960d4b;
+}
+.datepicker.calendar-purple-100 table thead tr {
+  background: #e1bee7 !important;
+}
+.datepicker.calendar-purple-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-purple-100 table thead tr th.next:hover,
+.datepicker.calendar-purple-100 table thead tr th.prev:hover {
+  background: #d099d9;
+}
+.datepicker.calendar-purple-100 table tr td.day.active,
+.datepicker.calendar-purple-100 table tr td .month.active,
+.datepicker.calendar-purple-100 table tr td .year.active {
+  background-color: #e1bee7 !important;
+}
+.datepicker.calendar-purple-100 table tr td.day:hover,
+.datepicker.calendar-purple-100 table tr td .month:hover,
+.datepicker.calendar-purple-100 table tr td .year:hover {
+  background: #d099d9;
+}
+.datepicker.calendar-purple-200 table thead tr {
+  background: #ce93d8 !important;
+}
+.datepicker.calendar-purple-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-purple-200 table thead tr th.next:hover,
+.datepicker.calendar-purple-200 table thead tr th.prev:hover {
+  background: #bd6eca;
+}
+.datepicker.calendar-purple-200 table tr td.day.active,
+.datepicker.calendar-purple-200 table tr td .month.active,
+.datepicker.calendar-purple-200 table tr td .year.active {
+  background-color: #ce93d8 !important;
+}
+.datepicker.calendar-purple-200 table tr td.day:hover,
+.datepicker.calendar-purple-200 table tr td .month:hover,
+.datepicker.calendar-purple-200 table tr td .year:hover {
+  background: #bd6eca;
+}
+.datepicker.calendar-purple-300 table thead tr {
+  background: #ba68c8 !important;
+}
+.datepicker.calendar-purple-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-purple-300 table thead tr th.next:hover,
+.datepicker.calendar-purple-300 table thead tr th.prev:hover {
+  background: #a844b9;
+}
+.datepicker.calendar-purple-300 table tr td.day.active,
+.datepicker.calendar-purple-300 table tr td .month.active,
+.datepicker.calendar-purple-300 table tr td .year.active {
+  background-color: #ba68c8 !important;
+}
+.datepicker.calendar-purple-300 table tr td.day:hover,
+.datepicker.calendar-purple-300 table tr td .month:hover,
+.datepicker.calendar-purple-300 table tr td .year:hover {
+  background: #a844b9;
+}
+.datepicker.calendar-purple-400 table thead tr {
+  background: #ab47bc !important;
+}
+.datepicker.calendar-purple-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-purple-400 table thead tr th.next:hover,
+.datepicker.calendar-purple-400 table thead tr th.prev:hover {
+  background: #8a3898;
+}
+.datepicker.calendar-purple-400 table tr td.day.active,
+.datepicker.calendar-purple-400 table tr td .month.active,
+.datepicker.calendar-purple-400 table tr td .year.active {
+  background-color: #ab47bc !important;
+}
+.datepicker.calendar-purple-400 table tr td.day:hover,
+.datepicker.calendar-purple-400 table tr td .month:hover,
+.datepicker.calendar-purple-400 table tr td .year:hover {
+  background: #8a3898;
+}
+.datepicker.calendar-purple-500 table thead tr {
+  background: #9c27b0 !important;
+}
+.datepicker.calendar-purple-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-purple-500 table thead tr th.next:hover,
+.datepicker.calendar-purple-500 table thead tr th.prev:hover {
+  background: #771e86;
+}
+.datepicker.calendar-purple-500 table tr td.day.active,
+.datepicker.calendar-purple-500 table tr td .month.active,
+.datepicker.calendar-purple-500 table tr td .year.active {
+  background-color: #9c27b0 !important;
+}
+.datepicker.calendar-purple-500 table tr td.day:hover,
+.datepicker.calendar-purple-500 table tr td .month:hover,
+.datepicker.calendar-purple-500 table tr td .year:hover {
+  background: #771e86;
+}
+.datepicker.calendar-purple-600 table thead tr {
+  background: #8e24aa !important;
+}
+.datepicker.calendar-purple-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-purple-600 table thead tr th.next:hover,
+.datepicker.calendar-purple-600 table thead tr th.prev:hover {
+  background: #6b1b80;
+}
+.datepicker.calendar-purple-600 table tr td.day.active,
+.datepicker.calendar-purple-600 table tr td .month.active,
+.datepicker.calendar-purple-600 table tr td .year.active {
+  background-color: #8e24aa !important;
+}
+.datepicker.calendar-purple-600 table tr td.day:hover,
+.datepicker.calendar-purple-600 table tr td .month:hover,
+.datepicker.calendar-purple-600 table tr td .year:hover {
+  background: #6b1b80;
+}
+.datepicker.calendar-purple-700 table thead tr {
+  background: #7b1fa2 !important;
+}
+.datepicker.calendar-purple-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-purple-700 table thead tr th.next:hover,
+.datepicker.calendar-purple-700 table thead tr th.prev:hover {
+  background: #5a1777;
+}
+.datepicker.calendar-purple-700 table tr td.day.active,
+.datepicker.calendar-purple-700 table tr td .month.active,
+.datepicker.calendar-purple-700 table tr td .year.active {
+  background-color: #7b1fa2 !important;
+}
+.datepicker.calendar-purple-700 table tr td.day:hover,
+.datepicker.calendar-purple-700 table tr td .month:hover,
+.datepicker.calendar-purple-700 table tr td .year:hover {
+  background: #5a1777;
+}
+.datepicker.calendar-purple-800 table thead tr {
+  background: #6a1b9a !important;
+}
+.datepicker.calendar-purple-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-purple-800 table thead tr th.next:hover,
+.datepicker.calendar-purple-800 table thead tr th.prev:hover {
+  background: #4c136f;
+}
+.datepicker.calendar-purple-800 table tr td.day.active,
+.datepicker.calendar-purple-800 table tr td .month.active,
+.datepicker.calendar-purple-800 table tr td .year.active {
+  background-color: #6a1b9a !important;
+}
+.datepicker.calendar-purple-800 table tr td.day:hover,
+.datepicker.calendar-purple-800 table tr td .month:hover,
+.datepicker.calendar-purple-800 table tr td .year:hover {
+  background: #4c136f;
+}
+.datepicker.calendar-purple-900 table thead tr {
+  background: #4a148c !important;
+}
+.datepicker.calendar-purple-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-purple-900 table thead tr th.next:hover,
+.datepicker.calendar-purple-900 table thead tr th.prev:hover {
+  background: #320e5f;
+}
+.datepicker.calendar-purple-900 table tr td.day.active,
+.datepicker.calendar-purple-900 table tr td .month.active,
+.datepicker.calendar-purple-900 table tr td .year.active {
+  background-color: #4a148c !important;
+}
+.datepicker.calendar-purple-900 table tr td.day:hover,
+.datepicker.calendar-purple-900 table tr td .month:hover,
+.datepicker.calendar-purple-900 table tr td .year:hover {
+  background: #320e5f;
+}
+.datepicker.calendar-purple-A100 table thead tr {
+  background: #ea80fc !important;
+}
+.datepicker.calendar-purple-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-purple-A100 table thead tr th.next:hover,
+.datepicker.calendar-purple-A100 table thead tr th.prev:hover {
+  background: #e24efb;
+}
+.datepicker.calendar-purple-A100 table tr td.day.active,
+.datepicker.calendar-purple-A100 table tr td .month.active,
+.datepicker.calendar-purple-A100 table tr td .year.active {
+  background-color: #ea80fc !important;
+}
+.datepicker.calendar-purple-A100 table tr td.day:hover,
+.datepicker.calendar-purple-A100 table tr td .month:hover,
+.datepicker.calendar-purple-A100 table tr td .year:hover {
+  background: #e24efb;
+}
+.datepicker.calendar-purple-A200 table thead tr {
+  background: #e040fb !important;
+}
+.datepicker.calendar-purple-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-purple-A200 table thead tr th.next:hover,
+.datepicker.calendar-purple-A200 table thead tr th.prev:hover {
+  background: #d80efa;
+}
+.datepicker.calendar-purple-A200 table tr td.day.active,
+.datepicker.calendar-purple-A200 table tr td .month.active,
+.datepicker.calendar-purple-A200 table tr td .year.active {
+  background-color: #e040fb !important;
+}
+.datepicker.calendar-purple-A200 table tr td.day:hover,
+.datepicker.calendar-purple-A200 table tr td .month:hover,
+.datepicker.calendar-purple-A200 table tr td .year:hover {
+  background: #d80efa;
+}
+.datepicker.calendar-purple-A400 table thead tr {
+  background: #d500f9 !important;
+}
+.datepicker.calendar-purple-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-purple-A400 table thead tr th.next:hover,
+.datepicker.calendar-purple-A400 table thead tr th.prev:hover {
+  background: #a900c6;
+}
+.datepicker.calendar-purple-A400 table tr td.day.active,
+.datepicker.calendar-purple-A400 table tr td .month.active,
+.datepicker.calendar-purple-A400 table tr td .year.active {
+  background-color: #d500f9 !important;
+}
+.datepicker.calendar-purple-A400 table tr td.day:hover,
+.datepicker.calendar-purple-A400 table tr td .month:hover,
+.datepicker.calendar-purple-A400 table tr td .year:hover {
+  background: #a900c6;
+}
+.datepicker.calendar-purple-A700 table thead tr {
+  background: #aa00ff !important;
+}
+.datepicker.calendar-purple-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-purple-A700 table thead tr th.next:hover,
+.datepicker.calendar-purple-A700 table thead tr th.prev:hover {
+  background: #8800cc;
+}
+.datepicker.calendar-purple-A700 table tr td.day.active,
+.datepicker.calendar-purple-A700 table tr td .month.active,
+.datepicker.calendar-purple-A700 table tr td .year.active {
+  background-color: #aa00ff !important;
+}
+.datepicker.calendar-purple-A700 table tr td.day:hover,
+.datepicker.calendar-purple-A700 table tr td .month:hover,
+.datepicker.calendar-purple-A700 table tr td .year:hover {
+  background: #8800cc;
+}
+.datepicker.calendar-red-100 table thead tr {
+  background: #ffcdd2 !important;
+}
+.datepicker.calendar-red-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-red-100 table thead tr th.next:hover,
+.datepicker.calendar-red-100 table thead tr th.prev:hover {
+  background: #ff9aa4;
+}
+.datepicker.calendar-red-100 table tr td.day.active,
+.datepicker.calendar-red-100 table tr td .month.active,
+.datepicker.calendar-red-100 table tr td .year.active {
+  background-color: #ffcdd2 !important;
+}
+.datepicker.calendar-red-100 table tr td.day:hover,
+.datepicker.calendar-red-100 table tr td .month:hover,
+.datepicker.calendar-red-100 table tr td .year:hover {
+  background: #ff9aa4;
+}
+.datepicker.calendar-red-200 table thead tr {
+  background: #ef9a9a !important;
+}
+.datepicker.calendar-red-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-red-200 table thead tr th.next:hover,
+.datepicker.calendar-red-200 table thead tr th.prev:hover {
+  background: #e86e6e;
+}
+.datepicker.calendar-red-200 table tr td.day.active,
+.datepicker.calendar-red-200 table tr td .month.active,
+.datepicker.calendar-red-200 table tr td .year.active {
+  background-color: #ef9a9a !important;
+}
+.datepicker.calendar-red-200 table tr td.day:hover,
+.datepicker.calendar-red-200 table tr td .month:hover,
+.datepicker.calendar-red-200 table tr td .year:hover {
+  background: #e86e6e;
+}
+.datepicker.calendar-red-300 table thead tr {
+  background: #e57373 !important;
+}
+.datepicker.calendar-red-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-red-300 table thead tr th.next:hover,
+.datepicker.calendar-red-300 table thead tr th.prev:hover {
+  background: #dd4848;
+}
+.datepicker.calendar-red-300 table tr td.day.active,
+.datepicker.calendar-red-300 table tr td .month.active,
+.datepicker.calendar-red-300 table tr td .year.active {
+  background-color: #e57373 !important;
+}
+.datepicker.calendar-red-300 table tr td.day:hover,
+.datepicker.calendar-red-300 table tr td .month:hover,
+.datepicker.calendar-red-300 table tr td .year:hover {
+  background: #dd4848;
+}
+.datepicker.calendar-red-400 table thead tr {
+  background: #ef5350 !important;
+}
+.datepicker.calendar-red-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-red-400 table thead tr th.next:hover,
+.datepicker.calendar-red-400 table thead tr th.prev:hover {
+  background: #eb2521;
+}
+.datepicker.calendar-red-400 table tr td.day.active,
+.datepicker.calendar-red-400 table tr td .month.active,
+.datepicker.calendar-red-400 table tr td .year.active {
+  background-color: #ef5350 !important;
+}
+.datepicker.calendar-red-400 table tr td.day:hover,
+.datepicker.calendar-red-400 table tr td .month:hover,
+.datepicker.calendar-red-400 table tr td .year:hover {
+  background: #eb2521;
+}
+.datepicker.calendar-red-500 table thead tr {
+  background: #f44336 !important;
+}
+.datepicker.calendar-red-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-red-500 table thead tr th.next:hover,
+.datepicker.calendar-red-500 table thead tr th.prev:hover {
+  background: #ea1c0d;
+}
+.datepicker.calendar-red-500 table tr td.day.active,
+.datepicker.calendar-red-500 table tr td .month.active,
+.datepicker.calendar-red-500 table tr td .year.active {
+  background-color: #f44336 !important;
+}
+.datepicker.calendar-red-500 table tr td.day:hover,
+.datepicker.calendar-red-500 table tr td .month:hover,
+.datepicker.calendar-red-500 table tr td .year:hover {
+  background: #ea1c0d;
+}
+.datepicker.calendar-red-600 table thead tr {
+  background: #e53935 !important;
+}
+.datepicker.calendar-red-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-red-600 table thead tr th.next:hover,
+.datepicker.calendar-red-600 table thead tr th.prev:hover {
+  background: #cd1e1a;
+}
+.datepicker.calendar-red-600 table tr td.day.active,
+.datepicker.calendar-red-600 table tr td .month.active,
+.datepicker.calendar-red-600 table tr td .year.active {
+  background-color: #e53935 !important;
+}
+.datepicker.calendar-red-600 table tr td.day:hover,
+.datepicker.calendar-red-600 table tr td .month:hover,
+.datepicker.calendar-red-600 table tr td .year:hover {
+  background: #cd1e1a;
+}
+.datepicker.calendar-red-700 table thead tr {
+  background: #d32f2f !important;
+}
+.datepicker.calendar-red-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-red-700 table thead tr th.next:hover,
+.datepicker.calendar-red-700 table thead tr th.prev:hover {
+  background: #ab2424;
+}
+.datepicker.calendar-red-700 table tr td.day.active,
+.datepicker.calendar-red-700 table tr td .month.active,
+.datepicker.calendar-red-700 table tr td .year.active {
+  background-color: #d32f2f !important;
+}
+.datepicker.calendar-red-700 table tr td.day:hover,
+.datepicker.calendar-red-700 table tr td .month:hover,
+.datepicker.calendar-red-700 table tr td .year:hover {
+  background: #ab2424;
+}
+.datepicker.calendar-red-800 table thead tr {
+  background: #c62828 !important;
+}
+.datepicker.calendar-red-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-red-800 table thead tr th.next:hover,
+.datepicker.calendar-red-800 table thead tr th.prev:hover {
+  background: #9c1f1f;
+}
+.datepicker.calendar-red-800 table tr td.day.active,
+.datepicker.calendar-red-800 table tr td .month.active,
+.datepicker.calendar-red-800 table tr td .year.active {
+  background-color: #c62828 !important;
+}
+.datepicker.calendar-red-800 table tr td.day:hover,
+.datepicker.calendar-red-800 table tr td .month:hover,
+.datepicker.calendar-red-800 table tr td .year:hover {
+  background: #9c1f1f;
+}
+.datepicker.calendar-red-900 table thead tr {
+  background: #b71c1c !important;
+}
+.datepicker.calendar-red-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-red-900 table thead tr th.next:hover,
+.datepicker.calendar-red-900 table thead tr th.prev:hover {
+  background: #8b1515;
+}
+.datepicker.calendar-red-900 table tr td.day.active,
+.datepicker.calendar-red-900 table tr td .month.active,
+.datepicker.calendar-red-900 table tr td .year.active {
+  background-color: #b71c1c !important;
+}
+.datepicker.calendar-red-900 table tr td.day:hover,
+.datepicker.calendar-red-900 table tr td .month:hover,
+.datepicker.calendar-red-900 table tr td .year:hover {
+  background: #8b1515;
+}
+.datepicker.calendar-red-A100 table thead tr {
+  background: #ff8a80 !important;
+}
+.datepicker.calendar-red-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-red-A100 table thead tr th.next:hover,
+.datepicker.calendar-red-A100 table thead tr th.prev:hover {
+  background: #ff5b4d;
+}
+.datepicker.calendar-red-A100 table tr td.day.active,
+.datepicker.calendar-red-A100 table tr td .month.active,
+.datepicker.calendar-red-A100 table tr td .year.active {
+  background-color: #ff8a80 !important;
+}
+.datepicker.calendar-red-A100 table tr td.day:hover,
+.datepicker.calendar-red-A100 table tr td .month:hover,
+.datepicker.calendar-red-A100 table tr td .year:hover {
+  background: #ff5b4d;
+}
+.datepicker.calendar-red-A200 table thead tr {
+  background: #ff5252 !important;
+}
+.datepicker.calendar-red-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-red-A200 table thead tr th.next:hover,
+.datepicker.calendar-red-A200 table thead tr th.prev:hover {
+  background: #ff1f1f;
+}
+.datepicker.calendar-red-A200 table tr td.day.active,
+.datepicker.calendar-red-A200 table tr td .month.active,
+.datepicker.calendar-red-A200 table tr td .year.active {
+  background-color: #ff5252 !important;
+}
+.datepicker.calendar-red-A200 table tr td.day:hover,
+.datepicker.calendar-red-A200 table tr td .month:hover,
+.datepicker.calendar-red-A200 table tr td .year:hover {
+  background: #ff1f1f;
+}
+.datepicker.calendar-red-A400 table thead tr {
+  background: #ff1744 !important;
+}
+.datepicker.calendar-red-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-red-A400 table thead tr th.next:hover,
+.datepicker.calendar-red-A400 table thead tr th.prev:hover {
+  background: #e3002c;
+}
+.datepicker.calendar-red-A400 table tr td.day.active,
+.datepicker.calendar-red-A400 table tr td .month.active,
+.datepicker.calendar-red-A400 table tr td .year.active {
+  background-color: #ff1744 !important;
+}
+.datepicker.calendar-red-A400 table tr td.day:hover,
+.datepicker.calendar-red-A400 table tr td .month:hover,
+.datepicker.calendar-red-A400 table tr td .year:hover {
+  background: #e3002c;
+}
+.datepicker.calendar-red-A700 table thead tr {
+  background: #d50000 !important;
+}
+.datepicker.calendar-red-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-red-A700 table thead tr th.next:hover,
+.datepicker.calendar-red-A700 table thead tr th.prev:hover {
+  background: #a20000;
+}
+.datepicker.calendar-red-A700 table tr td.day.active,
+.datepicker.calendar-red-A700 table tr td .month.active,
+.datepicker.calendar-red-A700 table tr td .year.active {
+  background-color: #d50000 !important;
+}
+.datepicker.calendar-red-A700 table tr td.day:hover,
+.datepicker.calendar-red-A700 table tr td .month:hover,
+.datepicker.calendar-red-A700 table tr td .year:hover {
+  background: #a20000;
+}
+.datepicker.calendar-teal-100 table thead tr {
+  background: #b2dfdb !important;
+}
+.datepicker.calendar-teal-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-teal-100 table thead tr th.next:hover,
+.datepicker.calendar-teal-100 table thead tr th.prev:hover {
+  background: #8ed0ca;
+}
+.datepicker.calendar-teal-100 table tr td.day.active,
+.datepicker.calendar-teal-100 table tr td .month.active,
+.datepicker.calendar-teal-100 table tr td .year.active {
+  background-color: #b2dfdb !important;
+}
+.datepicker.calendar-teal-100 table tr td.day:hover,
+.datepicker.calendar-teal-100 table tr td .month:hover,
+.datepicker.calendar-teal-100 table tr td .year:hover {
+  background: #8ed0ca;
+}
+.datepicker.calendar-teal-200 table thead tr {
+  background: #80cbc4 !important;
+}
+.datepicker.calendar-teal-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-teal-200 table thead tr th.next:hover,
+.datepicker.calendar-teal-200 table thead tr th.prev:hover {
+  background: #5cbcb3;
+}
+.datepicker.calendar-teal-200 table tr td.day.active,
+.datepicker.calendar-teal-200 table tr td .month.active,
+.datepicker.calendar-teal-200 table tr td .year.active {
+  background-color: #80cbc4 !important;
+}
+.datepicker.calendar-teal-200 table tr td.day:hover,
+.datepicker.calendar-teal-200 table tr td .month:hover,
+.datepicker.calendar-teal-200 table tr td .year:hover {
+  background: #5cbcb3;
+}
+.datepicker.calendar-teal-300 table thead tr {
+  background: #4db6ac !important;
+}
+.datepicker.calendar-teal-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-teal-300 table thead tr th.next:hover,
+.datepicker.calendar-teal-300 table thead tr th.prev:hover {
+  background: #3c948b;
+}
+.datepicker.calendar-teal-300 table tr td.day.active,
+.datepicker.calendar-teal-300 table tr td .month.active,
+.datepicker.calendar-teal-300 table tr td .year.active {
+  background-color: #4db6ac !important;
+}
+.datepicker.calendar-teal-300 table tr td.day:hover,
+.datepicker.calendar-teal-300 table tr td .month:hover,
+.datepicker.calendar-teal-300 table tr td .year:hover {
+  background: #3c948b;
+}
+.datepicker.calendar-teal-400 table thead tr {
+  background: #26a69a !important;
+}
+.datepicker.calendar-teal-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-teal-400 table thead tr th.next:hover,
+.datepicker.calendar-teal-400 table thead tr th.prev:hover {
+  background: #1c7d74;
+}
+.datepicker.calendar-teal-400 table tr td.day.active,
+.datepicker.calendar-teal-400 table tr td .month.active,
+.datepicker.calendar-teal-400 table tr td .year.active {
+  background-color: #26a69a !important;
+}
+.datepicker.calendar-teal-400 table tr td.day:hover,
+.datepicker.calendar-teal-400 table tr td .month:hover,
+.datepicker.calendar-teal-400 table tr td .year:hover {
+  background: #1c7d74;
+}
+.datepicker.calendar-teal-500 table thead tr {
+  background: #009688 !important;
+}
+.datepicker.calendar-teal-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-teal-500 table thead tr th.next:hover,
+.datepicker.calendar-teal-500 table thead tr th.prev:hover {
+  background: #00635a;
+}
+.datepicker.calendar-teal-500 table tr td.day.active,
+.datepicker.calendar-teal-500 table tr td .month.active,
+.datepicker.calendar-teal-500 table tr td .year.active {
+  background-color: #009688 !important;
+}
+.datepicker.calendar-teal-500 table tr td.day:hover,
+.datepicker.calendar-teal-500 table tr td .month:hover,
+.datepicker.calendar-teal-500 table tr td .year:hover {
+  background: #00635a;
+}
+.datepicker.calendar-teal-600 table thead tr {
+  background: #00897b !important;
+}
+.datepicker.calendar-teal-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-teal-600 table thead tr th.next:hover,
+.datepicker.calendar-teal-600 table thead tr th.prev:hover {
+  background: #00564d;
+}
+.datepicker.calendar-teal-600 table tr td.day.active,
+.datepicker.calendar-teal-600 table tr td .month.active,
+.datepicker.calendar-teal-600 table tr td .year.active {
+  background-color: #00897b !important;
+}
+.datepicker.calendar-teal-600 table tr td.day:hover,
+.datepicker.calendar-teal-600 table tr td .month:hover,
+.datepicker.calendar-teal-600 table tr td .year:hover {
+  background: #00564d;
+}
+.datepicker.calendar-teal-700 table thead tr {
+  background: #00796b !important;
+}
+.datepicker.calendar-teal-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-teal-700 table thead tr th.next:hover,
+.datepicker.calendar-teal-700 table thead tr th.prev:hover {
+  background: #00463e;
+}
+.datepicker.calendar-teal-700 table tr td.day.active,
+.datepicker.calendar-teal-700 table tr td .month.active,
+.datepicker.calendar-teal-700 table tr td .year.active {
+  background-color: #00796b !important;
+}
+.datepicker.calendar-teal-700 table tr td.day:hover,
+.datepicker.calendar-teal-700 table tr td .month:hover,
+.datepicker.calendar-teal-700 table tr td .year:hover {
+  background: #00463e;
+}
+.datepicker.calendar-teal-800 table thead tr {
+  background: #00695c !important;
+}
+.datepicker.calendar-teal-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-teal-800 table thead tr th.next:hover,
+.datepicker.calendar-teal-800 table thead tr th.prev:hover {
+  background: #00362f;
+}
+.datepicker.calendar-teal-800 table tr td.day.active,
+.datepicker.calendar-teal-800 table tr td .month.active,
+.datepicker.calendar-teal-800 table tr td .year.active {
+  background-color: #00695c !important;
+}
+.datepicker.calendar-teal-800 table tr td.day:hover,
+.datepicker.calendar-teal-800 table tr td .month:hover,
+.datepicker.calendar-teal-800 table tr td .year:hover {
+  background: #00362f;
+}
+.datepicker.calendar-teal-900 table thead tr {
+  background: #004d40 !important;
+}
+.datepicker.calendar-teal-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-teal-900 table thead tr th.next:hover,
+.datepicker.calendar-teal-900 table thead tr th.prev:hover {
+  background: #001a16;
+}
+.datepicker.calendar-teal-900 table tr td.day.active,
+.datepicker.calendar-teal-900 table tr td .month.active,
+.datepicker.calendar-teal-900 table tr td .year.active {
+  background-color: #004d40 !important;
+}
+.datepicker.calendar-teal-900 table tr td.day:hover,
+.datepicker.calendar-teal-900 table tr td .month:hover,
+.datepicker.calendar-teal-900 table tr td .year:hover {
+  background: #001a16;
+}
+.datepicker.calendar-teal-A100 table thead tr {
+  background: #a7ffeb !important;
+}
+.datepicker.calendar-teal-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-teal-A100 table thead tr th.next:hover,
+.datepicker.calendar-teal-A100 table thead tr th.prev:hover {
+  background: #74ffdf;
+}
+.datepicker.calendar-teal-A100 table tr td.day.active,
+.datepicker.calendar-teal-A100 table tr td .month.active,
+.datepicker.calendar-teal-A100 table tr td .year.active {
+  background-color: #a7ffeb !important;
+}
+.datepicker.calendar-teal-A100 table tr td.day:hover,
+.datepicker.calendar-teal-A100 table tr td .month:hover,
+.datepicker.calendar-teal-A100 table tr td .year:hover {
+  background: #74ffdf;
+}
+.datepicker.calendar-teal-A200 table thead tr {
+  background: #64ffda !important;
+}
+.datepicker.calendar-teal-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-teal-A200 table thead tr th.next:hover,
+.datepicker.calendar-teal-A200 table thead tr th.prev:hover {
+  background: #31ffce;
+}
+.datepicker.calendar-teal-A200 table tr td.day.active,
+.datepicker.calendar-teal-A200 table tr td .month.active,
+.datepicker.calendar-teal-A200 table tr td .year.active {
+  background-color: #64ffda !important;
+}
+.datepicker.calendar-teal-A200 table tr td.day:hover,
+.datepicker.calendar-teal-A200 table tr td .month:hover,
+.datepicker.calendar-teal-A200 table tr td .year:hover {
+  background: #31ffce;
+}
+.datepicker.calendar-teal-A400 table thead tr {
+  background: #1de9b6 !important;
+}
+.datepicker.calendar-teal-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-teal-A400 table thead tr th.next:hover,
+.datepicker.calendar-teal-A400 table thead tr th.prev:hover {
+  background: #13c095;
+}
+.datepicker.calendar-teal-A400 table tr td.day.active,
+.datepicker.calendar-teal-A400 table tr td .month.active,
+.datepicker.calendar-teal-A400 table tr td .year.active {
+  background-color: #1de9b6 !important;
+}
+.datepicker.calendar-teal-A400 table tr td.day:hover,
+.datepicker.calendar-teal-A400 table tr td .month:hover,
+.datepicker.calendar-teal-A400 table tr td .year:hover {
+  background: #13c095;
+}
+.datepicker.calendar-teal-A700 table thead tr {
+  background: #00bfa5 !important;
+}
+.datepicker.calendar-teal-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-teal-A700 table thead tr th.next:hover,
+.datepicker.calendar-teal-A700 table thead tr th.prev:hover {
+  background: #008c79;
+}
+.datepicker.calendar-teal-A700 table tr td.day.active,
+.datepicker.calendar-teal-A700 table tr td .month.active,
+.datepicker.calendar-teal-A700 table tr td .year.active {
+  background-color: #00bfa5 !important;
+}
+.datepicker.calendar-teal-A700 table tr td.day:hover,
+.datepicker.calendar-teal-A700 table tr td .month:hover,
+.datepicker.calendar-teal-A700 table tr td .year:hover {
+  background: #008c79;
+}
+.datepicker.calendar-yellow-100 table thead tr {
+  background: #fff9c4 !important;
+}
+.datepicker.calendar-yellow-100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-yellow-100 table thead tr th.next:hover,
+.datepicker.calendar-yellow-100 table thead tr th.prev:hover {
+  background: #fff491;
+}
+.datepicker.calendar-yellow-100 table tr td.day.active,
+.datepicker.calendar-yellow-100 table tr td .month.active,
+.datepicker.calendar-yellow-100 table tr td .year.active {
+  background-color: #fff9c4 !important;
+}
+.datepicker.calendar-yellow-100 table tr td.day:hover,
+.datepicker.calendar-yellow-100 table tr td .month:hover,
+.datepicker.calendar-yellow-100 table tr td .year:hover {
+  background: #fff491;
+}
+.datepicker.calendar-yellow-200 table thead tr {
+  background: #fff59d !important;
+}
+.datepicker.calendar-yellow-200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-yellow-200 table thead tr th.next:hover,
+.datepicker.calendar-yellow-200 table thead tr th.prev:hover {
+  background: #fff06a;
+}
+.datepicker.calendar-yellow-200 table tr td.day.active,
+.datepicker.calendar-yellow-200 table tr td .month.active,
+.datepicker.calendar-yellow-200 table tr td .year.active {
+  background-color: #fff59d !important;
+}
+.datepicker.calendar-yellow-200 table tr td.day:hover,
+.datepicker.calendar-yellow-200 table tr td .month:hover,
+.datepicker.calendar-yellow-200 table tr td .year:hover {
+  background: #fff06a;
+}
+.datepicker.calendar-yellow-300 table thead tr {
+  background: #fff176 !important;
+}
+.datepicker.calendar-yellow-300 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-yellow-300 table thead tr th.next:hover,
+.datepicker.calendar-yellow-300 table thead tr th.prev:hover {
+  background: #ffec43;
+}
+.datepicker.calendar-yellow-300 table tr td.day.active,
+.datepicker.calendar-yellow-300 table tr td .month.active,
+.datepicker.calendar-yellow-300 table tr td .year.active {
+  background-color: #fff176 !important;
+}
+.datepicker.calendar-yellow-300 table tr td.day:hover,
+.datepicker.calendar-yellow-300 table tr td .month:hover,
+.datepicker.calendar-yellow-300 table tr td .year:hover {
+  background: #ffec43;
+}
+.datepicker.calendar-yellow-400 table thead tr {
+  background: #ffee58 !important;
+}
+.datepicker.calendar-yellow-400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-yellow-400 table thead tr th.next:hover,
+.datepicker.calendar-yellow-400 table thead tr th.prev:hover {
+  background: #ffe925;
+}
+.datepicker.calendar-yellow-400 table tr td.day.active,
+.datepicker.calendar-yellow-400 table tr td .month.active,
+.datepicker.calendar-yellow-400 table tr td .year.active {
+  background-color: #ffee58 !important;
+}
+.datepicker.calendar-yellow-400 table tr td.day:hover,
+.datepicker.calendar-yellow-400 table tr td .month:hover,
+.datepicker.calendar-yellow-400 table tr td .year:hover {
+  background: #ffe925;
+}
+.datepicker.calendar-yellow-500 table thead tr {
+  background: #ffeb3b !important;
+}
+.datepicker.calendar-yellow-500 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-yellow-500 table thead tr th.next:hover,
+.datepicker.calendar-yellow-500 table thead tr th.prev:hover {
+  background: #ffe608;
+}
+.datepicker.calendar-yellow-500 table tr td.day.active,
+.datepicker.calendar-yellow-500 table tr td .month.active,
+.datepicker.calendar-yellow-500 table tr td .year.active {
+  background-color: #ffeb3b !important;
+}
+.datepicker.calendar-yellow-500 table tr td.day:hover,
+.datepicker.calendar-yellow-500 table tr td .month:hover,
+.datepicker.calendar-yellow-500 table tr td .year:hover {
+  background: #ffe608;
+}
+.datepicker.calendar-yellow-600 table thead tr {
+  background: #fdd835 !important;
+}
+.datepicker.calendar-yellow-600 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-yellow-600 table thead tr th.next:hover,
+.datepicker.calendar-yellow-600 table thead tr th.prev:hover {
+  background: #fdce02;
+}
+.datepicker.calendar-yellow-600 table tr td.day.active,
+.datepicker.calendar-yellow-600 table tr td .month.active,
+.datepicker.calendar-yellow-600 table tr td .year.active {
+  background-color: #fdd835 !important;
+}
+.datepicker.calendar-yellow-600 table tr td.day:hover,
+.datepicker.calendar-yellow-600 table tr td .month:hover,
+.datepicker.calendar-yellow-600 table tr td .year:hover {
+  background: #fdce02;
+}
+.datepicker.calendar-yellow-700 table thead tr {
+  background: #fbc02d !important;
+}
+.datepicker.calendar-yellow-700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-yellow-700 table thead tr th.next:hover,
+.datepicker.calendar-yellow-700 table thead tr th.prev:hover {
+  background: #f0ad05;
+}
+.datepicker.calendar-yellow-700 table tr td.day.active,
+.datepicker.calendar-yellow-700 table tr td .month.active,
+.datepicker.calendar-yellow-700 table tr td .year.active {
+  background-color: #fbc02d !important;
+}
+.datepicker.calendar-yellow-700 table tr td.day:hover,
+.datepicker.calendar-yellow-700 table tr td .month:hover,
+.datepicker.calendar-yellow-700 table tr td .year:hover {
+  background: #f0ad05;
+}
+.datepicker.calendar-yellow-800 table thead tr {
+  background: #f9a825 !important;
+}
+.datepicker.calendar-yellow-800 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-yellow-800 table thead tr th.next:hover,
+.datepicker.calendar-yellow-800 table thead tr th.prev:hover {
+  background: #e59006;
+}
+.datepicker.calendar-yellow-800 table tr td.day.active,
+.datepicker.calendar-yellow-800 table tr td .month.active,
+.datepicker.calendar-yellow-800 table tr td .year.active {
+  background-color: #f9a825 !important;
+}
+.datepicker.calendar-yellow-800 table tr td.day:hover,
+.datepicker.calendar-yellow-800 table tr td .month:hover,
+.datepicker.calendar-yellow-800 table tr td .year:hover {
+  background: #e59006;
+}
+.datepicker.calendar-yellow-900 table thead tr {
+  background: #f57f17 !important;
+}
+.datepicker.calendar-yellow-900 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-yellow-900 table thead tr th.next:hover,
+.datepicker.calendar-yellow-900 table thead tr th.prev:hover {
+  background: #d06609;
+}
+.datepicker.calendar-yellow-900 table tr td.day.active,
+.datepicker.calendar-yellow-900 table tr td .month.active,
+.datepicker.calendar-yellow-900 table tr td .year.active {
+  background-color: #f57f17 !important;
+}
+.datepicker.calendar-yellow-900 table tr td.day:hover,
+.datepicker.calendar-yellow-900 table tr td .month:hover,
+.datepicker.calendar-yellow-900 table tr td .year:hover {
+  background: #d06609;
+}
+.datepicker.calendar-yellow-A100 table thead tr {
+  background: #ffff8d !important;
+}
+.datepicker.calendar-yellow-A100 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-yellow-A100 table thead tr th.next:hover,
+.datepicker.calendar-yellow-A100 table thead tr th.prev:hover {
+  background: #ffff5a;
+}
+.datepicker.calendar-yellow-A100 table tr td.day.active,
+.datepicker.calendar-yellow-A100 table tr td .month.active,
+.datepicker.calendar-yellow-A100 table tr td .year.active {
+  background-color: #ffff8d !important;
+}
+.datepicker.calendar-yellow-A100 table tr td.day:hover,
+.datepicker.calendar-yellow-A100 table tr td .month:hover,
+.datepicker.calendar-yellow-A100 table tr td .year:hover {
+  background: #ffff5a;
+}
+.datepicker.calendar-yellow-A200 table thead tr {
+  background: #ffff00 !important;
+}
+.datepicker.calendar-yellow-A200 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-yellow-A200 table thead tr th.next:hover,
+.datepicker.calendar-yellow-A200 table thead tr th.prev:hover {
+  background: #cccc00;
+}
+.datepicker.calendar-yellow-A200 table tr td.day.active,
+.datepicker.calendar-yellow-A200 table tr td .month.active,
+.datepicker.calendar-yellow-A200 table tr td .year.active {
+  background-color: #ffff00 !important;
+}
+.datepicker.calendar-yellow-A200 table tr td.day:hover,
+.datepicker.calendar-yellow-A200 table tr td .month:hover,
+.datepicker.calendar-yellow-A200 table tr td .year:hover {
+  background: #cccc00;
+}
+.datepicker.calendar-yellow-A400 table thead tr {
+  background: #ffea00 !important;
+}
+.datepicker.calendar-yellow-A400 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-yellow-A400 table thead tr th.next:hover,
+.datepicker.calendar-yellow-A400 table thead tr th.prev:hover {
+  background: #ccbb00;
+}
+.datepicker.calendar-yellow-A400 table tr td.day.active,
+.datepicker.calendar-yellow-A400 table tr td .month.active,
+.datepicker.calendar-yellow-A400 table tr td .year.active {
+  background-color: #ffea00 !important;
+}
+.datepicker.calendar-yellow-A400 table tr td.day:hover,
+.datepicker.calendar-yellow-A400 table tr td .month:hover,
+.datepicker.calendar-yellow-A400 table tr td .year:hover {
+  background: #ccbb00;
+}
+.datepicker.calendar-yellow-A700 table thead tr {
+  background: #ffd600 !important;
+}
+.datepicker.calendar-yellow-A700 table thead tr th.datepicker-switch:hover,
+.datepicker.calendar-yellow-A700 table thead tr th.next:hover,
+.datepicker.calendar-yellow-A700 table thead tr th.prev:hover {
+  background: #ccab00;
+}
+.datepicker.calendar-yellow-A700 table tr td.day.active,
+.datepicker.calendar-yellow-A700 table tr td .month.active,
+.datepicker.calendar-yellow-A700 table tr td .year.active {
+  background-color: #ffd600 !important;
+}
+.datepicker.calendar-yellow-A700 table tr td.day:hover,
+.datepicker.calendar-yellow-A700 table tr td .month:hover,
+.datepicker.calendar-yellow-A700 table tr td .year:hover {
+  background: #ccab00;
+}
