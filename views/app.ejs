@@ -92,6 +92,12 @@
                          ng-click="setFreeDrawingMode(!getFreeDrawingMode())">
                     <i class="fa fa-paint-brush"></i>&nbsp;绘画
                 </button>
+                <button  id="zoom-in" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-zoom-in"></i>
+                </button>
+                <button  id="zoom-out" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-zoom-out"></i>
+                </button>
                 <button id="clear-all-canvas" type="button" class="btn btn-default" data-toggle="modal" data-target="#myAlertModal">
                     <i class="fa fa-trash-o fa-lg"></i>&nbsp;清空
                 </button>
@@ -430,13 +436,9 @@
             };
             editBoard.communication.loadFile(queryObj, Utils.bind(editBoard,editBoard.resetBoard));
         }
-        var canvasCtns =document.getElementsByClassName('canvas-container');
-        var canvasCtnEl = canvasCtns[0];
-        var o_style = canvasCtnEl.getAttribute('style');
-        canvasCtnEl.setAttribute('style',o_style+' position:absolute;left: 384px;top:184px');
-        console.log(canvasCtnEl);
         var canvas = editBoard.__canvas;
         var socket = editBoard.__socket;
+        var canvasCtnEl = editBoard.canvasCtnEl;
         var SerializeShapes = editBoard.serializeShapes;
         var Communication = editBoard.communication;
 	</script>

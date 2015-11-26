@@ -3,6 +3,7 @@
  */
 var ConfigBoard = function (editBoard) {
     this.editBoard = editBoard;
+
 };
 
 ConfigBoard.prototype.resizeCanvas = function () {
@@ -21,6 +22,24 @@ ConfigBoard.prototype.resizeCanvas = function () {
     //}else                                                              // 340 <= width <= 1550
     //    this.editBoard.__canvas.setWidth($(window).width()+85-$("#controls").width()-150);
     //_('canvas-col').setAttribute('style','margin-top:80px;');
+
+    //reset canvas
+
+    var canvasCol = document.getElementById('canvas-col');
+    var sh= canvasCol.scrollHeight;
+    var sfh = canvasCol.offsetHeight;
+    var sTop = (sh-sfh)/2;
+
+    var sw= canvasCol.scrollWidth;
+    var sfw = canvasCol.offsetWidth;
+    var sLeft = (sw-sfw)/2;
+    $('#canvas-col').scrollTop(sTop);
+    $('#canvas-col').scrollLeft(sLeft);
+    //console.log('height: '+h+",width: "+w);
+    //console.log('scroll height: '+sh);
+    //console.log('offsetheight: '+sofH);
+
+
     //resize sideBar
     var sideBarHeight= $(window).height()-150;
     if($(window).height()<870&&$(window).width()>950){ //less height
@@ -28,9 +47,16 @@ ConfigBoard.prototype.resizeCanvas = function () {
     }else if($(window).height()>=870&&$(window).width()<=950){ //less width
         _('optionDiv').setAttribute('style','width:120px;overflow-x:auto;overflow-y:hidden;position:fixed;top:130px;');
     }else if($(window).height()<870&&$(window).width()<=950){ //both less
-        _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;width:120px;overflow-x:auto;overflow-y:auto;position:fixed;top:90px;');
+        _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;width:120px;overflow-x:auto;overflow-y:auto;position:fixed;top:130px;');
     }else //normal
         _('optionDiv').setAttribute('style','position:fixed;top:90px;');
+};
+
+ConfigBoard.prototype.resetCanvas = function () {
+    var left = (2000-this.editBoard.__canvas.width)/2;
+    var top = (2000-this.editBoard.__canvas.height)/2;
+    this.editBoard.canvasCtnEl.style.top=top+'px';
+    this.editBoard.canvasCtnEl.style.left=left+'px';
 };
 
 
