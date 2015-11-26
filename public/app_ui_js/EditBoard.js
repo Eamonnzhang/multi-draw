@@ -12,8 +12,8 @@ var EditBoard = function (){
     this.serializeShapes = new SerializeShapes();
     var canvas = this.__canvas = new fabric.Canvas('c', {
         backgroundColor :"#ffffff",
-        width:640,
-        height:480,
+        width:800,
+        height:600,
         allowTouchScrolling:true
     });
     var configBoard = new ConfigBoard(this);
@@ -41,16 +41,6 @@ var EditBoard = function (){
         }
         else
         {
-            //var flashcopier = 'flashcopier';
-            //if(!document.getElementById(flashcopier))
-            //{
-            //    var divholder = document.createElement('div');
-            //    divholder.id = flashcopier;
-            //    document.body.appendChild(divholder);
-            //}
-            //document.getElementById(flashcopier).innerHTML = '';
-            //var divinfo = '<embed src="app_util_js/_clipboard.swf" FlashVars="clipboard='+encodeURIComponent(_('json-value').value)+'" width="0" height="0" type="application/x-shockwave-flash"></embed>';
-            //document.getElementById(flashcopier).innerHTML = divinfo;
             $('#myUnsptModal').modal({
                 keyboard:false
             });
@@ -58,21 +48,21 @@ var EditBoard = function (){
     };
 
     consoleInfo.onclick = function(){
-        if(canvas.getActiveObject()){
-            console.log(canvas.getActiveObject());
-        }
-        if(canvas.getActiveGroup()){
-            canvas.getActiveGroup().forEachObject(function(a) {
-                console.log(a);
-            });
-        }
+        //if(canvas.getActiveObject()){
+        //    console.log(canvas.getActiveObject());
+        //}
+        //if(canvas.getActiveGroup()){
+        //    canvas.getActiveGroup().forEachObject(function(a) {
+        //        console.log(a);
+        //    });
+        //}
+        console.log(canvas.getZoom());
     };
 
     test.onclick = function(){
-        var obj = canvas.getActiveGroup();
-        obj.forEachObject(function(x){
-            x.selectable  = false;
-        });
+        canvas.setZoom(canvas.getZoom()*1.2);
+        canvas.setWidth(canvas.getWidth()*1.2);
+        canvas.setHeight(canvas.getHeight()*1.2);
     };
 };
 

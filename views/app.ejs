@@ -1,367 +1,398 @@
 <!DOCTYPE html>
 <html ng-app="app">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%= title %></title>
-    <link href="/css/bootstrap/bootstrap.css" rel="stylesheet">
-    <link href="/css/font_awesome/font-awesome.css" rel="stylesheet">
-    <link href="/css/app-styles.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-    <script src="/app_3th_js/forIE/html5shiv.js"></script>
-    <script src="/app_3th_js/forIE/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body ng-controller="CanvasCtrl">
-    <div id="bd-wrapper">
-        <nav class="navbar navbar-default navbar-fixed-top my-navbar">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand brand-title" href="javascript:void(0)"><i class="fa fa-paint-brush  fa-lg"></i>&nbsp;MultiDraw</a>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">文件 <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href=""><span class="fa fa-file" style="padding-right: 15px"></span>新建</a></li>
-                                <li><a href="/filelist"><span class="fa fa-folder-open" style="padding-right: 12px"></span>打开</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href='' data-toggle="modal" data-target="#myModal" ><span class="glyphicon glyphicon-save" style="padding-right: 13px"></span>保存</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#"><span class="fa fa-share" style="padding-right: 12px"></span>导出为</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="javascript:void(0)" ng-click="rasterize()"><span class="fa fa-image" style="padding-right: 13px"></span>PNG</a></li>
-                                        <li><a href="javascript:void(0)" ng-click="rasterizeSVG()"><span class="fa fa-file-excel-o" style="padding-right: 15px"></span>SVG</a></li>
-                                        <li><a href="" type="button" data-toggle="modal" data-target="#JsonModal" ng-click="rasterizeJSON()"><span class="fa fa-file-code-o" style="padding-right: 14px"></span>JSON</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">插入 <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-text-size" style="padding-right: 15px"></span>文字</a></li>
-                                <li><a  href="javascript:void(0)" ng-click="addImage1()"><span class="glyphicon glyphicon-picture" style="padding-right: 15px"></span>图片</a></li>
-                                <li><a  href="javascript:void(0)" ng-click="" ><span class="glyphicon glyphicon-facetime-video" style="padding-right: 15px"></span>视频</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#"><span class="fa fa-pie-chart" style="padding-right: 15px"></span>图形</a>
-                                    <ul class="dropdown-menu">
-                                        <li type="button" ng-click="addRect()" class="btn" style="margin-left: 33px">矩形</li>
-                                        <li type="button" ng-click="addTriangle()" class="btn" style="margin-left: 33px">三角形</li>
-                                        <li type="button" ng-click="addCircle()" class="btn" style="margin-left: 33px">圆形</li>
-                                        <!--<li type="button" ng-click="addPolygon()" class="btn" style="margin-left: 33px">多边形</li>-->
-                                        <li type="button" ng-click="addLine()" class="btn" style="margin-left: 33px">直线</li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href='' id="roomId" bind-value-to="roomId" data-toggle="collapse"></a></li>
-                        <li class="dropdown">
-                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                            <li><a href=""><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                            <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-                            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
-        <div class="btn-group toolbar object-controls" object-buttons-enabled="getSelected()" role="group" aria-label="...">
-            <button  id="drawing-mode" type="button" class="btn btn-info"
-                     ng-click="setFreeDrawingMode(!getFreeDrawingMode())">
-                <i class="fa fa-paint-brush"></i>&nbsp;绘画
-            </button>
-            <button id="clear-all-canvas" type="button" class="btn btn-default" data-toggle="modal" data-target="#myAlertModal">
-                <i class="fa fa-trash-o fa-lg"></i>&nbsp;清空
-            </button>
-            <button id="clear-selected-canvas" type="button" class="btn btn-default"
-                    ng-click="removeSelected()">
-                <i class="fa fa-trash fa-lg"></i>&nbsp;清除选中
-            </button>
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-lock"></i>&nbsp;锁定
-                    <span class="caret"></span>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title><%= title %></title>
+        <link href="/css/bootstrap/bootstrap.css" rel="stylesheet">
+        <link href="/css/font_awesome/font-awesome.css" rel="stylesheet">
+        <link href="/css/app-styles.css" rel="stylesheet">
+        <!--<link href="/css/vendor/all.css" rel="stylesheet">-->
+        <!--<link href="/css/app/app.css" rel="stylesheet">-->
+        <!--[if lt IE 9]>
+        <script src="/app_3th_js/forIE/html5shiv.js"></script>
+        <script src="/app_3th_js/forIE/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body ng-controller="CanvasCtrl">
+        <div id="bd-wrapper">
+            <!--导航栏-->
+            <nav class="navbar navbar-default navbar-fixed-top my-navbar">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand brand-title" href="javascript:void(0)"><i class="fa fa-paint-brush  fa-lg"></i>&nbsp;MultiDraw</a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">文件 <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href=""><span class="fa fa-file" style="padding-right: 15px"></span>新建</a></li>
+                                    <li><a href="/filelist"><span class="fa fa-folder-open" style="padding-right: 12px"></span>打开</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href='' data-toggle="modal" data-target="#myModal" ><span class="glyphicon glyphicon-save" style="padding-right: 13px"></span>保存</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#"><span class="fa fa-share" style="padding-right: 12px"></span>导出为</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:void(0)" ng-click="rasterize()"><span class="fa fa-image" style="padding-right: 13px"></span>PNG</a></li>
+                                            <li><a href="javascript:void(0)" ng-click="rasterizeSVG()"><span class="fa fa-file-excel-o" style="padding-right: 15px"></span>SVG</a></li>
+                                            <li><a href="" type="button" data-toggle="modal" data-target="#JsonModal" ng-click="rasterizeJSON()"><span class="fa fa-file-code-o" style="padding-right: 14px"></span>JSON</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">插入 <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-text-size" style="padding-right: 15px"></span>文字</a></li>
+                                    <li><a  href="javascript:void(0)" ng-click="addImage1()"><span class="glyphicon glyphicon-picture" style="padding-right: 15px"></span>图片</a></li>
+                                    <li><a  href="javascript:void(0)" ng-click="" ><span class="glyphicon glyphicon-facetime-video" style="padding-right: 15px"></span>视频</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#"><span class="fa fa-pie-chart" style="padding-right: 15px"></span>图形</a>
+                                        <ul class="dropdown-menu">
+                                            <li type="button" ng-click="addRect()" class="btn" style="margin-left: 33px">矩形</li>
+                                            <li type="button" ng-click="addTriangle()" class="btn" style="margin-left: 33px">三角形</li>
+                                            <li type="button" ng-click="addCircle()" class="btn" style="margin-left: 33px">圆形</li>
+                                            <!--<li type="button" ng-click="addPolygon()" class="btn" style="margin-left: 33px">多边形</li>-->
+                                            <li type="button" ng-click="addLine()" class="btn" style="margin-left: 33px">直线</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href='' id="roomId" bind-value-to="roomId" data-toggle="collapse"></a></li>
+                            <li class="dropdown">
+                                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                <li><a href=""><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                                <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+            <!--导航栏END-->
+
+            <!--工具条-->
+            <div class="btn-group toolbar object-controls" object-buttons-enabled="getSelected()" role="group" aria-label="...">
+                <button  id="drawing-mode" type="button" class="btn btn-info"
+                         ng-click="setFreeDrawingMode(!getFreeDrawingMode())">
+                    <i class="fa fa-paint-brush"></i>&nbsp;绘画
                 </button>
-                <ul class="dropdown-menu">
-                    <li><a type='button' class="btn"
-                           ng-click="setRotationLock(!getRotationLock())"
-                           ng-class="{'active': getRotationLock()}">旋转
-                        </a>
-                    </li>
-                    <li><a type='button' class="btn"
-                           ng-click="setHorizontalLock(!getHorizontalLock())"
-                           ng-class="{'active': getHorizontalLock()}">
-                            水平移动
-                        </a>
-                    </li>
-                    <li><a type='button' class="btn"
-                           ng-click="setVerticalLock(!getVerticalLock())"
-                           ng-class="{'active': getVerticalLock()}">
-                            垂直移动
-                        </a>
-                    </li>
-                    <li><a type='button' class="btn"
-                           ng-click="setScaleLockX(!getScaleLockX())"
-                           ng-class="{'active': getScaleLockX()}">
-                            水平放大
-                        </a>
-                    </li>
-                    <li><a type='button' class="btn"
-                           ng-click="setScaleLockX(!getScaleLockY())"
-                           ng-class="{'active': getScaleLockY()}">
-                            垂直放大
-                        </a>
-                    </li>
-                </ul>
+                <button id="clear-all-canvas" type="button" class="btn btn-default" data-toggle="modal" data-target="#myAlertModal">
+                    <i class="fa fa-trash-o fa-lg"></i>&nbsp;清空
+                </button>
+                <button id="clear-selected-canvas" type="button" class="btn btn-default"
+                        ng-click="removeSelected()">
+                    <i class="fa fa-trash fa-lg"></i>&nbsp;清除选中
+                </button>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-lock"></i>&nbsp;锁定
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a type='button' class="btn"
+                               ng-click="setRotationLock(!getRotationLock())"
+                               ng-class="{'active': getRotationLock()}">旋转
+                            </a>
+                        </li>
+                        <li><a type='button' class="btn"
+                               ng-click="setHorizontalLock(!getHorizontalLock())"
+                               ng-class="{'active': getHorizontalLock()}">
+                                水平移动
+                            </a>
+                        </li>
+                        <li><a type='button' class="btn"
+                               ng-click="setVerticalLock(!getVerticalLock())"
+                               ng-class="{'active': getVerticalLock()}">
+                                垂直移动
+                            </a>
+                        </li>
+                        <li><a type='button' class="btn"
+                               ng-click="setScaleLockX(!getScaleLockX())"
+                               ng-class="{'active': getScaleLockX()}">
+                                水平放大
+                            </a>
+                        </li>
+                        <li><a type='button' class="btn"
+                               ng-click="setScaleLockX(!getScaleLockY())"
+                               ng-class="{'active': getScaleLockY()}">
+                                垂直放大
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <button id="send-backwards" class="btn btn-default btn-lock btn-object-action"
+                        ng-click="sendBackwards()">
+                    <i class="fa fa-angle-down fa-lg"></i>&nbsp;下移
+                </button>
+                <button id="send-to-back" class="btn btn-default btn-lock btn-object-action"
+                        ng-click="sendToBack()">
+                    <i class="fa fa-angle-double-down fa-lg"></i>&nbsp;置底
+                </button>
+                <button id="bring-forward" class="btn btn-default btn-lock btn-object-action"
+                        ng-click="bringForward()">
+                    <i class="fa fa-angle-up fa-lg"></i>&nbsp;上移
+                </button>
+                <button id="bring-to-front" class="btn btn-default btn-lock btn-object-action"
+                        ng-click="bringToFront()">
+                    <i class="fa fa-angle-double-up fa-lg"></i>&nbsp;置顶
+                </button>
+                <button id="clip" class="btn btn-default btn-lock btn-object-action"
+                        ng-click="clip()">
+                    <i class="fa fa-scissors fa-lg"></i>&nbsp;修剪
+                </button>
             </div>
-            <button id="send-backwards" class="btn btn-default btn-lock btn-object-action"
-                    ng-click="sendBackwards()">
-                <i class="fa fa-angle-down fa-lg"></i>&nbsp;下移
-            </button>
-            <button id="send-to-back" class="btn btn-default btn-lock btn-object-action"
-                    ng-click="sendToBack()">
-                <i class="fa fa-angle-double-down fa-lg"></i>&nbsp;置底
-            </button>
-            <button id="bring-forward" class="btn btn-default btn-lock btn-object-action"
-                    ng-click="bringForward()">
-                <i class="fa fa-angle-up fa-lg"></i>&nbsp;上移
-            </button>
-            <button id="bring-to-front" class="btn btn-default btn-lock btn-object-action"
-                    ng-click="bringToFront()">
-                <i class="fa fa-angle-double-up fa-lg"></i>&nbsp;置顶
-            </button>
-            <button id="clip" class="btn btn-default btn-lock btn-object-action"
-                    ng-click="clip()">
-                <i class="fa fa-scissors fa-lg"></i>&nbsp;修剪
-            </button>
-        </div><!--toolbar btn group-->
-        <div  id="controls">
-            <div id='optionDiv'>
-                <div id="drawing-mode-options" ng-show="getFreeDrawingMode()">
-                    <label for="drawing-mode-selector">画笔:</label><br>
-                    <select id="drawing-mode-selector" bind-value-to="drawingMode">
-                        <option>Pencil</option>
-                        <option>Circle</option>
-                        <option>Spray</option>
-                        <option>Pattern</option>
+            <!--工具条END-->
 
-                        <option>vline</option>
-                        <option>hline</option>
-                        <option>square</option>
-                        <option>diamond</option>
-                        <option>texture</option>
-                    </select><br>
-                    <label for="drawing-line-width">线宽:</label>
-                    <span class="info">1</span><input type="range" min="0" max="150"  data-orientation="vertical" bind-value-to="drawingLineWidth">
+            <!--左侧配置选项-->
+            <div  id="controls">
+                <div id='optionDiv'>
+                    <!--自由绘画选项-->
+                    <div id="drawing-mode-options" ng-show="getFreeDrawingMode()">
+                        <label for="drawing-mode-selector">画笔:</label><br>
+                        <select id="drawing-mode-selector" bind-value-to="drawingMode">
+                            <option>Pencil</option>
+                            <option>Circle</option>
+                            <option>Spray</option>
+                            <option>Pattern</option>
 
-                    <label for="drawing-color">颜色:</label><br>
-                    <input type="color" bind-value-to="drawingLineColor"><br>
+                            <option>vline</option>
+                            <option>hline</option>
+                            <option>square</option>
+                            <option>diamond</option>
+                            <option>texture</option>
+                        </select><br>
+                        <label for="drawing-line-width">线宽:</label>
+                        <span class="info">1</span><input type="range" min="0" max="150"  data-orientation="vertical" bind-value-to="drawingLineWidth">
 
-                    <label for="drawing-shadow-color">阴影颜色:</label><br>
-                    <input type="color" bind-value-to="drawingLineShadowColor"><br>
+                        <label for="drawing-color">颜色:</label><br>
+                        <input type="color" bind-value-to="drawingLineColor"><br>
 
-                    <label for="drawing-shadow-width">阴影宽度:</label>
-                    <span class="info"></span><input type="range" min="0" max="50" bind-value-to="drawingLineShadowWidth">
+                        <label for="drawing-shadow-color">阴影颜色:</label><br>
+                        <input type="color" bind-value-to="drawingLineShadowColor"><br>
+
+                        <label for="drawing-shadow-width">阴影宽度:</label>
+                        <span class="info"></span><input type="range" min="0" max="50" bind-value-to="drawingLineShadowWidth">
+                    </div>
+                    <!--自由绘画选项END-->
+
+                    <div id="canvas-background">
+                        <label for="canvas-background-picker">画板背景色:</label>
+                        <input type="color" bind-value-to="canvasBgColor">
+                    </div>
+
+                    <!--配置透明度-->
+                    <div id="color-opacity-controls"  ng-show="canvas.getActiveObject()">
+
+                        <label for="opacity">透明度: </label>
+                        <span class="info">100</span><input value="100" type="range" bind-value-to="opacity">
+
+                        <label for="color">填充色: </label><br>
+                        <input type="color"  bind-value-to="fill"><br>
+
+                        <label for="text-stroke-color">线条颜色:</label><br>
+                        <input  type="color" id="text-stroke-color" class="btn-object-action"
+                                bind-value-to="strokeColor">
+                    </div>
+                    <!--配置透明度END-->
+
+                    <!--编辑文字-->
+                    <div id="text-wrapper" ng-show="getText()&&!getFreeDrawingMode()">
+                        <textarea bind-value-to="text"></textarea>
+                        <div id="text-controls">
+                            <label for="font-family">字体类型:</label><br>
+                            <select id="font-family" class="btn-object-action" bind-value-to="fontFamily">
+                                <option value="arial">Arial</option>
+                                <option value="myriad pro">Myriad Pro</option>
+                                <option value="verdana">Verdana</option>
+                                <option value="georgia">Georgia</option>
+                                <option value="courier">Courier</option>
+                                <option value="comic sans ms">Comic Sans MS</option>
+                                <option value="impact">Impact</option>
+                                <option value="monaco">Monaco</option>
+                                <option value="微软雅黑">微软雅黑</option>
+                            </select>
+                            <br>
+                            <div>
+                                <label for="text-bg-color">背景颜色:</label><br>
+                                <input type="color"  id="text-bg-color" size="10" class="btn-object-action"
+                                       bind-value-to="bgColor">
+                            </div>
+                            <div>
+                                <label for="text-lines-bg-color">文本背景颜色:</label><br>
+                                <input type="color" id="text-lines-bg-color" size="10" class="btn-object-action"
+                                       bind-value-to="textBgColor">
+                            </div>
+                            <div>
+                                <label for="text-stroke-width">线条宽度:</label>
+                                <span class="info">1</span><input type="range" value="1" min="1" max="5" id="text-stroke-width" class="btn-object-action"
+                                       bind-value-to="strokeWidth">
+                            </div>
+                            <div>
+                                <label for="text-font-size">字体大小:</label>
+                                <span class="info">100</span><input type="range" value="" min="1" max="120" step="1" id="text-font-size" class="btn-object-action"
+                                       bind-value-to="fontSize">
+                            </div>
+                            <div>
+                                <label for="text-line-height">行间距:</label>
+                                <span class="info">100</span><input type="range"  value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
+                                       bind-value-to="lineHeight">
+                            </div>
+                        </div><!--text control-->
+                        <div id="text-control-add1">
+                            <div class="btn-group" role="group" aria-label="..." style="margin-top:10px">
+                                <button type="button" class="btn btn-default btn-sm btn-object-action"
+                                        ng-click="toggleBold()"
+                                        ng-class="{'active': isBold()}">
+                                    <i class="fa fa-bold"></i>
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm btn-object-action" id="text-cmd-italic"
+                                        ng-click="toggleItalic()"
+                                        ng-class="{'active': isItalic()}">
+                                    <i class="fa fa-italic"></i>
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm btn-object-action" id="text-cmd-underline"
+                                        ng-click="toggleUnderline()"
+                                        ng-class="{'active': isUnderline()}">
+                                   <i class="fa fa-underline"></i>
+                                </button>
+                            </div><br>
+                            <div class="btn-group" role="group" aria-label="..." style="margin-top:10px">
+                                <button type="button" class="btn btn-default btn-sm btn-object-action" id="text-cmd-linethrough"
+                                        ng-click="toggleLinethrough()"
+                                        ng-class="{'active': isLinethrough()}">
+                                    <i class="fa fa-strikethrough"></i>
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm btn-object-action" id="text-cmd-overline"
+                                        ng-click="toggleOverline()"
+                                        ng-class="{'active': isOverline()}">
+                                        O
+                                </button>
+                            </div>
+                        </div><!--text control add1-->
+                    </div>
+                    <!--编辑文字END-->
+                    <!--测试按钮-->
+                    <div class = 'testBtn'>
+                        <button id="console-info" class="btn btn-default btn-sm">Console Info</button>
+                        <button id="test" class="btn btn-default btn-sm">test</button><br>
+                    </div>
+                    <!--测试按钮 END-->
                 </div>
-
-                <!--配置透明度-->
-                <div id="color-opacity-controls"  ng-show="canvas.getActiveObject()">
-
-                    <label for="opacity">透明度: </label>
-                    <span class="info">100</span><input value="100" type="range" bind-value-to="opacity">
-
-                    <label for="color">填充色: </label><br>
-                    <input type="color"  bind-value-to="fill"><br>
-
-                    <label for="text-stroke-color">线条颜色:</label><br>
-                    <input  type="color" id="text-stroke-color" class="btn-object-action"
-                            bind-value-to="strokeColor">
-                </div><!--配置透明度-->
-
-                <!--编辑文字-->
-                <div id="text-wrapper" ng-show="getText()&&!getFreeDrawingMode()">
-                    <textarea bind-value-to="text"></textarea>
-                    <div id="text-controls">
-                        <label for="font-family">字体类型:</label><br>
-                        <select id="font-family" class="btn-object-action" bind-value-to="fontFamily">
-                            <option value="arial">Arial</option>
-                            <option value="myriad pro">Myriad Pro</option>
-                            <option value="verdana">Verdana</option>
-                            <option value="georgia">Georgia</option>
-                            <option value="courier">Courier</option>
-                            <option value="comic sans ms">Comic Sans MS</option>
-                            <option value="impact">Impact</option>
-                            <option value="monaco">Monaco</option>
-                            <option value="微软雅黑">微软雅黑</option>
-                        </select>
-                        <br>
-                        <div>
-                            <label for="text-bg-color">背景颜色:</label><br>
-                            <input type="color"  id="text-bg-color" size="10" class="btn-object-action"
-                                   bind-value-to="bgColor">
-                        </div>
-                        <div>
-                            <label for="text-lines-bg-color">文本背景颜色:</label><br>
-                            <input type="color" id="text-lines-bg-color" size="10" class="btn-object-action"
-                                   bind-value-to="textBgColor">
-                        </div>
-                        <div>
-                            <label for="text-stroke-width">线条宽度:</label>
-                            <span class="info">1</span><input type="range" value="1" min="1" max="5" id="text-stroke-width" class="btn-object-action"
-                                   bind-value-to="strokeWidth">
-                        </div>
-                        <div>
-                            <label for="text-font-size">字体大小:</label>
-                            <span class="info">100</span><input type="range" value="" min="1" max="120" step="1" id="text-font-size" class="btn-object-action"
-                                   bind-value-to="fontSize">
-                        </div>
-                        <div>
-                            <label for="text-line-height">行间距:</label>
-                            <span class="info">100</span><input type="range"  value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
-                                   bind-value-to="lineHeight">
-                        </div>
-                    </div><!--text control-->
-                    <div id="text-control-add1">
-                        <div class="btn-group" role="group" aria-label="..." style="margin-top:10px">
-                            <button type="button" class="btn btn-default btn-sm btn-object-action"
-                                    ng-click="toggleBold()"
-                                    ng-class="{'active': isBold()}">
-                                <i class="fa fa-bold"></i>
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm btn-object-action" id="text-cmd-italic"
-                                    ng-click="toggleItalic()"
-                                    ng-class="{'active': isItalic()}">
-                                <i class="fa fa-italic"></i>
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm btn-object-action" id="text-cmd-underline"
-                                    ng-click="toggleUnderline()"
-                                    ng-class="{'active': isUnderline()}">
-                               <i class="fa fa-underline"></i>
-                            </button>
-                        </div><br>
-                        <div class="btn-group" role="group" aria-label="..." style="margin-top:10px">
-                            <button type="button" class="btn btn-default btn-sm btn-object-action" id="text-cmd-linethrough"
-                                    ng-click="toggleLinethrough()"
-                                    ng-class="{'active': isLinethrough()}">
-                                <i class="fa fa-strikethrough"></i>
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm btn-object-action" id="text-cmd-overline"
-                                    ng-click="toggleOverline()"
-                                    ng-class="{'active': isOverline()}">
-                                    O
-                            </button>
-                        </div>
-                    </div><!--text control add1-->
-                </div><!--编辑文字-->
-            </div><!--optionDiv-->
-        </div><!--controls-->
-        <div id="canvas-col">
-            <div id="canvasCtn">
-                <canvas id="c" style="margin: auto"></canvas>
+                <!--optionDiv END-->
             </div>
-        </div>
-        <div id="canvas-background">
-            <label for="canvas-background-picker">画板背景色:</label>
-            <input type="color" bind-value-to="canvasBgColor">
-        </div>
-        <div class = 'testBtn'>
-            <button id="console-info" class="btn btn-default btn-sm" disabled="disabled">Console Info</button>
-            <button id="test" class="btn btn-default btn-sm">test</button><br>
-        </div>
-    </div><!--/bd--wrapper-->
+            <!--左侧配置选项 END-->
 
-    <!--Alert Modal -->
-    <div class="modal fade bs-example-modal-sm" id="myAlertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div align="center" class="alert alert-danger alert-dismissible fade in" role="alert">
-                <h4>Are you sure to do this?!</h4>
-                <!--<p>清空后将不可恢复</p>-->
-                <br>
-                <p >
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmClear()">Yes</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                </p>
+            <!--画板最外层div scroll-->
+            <div id="canvas-col">
+                <!--嵌套画板的固定宽高的DIV -->
+                <div id="canvasCtn">
+                    <canvas id="c"></canvas>
+                </div>
+                <!--嵌套画板的固定宽高的DIV END-->
             </div>
-        </div>
-    </div>
-    <div class="modal fade bs-example-modal-sm" id="myUnsptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div align="center" class="alert alert-warning alert-dismissible fade in" role="alert">
-                <p class="my-font" style="font-family: 微软雅黑">您的浏览器可能<strong>不支持</strong>此操作！</p>
-            </div>
-        </div>
-    </div>
-    <!--Save Model-->
-    <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" style="font-family: 微软雅黑; font-size: 13pt">文件名：</h4>
-                </div>
-                <div class="modal-body">
-                    <input id='filename' type='text' size="30">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button id='confirmSave' type="button" class="btn btn-info" data-dismiss="modal"
-                            ng-click="saveFile()">保存</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Share room-->
-    <div class="collapse" id="collapseShareRoom" style="width:380px;" >
-        <div class="well">
-            <form class="form-inline" action="/board" method="get">
-                <div class="form-group">
-                    <label>房间名:</label>
-                    <input type="text" class="form-control" name="room" placeholder="创建或进入">
-                </div>
-                <button id='start-draw' type="submit" class="btn btn-primary" style="margin-left: 10px"><i class="fa fa-paper-plane"></i></button>
-            </form>
-        </div>
-    </div>
-<!--JSON Model-->
-    <div class="modal fade" id="JsonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" style="font-family: 微软雅黑; font-size: 13pt">JSON Code</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="json-value" bind-value-to="consoleJSON"> </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="copy-value">复制</button>
+            <!--画板最外层div scroll END-->
+
+        </div><!--/bd--wrapper-->
+
+        <!--Alert Modal -->
+        <!--清空操作 Alert-->
+        <div class="modal fade bs-example-modal-sm" id="myAlertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div align="center" class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <h4>Are you sure to do this?!</h4>
+                    <!--<p>清空后将不可恢复</p>-->
+                    <br>
+                    <p >
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmClear()">Yes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
-</body>
-	<script>
-        var apiKey='<%= apiKey%>';
-        var userName ='<%= userName%>';
-        var userId ='<%= userId%>';
-	</script>
+        <!--清空操作 Alert END-->
+
+        <!--不支持canvas Alert-->
+        <div class="modal fade bs-example-modal-sm" id="myUnsptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div align="center" class="alert alert-warning alert-dismissible fade in" role="alert">
+                    <p class="my-font" style="font-family: 微软雅黑">您的浏览器可能<strong>不支持</strong>此操作！</p>
+                </div>
+            </div>
+        </div>
+        <!--不支持canvas Alert END-->
+        <!--Alert Modal END-->
+
+        <!--Save Model-->
+        <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" style="font-family: 微软雅黑; font-size: 13pt">文件名：</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input id='filename' type='text' size="30">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button id='confirmSave' type="button" class="btn btn-info" data-dismiss="modal"
+                                ng-click="saveFile()">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Save Model END-->
+
+        <!--Share room-->
+        <div class="collapse" id="collapseShareRoom" style="width:380px;" >
+            <div class="well">
+                <form class="form-inline" action="/board" method="get">
+                    <div class="form-group">
+                        <label>房间名:</label>
+                        <input type="text" class="form-control" name="room" placeholder="创建或进入">
+                    </div>
+                    <button id='start-draw' type="submit" class="btn btn-primary" style="margin-left: 10px"><i class="fa fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+        <!--Share room END-->
+
+        <!--JSON Modal-->
+        <div class="modal fade" id="JsonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" style="font-family: 微软雅黑; font-size: 13pt">JSON Code</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="json-value" bind-value-to="consoleJSON"> </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="copy-value">复制</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--JSON Modal END-->
+    </body>
 	<script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
 	<script src='/app_3th_js/angular/angular.min.js'></script>
 	<script src='/app_3th_js/bootstrap/bootstrap.js'></script>
@@ -375,6 +406,9 @@
     <script src='/app_ui_js/ConfigBoard.js'></script>
     <script src='/app_ui_js/EditBoard.js'></script>
 	<script>
+        var apiKey='<%= apiKey%>';
+        var userName ='<%= userName%>';
+        var userId ='<%= userId%>';
         var spaceKeyDown = false,
                 panning = false,
                 mouseXOnPan = 0,
@@ -396,7 +430,11 @@
             };
             editBoard.communication.loadFile(queryObj, Utils.bind(editBoard,editBoard.resetBoard));
         }
-        var canvasCtn = _('canvasContainer');
+        var canvasCtns =document.getElementsByClassName('canvas-container');
+        var canvasCtnEl = canvasCtns[0];
+        var o_style = canvasCtnEl.getAttribute('style');
+        canvasCtnEl.setAttribute('style',o_style+' position:absolute;left: 384px;top:184px');
+        console.log(canvasCtnEl);
         var canvas = editBoard.__canvas;
         var socket = editBoard.__socket;
         var SerializeShapes = editBoard.serializeShapes;

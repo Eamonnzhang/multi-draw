@@ -1,44 +1,126 @@
-body{  font-family:微软雅黑 ;background: #F4F6F8;}
-#bd-wrapper {position: relative; }
-#canvas-col{
-    margin-right: 100px;
-    margin-left: 300px;
-    overflow:scroll;
-    width: 1400px;
-    height: 900px;
-    background-color:#E1E3EF ;
-    margin-top:60px;
-
+body{
+    font-family:微软雅黑 ;
+    background: #F4F6F8;
 }
+
+/*#bd-wrapper {*/
+    /*position: relative;*/
+/*}*/
+
+#canvas-col{
+    position: absolute;
+    overflow:scroll;
+    right: 10px;
+    left: 180px;
+    bottom: 20px;
+    /*top:60px;*/
+    height: 90%;
+    background-color:#E1E3EF ;
+    /*margin:60px 100px 0px 300px;*/
+}
+
 #canvasCtn{
-    width: 1500px;
+    position: relative;
+    width: 1700px;
     height: 1000px;
 }
-ul { margin-left: 0; }
-label { display: inline-block; margin-right: 8px; }
-button.selected { font-weight: bold; vertical-align: top }
-textarea { font-family: monospace; }
-input[type=color] { width: 40px; padding: 0; margin: 0; height: 20px; position: relative; top: 2px;}
-input[type=radio] { margin-top: -3px; }
-/*canvas{  border: solid 2px;margin-top:20px;  }*/
-#canvas-background { position: absolute; top: 69px; right: 40px; }
-#roomId{color:#5BC0DE;}
-#modeBtn button{margin:10px}
-.testBtn{  display:none;}
-.brand-title{  font-family:Times New Roman;  font-style:italic;  font-size: 15pt;  }
-.my-navbar {  background-color: #ffffff;  margin-bottom: 0px}
-.toolbar{width:100%;position:fixed;z-index:99;top:50px}
-.overflow{  overflow-y:hidden;  }
-#json-value{overflow: auto}
-.my-font {font-family: ΢微软雅黑}
-#controls{margin-left: 20px;padding:0px;}
-#color-opacity-controls label{margin-top:10px}
-#text-wrapper textarea {width:120px;height: 80px;margin-top:10px }
-#font-family {width:100px}
-#text-controls label{margin-top:10px}
-#drawing-mode-options { margin-right: 30px}
-#drawing-mode-options label {margin-top:10px}
-#text-cmd-overline { text-decoration: overline; }
+ul {
+    margin-left: 0;
+}
+
+label {
+    display: inline-block; margin-right: 8px;
+}
+
+button.selected {
+    font-weight: bold; vertical-align: top
+}
+
+textarea {
+    font-family: monospace;
+}
+
+input[type=color] {
+    width: 40px; padding: 0; margin: 0; height: 20px; position: relative; top: 2px;
+}
+
+input[type=radio] {
+    margin-top: -3px;
+}
+
+#roomId {
+    color:#5BC0DE;
+}
+
+#modeBtn button {
+    margin:10px
+}
+
+.testBtn {
+    /*display:none;*/
+}
+
+.brand-title {
+    font-family:Times New Roman;  font-style:italic;  font-size: 15pt;
+}
+
+.my-navbar {
+    background-color: #ffffff;
+    margin-bottom: 0px
+}
+
+.toolbar{
+    width:100%;
+    position:fixed;
+    z-index:99;
+    top:50px
+}
+
+.overflow{
+    overflow-y:hidden;
+}
+
+#json-value{
+    overflow: auto
+}
+
+.my-font {
+    font-family: ΢微软雅黑
+}
+
+#controls{
+    margin-left: 20px;padding:0px;;
+}
+
+#color-opacity-controls label{
+    margin-top:10px
+}
+
+#text-wrapper textarea {
+    width:120px;
+    height: 80px;
+    margin-top:10px
+}
+
+#font-family {
+    width:100px
+}
+
+#text-controls label {
+    margin-top:10px
+}
+
+#drawing-mode-options {
+    margin-right: 30px
+}
+
+#drawing-mode-options label {
+    margin-top:10px
+}
+
+#text-cmd-overline {
+    text-decoration: overline;
+}
 
 /*三级菜单相关CSS*/
 

@@ -936,8 +936,8 @@ function watchCanvas($scope) {
                 panning = true;
                 mouseXOnPan = event.clientX;
                 mouseYOnPan = event.clientY;
-                canvasXOnPan = canvasCtn.offsetLeft;
-                canvasYOnPan = canvasCtn.offsetTop;
+                canvasXOnPan = canvasCtnEl.offsetLeft;
+                canvasYOnPan = canvasCtnEl.offsetTop;
             }
         }else {
             var obj = e.target;
@@ -963,11 +963,8 @@ function watchCanvas($scope) {
 
     function dragCanvas(){
         if ( panning && spaceKeyDown) {
-            canvasCtn.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
-            canvasCtn.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan ) + 'px';
-            //canvas.renderAll();
-            //container.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
-            //container.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan ) + 'px';
+            canvasCtnEl.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
+            canvasCtnEl.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan ) + 'px';
         }
     }
 
