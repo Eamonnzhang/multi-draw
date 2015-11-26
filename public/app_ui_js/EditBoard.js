@@ -13,7 +13,7 @@ var EditBoard = function (){
     var canvas = this.__canvas = new fabric.Canvas('c', {
         backgroundColor :"#ffffff",
         width:800,
-        height:600,
+        height:540,
         allowTouchScrolling:true
     });
     var configBoard = new ConfigBoard(this);

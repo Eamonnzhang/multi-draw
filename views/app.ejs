@@ -162,6 +162,10 @@
             <!--左侧配置选项-->
             <div  id="controls">
                 <div id='optionDiv'>
+                    <div id="canvas-background">
+                        <label for="canvas-background-picker">画板背景色:</label>
+                        <input type="color" bind-value-to="canvasBgColor">
+                    </div>
                     <!--自由绘画选项-->
                     <div id="drawing-mode-options" ng-show="getFreeDrawingMode()">
                         <label for="drawing-mode-selector">画笔:</label><br>
@@ -191,10 +195,6 @@
                     </div>
                     <!--自由绘画选项END-->
 
-                    <div id="canvas-background">
-                        <label for="canvas-background-picker">画板背景色:</label>
-                        <input type="color" bind-value-to="canvasBgColor">
-                    </div>
 
                     <!--配置透明度-->
                     <div id="color-opacity-controls"  ng-show="canvas.getActiveObject()">
