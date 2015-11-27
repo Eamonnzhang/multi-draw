@@ -19,7 +19,21 @@ var EditBoard = function (){
         height:460,
         allowTouchScrolling:true
     });
+
     var configBoard = new ConfigBoard(this);
+
+    $('#picker').colpick({
+        layout:'hex',
+        onSubmit: function(hsb,hex,rgb,el) {
+            canvas.backgroundColor = '#'+hex;
+            if(hex =='ffffff')
+                $(el).css('color', '#777777');
+            else
+                $(el).css('color', '#'+hex);
+            $(el).colpickHide();
+            canvas.renderAll();
+        }
+    });
 
     //监听window的缩放事件 使滚动条居中
     window.onresize = Utils.bind(configBoard,configBoard.resizeCanvas);
@@ -66,7 +80,6 @@ var EditBoard = function (){
         canvas.setHeight(canvas.getHeight()/1.2);
         canvasCtner.style.width = (canvasCtner.offsetWidth)/1.2+'px';
         canvasCtner.style.height = (canvasCtner.offsetHeight)/1.2+'px';
-        //console.log(canvasCtner.style.width);
         configBoard.resetCanvas();
     };
 

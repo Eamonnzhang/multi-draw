@@ -16,6 +16,7 @@ body{
     /*top:60px;*/
     height: 90%;
     background-color:#E1E3EF ;
+    z-index: -1;
     /*margin:60px 100px 0px 300px;*/
 }
 
@@ -72,8 +73,8 @@ input[type=radio] {
 
 .toolbar{
     width:100%;
-    position:fixed;
-    z-index:99;
+    position:absolute;
+    /*z-index: 1;*/
     top:50px
 }
 

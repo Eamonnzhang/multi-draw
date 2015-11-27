@@ -25,13 +25,7 @@ ConfigBoard.prototype.resizeCanvas = function () {
     //_('canvas-col').setAttribute('style','margin-top:80px;');
 
     //reset canvasScroll
-
     this.resetScroll();
-
-    //console.log('height: '+h+",width: "+w);
-    //console.log('scroll height: '+sh);
-    //console.log('offsetheight: '+sofH);
-
 
     //resize sideBar
     var sideBarHeight= $(window).height()-150;
@@ -95,16 +89,16 @@ ConfigBoard.prototype.initKeyBoard = function () {
             }
         }
         if(key === 17){ //实际上为Ctrl键
-            if(!spaceKeyDown){
-                spaceKeyDown = true;
+            if(!ctrlKeyDown){
+                ctrlKeyDown = true;
             }
         }
     }
     function KeyUp(){
         var key = event.keyCode;
         if(key === 17){
-            if(spaceKeyDown)
-                spaceKeyDown = false;
+            if(ctrlKeyDown)
+                ctrlKeyDown = false;
         }
     }
 };

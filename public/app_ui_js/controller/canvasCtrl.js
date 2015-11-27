@@ -895,7 +895,7 @@ function watchCanvas($scope) {
         //console.log(e.target);
     }
     function addPath(e){
-        if(!spaceKeyDown){
+        if(!ctrlKeyDown){
             updateScope();
             var path = e.path;
             var data = SerializeShapes.serializePath(path);
@@ -929,7 +929,7 @@ function watchCanvas($scope) {
             }
     }
     function listenMouseDown(e){
-        if(spaceKeyDown){
+        if(ctrlKeyDown){
             if(canvas.isDrawingMode){
                 console.log('no drag');
             }else{
@@ -962,7 +962,7 @@ function watchCanvas($scope) {
     }
 
     function dragCanvas(){
-        if ( panning && spaceKeyDown) {
+        if ( panning && ctrlKeyDown) {
             canvasCtnEl.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
             canvasCtnEl.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan ) + 'px';
         }
