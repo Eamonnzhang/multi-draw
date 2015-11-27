@@ -405,7 +405,6 @@
 	<script src='/socket.io/socket.io.js'></script>
 	<script src='/app_3th_js/fabric/fabric.min.js'></script>
     <script src="/app_ui_js/utils.js"></script>
-
 	<script src='/app_util_js/util.js'></script>
 	<script src='/app_ui_js/Communication.js'></script>
 	<script src='/app_ui_js/SerializeShapes.js'></script>
@@ -418,11 +417,11 @@
         var spaceKeyDown = false,
                 panning = false,
                 mouseXOnPan = 0,
+                mouseYOnPan = 0,
                 mouseX = 0,
                 mouseY = 0,
                 oldMouseX = 0,
                 oldMouseY = 0,
-                mouseYOnPan = 0,
                 canvasXOnPan = 0,
                 canvasYOnPan = 0;
         var _ = function(id){return document.getElementById(id)};

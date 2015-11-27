@@ -3,6 +3,7 @@
  */
 var ConfigBoard = function (editBoard) {
     this.editBoard = editBoard;
+    var me = this;
 
 };
 
@@ -23,18 +24,10 @@ ConfigBoard.prototype.resizeCanvas = function () {
     //    this.editBoard.__canvas.setWidth($(window).width()+85-$("#controls").width()-150);
     //_('canvas-col').setAttribute('style','margin-top:80px;');
 
-    //reset canvas
+    //reset canvasScroll
 
-    var canvasCol = document.getElementById('canvas-col');
-    var sh= canvasCol.scrollHeight;
-    var sfh = canvasCol.offsetHeight;
-    var sTop = (sh-sfh)/2;
+    this.resetScroll();
 
-    var sw= canvasCol.scrollWidth;
-    var sfw = canvasCol.offsetWidth;
-    var sLeft = (sw-sfw)/2;
-    $('#canvas-col').scrollTop(sTop);
-    $('#canvas-col').scrollLeft(sLeft);
     //console.log('height: '+h+",width: "+w);
     //console.log('scroll height: '+sh);
     //console.log('offsetheight: '+sofH);
@@ -53,12 +46,25 @@ ConfigBoard.prototype.resizeCanvas = function () {
 };
 
 ConfigBoard.prototype.resetCanvas = function () {
-    var left = (2000-this.editBoard.__canvas.width)/2;
-    var top = (2000-this.editBoard.__canvas.height)/2;
+    var left = (this.editBoard.__canvasCtner.offsetWidth-this.editBoard.__canvas.width)/2;
+    var top = (this.editBoard.__canvasCtner.offsetWidth-this.editBoard.__canvas.height)/2;
     this.editBoard.canvasCtnEl.style.top=top+'px';
     this.editBoard.canvasCtnEl.style.left=left+'px';
+    this.resetScroll();
 };
 
+ConfigBoard.prototype.resetScroll = function () {
+    var canvasCol = document.getElementById('canvas-col');
+    var sh= canvasCol.scrollHeight;
+    var sfh = canvasCol.offsetHeight;
+    var sTop = (sh-sfh)/2;
+
+    var sw= canvasCol.scrollWidth;
+    var sfw = canvasCol.offsetWidth;
+    var sLeft = (sw-sfw)/2;
+    $('#canvas-col').scrollTop(sTop);
+    $('#canvas-col').scrollLeft(sLeft);
+}
 
 ConfigBoard.prototype.initKeyBoard = function () {
     var ie;

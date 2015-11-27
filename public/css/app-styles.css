@@ -9,7 +9,7 @@ body{
 
 #canvas-col{
     position: absolute;
-    overflow:scroll;
+    overflow:auto;
     right: 10px;
     left: 180px;
     bottom: 20px;

@@ -10,6 +10,7 @@ var EditBoard = function (){
         consoleInfo = _('console-info');
     this.communication = new Communication();
     this.serializeShapes = new SerializeShapes();
+    var canvasCtner = this.__canvasCtner = _('canvasCtn');
     var zoomIn = _('zoom-in');
     var zoomOut = _('zoom-out');
     var canvas = this.__canvas = new fabric.Canvas('c', {
@@ -21,7 +22,7 @@ var EditBoard = function (){
     var configBoard = new ConfigBoard(this);
 
     //监听window的缩放事件 使滚动条居中
-    window.onresize = configBoard.resizeCanvas;
+    window.onresize = Utils.bind(configBoard,configBoard.resizeCanvas);
     configBoard.initKeyBoard();
     configBoard.resizeCanvas();
 
@@ -63,6 +64,9 @@ var EditBoard = function (){
         canvas.setZoom(canvas.getZoom()/1.2);
         canvas.setWidth(canvas.getWidth()/1.2);
         canvas.setHeight(canvas.getHeight()/1.2);
+        canvasCtner.style.width = (canvasCtner.offsetWidth)/1.2+'px';
+        canvasCtner.style.height = (canvasCtner.offsetHeight)/1.2+'px';
+        //console.log(canvasCtner.style.width);
         configBoard.resetCanvas();
     };
 
@@ -70,6 +74,8 @@ var EditBoard = function (){
         canvas.setZoom(canvas.getZoom()*1.2);
         canvas.setWidth(canvas.getWidth()*1.2);
         canvas.setHeight(canvas.getHeight()*1.2);
+        canvasCtner.style.width = (canvasCtner.offsetWidth)*1.2+'px';
+        canvasCtner.style.height = (canvasCtner.offsetHeight)*1.2+'px';
         configBoard.resetCanvas();
     };
 
