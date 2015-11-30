@@ -7,23 +7,19 @@ var socket = require('./socket.js');
 var dataSource = require('./app_db/dataSource.js');
 var config = require('./config.json');
 
-/**
- * Èç¹û×îÖÕĞèÒªÊı¾İ¿âµÄ»°£¬¿ÉÒÔ°ÑÒÔÏÂ²¿·ÖÌí¼Óµ½Á¬½ÓÊı¾İ¿âµÄ»Øµ÷º¯ÊıÀï
- */
+
 dataSource.connectDb(config.dbUrl,function(){
-    var app = require('./config'); //»ñÈ¡Æô¶¯appµÄ»ù±¾ÅäÖÃĞÅÏ¢£¬Êµ¼ÊÉÏ¾ÍÊÇexpress¶ÔÏó
-    app = require('./routes/root')(app); //°Ñ»ñÈ¡µÄapp´«µ½rootµÄ²ÎÊıÀï£¬½øĞĞ¶Ôapp½øĞĞÂ·ÓÉµÄÅäÖÃ,ÓĞµã¶ùÃæÏò¹ı³ÌµÄ¸Ğ¾õ
+    var app = require('./config'); //è·å–å¯åŠ¨appçš„åŸºæœ¬é…ç½®ä¿¡æ¯ï¼Œå®é™…ä¸Šå°±æ˜¯expresså¯¹è±¡
+    app = require('./routes/root')(app); //æŠŠè·å–çš„appä¼ åˆ°rootçš„å‚æ•°é‡Œï¼Œè¿›è¡Œå¯¹appè¿›è¡Œè·¯ç”±çš„é…ç½®,æœ‰ç‚¹å„¿é¢å‘è¿‡ç¨‹çš„æ„Ÿè§‰
 
     var port = normalizePort(process.env.PORT || '4500');
     app.set('port', port);
-
 
     /**
      * Create HTTP server.
      */
     var server = http.createServer(app);
     socket.startSocketIo(server);
-
 
     /**
      * Listen on provided port, on all network interfaces.

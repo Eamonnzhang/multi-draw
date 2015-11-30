@@ -3,7 +3,6 @@
  */
 var ConfigBoard = function (editBoard) {
     this.editBoard = editBoard;
-    var me = this;
 
 };
 
@@ -30,18 +29,18 @@ ConfigBoard.prototype.resizeCanvas = function () {
     //resize sideBar
     var sideBarHeight= $(window).height()-150;
     if($(window).height()<870&&$(window).width()>950){ //less height
-        _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;width:120px;overflow-y:auto;overflow-x:hidden;position:fixed;top:90px;');
+        _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;overflow-y:auto;width:145px;overflow-x:hidden;position:fixed;top:90px;');
     }else if($(window).height()>=870&&$(window).width()<=950){ //less width
-        _('optionDiv').setAttribute('style','width:120px;overflow-x:auto;overflow-y:hidden;position:fixed;top:130px;');
+        _('optionDiv').setAttribute('style','overflow-y:hidden;position:fixed;top:130px;');
     }else if($(window).height()<870&&$(window).width()<=950){ //both less
-        _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;width:120px;overflow-x:auto;overflow-y:auto;position:fixed;top:130px;');
+        _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;width:145px;overflow-x:hidden;overflow-y:auto;position:fixed;top:130px;');
     }else //normal
         _('optionDiv').setAttribute('style','position:fixed;top:90px;');
 };
 
 ConfigBoard.prototype.resetCanvas = function () {
     var left = (this.editBoard.__canvasCtner.offsetWidth-this.editBoard.__canvas.width)/2;
-    var top = (this.editBoard.__canvasCtner.offsetWidth-this.editBoard.__canvas.height)/2;
+    var top = (this.editBoard.__canvasCtner.offsetHeight-this.editBoard.__canvas.height)/2;
     this.editBoard.canvasCtnEl.style.top=top+'px';
     this.editBoard.canvasCtnEl.style.left=left+'px';
     this.resetScroll();

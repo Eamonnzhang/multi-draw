@@ -2,15 +2,15 @@ var canvasData = {};
 canvasData.pathData = [];
 canvasData.textData = [];
 canvasData.geometryData = [];
+canvasData.imgData=[];
 canvasData.usersId = [];
 
+//为文字编辑绑定事件
 function setITextFire(iText,$scope){
     iText.on('editing:entered', function (e) {
-        console.log(e);
         console.log('editing:entered');
     });
     iText.on('editing:exited', function (e) {
-        console.log(e);
         console.log('editing:exited');
     });
     iText.on('selection:changed', function () {
@@ -20,10 +20,20 @@ function setITextFire(iText,$scope){
     });
 }
 
+//记录进入canvas的所有用户ID
 function addUsers(obj){
     if (canvasData.usersId.indexOf(obj.userId) === -1) {
         canvasData.usersId.push(obj.userId);
     }
+}
+
+//为当前canvas的对象添加必要的属性
+function prepareObj(obj,n_obj){
+    obj.id = n_obj.id;
+    obj.userId = n_obj.userId;
+    obj.userName = n_obj.userName;
+    obj.createTime = n_obj.createTime;
+    obj.lastModify = n_obj.lastModify;
 }
 
 function addGeometryToCanvas(obj){
@@ -49,12 +59,13 @@ function getActiveStyle(styleName, object) {
         : (object[styleName] || '');
 }
 
+//设置对象样式
 function setActiveStyle(styleName, value, object) {
     object = object || canvas.getActiveObject();
     if (!object) return;
 
     if (object.setSelectionStyles && object.isEditing) {
-        console.log('setSelectionStyles');
+        //console.log('setSelectionStyles');
         var style = { };
         style[styleName] = value;
         object.setSelectionStyles(style);
@@ -81,6 +92,7 @@ function getActiveProp(name) {
     return object[name] || '';
 }
 
+//设置对象属性
 function setActiveProp(name, value) {
     console.log('setActiveProp');
     var object = canvas.getActiveObject();
@@ -253,7 +265,8 @@ function addAccessors($scope) {
             height: 50
         });
         var sRect = SerializeShapes.serializeRect(rect);
-        rect.id = sRect.id;
+        //rect.id = sRect.id;
+        prepareObj(rect,sRect);
         canvas.add(rect);
         if(roomId){
             socket.emit('addGeometry',sRect);
@@ -269,7 +282,8 @@ function addAccessors($scope) {
             radius: 50
         });
         var sCircle = SerializeShapes.serializeCircle(circle);
-        circle.id = sCircle.id;
+        //circle.id = sCircle.id;
+        prepareObj(circle,sCircle);
         canvas.add(circle);
         if(roomId){
             socket.emit('addGeometry',sCircle);
@@ -286,7 +300,8 @@ function addAccessors($scope) {
             height: 50
         });
         var sTriangle = SerializeShapes.serializeTriangle(triangle);
-        triangle.id = sTriangle.id;
+        //triangle.id = sTriangle.id;
+        prepareObj(triangle,sTriangle);
         canvas.add(triangle);
         if(roomId){
             socket.emit('addGeometry',sTriangle);
@@ -301,14 +316,15 @@ function addAccessors($scope) {
             stroke: '#' + 000000
         });
         var sLine = SerializeShapes.serializeLine(line);
-        line.id = sLine.id;
+        //line.id = sLine.id;
+        prepareObj(line,sLine);
         canvas.add(line);
         if(roomId){
             socket.emit('addGeometry',sLine);
         }
     };
 
-    //$scope.addPolygon = function() {
+    //$scope.addPolygon = function() {  //多边形
     //    var coord = getRandomLeftTop();
     //
     //    canvas.add(new fabric.Polygon([
@@ -334,10 +350,11 @@ function addAccessors($scope) {
             hasRotatingPoint: true,
             centerTransform: true
         });
-        var text = SerializeShapes.serializeText(textSample);
-        textSample.id = text.id;
+        var sText = SerializeShapes.serializeText(textSample);
+        //textSample.id = text.id;
+        prepareObj(textSample,sText);
         if(roomId){
-            socket.emit('addText',text);
+            socket.emit('addText',sText);
         }
         setITextFire(textSample,this);
         canvas.add(textSample);
@@ -367,20 +384,59 @@ function addAccessors($scope) {
         }
     };
 
-    function addImage(imageName, minScale, maxScale) {
+    //function addImage(imageName, minScale, maxScale) {
+    //    var coord = getRandomLeftTop();
+    //    fabric.Image.fromURL('../images/' + imageName, function(image) {
+    //        image.set({
+    //            left: coord.left,
+    //            top: coord.top,
+    //            angle: getRandomInt(-10, 10)
+    //        }).scale(getRandomNum(minScale, maxScale)).setCoords();
+    //        canvas.add(image);
+    //    });
+    //};
+
+    function addImage(imgData, minScale, maxScale) {
         var coord = getRandomLeftTop();
-        fabric.Image.fromURL('../images/' + imageName, function(image) {
+        fabric.Image.fromURL(imgData, function(image) {
+
             image.set({
                 left: coord.left,
-                top: coord.top,
-                angle: getRandomInt(-10, 10)
+                top: coord.top
+                //angle: getRandomInt(-10, 10)
             }).scale(getRandomNum(minScale, maxScale)).setCoords();
+            var sImage = SerializeShapes.serializeImage(imgData,image);
+            prepareObj(image,sImage);
+            if(roomId){
+                socket.emit('addImage',sImage);
+            }
             canvas.add(image);
         });
     };
 
+    _('image').addEventListener('change', function() {
+        if (this.files.length != 0) {
+            var file = this.files[0],
+                reader = new FileReader();
+            if (!reader) {
+                alert('your browser doesn\'t support fileReader');
+                this.value = '';
+                return;
+            };
+            reader.onload = function(e) {
+                this.value = '';
+                console.log(e.target.result);
+                addImage(e.target.result,0.5,1);
+                //socket.emit('img', e.target.result);
+                //that._displayImage('me', e.target.result, color);
+            };
+            reader.readAsDataURL(file);
+        };
+    }, false);
+
     $scope.addImage1 = function() {
-        addImage('logo.png', 1, 0.5);
+        //addImage('logo.png', 1, 0.5);
+        _('image').click();
     };
 
     $scope.confirmClear = function() {
@@ -899,7 +955,8 @@ function watchCanvas($scope) {
             updateScope();
             var path = e.path;
             var data = SerializeShapes.serializePath(path);
-            path.id = data.id;
+            //path.id = data.id;
+            prepareObj(path,data);
             canvasData.pathData.push(data);
             if(canvasData.usersId.indexOf(data.userId) === -1){
                 canvasData.usersId.push(data.userId);
@@ -1016,6 +1073,20 @@ function initCanvasSocket($scope){
           });
       }
     });
+
+    socket.on('allImage',function(data){
+        if(data){
+            data.forEach(function (x) {
+                canvasData.imgData.push(x);
+                addUsers(x);
+                fabric.Image.fromURL(x.url, function (img) {
+                    img.set(x).setCoords();
+                    canvas.add(img);
+                });
+            });
+        }
+    });
+
     //监听其他用户画完path
     socket.on('addPath',function(data){
         canvasData.pathData.push(data);
@@ -1033,6 +1104,14 @@ function initCanvasSocket($scope){
 
     socket.on('addGeometry', function (data) {
         addGeometryToCanvas(data);
+    });
+
+    socket.on('addImage', function (data) {
+        canvasData.imgData.push(data);
+        fabric.Image.fromURL(data.url, function (image) {
+            image.set(data).setCoords();
+            canvas.add(image);
+        });
     });
 
     socket.on('userJoined',function(data){

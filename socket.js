@@ -6,6 +6,7 @@ var io=null;
 var pathRoom = {};
 var textRoom = {};
 var geometryRoom = {};
+var imgRoom = {};
 var userRoom = {};
 exports.getSocketIo = function(){
     return socket;
@@ -30,9 +31,12 @@ exports.startSocketIo = function(server){
                 textRoom[room]=[];
             if(geometryRoom[room]===null||geometryRoom[room]===undefined)
                 geometryRoom[room]=[];
+            if(imgRoom[room]===null||imgRoom[room]===undefined)
+                imgRoom[room]=[];
             socket.emit('allPath', pathRoom[room]);
             socket.emit('allText', textRoom[room]);
             socket.emit('allGeometry', geometryRoom[room]);
+            socket.emit('allImage', imgRoom[room]);
         });
 
         socket.on('queryUsers', function (data) {
@@ -78,6 +82,12 @@ exports.startSocketIo = function(server){
                     i--;
                 }
             }
+            for(var i =0;i<imgRoom[room].length;i++) {
+                if (data.indexOf(imgRoom[room][i].id) !== -1) {
+                    imgRoom[room].splice(i, 1);
+                    i--;
+                }
+            }
             socket.broadcast.to(room).emit('clearSelected', data);
         });
         socket.on('addPath',function(data){
@@ -93,6 +103,11 @@ exports.startSocketIo = function(server){
         socket.on('addGeometry',function(data){
             geometryRoom[room].push(data);
             socket.broadcast.to(room).emit('addGeometry', data);
+        });
+
+        socket.on('addImage', function (data) {
+            imgRoom[room].push(data);
+            socket.broadcast.to(room).emit('addImage',data);
         });
 
         socket.on('stateChange',function(data){
@@ -117,6 +132,13 @@ exports.startSocketIo = function(server){
                     }
                 }
             }
+            for(var i =0;i<imgRoom[room].length;i++) {
+                if (data.id === imgRoom[room][i].id) {
+                    for(var p in data){
+                        imgRoom[room][i][p] = data[p];
+                    }
+                }
+            }
             socket.broadcast.to(room).emit('stateChange', data);
         });
 
@@ -134,6 +156,12 @@ exports.startSocketIo = function(server){
             for(var i =0;i<geometryRoom[room].length;i++) {
                 if (data.id === geometryRoom[room][i].id) {
                     geometryRoom[room][i][data.styleName] = data.value;
+                }
+            }
+
+            for(var i =0;i<imgRoom[room].length;i++) {
+                if (data.id === imgRoom[room][i].id) {
+                    imgRoom[room][i][data.styleName] = data.value;
                 }
             }
             socket.broadcast.to(room).emit('styleChange', data);

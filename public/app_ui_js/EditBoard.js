@@ -2,11 +2,12 @@
  * Created by Eamonn on 2015/9/26.
  */
 var EditBoard = function (){
+    var me = this;
     this.__socket = io.connect('http://192.168.1.81:4500');
     var drawingModeEl =this.__drawingModeEl= _('drawing-mode'),
         test = _('test'),
         copy = _('copy-value'),
-        //canvasEl = this.__canvasEl= _('c'),
+        uploadImage = _('image'),
         consoleInfo = _('console-info');
     this.communication = new Communication();
     this.serializeShapes = new SerializeShapes();
@@ -35,6 +36,7 @@ var EditBoard = function (){
         }
     });
 
+
     //监听window的缩放事件 使滚动条居中
     window.onresize = Utils.bind(configBoard,configBoard.resizeCanvas);
     configBoard.initKeyBoard();
@@ -45,7 +47,7 @@ var EditBoard = function (){
     this.canvasCtnEl = canvasCtns[0];
     var o_style = this.canvasCtnEl.getAttribute('style');
     var left = (2000-this.__canvas.width)/2;
-    var top = (2000-this.__canvas.height)/2;
+    var top = (1700-this.__canvas.height)/2;
     this.canvasCtnEl.setAttribute('style',o_style+' position:absolute;left: '+left+'px;top:'+top+'px');
 
     fabric.Object.prototype.transparentCorners = false;

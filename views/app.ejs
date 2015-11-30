@@ -51,25 +51,25 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">插入 <span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-text-size" style="padding-right: 15px"></span>文字</a></li>
-                                    <li><a  href="javascript:void(0)" ng-click="addImage1()"><span class="glyphicon glyphicon-picture" style="padding-right: 15px"></span>图片</a></li>
-                                    <li><a  href="javascript:void(0)" ng-click="" ><span class="glyphicon glyphicon-facetime-video" style="padding-right: 15px"></span>视频</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li class="dropdown-submenu">
-                                        <a tabindex="-1" href="#"><span class="fa fa-pie-chart" style="padding-right: 15px"></span>图形</a>
-                                        <ul class="dropdown-menu">
-                                            <li type="button" ng-click="addRect()" class="btn" style="margin-left: 33px">矩形</li>
-                                            <li type="button" ng-click="addTriangle()" class="btn" style="margin-left: 33px">三角形</li>
-                                            <li type="button" ng-click="addCircle()" class="btn" style="margin-left: 33px">圆形</li>
-                                            <!--<li type="button" ng-click="addPolygon()" class="btn" style="margin-left: 33px">多边形</li>-->
-                                            <li type="button" ng-click="addLine()" class="btn" style="margin-left: 33px">直线</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+                            <!--<li class="dropdown">-->
+                                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">插入 <span class="caret"></span></a>-->
+                                <!--<ul class="dropdown-menu" role="menu">-->
+                                    <!--<li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-text-size" style="padding-right: 15px"></span>文字</a></li>-->
+                                    <!--<li><a  href="javascript:void(0)" ng-click="addImage1()"><span class="glyphicon glyphicon-picture" style="padding-right: 15px"></span>图片</a></li>-->
+                                    <!--<li><a  href="javascript:void(0)" ng-click="" ><span class="glyphicon glyphicon-facetime-video" style="padding-right: 15px"></span>视频</a></li>-->
+                                    <!--<li role="separator" class="divider"></li>-->
+                                    <!--<li class="dropdown-submenu">-->
+                                        <!--<a tabindex="-1" href="#"><span class="fa fa-pie-chart" style="padding-right: 15px"></span>图形</a>-->
+                                        <!--<ul class="dropdown-menu">-->
+                                            <!--<li type="button" ng-click="addRect()" class="btn" style="margin-left: 33px">矩形</li>-->
+                                            <!--<li type="button" ng-click="addTriangle()" class="btn" style="margin-left: 33px">三角形</li>-->
+                                            <!--<li type="button" ng-click="addCircle()" class="btn" style="margin-left: 33px">圆形</li>-->
+                                            <!--&lt;!&ndash;<li type="button" ng-click="addPolygon()" class="btn" style="margin-left: 33px">多边形</li>&ndash;&gt;-->
+                                            <!--<li type="button" ng-click="addLine()" class="btn" style="margin-left: 33px">直线</li>-->
+                                        <!--</ul>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                            <!--</li>-->
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href='' id="roomId" bind-value-to="roomId" data-toggle="collapse"></a></li>
@@ -106,6 +106,30 @@
                         ng-click="removeSelected()">
                     <i class="fa fa-trash fa-lg"></i>&nbsp;清除选中
                 </button>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="fa fa-plus"></span>&nbsp;插入 <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-text-size" style="padding-right: 15px"></span>文字</a></li>
+                        <li>
+                            <a  href="javascript:void(0)" ng-click="addImage1()" ><span class="glyphicon glyphicon-picture" style="padding-right: 15px"></span>图片</a>
+                            <input type="file" id="image" name="image" style="display: none;"/>
+                        </li>
+                        <li><a  href="javascript:void(0)" ng-click="" ><span class="glyphicon glyphicon-facetime-video" style="padding-right: 15px"></span>视频</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#"><span class="fa fa-pie-chart" style="padding-right: 15px"></span>图形</a>
+                            <ul class="dropdown-menu">
+                                <li type="button" ng-click="addRect()" class="btn" style="margin-left: 33px">矩形</li>
+                                <li type="button" ng-click="addTriangle()" class="btn" style="margin-left: 33px">三角形</li>
+                                <li type="button" ng-click="addCircle()" class="btn" style="margin-left: 33px">圆形</li>
+                                <!--<li type="button" ng-click="addPolygon()" class="btn" style="margin-left: 33px">多边形</li>-->
+                                <li type="button" ng-click="addLine()" class="btn" style="margin-left: 33px">直线</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-lock"></i>&nbsp;锁定
@@ -163,6 +187,8 @@
                         ng-click="clip()">
                     <i class="fa fa-scissors fa-lg"></i>&nbsp;修剪
                 </button>
+                <button id="console-info" class="btn btn-default ">Info</button>
+                <button id="test" class="btn btn-default ">test</button><br>
             </div>
             <!--工具条END-->
 
@@ -295,10 +321,10 @@
                     </div>
                     <!--编辑文字END-->
                     <!--测试按钮-->
-                    <div class = 'testBtn'>
-                        <button id="console-info" class="btn btn-default btn-sm">Console Info</button>
-                        <button id="test" class="btn btn-default btn-sm">test</button><br>
-                    </div>
+                    <!--<div class = 'testBtn'>-->
+                        <!--<button id="console-info" class="btn btn-default btn-sm">Console Info</button>-->
+                        <!--<button id="test" class="btn btn-default btn-sm">test</button><br>-->
+                    <!--</div>-->
                     <!--测试按钮 END-->
                 </div>
                 <!--optionDiv END-->
@@ -426,6 +452,11 @@
                 oldMouseY = 0,
                 canvasXOnPan = 0,
                 canvasYOnPan = 0;
+//        $('a').on('click', function(e) {
+//            console.log(e);
+////            e.preventDefault();
+//            $(this).closest('input[type=file]').trigger('click');
+//        })
         var _ = function(id){return document.getElementById(id)};
         var urlParams = Utils.urlParams(window.location.href);
         if(urlParams['room']) var roomId = urlParams['room'];

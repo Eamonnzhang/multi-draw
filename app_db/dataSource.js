@@ -15,8 +15,6 @@ exports.connectDb=function(url, next){
             multidrawDb=dbInstance;
             next();
         }
-
-
     });
 };
 exports.getDB=function(){
