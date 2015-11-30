@@ -425,19 +425,71 @@ function addAccessors($scope) {
             };
             reader.onload = function(e) {
                 this.value = '';
-                console.log(e.target.result);
-                addImage(e.target.result,0.5,1);
-                //socket.emit('img', e.target.result);
-                //that._displayImage('me', e.target.result, color);
+                console.log(e.target);
+                var type = Utils.getDataUrlType(e.target.result);
+                console.log(type);
+                if(type === 'image')
+                    addImage(e.target.result,0.5,1);
             };
             reader.readAsDataURL(file);
         };
     }, false);
 
     $scope.addImage1 = function() {
-        //addImage('logo.png', 1, 0.5);
         _('image').click();
     };
+
+    $scope.addVideo1 = function() {
+        _('video').click();
+    };
+
+    _('video').addEventListener('change', function() {
+        if (this.files.length != 0) {
+            var file = this.files[0],
+                reader = new FileReader();
+            if (!reader) {
+                alert('your browser doesn\'t support fileReader');
+                this.value = '';
+                return;
+            };
+            reader.onload = function(e) {
+                this.value = '';
+                //console.log(e.target);
+                var type = Utils.getDataUrlType(e.target.result);
+                console.log(type);
+                if(type === 'video')
+                    addVideo(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        };
+    }, false);
+
+
+    function addVideo(url) {
+        var videoEl = document.createElement('video');
+        videoEl.setAttribute('src',url);
+        videoEl.setAttribute('style','display:none');
+        videoEl.setAttribute('width',"480");
+        videoEl.setAttribute('height',"240");
+        //var video2El = _('video2');
+        var video = new fabric.Image(videoEl, {
+            left: 100,
+            top: 100
+        });
+        var sVideo = SerializeShapes.serializeVideo(url,video);
+        prepareObj(video,sVideo);
+        if(roomId){
+            socket.emit('addVideo',sVideo);
+        }
+        canvas.add(video);
+        //console.log(video2.getElement());
+        //video2.getElement().setAttribute('controls','controls');
+        fabric.util.requestAnimFrame(function render() {
+            canvas.renderAll();
+            fabric.util.requestAnimFrame(render);
+        });
+    };
+    //addVideo();
 
     $scope.confirmClear = function() {
         if(roomId) socket.emit('clearAll','clearAll');
@@ -1012,7 +1064,16 @@ function watchCanvas($scope) {
                         //console.log('send lock');
                         socket.emit('lockState', obj.id);
                     }
-                    console.log(obj);
+                if(obj._element.tagName === 'VIDEO'){
+                    var myVideo = obj._element;
+                    //console.log(obj._element.prototype);
+                    if(myVideo.paused)
+                        myVideo.play();
+                    else
+                        myVideo.pause();
+                }
+                    //console.log(obj._element.tagName);
+                    //console.log(obj);
                 }
             }
         isMouseDown = true;
@@ -1111,6 +1172,20 @@ function initCanvasSocket($scope){
         fabric.Image.fromURL(data.url, function (image) {
             image.set(data).setCoords();
             canvas.add(image);
+        });
+    });
+
+    socket.on('addVideo', function (data) {
+        var videoEl = document.createElement('video');
+        videoEl.setAttribute('src',data.url);
+        videoEl.setAttribute('style','display:none');
+        videoEl.setAttribute('width',"480");
+        videoEl.setAttribute('height',"240");
+        var video = new fabric.Image(videoEl,data);
+        canvas.add(video);
+        fabric.util.requestAnimFrame(function render() {
+            canvas.renderAll();
+            fabric.util.requestAnimFrame(render);
         });
     });
 

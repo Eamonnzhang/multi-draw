@@ -110,6 +110,10 @@ exports.startSocketIo = function(server){
             socket.broadcast.to(room).emit('addImage',data);
         });
 
+        socket.on('addVideo', function (data) {
+            socket.broadcast.to(room).emit('addVideo',data);
+        });
+
         socket.on('stateChange',function(data){
             for(var i =0;i<pathRoom[room].length;i++) {
                 if (data.id === pathRoom[room][i].id) {

@@ -132,6 +132,17 @@ SerializeShapes.prototype.serializeImage = function(url,obj){
     return opt;
 };
 
+//关于视频
+SerializeShapes.prototype.serializeVideo = function(url,obj){
+    var opt = this.prepareSerializePosShapes(obj);
+    opt.scaleX = obj.scaleX;
+    opt.scaleY = obj.scaleY;
+    opt.url = url;
+    return opt;
+};
+
+
+
 //SerializeShapes.prototype.serializePolygon = function(obj){
 //    var opt = this.prepareSerializePosShapes(obj);
 //    opt.points = obj.points;

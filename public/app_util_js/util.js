@@ -93,5 +93,9 @@ var Utils = {
             queryStr = '?' + queryStr;
         }
         return queryStr;
+    },
+
+    getDataUrlType : function (url) {
+        return url.substring(5,url.indexOf('/'));
     }
 };
