@@ -16,8 +16,8 @@ var EditBoard = function (){
     var zoomOut = _('zoom-out');
     var canvas = this.__canvas = new fabric.Canvas('c', {
         backgroundColor :"#ffffff",
-        width:680,
-        height:460,
+        width:750,
+        height:530,
         allowTouchScrolling:true
     });
 
@@ -47,7 +47,7 @@ var EditBoard = function (){
     this.canvasCtnEl = canvasCtns[0];
     var o_style = this.canvasCtnEl.getAttribute('style');
     var left = (2000-this.__canvas.width)/2;
-    var top = (1700-this.__canvas.height)/2;
+    var top = (1500-this.__canvas.height)/2;
     this.canvasCtnEl.setAttribute('style',o_style+' position:absolute;left: '+left+'px;top:'+top+'px');
 
     fabric.Object.prototype.transparentCorners = false;

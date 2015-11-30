@@ -466,12 +466,13 @@ function addAccessors($scope) {
 
 
     function addVideo(url) {
+        var parent = document.createElement('div');
         var videoEl = document.createElement('video');
         videoEl.setAttribute('src',url);
         videoEl.setAttribute('style','display:none');
         videoEl.setAttribute('width',"480");
         videoEl.setAttribute('height',"240");
-        //var video2El = _('video2');
+        parent.appendChild(videoEl);
         var video = new fabric.Image(videoEl, {
             left: 100,
             top: 100
@@ -482,13 +483,21 @@ function addAccessors($scope) {
             socket.emit('addVideo',sVideo);
         }
         canvas.add(video);
-        //console.log(video2.getElement());
-        //video2.getElement().setAttribute('controls','controls');
         fabric.util.requestAnimFrame(function render() {
             canvas.renderAll();
             fabric.util.requestAnimFrame(render);
         });
     };
+
+    function removeVideoEl(el){
+
+        //el.parentNode.removeChild(el);
+        if(el.play){
+            el.pause();
+        }
+        console.log(el);
+
+    }
     //addVideo();
 
     $scope.confirmClear = function() {
@@ -547,9 +556,21 @@ function addAccessors($scope) {
             canvas.discardActiveGroup();
             objectsInGroup.forEach(function (object) {
                 canvas.remove(object);
+                if(object._element){
+                    var el = object._element;
+                    if(el.tagName === 'VIDEO'){
+                        removeVideoEl(el);
+                    }
+                }
             });
         }
         else if (activeObject) {
+            if(activeObject._element){
+                var el = activeObject._element;
+                if(el.tagName === 'VIDEO'){
+                    removeVideoEl(el);
+                }
+            }
             canvas.remove(activeObject);
         }
 
@@ -1064,13 +1085,16 @@ function watchCanvas($scope) {
                         //console.log('send lock');
                         socket.emit('lockState', obj.id);
                     }
-                if(obj._element.tagName === 'VIDEO'){
-                    var myVideo = obj._element;
-                    //console.log(obj._element.prototype);
-                    if(myVideo.paused)
-                        myVideo.play();
-                    else
-                        myVideo.pause();
+                if(obj._element){
+                    if(obj._element.tagName === 'VIDEO'){
+
+                        var myVideo = obj._element;
+                        //console.log(obj._element.prototype);
+                        if(myVideo.paused)
+                            myVideo.play();
+                        else
+                            myVideo.pause();
+                    }
                 }
                     //console.log(obj._element.tagName);
                     //console.log(obj);
@@ -1176,11 +1200,13 @@ function initCanvasSocket($scope){
     });
 
     socket.on('addVideo', function (data) {
+        var parent = document.createElement('div');
         var videoEl = document.createElement('video');
         videoEl.setAttribute('src',data.url);
         videoEl.setAttribute('style','display:none');
         videoEl.setAttribute('width',"480");
         videoEl.setAttribute('height',"240");
+        parent.appendChild(videoEl);
         var video = new fabric.Image(videoEl,data);
         canvas.add(video);
         fabric.util.requestAnimFrame(function render() {
@@ -1211,6 +1237,12 @@ function initCanvasSocket($scope){
         myObjArr.forEach(function(a){
             if(idArr.indexOf(a.id)!==-1){
                 canvas.remove(a);
+                if(a._element){
+                    var el = a._element;
+                    if(el.tagName === 'VIDEO'){
+                        removeVideoEl(el);
+                    }
+                }
             }
         });
         for(var i =0;i<canvasData.pathData.length;i++) {
