@@ -99,6 +99,9 @@
                 <button  id="zoom-out" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-zoom-out"></i>
                 </button>
+                <button  id="customized" type="button" class="btn btn-default" data-toggle="modal" data-target="#customizedModal">
+                    <i class="fa fa-crop"></i>
+                </button>
                 <button id="clear-all-canvas" type="button" class="btn btn-default" data-toggle="modal" data-target="#myAlertModal">
                     <i class="fa fa-trash-o fa-lg"></i>&nbsp;清空
                 </button>
@@ -428,6 +431,36 @@
             </div>
         </div>
         <!--JSON Modal END-->
+        <!--canvas 自定义大小 Modal-->
+        <div class="modal fade bs-example-modal-sm" id="customizedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog  modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">自定义画布大小</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label for="recipient-name" class="control-label">宽(Width):</label>
+                                    <input type="text" class="form-control" id="canvas-width">
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label for="message-text" class="control-label">高(Height):</label>
+                                    <input type="text" class="form-control" id="canvas-height">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="customizedCanvas">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--canvas 自定义大小 Modal-->
     </body>
 	<script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
 	<script src='/app_3th_js/angular/angular.min.js'></script>

@@ -61,6 +61,7 @@ exports.startSocketIo = function(server){
             pathRoom[room] = [];
             textRoom[room] = [];
             geometryRoom[room] = [];
+            imgRoom[room] = [];
             socket.broadcast.to(room).emit('clearAll', data);
         });
         socket.on('clearSelected',function(data){

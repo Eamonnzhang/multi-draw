@@ -22,7 +22,7 @@ body{
 
 #canvasCtn{
     position: relative;
-    width: 2000px;
+    width: 1700px;
     height: 1500px;
 }
 ul {
@@ -68,7 +68,7 @@ input[type=radio] {
 
 .my-navbar {
     background-color: #ffffff;
-    height: 10px;
+    /*height: 10px;*/
 }
 
 .toolbar{

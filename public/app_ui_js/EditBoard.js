@@ -7,7 +7,7 @@ var EditBoard = function (){
     var drawingModeEl =this.__drawingModeEl= _('drawing-mode'),
         test = _('test'),
         copy = _('copy-value'),
-        uploadImage = _('image'),
+        customizedCanvas = _('customizedCanvas'),
         consoleInfo = _('console-info');
     this.communication = new Communication();
     this.serializeShapes = new SerializeShapes();
@@ -46,7 +46,7 @@ var EditBoard = function (){
     var canvasCtns =document.getElementsByClassName('canvas-container');
     this.canvasCtnEl = canvasCtns[0];
     var o_style = this.canvasCtnEl.getAttribute('style');
-    var left = (2000-this.__canvas.width)/2;
+    var left = (1700-this.__canvas.width)/2;
     var top = (1500-this.__canvas.height)/2;
     this.canvasCtnEl.setAttribute('style',o_style+' position:absolute;left: '+left+'px;top:'+top+'px');
 
@@ -93,6 +93,13 @@ var EditBoard = function (){
         canvasCtner.style.height = (canvasCtner.offsetHeight)*1.2+'px';
         configBoard.resetCanvas();
     };
+
+    customizedCanvas.onclick = function () {
+        canvas.setWidth(_('canvas-width').value);
+        canvas.setHeight(_('canvas-height').value);
+        configBoard.resetCanvas();
+    };
+
 
     consoleInfo.onclick = function(){
         if(canvas.getActiveObject()){
