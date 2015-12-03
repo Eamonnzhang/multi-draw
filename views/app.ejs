@@ -243,7 +243,7 @@
                         <input value="100" style="width:46px" type="number" bind-value-to="opacity">
 
                         <label for="stroke-width">线条宽度:</label>
-                        <input type="number" min="1" max="10" id="stroke-width" bind-value-to="strokeWidth">
+                        <input type="number" style="width:40px" min="1" max="10" id="stroke-width" bind-value-to="strokeWidth">
 
                         <div class="mdBtn fill-color-box " style='float:left;margin-top:9px;margin-right:5px;'  data-toggle="tooltip" data-placement="bottom" title="填充色">
                             <button class="btn btn-default geSprite geSprite-fillcolor" style='float:left'></button>
@@ -280,16 +280,16 @@
 
                             <div  style='float:left;margin-right: 5px;'>
                                 <label for="text-font-size">字体大小:</label>
-                               <input type="number" value="" min="1" max="120" step="1" id="text-font-size" class="btn-object-action"
+                               <input type="number" style="width:40px;" value="" min="1" max="120" step="1" id="text-font-size" class="btn-object-action"
                                        bind-value-to="fontSize">
                             </div>
 
                             <div  style='float:left;margin-right: 5px;'>
                                 <label for="text-line-height">行间距:</label>
-                               <input type="number"  value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
+                               <input type="number"  style="width:50px;" value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
                                        bind-value-to="lineHeight">
                             </div>
-                        </div><!--text control-->
+                        </div><!--text controls end-->
 
                         <div id="text-control-add1"  style='float:left;margin-top:6px;'>
                             <div class="btn-group" role="group">
@@ -321,7 +321,7 @@
                                         O
                                 </button>
                             </div>
-                        </div><!--text control add1-->
+                        </div><!--text control add1 end-->
 
                         <div style='float:left;margin-left: 10px;'>
                             <textarea bind-value-to="text" style="height: 23px;"></textarea>
