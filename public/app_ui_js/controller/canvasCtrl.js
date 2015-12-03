@@ -14,8 +14,8 @@ function setITextFire(iText,$scope){
         console.log('editing:exited');
     });
     iText.on('selection:changed', function () {
-        //$scope.$$phase || $scope.$digest();
         $scope.setText($scope.getText());
+        //$scope.$$phase || $scope.$digest();
         canvas.renderAll();
     });
 }
@@ -94,7 +94,7 @@ function getActiveProp(name) {
 
 //设置对象属性
 function setActiveProp(name, value) {
-    console.log('setActiveProp');
+    //console.log('setActiveProp');
     var object = canvas.getActiveObject();
     if (!object) return;
     if(roomId){
@@ -122,7 +122,7 @@ function addAccessors($scope) {
         return getActiveStyle('fill');
     };
     $scope.setFill = function(value) {
-        console.log('setFill');
+        //console.log('setFill');
         setActiveStyle('fill', value);
     };
 
@@ -177,7 +177,7 @@ function addAccessors($scope) {
         return getActiveProp('text');
     };
     $scope.setText = function(value) {
-        console.log('setText');
+        //console.log('setText');
         setActiveProp('text', value);
     };
 
@@ -813,7 +813,7 @@ function addAccessors($scope) {
   };
   $scope.setFreeDrawingMode = function(value) {
     canvas.isDrawingMode = !!value;
-    $scope.$$phase || $scope.$digest();
+    //$scope.$$phase || $scope.$digest();
   };
 
   $scope.freeDrawingMode = 'Pencil';
@@ -1012,6 +1012,63 @@ function addAccessors($scope) {
   }
 }
 
+function addMyOwnAccessors($scope){
+    $('.fill-color-box').colpick({
+        colorScheme:'light',
+        layout:'rgbhex',
+        onSubmit:function(hsb,hex,rgb,el) {
+            $scope.setFill('#'+hex);
+            console.log($(el).children());
+            $($(el).children()[1]).css('background-color','#'+hex);
+            $(el).colpickHide();
+        }
+    });
+
+    $('.stroke-color-box').colpick({
+        colorScheme:'light',
+        layout:'rgbhex',
+        onSubmit:function(hsb,hex,rgb,el) {
+            $scope.setStrokeColor('#'+hex);
+            console.log($(el).children());
+            $($(el).children()[1]).css('background-color','#'+hex);
+            $(el).colpickHide();
+        }
+    });
+
+    $('.text-background-color-box').colpick({
+        colorScheme:'light',
+        layout:'rgbhex',
+        onSubmit:function(hsb,hex,rgb,el) {
+            $scope.setTextBgColor('#'+hex);
+            console.log($(el).children());
+            $($(el).children()[1]).css('background-color','#'+hex);
+            $(el).colpickHide();
+        }
+    });
+
+    $('.drawing-color-box').colpick({
+        colorScheme:'light',
+        layout:'rgbhex',
+        onSubmit:function(hsb,hex,rgb,el) {
+            $scope.setDrawingLineColor('#'+hex);
+            console.log($(el).children());
+            $($(el).children()[1]).css('background-color','#'+hex);
+            $(el).colpickHide();
+        }
+    });
+
+    $('.shadow-color-box').colpick({
+        colorScheme:'light',
+        layout:'rgbhex',
+        onSubmit:function(hsb,hex,rgb,el) {
+            $scope.setDrawingLineShadowColor('#'+hex);
+            console.log($(el).children());
+            $($(el).children()[1]).css('background-color','#'+hex);
+            $(el).colpickHide();
+        }
+    });
+}
+
 function watchCanvas($scope) {
     var isMouseDown = false;
 
@@ -1019,7 +1076,8 @@ function watchCanvas($scope) {
         $scope.$$phase || $scope.$digest();
         canvas.renderAll();
     }
-    function getObjInfo(e){
+    function getObjInfo(){
+        //console.log('select');
         updateScope();
         //console.log(e.target);
     }
@@ -1078,35 +1136,29 @@ function watchCanvas($scope) {
                             obj._objects.forEach(function (a) {
                                 idArr.push(a.id);
                             });
-                            //console.log('send group lock');
                             socket.emit('lockState', idArr);
                         }
                     }else if (obj.selectable) {
-                        //console.log('send lock');
                         socket.emit('lockState', obj.id);
                     }
-                if(obj._element){
-                    if(obj._element.tagName === 'VIDEO'){
-
-                        var myVideo = obj._element;
-                        //console.log(obj._element.prototype);
-                        if(myVideo.paused)
-                            myVideo.play();
-                        else
-                            myVideo.pause();
+                    if(obj._element){
+                        if(obj._element.tagName === 'VIDEO'){
+                            var myVideo = obj._element;
+                            if(myVideo.paused)
+                                myVideo.play();
+                            else
+                                myVideo.pause();
+                        }
                     }
-                }
-                    //console.log(obj._element.tagName);
-                    //console.log(obj);
                 }
             }
         isMouseDown = true;
     }
 
-    function dragCanvas(){
+    function dragCanvas(e){
         if ( panning && ctrlKeyDown) {
             canvasCtnEl.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
-            canvasCtnEl.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan ) + 'px';
+            canvasCtnEl.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan  )+ 'px';
         }
     }
 
@@ -1286,6 +1338,7 @@ function initCanvasSocket($scope){
         myObjArr.forEach(function (a) {
             if (a.id === data.id) {
                 a.set(data.name,data.value).setCoords();
+                //$scope.$digest();
                 canvas.renderAll();
             }
         });
@@ -1366,6 +1419,7 @@ canvasModule.controller('CanvasCtrl', function($scope) {
     $scope.canvas = canvas;
     $scope.getActiveStyle = getActiveStyle;
     addAccessors($scope);
+    addMyOwnAccessors($scope);
     initCanvasSocket($scope);
     watchCanvas($scope);
     httpOpt($scope);

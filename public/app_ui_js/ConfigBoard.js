@@ -27,15 +27,15 @@ ConfigBoard.prototype.resizeCanvas = function () {
     this.resetScroll();
 
     //resize sideBar
-    var sideBarHeight= $(window).height()-150;
-    if($(window).height()<870&&$(window).width()>950){ //less height
-        _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;overflow-y:auto;width:145px;overflow-x:hidden;position:fixed;top:90px;');
-    }else if($(window).height()>=870&&$(window).width()<=950){ //less width
-        _('optionDiv').setAttribute('style','overflow-y:hidden;position:fixed;top:130px;');
-    }else if($(window).height()<870&&$(window).width()<=950){ //both less
-        _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;width:145px;overflow-x:hidden;overflow-y:auto;position:fixed;top:130px;');
-    }else //normal
-        _('optionDiv').setAttribute('style','position:fixed;top:90px;');
+    //var sideBarHeight= $(window).height()-150;
+    //if($(window).height()<870&&$(window).width()>950){ //less height
+    //    _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;overflow-y:auto;width:135px;overflow-x:hidden;position:fixed;top:90px;');
+    //}else if($(window).height()>=870&&$(window).width()<=950){ //less width
+    //    _('optionDiv').setAttribute('style','overflow-y:hidden;position:fixed;top:130px;');
+    //}else if($(window).height()<870&&$(window).width()<=950){ //both less
+    //    _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;width:135px;overflow-x:hidden;overflow-y:auto;position:fixed;top:130px;');
+    //}else //normal
+    //    _('optionDiv').setAttribute('style','position:fixed;top:90px;');
 };
 
 ConfigBoard.prototype.resetCanvas = function () {
@@ -78,12 +78,12 @@ ConfigBoard.prototype.initKeyBoard = function () {
         if(key == 27){ //ESC键
             if (!me.editBoard.__canvas.isDrawingMode) {
                 me.editBoard.__canvas.isDrawingMode = true;
-                me.editBoard.__drawingModeEl.innerHTML = ' <i class="fa fa-mouse-pointer"></i>&nbsp;选中';
+                me.editBoard.__drawingModeEl.innerHTML = ' <i class="fa fa-mouse-pointer"></i>';
                 me.editBoard.__drawingModeEl.setAttribute('class','btn btn-default');
             }
             else {
                 me.editBoard.__canvas.isDrawingMode = false;
-                me.editBoard.__drawingModeEl.innerHTML = ' <i class="fa fa-paint-brush "></i>&nbsp;绘画';
+                me.editBoard.__drawingModeEl.innerHTML = ' <i class="fa fa-paint-brush "></i>';
                 me.editBoard.__drawingModeEl.setAttribute('class','btn btn-info');
             }
         }
@@ -93,7 +93,7 @@ ConfigBoard.prototype.initKeyBoard = function () {
             }
         }
     }
-    function KeyUp(){
+    function KeyUp(event){
         var key = event.keyCode;
         if(key === 17){
             if(ctrlKeyDown)

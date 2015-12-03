@@ -18,7 +18,8 @@ var EditBoard = function (){
         backgroundColor :"#ffffff",
         width:750,
         height:530,
-        allowTouchScrolling:true
+        isDrawingMode:true
+        //allowTouchScrolling:true
     });
 
     var configBoard = new ConfigBoard(this);
@@ -54,11 +55,11 @@ var EditBoard = function (){
 
     drawingModeEl.onclick =  function() {
         if (!canvas.isDrawingMode) {
-            drawingModeEl.innerHTML = ' <i class="fa fa-mouse-pointer"></i>&nbsp;选中';
+            drawingModeEl.innerHTML = ' <i class="fa fa-mouse-pointer"></i>';
             drawingModeEl.setAttribute('class','btn btn-default');
         }
         else {
-            drawingModeEl.innerHTML = ' <i class="fa fa-paint-brush "></i>&nbsp;绘画';
+            drawingModeEl.innerHTML = ' <i class="fa fa-paint-brush "></i>';
             drawingModeEl.setAttribute('class','btn btn-info');
         }
     };

@@ -4,18 +4,18 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><%= title %></title>
-        <link href="/css/bootstrap/bootstrap.css" rel="stylesheet">
+        <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
         <link href="/css/font_awesome/font-awesome.css" rel="stylesheet">
         <link href="/css/app-styles.css" rel="stylesheet">
         <link href="/css/colpick.css" rel="stylesheet">
-        <!--<link href="/css/vendor/all.css" rel="stylesheet">-->
-        <!--<link href="/css/app/app.css" rel="stylesheet">-->
+
         <!--[if lt IE 9]>
         <script src="/app_3th_js/forIE/html5shiv.js"></script>
         <script src="/app_3th_js/forIE/respond.min.js"></script>
         <![endif]-->
     </head>
     <body ng-controller="CanvasCtrl">
+
         <div id="bd-wrapper">
             <!--导航栏-->
             <nav class="navbar navbar-default navbar-fixed-top my-navbar">
@@ -51,28 +51,9 @@
                                     </li>
                                 </ul>
                             </li>
-                            <!--<li class="dropdown">-->
-                                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">插入 <span class="caret"></span></a>-->
-                                <!--<ul class="dropdown-menu" role="menu">-->
-                                    <!--<li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-text-size" style="padding-right: 15px"></span>文字</a></li>-->
-                                    <!--<li><a  href="javascript:void(0)" ng-click="addImage1()"><span class="glyphicon glyphicon-picture" style="padding-right: 15px"></span>图片</a></li>-->
-                                    <!--<li><a  href="javascript:void(0)" ng-click="" ><span class="glyphicon glyphicon-facetime-video" style="padding-right: 15px"></span>视频</a></li>-->
-                                    <!--<li role="separator" class="divider"></li>-->
-                                    <!--<li class="dropdown-submenu">-->
-                                        <!--<a tabindex="-1" href="#"><span class="fa fa-pie-chart" style="padding-right: 15px"></span>图形</a>-->
-                                        <!--<ul class="dropdown-menu">-->
-                                            <!--<li type="button" ng-click="addRect()" class="btn" style="margin-left: 33px">矩形</li>-->
-                                            <!--<li type="button" ng-click="addTriangle()" class="btn" style="margin-left: 33px">三角形</li>-->
-                                            <!--<li type="button" ng-click="addCircle()" class="btn" style="margin-left: 33px">圆形</li>-->
-                                            <!--&lt;!&ndash;<li type="button" ng-click="addPolygon()" class="btn" style="margin-left: 33px">多边形</li>&ndash;&gt;-->
-                                            <!--<li type="button" ng-click="addLine()" class="btn" style="margin-left: 33px">直线</li>-->
-                                        <!--</ul>-->
-                                    <!--</li>-->
-                                <!--</ul>-->
-                            <!--</li>-->
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href='' id="roomId" bind-value-to="roomId" data-toggle="collapse"></a></li>
+                            <li><a href='javascript:void(0)' id="roomId" bind-value-to="roomId"></a></li>
                             <li class="dropdown">
                                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -87,31 +68,43 @@
             </nav>
             <!--导航栏END-->
 
-            <!--工具条-->
-            <div class="btn-group toolbar object-controls" object-buttons-enabled="getSelected()" role="group" aria-label="...">
-                <button  id="drawing-mode" type="button" class="btn btn-info"
+            <!--左侧工具条-->
+            <div class="btn-group-vertical toolbar object-controls" object-buttons-enabled="getSelected()" role="group">
+                <!--模式-->
+                <button  id="drawing-mode" type="button" class="btn btn-default"
                          ng-click="setFreeDrawingMode(!getFreeDrawingMode())">
-                    <i class="fa fa-paint-brush"></i>&nbsp;绘画
+                    <i class="fa fa-mouse-pointer"></i>
                 </button>
+                <!--放大-->
                 <button  id="zoom-in" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-zoom-in"></i>
                 </button>
+                <!--缩小-->
                 <button  id="zoom-out" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-zoom-out"></i>
                 </button>
+                <!--自适应-->
                 <button  id="customized" type="button" class="btn btn-default" data-toggle="modal" data-target="#customizedModal">
                     <i class="fa fa-crop"></i>
                 </button>
-                <button id="clear-all-canvas" type="button" class="btn btn-default" data-toggle="modal" data-target="#myAlertModal">
-                    <i class="fa fa-trash-o fa-lg"></i>&nbsp;清空
+                <!--阴影-->
+                <button id="clip" class="btn btn-default btn-lock btn-object-action"
+                        ng-click="shadowify()">
+                    <div class="geSprite geSprite-shadow"></div>
                 </button>
+                <!--清除全部-->
+                <button id="clear-all-canvas" type="button" class="btn btn-default" data-toggle="modal" data-target="#myAlertModal">
+                    <i class="fa fa-trash fa-lg"></i>
+                </button>
+                <!--清除选中-->
                 <button id="clear-selected-canvas" type="button" class="btn btn-default"
                         ng-click="removeSelected()">
-                    <i class="fa fa-trash fa-lg"></i>&nbsp;清除选中
+                    <i class="fa fa-trash-o fa-lg"></i>
                 </button>
+                <!--插入-->
                 <div class="btn-group" role="group">
                     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="fa fa-plus"></span>&nbsp;插入 <span class="caret"></span>
+                        <span class="fa fa-plus"></span>&nbsp;<span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-text-size" style="padding-right: 15px"></span>文字</a></li>
@@ -136,9 +129,10 @@
                         </li>
                     </ul>
                 </div>
+                <!--锁定-->
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-lock"></i>&nbsp;锁定
+                        <i class="fa fa-lock"></i>
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
@@ -173,89 +167,101 @@
                         </li>
                     </ul>
                 </div>
+                <!--下移一层-->
                 <button id="send-backwards" class="btn btn-default btn-lock btn-object-action"
                         ng-click="sendBackwards()">
-                    <i class="fa fa-angle-down fa-lg"></i>&nbsp;下移
+                    <i class="fa fa-angle-down fa-lg"></i>
                 </button>
+                <!--置于底层-->
                 <button id="send-to-back" class="btn btn-default btn-lock btn-object-action"
                         ng-click="sendToBack()">
-                    <i class="fa fa-angle-double-down fa-lg"></i>&nbsp;置底
+                    <i class="fa fa-angle-double-down fa-lg"></i>
                 </button>
+                <!--上移一层-->
                 <button id="bring-forward" class="btn btn-default btn-lock btn-object-action"
                         ng-click="bringForward()">
-                    <i class="fa fa-angle-up fa-lg"></i>&nbsp;上移
+                    <i class="fa fa-angle-up fa-lg"></i>
                 </button>
+                <!--置于顶层-->
                 <button id="bring-to-front" class="btn btn-default btn-lock btn-object-action"
                         ng-click="bringToFront()">
-                    <i class="fa fa-angle-double-up fa-lg"></i>&nbsp;置顶
+                    <i class="fa fa-angle-double-up fa-lg"></i>
                 </button>
+                <!--修剪-->
                 <button id="clip" class="btn btn-default btn-lock btn-object-action"
-                        ng-click="clip()">
-                    <i class="fa fa-scissors fa-lg"></i>&nbsp;修剪
+                        ng-click="clip()" style="display: none">
+                    <i class="fa fa-scissors fa-lg"></i>
                 </button>
-                <button id="console-info" class="btn btn-default ">Info</button>
-                <button id="test" class="btn btn-default ">test</button><br>
+                <!--测试-->
+                <button id="console-info" class="btn btn-default" style="display: none">Info</button>
+                <button id="test" class="btn btn-default" style="display: none">Test</button>
             </div>
-            <!--工具条END-->
+            <!--左侧工具条 END-->
 
-            <!--左侧配置选项-->
-            <div  id="controls">
-                <div id='optionDiv'>
-                    <!--<div id="canvas-background">-->
-                        <!--<label for="canvas-background-picker">画板背景色:</label>-->
-                        <!--<input type="color" bind-value-to="canvasBgColor">-->
-                    <!--</div>-->
+            <!--顶部工具条-->
+            <div  id="topToolbar">
                     <!--自由绘画选项-->
-                    <div id="drawing-mode-options" ng-show="getFreeDrawingMode()">
-                        <label for="drawing-mode-selector">画笔:</label><br>
-                        <select id="drawing-mode-selector" bind-value-to="drawingMode">
-                            <option>Pencil</option>
-                            <option>Circle</option>
-                            <option>Spray</option>
-                            <option>Pattern</option>
+                    <div id="drawing-mode-options" style="float:left" ng-show="getFreeDrawingMode()">
+                        <div  style="float:left">
+                            <label for="drawing-mode-selector">画笔:</label>
+                            <select id="drawing-mode-selector" style="width:60px;" bind-value-to="drawingMode">
+                                <option>Pencil</option>
+                                <option>Circle</option>
+                                <option>Spray</option>
+                                <option>Pattern</option>
+                                <option>vline</option>
+                                <option>hline</option>
+                                <option>square</option>
+                                <option>diamond</option>
+                                <option>texture</option>
+                            </select>
+                        </div>
 
-                            <option>vline</option>
-                            <option>hline</option>
-                            <option>square</option>
-                            <option>diamond</option>
-                            <option>texture</option>
-                        </select><br>
-                        <label for="drawing-line-width">线宽:</label>
-                        <span class="info">1</span><input type="range" min="0" max="150"  data-orientation="vertical" bind-value-to="drawingLineWidth">
+                        <button type='button' class="btn btn-default geSprite geSprite-strokecolor" data-toggle="tooltip" data-placement="bottom" title="线宽"></button>
+                        <input type="number" style="width:44px;display: inline;" min="0" max="150" bind-value-to="drawingLineWidth">
 
-                        <label for="drawing-color">颜色:</label><br>
-                        <input type="color" bind-value-to="drawingLineColor"><br>
+                        <div class="mdBtn drawing-color-box" style='float:left;margin-top:9px;' data-toggle="tooltip" data-placement="bottom" title="画笔色">
+                            <button type="button" class="btn btn-default fa fa-paint-brush" style="border: none;float:left"></button>
+                            <div id='fill' class="color-div" style='float:left;height: 21px;' bind-value-to="drawingLineColor"></div>
+                        </div>
 
-                        <label for="drawing-shadow-color">阴影颜色:</label><br>
-                        <input type="color" bind-value-to="drawingLineShadowColor"><br>
+                        <div class="mdBtn shadow-color-box" style='float:left;margin-top:9px;margin-right:5px;'  data-toggle="tooltip" data-placement="bottom" title="阴影色">
+                            <button class="btn btn-default geSprite geSprite-shadow" style='float:left'></button>
+                            <div id='fill' class="color-div" style='float:left;height: 21px;' bind-value-to="drawingLineShadowColor"></div>
+                        </div>
 
                         <label for="drawing-shadow-width">阴影宽度:</label>
-                        <span class="info"></span><input type="range" min="0" max="50" bind-value-to="drawingLineShadowWidth">
+                        <input type="number" min="0" max="50" style="width:50px;" bind-value-to="drawingLineShadowWidth">
                     </div>
                     <!--自由绘画选项END-->
 
 
-                    <!--配置透明度-->
-                    <div id="color-opacity-controls"  ng-show="canvas.getActiveObject()">
+                    <!--公用选项-->
+                    <div id="color-opacity-controls" style="float:left"  ng-show="canvas.getActiveObject()">
 
-                        <label for="opacity">透明度: </label>
-                        <span class="info">100</span><input value="100" type="range" bind-value-to="opacity">
+                        <label for="opacity">透明度:</label>
+                        <input value="100" style="width:46px" type="number" bind-value-to="opacity">
 
-                        <label for="color">填充色: </label><br>
-                        <input type="color"  bind-value-to="fill"><br>
+                        <label for="stroke-width">线条宽度:</label>
+                        <input type="number" min="1" max="10" id="stroke-width" bind-value-to="strokeWidth">
 
-                        <label for="text-stroke-color">线条颜色:</label><br>
-                        <input  type="color" id="text-stroke-color" class="btn-object-action"
-                                bind-value-to="strokeColor">
+                        <div class="mdBtn fill-color-box " style='float:left;margin-top:9px;margin-right:5px;'  data-toggle="tooltip" data-placement="bottom" title="填充色">
+                            <button class="btn btn-default geSprite geSprite-fillcolor" style='float:left'></button>
+                            <div id='fill' class="color-div" style='float:left;height: 21px;' bind-value-to="fill"></div>
+                        </div>
+
+                        <div class="mdBtn stroke-color-box" style='float:left;margin-top:9px;margin-right:5px;' data-toggle="tooltip" data-placement="bottom" title="线条色">
+                            <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-pencil text-center" style="border: none;width:21px;float:left"></button>
+                            <div id='fill' class="color-div" style='float:left;height: 21px;' bind-value-to="strokeColor"></div>
+                        </div>
+
                     </div>
-                    <!--配置透明度END-->
+                    <!--公用选项-->
 
-                    <!--编辑文字-->
-                    <div id="text-wrapper" ng-show="getText()&&!getFreeDrawingMode()">
-                        <textarea bind-value-to="text"></textarea>
-                        <div id="text-controls">
-                            <label for="font-family">字体类型:</label><br>
-                            <select id="font-family" class="btn-object-action" bind-value-to="fontFamily">
+                    <!--编辑文字选项-->
+                    <div id="text-wrapper" style='float:left' ng-show="getText()&&!getFreeDrawingMode()">
+                        <div id="text-controls" style='float:left'>
+                            <select id="font-family" style="width:85px;margin-top:9px;margin-right: 5px;" class="btn-object-action" bind-value-to="fontFamily">
                                 <option value="arial">Arial</option>
                                 <option value="myriad pro">Myriad Pro</option>
                                 <option value="verdana">Verdana</option>
@@ -266,35 +272,27 @@
                                 <option value="monaco">Monaco</option>
                                 <option value="微软雅黑">微软雅黑</option>
                             </select>
-                            <br>
-                            <div>
-                                <label for="text-bg-color">背景颜色:</label><br>
-                                <input type="color"  id="text-bg-color" size="10" class="btn-object-action"
-                                       bind-value-to="bgColor">
+
+                            <div class="mdBtn  text-background-color-box" style='float:left;margin-top:9px;margin-right:5px;' data-toggle="tooltip" data-placement="bottom" title="文本背景色">
+                                <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-text-background text-center" style="border: none;width:21px;float:left"></button>
+                                <div id='fill' class="color-div" style='float:left;height: 21px;' bind-value-to="textBgColor"></div>
                             </div>
-                            <div>
-                                <label for="text-lines-bg-color">文本背景颜色:</label><br>
-                                <input type="color" id="text-lines-bg-color" size="10" class="btn-object-action"
-                                       bind-value-to="textBgColor">
-                            </div>
-                            <div>
-                                <label for="text-stroke-width">线条宽度:</label>
-                                <span class="info">1</span><input type="range" value="1" min="1" max="5" id="text-stroke-width" class="btn-object-action"
-                                       bind-value-to="strokeWidth">
-                            </div>
-                            <div>
+
+                            <div  style='float:left;margin-right: 5px;'>
                                 <label for="text-font-size">字体大小:</label>
-                                <span class="info">100</span><input type="range" value="" min="1" max="120" step="1" id="text-font-size" class="btn-object-action"
+                               <input type="number" value="" min="1" max="120" step="1" id="text-font-size" class="btn-object-action"
                                        bind-value-to="fontSize">
                             </div>
-                            <div>
+
+                            <div  style='float:left;margin-right: 5px;'>
                                 <label for="text-line-height">行间距:</label>
-                                <span class="info">100</span><input type="range"  value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
+                               <input type="number"  value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
                                        bind-value-to="lineHeight">
                             </div>
                         </div><!--text control-->
-                        <div id="text-control-add1">
-                            <div class="btn-group" role="group" aria-label="..." style="margin-top:10px">
+
+                        <div id="text-control-add1"  style='float:left;margin-top:6px;'>
+                            <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-default btn-sm btn-object-action"
                                         ng-click="toggleBold()"
                                         ng-class="{'active': isBold()}">
@@ -310,8 +308,8 @@
                                         ng-class="{'active': isUnderline()}">
                                    <i class="fa fa-underline"></i>
                                 </button>
-                            </div><br>
-                            <div class="btn-group" role="group" aria-label="..." style="margin-top:10px">
+                            </div>
+                            <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-default btn-sm btn-object-action" id="text-cmd-linethrough"
                                         ng-click="toggleLinethrough()"
                                         ng-class="{'active': isLinethrough()}">
@@ -324,30 +322,27 @@
                                 </button>
                             </div>
                         </div><!--text control add1-->
+
+                        <div style='float:left;margin-left: 10px;'>
+                            <textarea bind-value-to="text" style="height: 23px;"></textarea>
+                        </div>
                     </div>
-                    <!--编辑文字END-->
-                    <!--测试按钮-->
-                    <!--<div class = 'testBtn'>-->
-                        <!--<button id="console-info" class="btn btn-default btn-sm">Console Info</button>-->
-                        <!--<button id="test" class="btn btn-default btn-sm">test</button><br>-->
-                    <!--</div>-->
-                    <!--测试按钮 END-->
-                </div>
-                <!--optionDiv END-->
+                    <!--编辑文字选项 END-->
             </div>
-            <!--左侧配置选项 END-->
+            <!--顶部工具条 END-->
 
             <!--画板最外层div scroll-->
             <div id="canvas-col">
-                <!--嵌套画板的固定宽高的DIV -->
+                <!--固定宽高的DIV -->
                 <div id="canvasCtn">
                     <canvas id="c"></canvas>
                 </div>
-                <!--嵌套画板的固定宽高的DIV END-->
+                <!--固定宽高的DIV END-->
             </div>
             <!--画板最外层div scroll END-->
 
-        </div><!--/bd--wrapper-->
+        </div>
+        <!--bd--wrapper end-->
 
         <!--Alert Modal -->
         <!--清空操作 Alert-->
@@ -443,11 +438,11 @@
                         <form>
                             <div class="form-group row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                    <label for="recipient-name" class="control-label">宽(Width):</label>
+                                    <label for="recipient-name" class="control-label">宽(Width:px):</label>
                                     <input type="text" class="form-control" id="canvas-width">
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                    <label for="message-text" class="control-label">高(Height):</label>
+                                    <label for="message-text" class="control-label">高(Height:px):</label>
                                     <input type="text" class="form-control" id="canvas-height">
                                 </div>
                             </div>
@@ -462,9 +457,9 @@
         </div>
         <!--canvas 自定义大小 Modal-->
     </body>
-	<script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
 	<script src='/app_3th_js/angular/angular.min.js'></script>
-	<script src='/app_3th_js/bootstrap/bootstrap.js'></script>
+    <script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
+    <script src='/app_3th_js/bootstrap/bootstrap.min.js'></script>
 	<script src='/app_3th_js/colpick.js'></script>
 	<script src='/socket.io/socket.io.js'></script>
 	<script src='/app_3th_js/fabric/fabric.min.js'></script>
@@ -474,6 +469,13 @@
 	<script src='/app_ui_js/SerializeShapes.js'></script>
     <script src='/app_ui_js/ConfigBoard.js'></script>
     <script src='/app_ui_js/EditBoard.js'></script>
+    <script>
+        $(function () { $("[data-toggle='tooltip']").tooltip(); });
+
+        $('#range').popover({
+            template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"><input type="range" ></div></div>'
+        })
+    </script>
 	<script>
         var apiKey='<%= apiKey%>';
         var userName ='<%= userName%>';
