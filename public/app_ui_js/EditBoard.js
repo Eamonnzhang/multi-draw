@@ -22,8 +22,11 @@ var EditBoard = function (){
         //allowTouchScrolling:true
     });
 
+    canvas.add();//chrome抽了，= =必须要加一句为了显示空白cavans画板
+
     var configBoard = new ConfigBoard(this);
 
+    //初始化取色器
     $('#picker').colpick({
         layout:'hex',
         onSubmit: function(hsb,hex,rgb,el) {

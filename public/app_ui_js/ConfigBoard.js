@@ -7,35 +7,8 @@ var ConfigBoard = function (editBoard) {
 };
 
 ConfigBoard.prototype.resizeCanvas = function () {
-
-    //resize canvas
-    //this.editBoard.__canvas.setHeight(640);
-    //if($(window).width() > 1550){                                      // width > 1550
-    //    this.editBoard.__canvas.setWidth($(window).width()-$("#controls").width()-150);
-    //    _('canvas-col').setAttribute('class','col-lg-8 col-md-8  col-sm-8 col-xs-8 col-lg-pull-1');
-    //    _('canvas-col').setAttribute('style','margin-left:55px;margin-top:80px;');
-    //}else if ($(window).width() <= 1550 &&$(window).width() >=1200){   // 1200 <= width <= 1550
-    //    this.editBoard.__canvas.setWidth($(window).width()-$("#controls").width()-150);
-    //    _('canvas-col').setAttribute('class','col-lg-8 col-md-8  col-sm-8 col-xs-8');
-    //}else if($(window).width() <340 ){                                 // width < 340
-    //    this.editBoard.__canvas.setWidth($(window).width()-35);
-    //}else                                                              // 340 <= width <= 1550
-    //    this.editBoard.__canvas.setWidth($(window).width()+85-$("#controls").width()-150);
-    //_('canvas-col').setAttribute('style','margin-top:80px;');
-
     //reset canvasScroll
     this.resetScroll();
-
-    //resize sideBar
-    //var sideBarHeight= $(window).height()-150;
-    //if($(window).height()<870&&$(window).width()>950){ //less height
-    //    _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;overflow-y:auto;width:135px;overflow-x:hidden;position:fixed;top:90px;');
-    //}else if($(window).height()>=870&&$(window).width()<=950){ //less width
-    //    _('optionDiv').setAttribute('style','overflow-y:hidden;position:fixed;top:130px;');
-    //}else if($(window).height()<870&&$(window).width()<=950){ //both less
-    //    _('optionDiv').setAttribute('style','height:'+sideBarHeight+'px;width:135px;overflow-x:hidden;overflow-y:auto;position:fixed;top:130px;');
-    //}else //normal
-    //    _('optionDiv').setAttribute('style','position:fixed;top:90px;');
 };
 
 ConfigBoard.prototype.resetCanvas = function () {

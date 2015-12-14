@@ -4,17 +4,27 @@
 var fileController = require('../app_modules/files_mgmt/fileController.js');
 var userController = require('../app_modules/users_mgmt/userController.js');
 var message = require('../app_modules/_utils/messageGenerator.js');
+var uuId = require('../app_modules/_utils/uuidGenerator.js');
 module.exports = function(app){
 
     app.get('/board',function(req,res){
-        if (req.session.userData) {
+        if(req.query.userName&&req.query.userId){
             res.render('app', {
-                userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
-                userId: req.session.userData.id,
-                apiKey: req.session.userData.apiKey,title:'MultiDraw'
+                userName: req.query.userName,
+                userId: req.query.userId,
+                apiKey: uuId.generateId(8, 32),
+                title:'MultiDraw'
             });
         }else{
-            res.redirect('/login');
+            if (req.session.userData) {
+                res.render('app', {
+                    userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
+                    userId: req.session.userData.id,
+                    apiKey: req.session.userData.apiKey,title:'MultiDraw'
+                });
+            }else{
+                res.redirect('/login');
+            }
         }
     });
 
