@@ -9,6 +9,16 @@ var ConfigBoard = function (editBoard) {
 ConfigBoard.prototype.resizeCanvas = function () {
     //reset canvasScroll
     this.resetScroll();
+
+    //reset lefttoolbar
+    console.log(window.innerWidth);
+    if(window.innerWidth < 990 && !this.editBoard.__canvas.isDrawingMode){
+        _('left-toolbar').style.top = '120px';
+    }
+    if(window.innerWidth > 990 && !this.editBoard.__canvas.isDrawingMode){
+        _('left-toolbar').style.top = '90px';
+    }
+
 };
 
 ConfigBoard.prototype.resetCanvas = function () {

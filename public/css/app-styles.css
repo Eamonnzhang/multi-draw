@@ -88,7 +88,7 @@ textarea {
 /*左侧工具条*/
 .leftToolbar{
     position:absolute;
-    top:90px
+    top:90px;
 }
 
 /*canvas最外层*/
