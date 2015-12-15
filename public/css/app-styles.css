@@ -1,5 +1,5 @@
 body{
-    font-family:微软雅黑 ;
+    font-family:微软雅黑;
     background: #F4F6F8;
 }
 
@@ -15,7 +15,6 @@ label {
 textarea {
     font-family: 微软雅黑;
     height: 25px;
-    /*margin-top:10px;*/
 }
 
 .my-navbar {
@@ -65,16 +64,15 @@ textarea {
 
 #topToolbar .cell{
     margin-right: 5px;
-    /*margin-top: 9px;*/
     float:left;
 }
 
 #topToolbar .bigCell{
-    vertical-align: middle;
     margin-right: 5px;
 }
 
 #topToolbar .colorBtn{
+    cursor: default;
     border: none;
     float:left;
     height: 22px;

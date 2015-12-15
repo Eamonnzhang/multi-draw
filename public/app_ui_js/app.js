@@ -30,8 +30,10 @@ app.directive('bindValueTo', function() {
                     } else if($element[0].getAttribute('id') =='roomId'){
                         if(newVal == null)
                             $element[0].innerHTML = '<span class="glyphicon glyphicon-share"></span>&nbsp;分享画板';
-                        else
+                        else{
+                            newVal = decodeURI(newVal);
                             $element[0].innerHTML = '房间：'+newVal;
+                        }
                     } else if($element[0].getAttribute('id') =='fill'){
                         $element[0].style.background= newVal;
                     }else{

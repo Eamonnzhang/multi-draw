@@ -8,7 +8,7 @@
         <link href="/css/font_awesome/font-awesome.css" rel="stylesheet">
         <link href="/css/app-styles.css" rel="stylesheet">
         <link href="/css/colpick.css" rel="stylesheet">
-
+        <link href="http://cdn.bootcss.com/jquery-contextmenu/2.0.1/jquery.contextMenu.css" rel="stylesheet">
         <!--[if lt IE 9]>
         <script src="/app_3th_js/forIE/html5shiv.js"></script>
         <script src="/app_3th_js/forIE/respond.min.js"></script>
@@ -193,8 +193,8 @@
                     <i class="fa fa-scissors fa-lg"></i>
                 </button>
                 <!--测试-->
-                <button id="console-info" class="btn btn-default" style="display: none">Info</button>
-                <button id="test" class="btn btn-default" style="display: none">Test</button>
+                <button id="console-info" class="btn btn-default">Info</button>
+                <button id="test" class="btn btn-default">Test</button>
             </div>
             <!--左侧工具条 END-->
 
@@ -462,10 +462,25 @@
             </div>
         </div>
         <!--canvas 自定义大小 Modal-->
+
+        <!--bootstrap context menu-->
+        <div id="context-menu2" style="position: absolute; z-index: 9999; top: 805px; left: 482px;" class="">
+            <ul class="dropdown-menu" role="menu">
+                <li><a tabindex="-1">Action</a></li>
+                <li><a tabindex="-1">Another action</a></li>
+                <li><a tabindex="-1">This was dynamically changed</a></li>
+                <li class="divider"></li>
+                <li><a tabindex="-1">Separated link</a></li>
+            </ul>
+        </div>
     </body>
 	<script src='/app_3th_js/angular/angular.min.js'></script>
     <script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
     <script src='/app_3th_js/bootstrap/bootstrap.min.js'></script>
+    <!--<script src='/app_3th_js/bootstrap/bootstrap-contextmenu.js'></script>-->
+    <!--<script src="http://cdn.bootcss.com/bootstrap-contextmenu/0.3.3/bootstrap-contextmenu.min.js"></script>-->
+    <script src="http://cdn.bootcss.com/jquery-contextmenu/2.0.1/jquery.contextMenu.js"></script>
+    <script src="http://cdn.bootcss.com/jquery-contextmenu/2.0.1/jquery.ui.position.min.js"></script>
 	<script src='/app_3th_js/colpick.js'></script>
 	<script src='/socket.io/socket.io.js'></script>
 	<script src='/app_3th_js/fabric/fabric.min.js'></script>
@@ -480,7 +495,9 @@
 
         $('#range').popover({
             template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"><input type="range" ></div></div>'
-        })
+        });
+
+
     </script>
 	<script>
         var apiKey='<%= apiKey%>';

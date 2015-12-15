@@ -1092,7 +1092,7 @@ function watchCanvas($scope) {
             if(canvasData.usersId.indexOf(data.userId) === -1){
                 canvasData.usersId.push(data.userId);
             }
-            console.log(canvasData);
+            //console.log(canvasData);
             if(roomId)
             socket.emit('addPath', data);
         }
@@ -1171,6 +1171,23 @@ function watchCanvas($scope) {
     .on('mouse:down', listenMouseDown)
     .on('mouse:move', dragCanvas)
     .on('selection:cleared', updateScope);
+
+    /*当时用jquerycontextmenu时,可用以下方式控制contextmenu的显示*/
+    $('.upper-canvas').bind("contextmenu", function () {
+        if(canvas.getActiveObject()||canvas.getActiveGroup())
+            return true;
+        else
+            return false;
+    })
+
+    /*原生DOM操作 有问题*/
+    //var upperCavasEl = document.getElementsByClassName('upper-canvas');
+    //upperCavasEl[0].oncontextmenu = function () {
+    //    return false;
+    //}
+    //upperCavasEl[0].addEventListener('contextmenu', function (e) {
+    //    e.preventDefault();
+    //},false);
 
 }
 

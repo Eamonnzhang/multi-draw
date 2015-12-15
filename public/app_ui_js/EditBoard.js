@@ -44,6 +44,7 @@ var EditBoard = function (){
     //监听window的缩放事件 使滚动条居中
     window.onresize = Utils.bind(configBoard,configBoard.resizeCanvas);
     configBoard.initKeyBoard();
+    configBoard.initContextMenu();
     configBoard.resizeCanvas();
 
     //获取canvas div 使canvas居中
@@ -117,15 +118,14 @@ var EditBoard = function (){
     };
 
     test.onclick = function(){
-        canvas.setZoom(canvas.getZoom()*1.2);
-        canvas.setWidth(canvas.getWidth()*1.2);
-        canvas.setHeight(canvas.getHeight()*1.2);
-        configBoard.resetCanvas();
+        console.log(JSON.stringify(canvas.getActiveObject()));
+        console.log(canvas.getActiveObject().toObject());
     };
 };
 
 EditBoard.prototype.resetBoard= function (data) {
     //console.log(data);
+
     data.pathData.forEach(function(x){
         canvas.add(new fabric.Path(x.path,x));
     });
