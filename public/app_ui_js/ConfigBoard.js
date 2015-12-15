@@ -11,13 +11,14 @@ ConfigBoard.prototype.resizeCanvas = function () {
     this.resetScroll();
 
     //reset lefttoolbar
-    console.log(window.innerWidth);
-    if(window.innerWidth < 990 && !this.editBoard.__canvas.isDrawingMode){
-        _('left-toolbar').style.top = '120px';
-    }
-    if(window.innerWidth > 990 && !this.editBoard.__canvas.isDrawingMode){
-        _('left-toolbar').style.top = '90px';
-    }
+    //console.log(window.innerWidth);
+    //if(window.innerWidth < 990){
+    //    _('left-toolbar').style.top = '130px';
+    //    _('left-toolbar').style.height = '130px';
+    //}
+    //if(window.innerWidth > 990){
+    //    _('left-toolbar').style.top = '90px';
+    //}
 
 };
 

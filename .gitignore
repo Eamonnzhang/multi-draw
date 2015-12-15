@@ -44,11 +44,13 @@ Temporary Items
 
 # ignore node_modules
 node_modules/
+*.log
+*.iml
 
 # ignore project setting
 .idea/
 .svn/
 .c9/
-npm-debug.log
+
 
 

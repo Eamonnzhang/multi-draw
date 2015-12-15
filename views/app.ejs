@@ -119,7 +119,7 @@
                         <li role="separator" class="divider"></li>
                         <li class="dropdown-submenu">
                             <a tabindex="-1" href="#"><span class="fa fa-pie-chart menu-btn"></span>图形</a>
-                            <ul class="dropdown-menu" style="padding: 10px 20px">
+                            <ul class="dropdown-menu menu-panel">
                                 <li ><a href="" ng-click="addRect()">矩形</a></li>
                                 <li ><a href="" ng-click="addTriangle()">三角形</a></li>
                                 <li ><a href="" ng-click="addCircle()">圆形</a></li>
@@ -218,16 +218,16 @@
                     </div>
 
                     <div class="cell">
-                        <button type='button' class="btn btn-default geSprite geSprite-strokecolor colorBtn" data-toggle="tooltip" data-placement="bottom" title="线宽"></button>
+                        <button type='button' class="btn btn-default geSprite geSprite-strokecolor colorBtn" data-toggle="tooltip" data-placement="left" title="线宽"></button>
                         <input type="number" min="0" max="150" bind-value-to="drawingLineWidth">
                     </div>
 
-                    <div class="mdBtn drawing-color-box cell" data-toggle="tooltip" data-placement="bottom" title="画笔色">
+                    <div class="mdBtn drawing-color-box cell" data-toggle="tooltip" data-placement="left" title="画笔色">
                         <button type="button" class="btn btn-default btn-xs fa fa-paint-brush colorBtn"></button>
                         <div id='fill' class="color-div" bind-value-to="drawingLineColor"></div>
                     </div>
 
-                    <div class="mdBtn shadow-color-box cell"  data-toggle="tooltip" data-placement="bottom" title="阴影色">
+                    <div class="mdBtn shadow-color-box cell"  data-toggle="tooltip" data-placement="left" title="阴影色">
                         <button class="btn btn-default geSprite geSprite-shadow colorBtn"></button>
                         <div id='fill' class="color-div" bind-value-to="drawingLineShadowColor"></div>
                     </div>
@@ -252,12 +252,12 @@
                         <input type="number" min="1" max="10" id="stroke-width" bind-value-to="strokeWidth">
                     </div>
 
-                    <div class="mdBtn fill-color-box cell" data-toggle="tooltip" data-placement="bottom" title="填充色">
+                    <div class="mdBtn fill-color-box cell" data-toggle="tooltip" data-placement="left" title="填充色">
                         <button class="btn btn-default geSprite geSprite-fillcolor colorBtn"></button>
                         <div id='fill' class="color-div" bind-value-to="fill"></div>
                     </div>
 
-                    <div class="mdBtn stroke-color-box cell" data-toggle="tooltip" data-placement="bottom" title="线条色">
+                    <div class="mdBtn stroke-color-box cell" data-toggle="tooltip" data-placement="left" title="线条色">
                         <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-pencil colorBtn"></button>
                         <div id='fill' class="color-div" bind-value-to="strokeColor"></div>
                     </div>
@@ -281,7 +281,7 @@
                             <option value="微软雅黑">微软雅黑</option>
                         </select>
 
-                        <div class="mdBtn  text-background-color-box cell" data-toggle="tooltip" data-placement="bottom" title="文本背景色">
+                        <div class="mdBtn  text-background-color-box cell" data-toggle="tooltip" data-placement="left" title="文本背景色">
                             <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-text-background colorBtn"></button>
                             <div id='fill' class="color-div" bind-value-to="textBgColor"></div>
                         </div>
@@ -355,12 +355,12 @@
         <div class="modal fade bs-example-modal-sm" id="myAlertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-sm" role="document">
                 <div align="center" class="alert alert-danger alert-dismissible fade in" role="alert">
-                    <h4>Are you sure to do this?!</h4>
+                    <h4>清空后将不可恢复!</h4>
                     <!--<p>清空后将不可恢复</p>-->
                     <br>
                     <p >
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmClear()">Yes</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmClear()">清空</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                     </p>
                 </div>
             </div>

@@ -15,7 +15,7 @@ label {
 textarea {
     font-family: 微软雅黑;
     height: 25px;
-    margin-top:10px;
+    /*margin-top:10px;*/
 }
 
 .my-navbar {
@@ -34,6 +34,10 @@ textarea {
     padding-right: 30px;
 }
 
+.menu-panel{
+    padding: 10px 20px;
+}
+
 #roomId {
     color:#5BC0DE;
 }
@@ -41,26 +45,32 @@ textarea {
 /*顶部工具条*/
 #topToolbar{
     background:#ffffff;
+    padding-top:10px;
+    padding-left:10px;
     position:absolute;
+    width: 100%;
+    height: 40px;
+    overflow:auto;
     top:50px;
 }
 
+
 #topToolbar select{
-    width: 70px;
+    width: 80px;
 }
 
 #topToolbar input{
-    width: 40px;
+    width: 43px;
 }
 
 #topToolbar .cell{
     margin-right: 5px;
-    margin-top: 8px;
+    /*margin-top: 9px;*/
     float:left;
 }
 
 #topToolbar .bigCell{
-    float:left;
+    vertical-align: middle;
     margin-right: 5px;
 }
 
