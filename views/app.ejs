@@ -97,10 +97,10 @@
                     <i class="fa fa-trash fa-lg"></i>
                 </button>
                 <!--清除选中-->
-                <button id="clear-selected-canvas" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="清除选中"
-                        ng-click="removeSelected()">
-                    <i class="fa fa-trash-o fa-lg"></i>
-                </button>
+                <!--<button id="clear-selected-canvas" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="清除选中"-->
+                        <!--ng-click="removeSelected()">-->
+                    <!--<i class="fa fa-trash-o fa-lg"></i>-->
+                <!--</button>-->
                 <!--插入-->
                 <div class="btn-group" role="group">
                     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -466,21 +466,21 @@
         <!--bootstrap context menu-->
         <div id="context-menu2" style="position: absolute; z-index: 9999; top: 805px; left: 482px;" class="">
             <ul class="dropdown-menu" role="menu">
-                <li><a tabindex="-1">Action</a></li>
-                <li><a tabindex="-1">Another action</a></li>
-                <li><a tabindex="-1">This was dynamically changed</a></li>
+                <li><a href="" tabindex="-1" ng-click="removeSelected()"><span class="fa fa-trash menu-btn" ></span>清除</a></li>
+                <li><a href="" tabindex="-1"><span class="fa fa-copy menu-btn" ></span>复制</a></li>
                 <li class="divider"></li>
-                <li><a tabindex="-1">Separated link</a></li>
+                <li><a href="" tabindex="-1"><span class="fa fa-angle-double-up menu-btn" ></span>置于顶层</a></li>
+                <li><a href="" tabindex="-1"><span class="fa fa-angle-double-down menu-btn" ></span>置于底层</a></li>
             </ul>
         </div>
     </body>
 	<script src='/app_3th_js/angular/angular.min.js'></script>
     <script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
     <script src='/app_3th_js/bootstrap/bootstrap.min.js'></script>
-    <!--<script src='/app_3th_js/bootstrap/bootstrap-contextmenu.js'></script>-->
+    <script src='/app_3th_js/bootstrap/bootstrap-contextmenu.js'></script>
     <!--<script src="http://cdn.bootcss.com/bootstrap-contextmenu/0.3.3/bootstrap-contextmenu.min.js"></script>-->
-    <script src="http://cdn.bootcss.com/jquery-contextmenu/2.0.1/jquery.contextMenu.js"></script>
-    <script src="http://cdn.bootcss.com/jquery-contextmenu/2.0.1/jquery.ui.position.min.js"></script>
+    <!--<script src="http://cdn.bootcss.com/jquery-contextmenu/2.0.1/jquery.contextMenu.js"></script>-->
+    <!--<script src="http://cdn.bootcss.com/jquery-contextmenu/2.0.1/jquery.ui.position.min.js"></script>-->
 	<script src='/app_3th_js/colpick.js'></script>
 	<script src='/socket.io/socket.io.js'></script>
 	<script src='/app_3th_js/fabric/fabric.min.js'></script>

@@ -3,7 +3,7 @@
  */
 var EditBoard = function (){
     var me = this;
-    this.__socket = io.connect('http://192.168.1.81:4500');
+    this.__socket = io.connect('http://localhost:4500');
     var drawingModeEl =this.__drawingModeEl= _('drawing-mode'),
         test = _('test'),
         copy = _('copy-value'),
@@ -43,8 +43,6 @@ var EditBoard = function (){
 
     //监听window的缩放事件 使滚动条居中
     window.onresize = Utils.bind(configBoard,configBoard.resizeCanvas);
-    configBoard.initKeyBoard();
-    configBoard.initContextMenu();
     configBoard.resizeCanvas();
 
     //获取canvas div 使canvas居中

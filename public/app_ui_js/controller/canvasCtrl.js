@@ -27,7 +27,7 @@ function addUsers(obj){
     }
 }
 
-//为当前canvas的对象添加必要的属性
+//为每个准备进入canvas的对象添加必要的属性
 function prepareObj(obj,n_obj){
     obj.id = n_obj.id;
     obj.userId = n_obj.userId;
@@ -384,18 +384,6 @@ function addAccessors($scope) {
         }
     };
 
-    //function addImage(imageName, minScale, maxScale) {
-    //    var coord = getRandomLeftTop();
-    //    fabric.Image.fromURL('../images/' + imageName, function(image) {
-    //        image.set({
-    //            left: coord.left,
-    //            top: coord.top,
-    //            angle: getRandomInt(-10, 10)
-    //        }).scale(getRandomNum(minScale, maxScale)).setCoords();
-    //        canvas.add(image);
-    //    });
-    //};
-
     function addImage(imgData, minScale, maxScale) {
         var coord = getRandomLeftTop();
         fabric.Image.fromURL(imgData, function(image) {
@@ -749,61 +737,61 @@ function addAccessors($scope) {
 
   initCustomization();
 
-  function addTexts() {
-    var iText = new fabric.IText('自由画板\n文字示例\n点我\n编辑', {
-      left: 100,
-      top: 150,
-      fontFamily: 'Helvetica',
-      fill: '#333333',
-      styles: {
-        0: {
-          0: { fill: 'red', fontSize: 20 },
-          1: { fill: 'red', fontSize: 30 },
-          2: { fill: 'red', fontSize: 40 },
-          3: { fill: 'red', fontSize: 50 },
-          4: { fill: 'red', fontSize: 60 },
-
-          6: { textBackgroundColor: 'yellow' },
-          7: { textBackgroundColor: 'yellow' },
-          8: { textBackgroundColor: 'yellow' },
-          9: { textBackgroundColor: 'yellow' }
-        },
-        1: {
-          0: { textDecoration: 'underline' },
-          1: { textDecoration: 'underline' },
-          2: { fill: 'green', fontStyle: 'italic', textDecoration: 'underline' },
-          3: { fill: 'green', fontStyle: 'italic', textDecoration: 'underline' },
-          4: { fill: 'green', fontStyle: 'italic', textDecoration: 'underline' }
-        },
-        2: {
-          0: { fill: 'blue', fontWeight: 'bold' },
-          1: { fill: 'blue', fontWeight: 'bold' },
-          2: { fill: 'blue', fontWeight: 'bold' },
-
-          4: { fontFamily: 'Courier', textDecoration: 'line-through' },
-          5: { fontFamily: 'Courier', textDecoration: 'line-through' },
-          6: { fontFamily: 'Courier', textDecoration: 'line-through' },
-          7: { fontFamily: 'Courier', textDecoration: 'line-through' }
-        },
-        3: {
-          0: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
-          1: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
-          2: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
-          3: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
-          4: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' }
-        }
-      }
-    });
-
-      iText.on('editing:entered', function (e) {
-          console.log('editing:entered');
-      });
-      iText.on('editing:exited', function (e) {
-          console.log('editing:exited');
-      });
-
-    canvas.add(iText);
-  }
+  //function addTexts() {
+  //  var iText = new fabric.IText('自由画板\n文字示例\n点我\n编辑', {
+  //    left: 100,
+  //    top: 150,
+  //    fontFamily: 'Helvetica',
+  //    fill: '#333333',
+  //    styles: {
+  //      0: {
+  //        0: { fill: 'red', fontSize: 20 },
+  //        1: { fill: 'red', fontSize: 30 },
+  //        2: { fill: 'red', fontSize: 40 },
+  //        3: { fill: 'red', fontSize: 50 },
+  //        4: { fill: 'red', fontSize: 60 },
+  //
+  //        6: { textBackgroundColor: 'yellow' },
+  //        7: { textBackgroundColor: 'yellow' },
+  //        8: { textBackgroundColor: 'yellow' },
+  //        9: { textBackgroundColor: 'yellow' }
+  //      },
+  //      1: {
+  //        0: { textDecoration: 'underline' },
+  //        1: { textDecoration: 'underline' },
+  //        2: { fill: 'green', fontStyle: 'italic', textDecoration: 'underline' },
+  //        3: { fill: 'green', fontStyle: 'italic', textDecoration: 'underline' },
+  //        4: { fill: 'green', fontStyle: 'italic', textDecoration: 'underline' }
+  //      },
+  //      2: {
+  //        0: { fill: 'blue', fontWeight: 'bold' },
+  //        1: { fill: 'blue', fontWeight: 'bold' },
+  //        2: { fill: 'blue', fontWeight: 'bold' },
+  //
+  //        4: { fontFamily: 'Courier', textDecoration: 'line-through' },
+  //        5: { fontFamily: 'Courier', textDecoration: 'line-through' },
+  //        6: { fontFamily: 'Courier', textDecoration: 'line-through' },
+  //        7: { fontFamily: 'Courier', textDecoration: 'line-through' }
+  //      },
+  //      3: {
+  //        0: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
+  //        1: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
+  //        2: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
+  //        3: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
+  //        4: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' }
+  //      }
+  //    }
+  //  });
+  //
+  //    iText.on('editing:entered', function (e) {
+  //        console.log('editing:entered');
+  //    });
+  //    iText.on('editing:exited', function (e) {
+  //        console.log('editing:exited');
+  //    });
+  //
+  //  canvas.add(iText);
+  //}
 
   //addTexts();
 
@@ -813,7 +801,6 @@ function addAccessors($scope) {
   };
   $scope.setFreeDrawingMode = function(value) {
     canvas.isDrawingMode = !!value;
-    //$scope.$$phase || $scope.$digest();
   };
 
   $scope.freeDrawingMode = 'Pencil';
@@ -1069,32 +1056,36 @@ function addMyOwnAccessors($scope){
     });
 }
 
+//主要为监听Canvas上的主要事件
 function watchCanvas($scope) {
-    var isMouseDown = false;
+    canvas
+        .on('object:selected', getObjInfo)
+        .on('group:selected', updateScope)
+        .on('path:created', addPath)
+        .on('mouse:up', changeState)
+        .on('mouse:down', listenMouseDown)
+        .on('mouse:move', dragCanvas)
+        .on('selection:cleared', updateScope);
 
+    var isMouseDown = false;
     function updateScope() {
         $scope.$$phase || $scope.$digest();
         canvas.renderAll();
     }
     function getObjInfo(){
-        //console.log('select');
         updateScope();
-        //console.log(e.target);
     }
     function addPath(e){
         if(!ctrlKeyDown){
             updateScope();
             var path = e.path;
             var data = SerializeShapes.serializePath(path);
-            //path.id = data.id;
             prepareObj(path,data);
             canvasData.pathData.push(data);
             if(canvasData.usersId.indexOf(data.userId) === -1){
                 canvasData.usersId.push(data.userId);
             }
-            //console.log(canvasData);
-            if(roomId)
-            socket.emit('addPath', data);
+            if(roomId) socket.emit('addPath', data);
         }
     }
     function changeState(e){
@@ -1154,7 +1145,6 @@ function watchCanvas($scope) {
             }
         isMouseDown = true;
     }
-
     function dragCanvas(e){
         if ( panning && ctrlKeyDown) {
             canvasCtnEl.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
@@ -1163,35 +1153,46 @@ function watchCanvas($scope) {
     }
 
 
-    canvas
-    .on('object:selected', getObjInfo)
-    .on('group:selected', updateScope)
-    .on('path:created', addPath)
-    .on('mouse:up', changeState)
-    .on('mouse:down', listenMouseDown)
-    .on('mouse:move', dragCanvas)
-    .on('selection:cleared', updateScope);
-
-    /*当时用jquerycontextmenu时,可用以下方式控制contextmenu的显示*/
-    $('.upper-canvas').bind("contextmenu", function () {
-        if(canvas.getActiveObject()||canvas.getActiveGroup())
-            return true;
-        else
-            return false;
-    })
-
-    /*原生DOM操作 有问题*/
-    //var upperCavasEl = document.getElementsByClassName('upper-canvas');
-    //upperCavasEl[0].oncontextmenu = function () {
-    //    return false;
-    //}
-    //upperCavasEl[0].addEventListener('contextmenu', function (e) {
-    //    e.preventDefault();
-    //},false);
-
 }
 
+function initContextMenu($scope){
 
+
+    document.oncontextmenu = function (e) {
+        return false;
+    };
+    $('.upper-canvas').contextmenu({
+        // Demo 3
+        target: '#context-menu2',
+        before: function (e) {
+            if(!canvas.getActiveObject()&&!canvas.getActiveGroup()){
+                e.preventDefault();
+                this.closemenu();
+                return false;
+            }
+                },
+        onItem: function (context, e) {
+            //alert($(e.target).text());
+
+        }
+        });
+
+    $('#context-menu2').on('show.bs.context', function (e) {
+        console.log('before show event');
+    });
+
+    $('#context-menu2').on('shown.bs.context', function (e) {
+        console.log('after show event');
+    });
+
+    $('#context-menu2').on('hide.bs.context', function (e) {
+        console.log('before hide event');
+    });
+
+    $('#context-menu2').on('hidden.bs.context', function (e) {
+        console.log('after hide event');
+    });
+}
 
 function initCanvasSocket($scope){
     if(roomId){
@@ -1413,6 +1414,48 @@ function initCanvasSocket($scope){
     })
 }
 
+function initKeyBoard($scope){
+    var ie;
+    if (document.all)
+        ie = true;
+    else
+        ie = false; //判断是否IE
+    document.onkeydown = KeyPress;
+    document.onkeyup = KeyUp;
+    var me = this;
+    function KeyPress(){
+        var key;
+        if (ie)
+            key = event.keyCode;
+        else
+            key = KeyPress.arguments[0].keyCode;
+        if(key == 27){ //ESC键
+            $scope.setFreeDrawingMode(!$scope.getFreeDrawingMode());
+            $scope.$$phase || $scope.$digest();
+            if ($scope.getFreeDrawingMode()) {
+                _('drawing-mode').innerHTML = ' <i class="fa fa-mouse-pointer"></i>';
+                _('drawing-mode').setAttribute('class','btn btn-default');
+            }
+            else {
+                _('drawing-mode').innerHTML = ' <i class="fa fa-paint-brush "></i>';
+                _('drawing-mode').setAttribute('class','btn btn-info');
+            }
+        }
+        if(key === 17){ //Ctrl键
+            if(!ctrlKeyDown){
+                ctrlKeyDown = true;
+            }
+        }
+    }
+    function KeyUp(event){
+        var key = event.keyCode;
+        if(key === 17){
+            if(ctrlKeyDown)
+                ctrlKeyDown = false;
+        }
+    }
+}
+
 function httpOpt($scope){
     $scope.saveFile = function () {
         var fileName = _('filename').value;
@@ -1437,6 +1480,8 @@ canvasModule.controller('CanvasCtrl', function($scope) {
     $scope.getActiveStyle = getActiveStyle;
     addAccessors($scope);
     addMyOwnAccessors($scope);
+    initContextMenu($scope);
+    initKeyBoard($scope);
     initCanvasSocket($scope);
     watchCanvas($scope);
     httpOpt($scope);

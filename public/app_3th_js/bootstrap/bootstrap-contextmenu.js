@@ -9,7 +9,9 @@
  * Licensed under MIT
  * ========================================================= */
 
-;(function($) {
+
+//基于bootstrap的data-toggle制作的上下文菜单
+(function($) {
 
 	'use strict';
 
@@ -17,6 +19,7 @@
 	 * ============================ */
 	var toggle = '[data-toggle="context"]';
 
+	//定义构造函数
 	var ContextMenu = function (element, options) {
 		this.$element = $(element);
 
@@ -33,14 +36,12 @@
 
 	ContextMenu.prototype = {
 
-		constructor: ContextMenu
-		,show: function(e) {
-
-			var $menu
-				, evt
-				, tp
-				, items
-				, relatedTarget = { relatedTarget: this, target: e.currentTarget };
+        //函数的prototype的constructor本身不就是指向自己也就是 ContextMenu 为什么要重新赋值一遍？
+		constructor: ContextMenu,
+        //以下为prototype赋值方法 等同于平常写的 ContextMenu.prototype.show = func()。。。。
+        //show
+        show: function(e) {
+			var $menu, evt, tp, items, relatedTarget = { relatedTarget: this, target: e.currentTarget };
 
 			if (this.isDisabled()) return;
 
@@ -65,13 +66,9 @@
 				.on('click.context.data-api', $menu.selector, $.proxy(this.closemenu, this));
 
 			return false;
-		}
-
-		,closemenu: function(e) {
-			var $menu
-				, evt
-				, items
-				, relatedTarget;
+		},
+        closemenu: function(e) {
+			var $menu, evt, items, relatedTarget;
 
 			$menu = this.getMenu();
 
@@ -89,40 +86,39 @@
 				.off('click.context.data-api', $menu.selector);
 			// Don't propagate click event so other currently
 			// opened menus won't close.
-			//e.stopPropagation();
-		}
+			e.stopPropagation();
+		},
 
-		,keydown: function(e) {
+        keydown: function(e) {
 			if (e.which == 27) this.closemenu(e);
-		}
+		},
 
-		,before: function(e) {
+        before: function(e) {
 			return true;
-		}
+		},
 
-		,onItem: function(e) {
+        onItem: function(e) {
 			return true;
-		}
+		},
 
-		,listen: function () {
+        listen: function () {
 			this.$element.on('contextmenu.context.data-api', this.scopes, $.proxy(this.show, this));
 			$('html').on('click.context.data-api', $.proxy(this.closemenu, this));
 			$('html').on('keydown.context.data-api', $.proxy(this.keydown, this));
-		}
+		},
 
-		,destroy: function() {
+        destroy: function() {
 			this.$element.off('.context.data-api').removeData('context');
 			$('html').off('.context.data-api');
-		}
+		},
 
-		,isDisabled: function() {
+        isDisabled: function() {
 			return this.$element.hasClass('disabled') || 
 					this.$element.attr('disabled');
-		}
+		},
 
-		,getMenu: function () {
-			var selector = this.$element.data('target')
-				, $menu;
+        getMenu: function () {
+			var selector = this.$element.data('target'), $menu;
 
 			if (!selector) {
 				selector = this.$element.attr('href');
@@ -132,17 +128,17 @@
 			$menu = $(selector);
 
 			return $menu && $menu.length ? $menu : this.$element.find(selector);
-		}
+		},
 
-		,getPosition: function(e, $menu) {
-			var mouseX = e.clientX
-				, mouseY = e.clientY
-				, boundsX = $(window).width()
-				, boundsY = $(window).height()
-				, menuWidth = $menu.find('.dropdown-menu').outerWidth()
-				, menuHeight = $menu.find('.dropdown-menu').outerHeight()
-				, tp = {"position":"absolute","z-index":9999}
-				, Y, X, parentOffset;
+        getPosition: function(e, $menu) {
+			var mouseX = e.clientX,
+                mouseY = e.clientY,
+                boundsX = $(window).width(),
+                boundsY = $(window).height(),
+                menuWidth = $menu.find('.dropdown-menu').outerWidth(),
+                menuHeight = $menu.find('.dropdown-menu').outerHeight(),
+                tp = {"position":"absolute","z-index":9999},
+                Y, X, parentOffset;
 
 			if (mouseY + menuHeight > boundsY) {
 				Y = {"top": mouseY - menuHeight + $(window).scrollTop()};
@@ -171,11 +167,12 @@
 	/* CONTEXT MENU PLUGIN DEFINITION
 	 * ========================== */
 
+    //为每个jquery封装的元素增加 contextmenu 方法
 	$.fn.contextmenu = function (option,e) {
 		return this.each(function () {
-			var $this = $(this)
-				, data = $this.data('context')
-				, options = (typeof option == 'object') && option;
+			var $this = $(this),
+                data = $this.data('context'),
+                options = (typeof option == 'object') && option;
 
 			if (!data) $this.data('context', (data = new ContextMenu($this, options)));
 			if (typeof option == 'string') data[option].call(data, e);
@@ -187,16 +184,17 @@
 	/* APPLY TO STANDARD CONTEXT MENU ELEMENTS
 	 * =================================== */
 
+    //为document绑定右键菜单事件绑定,
 	$(document)
 	   .on('contextmenu.context.data-api', function() {
-			$(toggle).each(function () {
+			$(toggle).each(function () {//给每一个属性含有 data-toggle = 'context'的结点执行此函数
 				var data = $(this).data('context');
 				if (!data) return;
 				data.closemenu();
 			});
 		})
 		.on('contextmenu.context.data-api', toggle, function(e) {
-			$(this).contextmenu('show', e);
+			$(this).contextmenu('show', e);  //toggle结点执行contextmenu函数，即show方法
 
 			e.preventDefault();
 			e.stopPropagation();
