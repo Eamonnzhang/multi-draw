@@ -498,16 +498,6 @@
         var apiKey='<%= apiKey%>';
         var userName ='<%= userName%>';
         var userId ='<%= userId%>';
-        var ctrlKeyDown = false,
-                panning = false,
-                mouseXOnPan = 0,
-                mouseYOnPan = 0,
-                mouseX = 0,
-                mouseY = 0,
-                oldMouseX = 0,
-                oldMouseY = 0,
-                canvasXOnPan = 0,
-                canvasYOnPan = 0;
         var _ = function(id){return document.getElementById(id)};
         var urlParams = mdUtils.urlParams(window.location.href);
         if(urlParams['room']) var roomId = urlParams['room'];

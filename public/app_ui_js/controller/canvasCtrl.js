@@ -896,6 +896,12 @@ function addMyOwnAccessors($scope){
     }
 }
 
+var isMouseDown = false;
+var ctrlKeyDown = false,
+    mouseXOnPan = 0,
+    mouseYOnPan = 0,
+    canvasXOnPan = 0,
+    canvasYOnPan = 0;
 function listenCanvas($scope) {
     canvas
         .on('object:selected',  updateScope)
@@ -906,7 +912,7 @@ function listenCanvas($scope) {
         .on('mouse:move', dragCanvas)
         .on('selection:cleared', updateScope);
 
-    var isMouseDown = false;
+
 
     function updateScope() {
         $scope.$$phase || $scope.$digest();
@@ -928,7 +934,6 @@ function listenCanvas($scope) {
     }
 
     function changeState(e){
-        panning = false;
             if(isMouseDown){
                 isMouseDown = !isMouseDown;
                 if(roomId){
@@ -949,46 +954,36 @@ function listenCanvas($scope) {
     }
 
     function listenMouseDown(e){
+        isMouseDown = true;
         if(ctrlKeyDown){
-            if(canvas.isDrawingMode){
-                console.log('no drag');
-            }else{
-                panning = true;
-                mouseXOnPan = event.clientX;
-                mouseYOnPan = event.clientY;
-                canvasXOnPan = canvasCtnEl.offsetLeft;
-                canvasYOnPan = canvasCtnEl.offsetTop;
-            }
-        }else {
-            var obj = e.target;
-            if (obj) {
-                    if (obj._objects) {
-                        if (obj._objects[0].selectable) {
-                            var idArr = [];
-                            obj._objects.forEach(function (a) {
-                                idArr.push(a.id);
-                            });
-                            socket.emit('lockState', idArr);
-                        }
-                    }else if (obj.selectable) {
-                        socket.emit('lockState', obj.id);
+            mouseXOnPan = event.clientX;
+            mouseYOnPan = event.clientY;
+            canvasXOnPan = canvasCtnEl.offsetLeft;
+            canvasYOnPan = canvasCtnEl.offsetTop;
+        } else {
+            var obj=e.target;
+            if(obj){
+                if (obj._objects){
+                    if (obj._objects[0].selectable) {
+                        var idArr = [];
+                        obj._objects.forEach(function (a) {
+                            idArr.push(a.id);
+                        });
+                        socket.emit('lockState', idArr);
                     }
-                    if(obj._element){
-                        if(obj._element.tagName === 'VIDEO'){
-                            var myVideo = obj._element;
-                            if(myVideo.paused)
-                                myVideo.play();
-                            else
-                                myVideo.pause();
-                        }
+                } else {
+                    obj.selectable&&socket.emit('lockState', obj.id);
+                    if (obj._element&&obj._element.tagName === 'VIDEO') {
+                        var myVideo = obj._element;
+                        myVideo.paused ? myVideo.play() : myVideo.pause();
                     }
                 }
             }
-        isMouseDown = true;
+        }
     }
 
     function dragCanvas(e){
-        if ( panning && ctrlKeyDown) {
+        if (isMouseDown && ctrlKeyDown) {
             canvasCtnEl.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
             canvasCtnEl.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan  )+ 'px';
         }
@@ -1250,13 +1245,13 @@ function initCanvasSocket($scope){
 
 function initKeyBoard($scope){
     var ie;
+    var free;
     if (document.all)
         ie = true;
     else
         ie = false; //判断是否IE
     document.onkeydown = KeyPress;
     document.onkeyup = KeyUp;
-    var me = this;
     function KeyPress(){
         var key;
         if (ie)
@@ -1276,7 +1271,9 @@ function initKeyBoard($scope){
             }
         }
         if(key === 17){ //Ctrl键
-            if(!ctrlKeyDown){
+            if(!isMouseDown&&$scope.getFreeDrawingMode()){
+                free = true;
+                $scope.setFreeDrawingMode(false);
                 ctrlKeyDown = true;
             }
         }
@@ -1284,8 +1281,11 @@ function initKeyBoard($scope){
     function KeyUp(event){
         var key = event.keyCode;
         if(key === 17){
-            if(ctrlKeyDown)
-                ctrlKeyDown = false;
+            if(free){
+                free = false;
+                $scope.setFreeDrawingMode(true);
+            }
+            ctrlKeyDown = false;
         }
     }
 }
