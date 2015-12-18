@@ -902,6 +902,7 @@ var ctrlKeyDown = false,
     mouseYOnPan = 0,
     canvasXOnPan = 0,
     canvasYOnPan = 0;
+
 function listenCanvas($scope) {
     canvas
         .on('object:selected',  updateScope)
@@ -1274,6 +1275,9 @@ function initKeyBoard($scope){
             if(!isMouseDown&&$scope.getFreeDrawingMode()){
                 free = true;
                 $scope.setFreeDrawingMode(false);
+                ctrlKeyDown = true;
+            }
+            if(!$scope.getFreeDrawingMode()){
                 ctrlKeyDown = true;
             }
         }

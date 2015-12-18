@@ -10,7 +10,6 @@ var EditBoard = function (){
         customizedCanvas = _('customizedCanvas'),
         consoleInfo = _('console-info');
     this.communication = new Communication();
-    //this.serializeShapes = new SerializeShapes();
     var canvasCtner = this.__canvasCtner = _('canvasCtn');
     var zoomIn = _('zoom-in');
     var zoomOut = _('zoom-out');
@@ -19,7 +18,6 @@ var EditBoard = function (){
         width:750,
         height:530,
         isDrawingMode:true
-        //allowTouchScrolling:true
     });
 
     canvas.add();//chrome抽了，= =必须要加一句为了显示空白cavans画板
