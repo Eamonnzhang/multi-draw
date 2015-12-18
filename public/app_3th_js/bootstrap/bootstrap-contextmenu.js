@@ -86,7 +86,7 @@
 				.off('click.context.data-api', $menu.selector);
 			// Don't propagate click event so other currently
 			// opened menus won't close.
-			e.stopPropagation();
+            if(e) e.stopPropagation();
 		},
 
         keydown: function(e) {
@@ -131,7 +131,7 @@
 		},
 
         getPosition: function(e, $menu) {
-			var mouseX = e.clientX,
+            var mouseX = e.clientX,
                 mouseY = e.clientY,
                 boundsX = $(window).width(),
                 boundsY = $(window).height(),
@@ -140,7 +140,7 @@
                 tp = {"position":"absolute","z-index":9999},
                 Y, X, parentOffset;
 
-			if (mouseY + menuHeight > boundsY) {
+            if (mouseY + menuHeight > boundsY) {
 				Y = {"top": mouseY - menuHeight + $(window).scrollTop()};
 			} else {
 				Y = {"top": mouseY + $(window).scrollTop()};

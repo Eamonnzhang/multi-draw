@@ -185,8 +185,8 @@ exports.startSocketIo = function(server){
             socket.broadcast.to(room).emit('canvasBgColor', value);
         });
 
-        socket.on('groupChange',function(group){
-            socket.broadcast.to(room).emit('groupChange', group);
+        socket.on('groupStateChange',function(group){
+            socket.broadcast.to(room).emit('groupStateChange', group);
             for(var i =0;i<pathRoom[room].length;i++) {
                 group.objArr.forEach(function(x){
                     if(x.id === pathRoom[room][i].id ){

@@ -10,7 +10,7 @@ var EditBoard = function (){
         customizedCanvas = _('customizedCanvas'),
         consoleInfo = _('console-info');
     this.communication = new Communication();
-    this.serializeShapes = new SerializeShapes();
+    //this.serializeShapes = new SerializeShapes();
     var canvasCtner = this.__canvasCtner = _('canvasCtn');
     var zoomIn = _('zoom-in');
     var zoomOut = _('zoom-out');
@@ -42,7 +42,7 @@ var EditBoard = function (){
 
 
     //监听window的缩放事件 使滚动条居中
-    window.onresize = Utils.bind(configBoard,configBoard.resizeCanvas);
+    window.onresize = mdUtils.bind(configBoard,configBoard.resizeCanvas);
     configBoard.resizeCanvas();
 
     //获取canvas div 使canvas居中
@@ -109,15 +109,19 @@ var EditBoard = function (){
             console.log(canvas.getActiveObject());
         }
         if(canvas.getActiveGroup()){
-            canvas.getActiveGroup().forEachObject(function(a) {
-                console.log(a);
-            });
+            //canvas.getActiveGroup().forEachObject(function(a) {
+                console.log(canvas.getActiveGroup());
+            //});
         }
     };
 
     test.onclick = function(){
-        console.log(JSON.stringify(canvas.getActiveObject()));
-        console.log(canvas.getActiveObject().toObject());
+        //console.log(JSON.stringify(canvas.getActiveObject()));
+        if(canvas.getActiveGroup()){
+           console.log(canvas.getActiveGroup().toObject());
+        }else
+            console.log(canvas.getActiveObject().toObject());
+
     };
 };
 

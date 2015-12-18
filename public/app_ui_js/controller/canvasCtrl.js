@@ -5,49 +5,11 @@ canvasData.geometryData = [];
 canvasData.imgData=[];
 canvasData.usersId = [];
 
-//为文字编辑绑定事件
-function setITextFire(iText,$scope){
-    iText.on('editing:entered', function (e) {
-        console.log('editing:entered');
-    });
-    iText.on('editing:exited', function (e) {
-        console.log('editing:exited');
-    });
-    iText.on('selection:changed', function () {
-        $scope.setText($scope.getText());
-        //$scope.$$phase || $scope.$digest();
-        canvas.renderAll();
-    });
-}
-
 //记录进入canvas的所有用户ID
 function addUsers(obj){
     if (canvasData.usersId.indexOf(obj.userId) === -1) {
         canvasData.usersId.push(obj.userId);
     }
-}
-
-//为每个准备进入canvas的对象添加必要的属性
-function prepareObj(obj,n_obj){
-    obj.id = n_obj.id;
-    obj.userId = n_obj.userId;
-    obj.userName = n_obj.userName;
-    obj.createTime = n_obj.createTime;
-    obj.lastModify = n_obj.lastModify;
-}
-
-function addGeometryToCanvas(obj){
-    canvasData.geometryData.push(obj);
-    addUsers(obj);
-    if(obj.type === 'circle')
-        var gmt = new fabric.Circle(obj);
-    if(obj.type === 'triangle')
-        var gmt = new fabric.Triangle(obj);
-    if(obj.type === 'rect')
-        var gmt = new fabric.Rect(obj);
-    if(obj.type === 'line')
-        var gmt = new fabric.Line([obj.x1,obj.y1,obj.x2,obj.y2],obj);
-    canvas.add(gmt);
 }
 
 function getActiveStyle(styleName, object) {
@@ -59,7 +21,7 @@ function getActiveStyle(styleName, object) {
         : (object[styleName] || '');
 }
 
-//设置对象样式
+//设置所有对象样式
 function setActiveStyle(styleName, value, object) {
     object = object || canvas.getActiveObject();
     if (!object) return;
@@ -92,7 +54,7 @@ function getActiveProp(name) {
     return object[name] || '';
 }
 
-//设置对象属性
+//设置对象属性,基本上只针对text对象
 function setActiveProp(name, value) {
     //console.log('setActiveProp');
     var object = canvas.getActiveObject();
@@ -255,238 +217,12 @@ function addAccessors($scope) {
         canvas.renderAll();
     };
 
-    $scope.addRect = function() {
-        var coord = getRandomLeftTop();
-        var rect = new fabric.Rect({
-            left: coord.left,
-            top: coord.top,
-            fill: '#' + getRandomColor(),
-            width: 50,
-            height: 50
-        });
-        var sRect = SerializeShapes.serializeRect(rect);
-        //rect.id = sRect.id;
-        prepareObj(rect,sRect);
-        canvas.add(rect);
-        if(roomId){
-            socket.emit('addGeometry',sRect);
-        }
-    };
-
-    $scope.addCircle = function() {
-        var coord = getRandomLeftTop();
-        var circle = new fabric.Circle({
-            left: coord.left,
-            top: coord.top,
-            fill: '#' + getRandomColor(),
-            radius: 50
-        });
-        var sCircle = SerializeShapes.serializeCircle(circle);
-        //circle.id = sCircle.id;
-        prepareObj(circle,sCircle);
-        canvas.add(circle);
-        if(roomId){
-            socket.emit('addGeometry',sCircle);
-        }
-    };
-
-    $scope.addTriangle = function() {
-        var coord = getRandomLeftTop();
-        var triangle = new fabric.Triangle({
-            left: coord.left,
-            top: coord.top,
-            fill: '#' + getRandomColor(),
-            width: 50,
-            height: 50
-        });
-        var sTriangle = SerializeShapes.serializeTriangle(triangle);
-        //triangle.id = sTriangle.id;
-        prepareObj(triangle,sTriangle);
-        canvas.add(triangle);
-        if(roomId){
-            socket.emit('addGeometry',sTriangle);
-        }
-    };
-
-    $scope.addLine = function() {
-        var coord = getRandomLeftTop();
-        var line = new fabric.Line([ 50, 100, 200, 200], {
-            left: coord.left,
-            top: coord.top,
-            stroke: '#' + 000000
-        });
-        var sLine = SerializeShapes.serializeLine(line);
-        //line.id = sLine.id;
-        prepareObj(line,sLine);
-        canvas.add(line);
-        if(roomId){
-            socket.emit('addGeometry',sLine);
-        }
-    };
-
-    //$scope.addPolygon = function() {  //多边形
-    //    var coord = getRandomLeftTop();
-    //
-    //    canvas.add(new fabric.Polygon([
-    //      {x: 185, y: 0},
-    //      {x: 250, y: 20},
-    //      {x: 385, y: 170},
-    //      {x: 0, y: 245} ], {
-    //        left: coord.left,
-    //        top: coord.top,
-    //        fill: '#' + getRandomColor()
-    //      }));
-    //};
-
-    $scope.addText = function() {
-        var text = '点击编辑文字';
-        var textSample = new fabric.IText(text, {
-            left: getRandomInt(0, 200),
-            top: getRandomInt(0, 200),
-            fontFamily: '微软雅黑',
-            fill: '#' + getRandomColor(),
-            fontWeight: '',
-            originX: 'left',
-            hasRotatingPoint: true,
-            centerTransform: true
-        });
-        var sText = SerializeShapes.serializeText(textSample);
-        //textSample.id = text.id;
-        prepareObj(textSample,sText);
-        if(roomId){
-            socket.emit('addText',sText);
-        }
-        setITextFire(textSample,this);
-        canvas.add(textSample);
-    };
-
-    var addShape = function(shapeName) {
-        console.log('adding shape', shapeName);
-        var coord = getRandomLeftTop();
-        fabric.loadSVGFromURL('../assets/' + shapeName + '.svg', function(objects, options) {
-            var loadedObject = fabric.util.groupSVGElements(objects, options);
-            loadedObject.set({
-                left: coord.left,
-                top: coord.top,
-                angle: getRandomInt(-10, 10)
-            }).setCoords();
-            canvas.add(loadedObject);
-        });
-    };
-
-    $scope.maybeLoadShape = function(e) {
-        var $el = $(e.target).closest('button.shape');
-        if (!$el[0]) return;
-
-        var id = $el.prop('id'), match;
-        if (match = /\d+$/.exec(id)) {
-            addShape(match[0]);
-        }
-    };
-
-    function addImage(imgData, minScale, maxScale) {
-        var coord = getRandomLeftTop();
-        fabric.Image.fromURL(imgData, function(image) {
-
-            image.set({
-                left: coord.left,
-                top: coord.top
-                //angle: getRandomInt(-10, 10)
-            }).scale(getRandomNum(minScale, maxScale)).setCoords();
-            var sImage = SerializeShapes.serializeImage(imgData,image);
-            prepareObj(image,sImage);
-            if(roomId){
-                socket.emit('addImage',sImage);
-            }
-            canvas.add(image);
-        });
-    };
-
-    _('image').addEventListener('change', function() {
-        if (this.files.length != 0) {
-            var file = this.files[0],
-                reader = new FileReader();
-            if (!reader) {
-                alert('your browser doesn\'t support fileReader');
-                this.value = '';
-                return;
-            };
-            reader.onload = function(e) {
-                this.value = '';
-                console.log(e.target);
-                var type = Utils.getDataUrlType(e.target.result);
-                console.log(type);
-                if(type === 'image')
-                    addImage(e.target.result,0.5,1);
-            };
-            reader.readAsDataURL(file);
-        };
-    }, false);
-
-    $scope.addImage1 = function() {
-        _('image').click();
-    };
-
-    $scope.addVideo1 = function() {
-        _('video').click();
-    };
-
-    _('video').addEventListener('change', function() {
-        if (this.files.length != 0) {
-            var file = this.files[0],
-                reader = new FileReader();
-            if (!reader) {
-                alert('your browser doesn\'t support fileReader');
-                this.value = '';
-                return;
-            };
-            reader.onload = function(e) {
-                this.value = '';
-                //console.log(e.target);
-                var type = Utils.getDataUrlType(e.target.result);
-                console.log(type);
-                if(type === 'video')
-                    addVideo(e.target.result);
-            };
-            reader.readAsDataURL(file);
-        };
-    }, false);
-
-
-    function addVideo(url) {
-        var parent = document.createElement('div');
-        var videoEl = document.createElement('video');
-        videoEl.setAttribute('src',url);
-        videoEl.setAttribute('style','display:none');
-        videoEl.setAttribute('width',"480");
-        videoEl.setAttribute('height',"240");
-        parent.appendChild(videoEl);
-        var video = new fabric.Image(videoEl, {
-            left: 100,
-            top: 100
-        });
-        var sVideo = SerializeShapes.serializeVideo(url,video);
-        prepareObj(video,sVideo);
-        if(roomId){
-            socket.emit('addVideo',sVideo);
-        }
-        canvas.add(video);
-        fabric.util.requestAnimFrame(function render() {
-            canvas.renderAll();
-            fabric.util.requestAnimFrame(render);
-        });
-    };
-
     function removeVideoEl(el){
-
-        //el.parentNode.removeChild(el);
         if(el.play){
             el.pause();
         }
         console.log(el);
-
     }
-    //addVideo();
 
     $scope.confirmClear = function() {
         if(roomId) socket.emit('clearAll','clearAll');
@@ -516,7 +252,6 @@ function addAccessors($scope) {
         return consoleJSONValue;
     };
     $scope.setConsoleJSON = function(value) {
-        //console.log(value);
         consoleJSONValue = value;
     };
 
@@ -527,41 +262,12 @@ function addAccessors($scope) {
     $scope.removeSelected = function() {
         var activeObject = canvas.getActiveObject(),
             activeGroup = canvas.getActiveGroup();
-        if(roomId){
-            var idArr = [];
-            if (activeObject) {
-                idArr.push(activeObject.id);
-            }
-            if (activeGroup) {
-                activeGroup.forEachObject(function (a) {
-                  idArr.push(a.id);
-                });
-            }
+        activeObject&&mdCanvas.remove(canvas,activeObject, function (idArr) {
             socket.emit('clearSelected', idArr);
-        }
-        if (activeGroup) {
-            var objectsInGroup = activeGroup.getObjects();
-            canvas.discardActiveGroup();
-            objectsInGroup.forEach(function (object) {
-                canvas.remove(object);
-                if(object._element){
-                    var el = object._element;
-                    if(el.tagName === 'VIDEO'){
-                        removeVideoEl(el);
-                    }
-                }
-            });
-        }
-        else if (activeObject) {
-            if(activeObject._element){
-                var el = activeObject._element;
-                if(el.tagName === 'VIDEO'){
-                    removeVideoEl(el);
-                }
-            }
-            canvas.remove(activeObject);
-        }
-
+        });
+        activeGroup&&mdCanvas.remove(canvas,activeGroup, function (idArr) {
+            socket.emit('clearSelected', idArr);
+        });
     };
 
     $scope.getHorizontalLock = function() {
@@ -681,134 +387,76 @@ function addAccessors($scope) {
         canvas.renderAll();
     };
 
-  $scope.shadowify = function() {
-    var obj = canvas.getActiveObject();
-    if (!obj) return;
+    $scope.shadowify = function() {
+        var obj = canvas.getActiveObject();
+        if (!obj) return;
 
-    if (obj.shadow) {
-      obj.shadow = null;
+        if (obj.shadow) {
+            obj.shadow = null;
+        }
+        else {
+            obj.setShadow({
+                color: 'rgba(0,0,0,0.3)',
+                blur: 10,
+                offsetX: 10,
+                offsetY: 10
+            });
+        }
+        canvas.renderAll();
+    };
+
+    $scope.gradientify = function() {
+        var obj = canvas.getActiveObject();
+        if (!obj) return;
+        obj.setGradient('fill', {
+            x1: 0,
+            y1: 0,
+            x2: (getRandomInt(0, 1) ? 0 : obj.width),
+            y2: (getRandomInt(0, 1) ? 0 : obj.height),
+            colorStops: {
+                0: '#' + getRandomColor(),
+                1: '#' + getRandomColor()
+            }
+        });
+        canvas.renderAll();
+    };
+
+    function initCustomization() {
+        if (typeof Cufon !== 'undefined' && Cufon.fonts.delicious) {
+            Cufon.fonts.delicious.offsetLeft = 75;
+            Cufon.fonts.delicious.offsetTop = 25;
+        }
+
+        if (/(iPhone|iPod|iPad)/i.test(navigator.userAgent)) {
+            fabric.Object.prototype.cornerSize = 30;
+        }
+
+        fabric.Object.prototype.transparentCorners = false;
+
+        if (document.location.search.indexOf('guidelines') > -1) {
+            initCenteringGuidelines(canvas);
+            initAligningGuidelines(canvas);
+        }
     }
-    else {
-      obj.setShadow({
-        color: 'rgba(0,0,0,0.3)',
-        blur: 10,
-        offsetX: 10,
-        offsetY: 10
-      });
-    }
-    canvas.renderAll();
-  };
 
-  $scope.gradientify = function() {
-    var obj = canvas.getActiveObject();
-    if (!obj) return;
+    initCustomization();
 
-    obj.setGradient('fill', {
-      x1: 0,
-      y1: 0,
-      x2: (getRandomInt(0, 1) ? 0 : obj.width),
-      y2: (getRandomInt(0, 1) ? 0 : obj.height),
-      colorStops: {
-        0: '#' + getRandomColor(),
-        1: '#' + getRandomColor()
-      }
-    });
-    canvas.renderAll();
-  };
+    $scope.getFreeDrawingMode = function() {
+        return canvas.isDrawingMode;
+    };
 
+    $scope.setFreeDrawingMode = function(value) {
+        canvas.isDrawingMode = !!value;
+    };
 
-  function initCustomization() {
-    if (typeof Cufon !== 'undefined' && Cufon.fonts.delicious) {
-      Cufon.fonts.delicious.offsetLeft = 75;
-      Cufon.fonts.delicious.offsetTop = 25;
-    }
+    $scope.freeDrawingMode = 'Pencil';
 
-    if (/(iPhone|iPod|iPad)/i.test(navigator.userAgent)) {
-      fabric.Object.prototype.cornerSize = 30;
-    }
+    $scope.getDrawingMode = function() {
+        return $scope.freeDrawingMode;
+    };
 
-    fabric.Object.prototype.transparentCorners = false;
+    $scope.setDrawingMode = function(type) {
 
-    if (document.location.search.indexOf('guidelines') > -1) {
-      initCenteringGuidelines(canvas);
-      initAligningGuidelines(canvas);
-    }
-  }
-
-  initCustomization();
-
-  //function addTexts() {
-  //  var iText = new fabric.IText('自由画板\n文字示例\n点我\n编辑', {
-  //    left: 100,
-  //    top: 150,
-  //    fontFamily: 'Helvetica',
-  //    fill: '#333333',
-  //    styles: {
-  //      0: {
-  //        0: { fill: 'red', fontSize: 20 },
-  //        1: { fill: 'red', fontSize: 30 },
-  //        2: { fill: 'red', fontSize: 40 },
-  //        3: { fill: 'red', fontSize: 50 },
-  //        4: { fill: 'red', fontSize: 60 },
-  //
-  //        6: { textBackgroundColor: 'yellow' },
-  //        7: { textBackgroundColor: 'yellow' },
-  //        8: { textBackgroundColor: 'yellow' },
-  //        9: { textBackgroundColor: 'yellow' }
-  //      },
-  //      1: {
-  //        0: { textDecoration: 'underline' },
-  //        1: { textDecoration: 'underline' },
-  //        2: { fill: 'green', fontStyle: 'italic', textDecoration: 'underline' },
-  //        3: { fill: 'green', fontStyle: 'italic', textDecoration: 'underline' },
-  //        4: { fill: 'green', fontStyle: 'italic', textDecoration: 'underline' }
-  //      },
-  //      2: {
-  //        0: { fill: 'blue', fontWeight: 'bold' },
-  //        1: { fill: 'blue', fontWeight: 'bold' },
-  //        2: { fill: 'blue', fontWeight: 'bold' },
-  //
-  //        4: { fontFamily: 'Courier', textDecoration: 'line-through' },
-  //        5: { fontFamily: 'Courier', textDecoration: 'line-through' },
-  //        6: { fontFamily: 'Courier', textDecoration: 'line-through' },
-  //        7: { fontFamily: 'Courier', textDecoration: 'line-through' }
-  //      },
-  //      3: {
-  //        0: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
-  //        1: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
-  //        2: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
-  //        3: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' },
-  //        4: { fontFamily: 'Impact', fill: '#666666', textDecoration: 'line-through' }
-  //      }
-  //    }
-  //  });
-  //
-  //    iText.on('editing:entered', function (e) {
-  //        console.log('editing:entered');
-  //    });
-  //    iText.on('editing:exited', function (e) {
-  //        console.log('editing:exited');
-  //    });
-  //
-  //  canvas.add(iText);
-  //}
-
-  //addTexts();
-
-
-  $scope.getFreeDrawingMode = function() {
-    return canvas.isDrawingMode;
-  };
-  $scope.setFreeDrawingMode = function(value) {
-    canvas.isDrawingMode = !!value;
-  };
-
-  $scope.freeDrawingMode = 'Pencil';
-
-  $scope.getDrawingMode = function() {
-    return $scope.freeDrawingMode;
-  };
-  $scope.setDrawingMode = function(type) {
     $scope.freeDrawingMode = type;
 
     if (type === 'hline') {
@@ -831,20 +479,20 @@ function addAccessors($scope) {
     }
 
     $scope.$$phase || $scope.$digest();
-  };
+    };
     canvas.freeDrawingBrush.width = 3;
+
     $scope.getDrawingLineWidth = function() {
         if (canvas.freeDrawingBrush) {
           return canvas.freeDrawingBrush.width;
         }
     };
+
     $scope.setDrawingLineWidth = function(value) {
         if (canvas.freeDrawingBrush) {
           canvas.freeDrawingBrush.width = parseInt(value, 10)||1;
         }
     };
-
-
 
     $scope.getDrawingLineColor = function() {
         if (canvas.freeDrawingBrush) {
@@ -897,106 +545,287 @@ function addAccessors($scope) {
             return null;
     };
 
-  function initBrushes() {
-    if (!fabric.PatternBrush) return;
+    function initBrushes() {
+        if (!fabric.PatternBrush) return;
 
-    initVLinePatternBrush();
-    initHLinePatternBrush();
-    initSquarePatternBrush();
-    initDiamondPatternBrush();
-    initImagePatternBrush();
-  }
-  initBrushes();
+        initVLinePatternBrush();
+        initHLinePatternBrush();
+        initSquarePatternBrush();
+        initDiamondPatternBrush();
+        initImagePatternBrush();
+    }
+    initBrushes();
 
-  function initImagePatternBrush() {
-    var img = new Image();
-    img.src = '/images/logo.png';
+    function initImagePatternBrush() {
+        var img = new Image();
+        img.src = '/images/logo.png';
 
-    $scope.texturePatternBrush = new fabric.PatternBrush(canvas);
-    $scope.texturePatternBrush.source = img;
-  }
+        $scope.texturePatternBrush = new fabric.PatternBrush(canvas);
+        $scope.texturePatternBrush.source = img;
+    }
 
-  function initDiamondPatternBrush() {
-    $scope.diamondPatternBrush = new fabric.PatternBrush(canvas);
-    $scope.diamondPatternBrush.getPatternSrc = function() {
+    function initDiamondPatternBrush() {
+        $scope.diamondPatternBrush = new fabric.PatternBrush(canvas);
+        $scope.diamondPatternBrush.getPatternSrc = function() {
 
-      var squareWidth = 10, squareDistance = 5;
-      var patternCanvas = fabric.document.createElement('canvas');
-      var rect = new fabric.Rect({
-        width: squareWidth,
-        height: squareWidth,
-        angle: 45,
-        fill: this.color
-      });
+            var squareWidth = 10, squareDistance = 5;
+            var patternCanvas = fabric.document.createElement('canvas');
+            var rect = new fabric.Rect({
+                width: squareWidth,
+                height: squareWidth,
+                angle: 45,
+                fill: this.color
+            });
 
-      var canvasWidth = rect.getBoundingRectWidth();
+            var canvasWidth = rect.getBoundingRectWidth();
 
-      patternCanvas.width = patternCanvas.height = canvasWidth + squareDistance;
-      rect.set({ left: canvasWidth / 2, top: canvasWidth / 2 });
+            patternCanvas.width = patternCanvas.height = canvasWidth + squareDistance;
+            rect.set({ left: canvasWidth / 2, top: canvasWidth / 2 });
 
-      var ctx = patternCanvas.getContext('2d');
-      rect.render(ctx);
+            var ctx = patternCanvas.getContext('2d');
+            rect.render(ctx);
 
-      return patternCanvas;
+            return patternCanvas;
+        };
+    }
+
+    function initSquarePatternBrush() {
+        $scope.squarePatternBrush = new fabric.PatternBrush(canvas);
+        $scope.squarePatternBrush.getPatternSrc = function() {
+
+            var squareWidth = 10, squareDistance = 2;
+
+            var patternCanvas = fabric.document.createElement('canvas');
+            patternCanvas.width = patternCanvas.height = squareWidth + squareDistance;
+            var ctx = patternCanvas.getContext('2d');
+
+            ctx.fillStyle = this.color;
+            ctx.fillRect(0, 0, squareWidth, squareWidth);
+
+            return patternCanvas;
+        };
+    }
+
+    function initVLinePatternBrush() {
+        $scope.vLinePatternBrush = new fabric.PatternBrush(canvas);
+        $scope.vLinePatternBrush.getPatternSrc = function() {
+
+            var patternCanvas = fabric.document.createElement('canvas');
+            patternCanvas.width = patternCanvas.height = 10;
+            var ctx = patternCanvas.getContext('2d');
+
+            ctx.strokeStyle = this.color;
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.moveTo(0, 5);
+            ctx.lineTo(10, 5);
+            ctx.closePath();
+            ctx.stroke();
+
+            return patternCanvas;
+        };
+    }
+
+    function initHLinePatternBrush() {
+        $scope.hLinePatternBrush = new fabric.PatternBrush(canvas);
+        $scope.hLinePatternBrush.getPatternSrc = function() {
+
+            var patternCanvas = fabric.document.createElement('canvas');
+            patternCanvas.width = patternCanvas.height = 10;
+            var ctx = patternCanvas.getContext('2d');
+
+            ctx.strokeStyle = this.color;
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.moveTo(5, 0);
+            ctx.lineTo(5, 10);
+            ctx.closePath();
+            ctx.stroke();
+
+            return patternCanvas;
+        };
+    }
+}
+
+function addObject($scope){
+    $scope.addRect = function() {
+        var coord = getRandomLeftTop();
+        var props = {
+            left: coord.left,
+            top: coord.top,
+            fill: '#ffffff',
+            stroke:'#000000',
+            width: 50,
+            height: 50
+        };
+        var rect = new fabric.Rect(props);
+        mdCanvas.add(canvas,rect.toObject(),true, function (sRect) {
+            roomId&&socket.emit('addGeometry',sRect);
+        });
     };
-  }
 
-  function initSquarePatternBrush() {
-    $scope.squarePatternBrush = new fabric.PatternBrush(canvas);
-    $scope.squarePatternBrush.getPatternSrc = function() {
-
-      var squareWidth = 10, squareDistance = 2;
-
-      var patternCanvas = fabric.document.createElement('canvas');
-      patternCanvas.width = patternCanvas.height = squareWidth + squareDistance;
-      var ctx = patternCanvas.getContext('2d');
-
-      ctx.fillStyle = this.color;
-      ctx.fillRect(0, 0, squareWidth, squareWidth);
-
-      return patternCanvas;
+    $scope.addCircle = function() {
+        var coord = getRandomLeftTop();
+        var props = {
+            left: coord.left,
+            top: coord.top,
+            fill: '#ffffff',
+            stroke:'#000000',
+            radius: 50
+        };
+        var circle = new fabric.Circle(props);
+        mdCanvas.add(canvas,circle.toObject(),true, function (sCircle) {
+            roomId&&socket.emit('addGeometry',sCircle);
+        });
     };
-  }
 
-  function initVLinePatternBrush() {
-    $scope.vLinePatternBrush = new fabric.PatternBrush(canvas);
-    $scope.vLinePatternBrush.getPatternSrc = function() {
-
-      var patternCanvas = fabric.document.createElement('canvas');
-      patternCanvas.width = patternCanvas.height = 10;
-      var ctx = patternCanvas.getContext('2d');
-
-      ctx.strokeStyle = this.color;
-      ctx.lineWidth = 5;
-      ctx.beginPath();
-      ctx.moveTo(0, 5);
-      ctx.lineTo(10, 5);
-      ctx.closePath();
-      ctx.stroke();
-
-      return patternCanvas;
+    $scope.addTriangle = function() {
+        var coord = getRandomLeftTop();
+        var props = {
+            left: coord.left,
+            top: coord.top,
+            fill: '#ffffff',
+            stroke:'#000000',
+            width: 50,
+            height: 50
+        };
+        var triangle = new fabric.Triangle(props);
+        mdCanvas.add(canvas,triangle.toObject(),true, function (sTriangle) {
+            roomId&&socket.emit('addGeometry',sTriangle);
+        });
     };
-  }
 
-  function initHLinePatternBrush() {
-    $scope.hLinePatternBrush = new fabric.PatternBrush(canvas);
-    $scope.hLinePatternBrush.getPatternSrc = function() {
-
-      var patternCanvas = fabric.document.createElement('canvas');
-      patternCanvas.width = patternCanvas.height = 10;
-      var ctx = patternCanvas.getContext('2d');
-
-      ctx.strokeStyle = this.color;
-      ctx.lineWidth = 5;
-      ctx.beginPath();
-      ctx.moveTo(5, 0);
-      ctx.lineTo(5, 10);
-      ctx.closePath();
-      ctx.stroke();
-
-      return patternCanvas;
+    $scope.addLine = function() {
+        var coord = getRandomLeftTop();
+        var props = {
+            x1:50,
+            y1:100,
+            x2:200,
+            y2:200,
+            left: coord.left,
+            top: coord.top,
+            stroke: '#000000'
+        };
+        var line = new fabric.Line([props.x1,props.y1,props.x2,props.y2],props);
+        mdCanvas.add(canvas,line.toObject(),true, function (sLine) {
+            roomId&&socket.emit('addGeometry',sLine);
+        });
     };
-  }
+
+    //$scope.addPolygon = function() {  //多边形
+    //    var coord = getRandomLeftTop();
+    //
+    //    canvas.add(new fabric.Polygon([
+    //      {x: 185, y: 0},
+    //      {x: 250, y: 20},
+    //      {x: 385, y: 170},
+    //      {x: 0, y: 245} ], {
+    //        left: coord.left,
+    //        top: coord.top,
+    //        fill: '#' + getRandomColor()
+    //      }));
+    //};
+
+    $scope.addText = function() {
+        var coord = getRandomLeftTop();
+        var props = {
+            text : '点击编辑文字',
+            left: coord.left,
+            top: coord.top,
+            fontFamily: '微软雅黑',
+            fill: '#000000',
+            fontWeight: '',
+            originX: 'left',
+            hasRotatingPoint: true,
+            centerTransform: true
+
+        }
+        var iText = new fabric.IText(props.text, props);
+
+        mdCanvas.add(canvas, iText.toObject(), true, function (sIText,fIText) {
+            roomId&&socket.emit('addText',sIText);
+            fIText.on('editing:entered', function (e) {
+                console.log('进入编辑');
+            });
+            fIText.on('editing:exited', function (e) {
+                console.log('退出编辑');
+            });
+            fIText.on('selection:changed', function () {
+                $scope.setText($scope.getText());
+                canvas.renderAll();
+            });
+
+        });
+    };
+
+    var addShape = function(shapeName) {
+        console.log('adding shape', shapeName);
+        var coord = getRandomLeftTop();
+        fabric.loadSVGFromURL('../assets/' + shapeName + '.svg', function(objects, options) {
+            var loadedObject = fabric.util.groupSVGElements(objects, options);
+            loadedObject.set({
+                left: coord.left,
+                top: coord.top,
+                angle: getRandomInt(-10, 10)
+            }).setCoords();
+            canvas.add(loadedObject);
+        });
+    };
+
+    $scope.maybeLoadShape = function(e) {
+        var $el = $(e.target).closest('button.shape');
+        if (!$el[0]) return;
+
+        var id = $el.prop('id'), match;
+        if (match = /\d+$/.exec(id)) {
+            addShape(match[0]);
+        }
+    };
+
+    $scope.addImage = function() {
+        _('image').click();
+    };
+
+    _('image').addEventListener('change', function() {
+        if (this.files.length != 0) {
+            var file = this.files[0],
+                reader = new FileReader();
+            if (!reader) {
+                alert('your browser doesn\'t support fileReader');
+                this.value = '';
+                return;
+            };
+            reader.onload = function(e) {
+                mdCanvas.addUrl(canvas,e.target.result,getRandomLeftTop(),true,function (sImage) {
+                    roomId&&socket.emit('addImage',sImage);
+                });
+
+            };
+            reader.readAsDataURL(file);
+        };
+    }, false);
+
+    $scope.addVideo = function() {
+        _('video').click();
+    };
+
+    _('video').addEventListener('change', function() {
+        if (this.files.length != 0) {
+            var file = this.files[0],
+                reader = new FileReader();
+            if (!reader) {
+                alert('your browser doesn\'t support fileReader');
+                this.value = '';
+                return;
+            };
+            reader.onload = function(e) {
+                mdCanvas.addUrl(canvas, e.target.result, getRandomLeftTop(),true,function (sVideo) {
+                    if(roomId) socket.emit('addVideo',sVideo);
+                });
+            };
+            reader.readAsDataURL(file);
+        };
+    }, false);
 }
 
 function addMyOwnAccessors($scope){
@@ -1054,12 +883,22 @@ function addMyOwnAccessors($scope){
             $(el).colpickHide();
         }
     });
+    
+    $scope.copySelf = function () {
+        var activeObject = canvas.getActiveObject(),
+            activeGroup = canvas.getActiveGroup();
+        if(activeObject){
+            console.log(activeObject);
+        }
+        if(activeGroup){
+
+        }
+    }
 }
 
-//主要为监听Canvas上的主要事件
-function watchCanvas($scope) {
+function listenCanvas($scope) {
     canvas
-        .on('object:selected', getObjInfo)
+        .on('object:selected',  updateScope)
         .on('group:selected', updateScope)
         .on('path:created', addPath)
         .on('mouse:up', changeState)
@@ -1068,26 +907,26 @@ function watchCanvas($scope) {
         .on('selection:cleared', updateScope);
 
     var isMouseDown = false;
+
     function updateScope() {
         $scope.$$phase || $scope.$digest();
         canvas.renderAll();
     }
-    function getObjInfo(){
-        updateScope();
-    }
+
     function addPath(e){
         if(!ctrlKeyDown){
             updateScope();
-            var path = e.path;
-            var data = SerializeShapes.serializePath(path);
-            prepareObj(path,data);
-            canvasData.pathData.push(data);
-            if(canvasData.usersId.indexOf(data.userId) === -1){
-                canvasData.usersId.push(data.userId);
+            var fPath = e.path;
+            var sPath = mdCanvas.toObject(fPath);
+            mdCanvas.packageObj(fPath,sPath);
+            canvasData.pathData.push(sPath);
+            if(canvasData.usersId.indexOf(sPath.userId) === -1){
+                canvasData.usersId.push(sPath.userId);
             }
-            if(roomId) socket.emit('addPath', data);
+            roomId&&socket.emit('addPath', sPath);
         }
     }
+
     function changeState(e){
         panning = false;
             if(isMouseDown){
@@ -1096,17 +935,19 @@ function watchCanvas($scope) {
                   var obj = e.target;
                   if(obj){
                       if(canvas.getActiveObject()){
-                          var data =SerializeShapes.serializeSingleState(obj);
-                          socket.emit('stateChange',data);
+                          var state = mdCanvas.toState(obj);
+                          socket.emit('stateChange',state);
                       }
                       if(canvas.getActiveGroup()){
-                          var group = SerializeShapes.serializeGroupState(canvas.getActiveGroup());
-                          socket.emit('groupChange',group);
+                          var objects = mdCanvas.toObject(canvas.getActiveGroup());
+                          var states = mdCanvas.toState(objects);
+                          socket.emit('groupStateChange',states);
                       }
                   }
                 }
             }
     }
+
     function listenMouseDown(e){
         if(ctrlKeyDown){
             if(canvas.isDrawingMode){
@@ -1145,19 +986,16 @@ function watchCanvas($scope) {
             }
         isMouseDown = true;
     }
+
     function dragCanvas(e){
         if ( panning && ctrlKeyDown) {
             canvasCtnEl.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
             canvasCtnEl.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan  )+ 'px';
         }
     }
-
-
 }
 
 function initContextMenu($scope){
-
-
     document.oncontextmenu = function (e) {
         return false;
     };
@@ -1195,115 +1033,113 @@ function initContextMenu($scope){
 }
 
 function initCanvasSocket($scope){
-    if(roomId){
-        socket.emit('room', roomId);
-        socket.emit('addUser', userName);
-    }
+    roomId&&socket.emit('room', roomId)&&socket.emit('addUser', userName);
+
     socket.on('allPath',function(data){
       if(data) {
-          data.forEach(function (x) {
-              canvasData.pathData.push(x);
-              addUsers(x);
-              canvas.add(new fabric.Path(x.path, x));
+          data.forEach(function (sPath) {
+              canvasData.pathData.push(sPath);
+              addUsers(sPath);
+              mdCanvas.add(canvas,sPath);
           })
       }
     });
 
     socket.on('allText',function(data){
       if(data) {
-          data.forEach(function (x) {
-              canvasData.textData.push(x);
-              addUsers(x);
-              var iText = new fabric.IText(x.text, x);
-              setITextFire(iText,$scope);
-              canvas.add(iText);
+          data.forEach(function (sIText) {
+              canvasData.textData.push(sIText);
+              addUsers(sIText);
+              mdCanvas.add(canvas,sIText,function (iText) {
+                  iText.on('editing:entered', function (e) {
+                      console.log('进入编辑');
+                  });
+                  iText.on('editing:exited', function (e) {
+                      console.log('退出编辑');
+                  });
+                  iText.on('selection:changed', function () {
+                      $scope.setText($scope.getText());
+                      canvas.renderAll();
+                  });
+              });
           });
       }
     });
 
     socket.on('allGeometry',function(data){
       if(data) {
-          data.forEach(function (x) {
-              addGeometryToCanvas(x);
+          data.forEach(function (gt) {
+              //addGeometryToCanvas(x);
+              mdCanvas.add(canvas,gt);
           });
       }
     });
 
-    socket.on('allImage',function(data){
-        if(data){
-            data.forEach(function (x) {
-                canvasData.imgData.push(x);
-                addUsers(x);
-                fabric.Image.fromURL(x.url, function (img) {
-                    img.set(x).setCoords();
-                    canvas.add(img);
-                });
+    socket.on('allImage',function(ImageArr){
+        if(ImageArr){
+            ImageArr.forEach(function (sImage) {
+                canvasData.imgData.push(sImage);
+                addUsers(sImage);
+                mdCanvas.add(canvas,sImage);
             });
         }
     });
 
-    //监听其他用户画完path
-    socket.on('addPath',function(data){
-        canvasData.pathData.push(data);
-        addUsers(data);
-        canvas.add(new fabric.Path(data.path,data));
+    socket.on('addPath',function(sPath){
+        canvasData.pathData.push(sPath);
+        addUsers(sPath);
+        mdCanvas.add(canvas,sPath);
     });
 
-    socket.on('addText',function(data){
-        canvasData.textData.push(data);
-        addUsers(data);
-        var iText = new fabric.IText(data.text,data);
-        setITextFire(iText,$scope);
-        canvas.add(iText);
-    });
-
-    socket.on('addGeometry', function (data) {
-        addGeometryToCanvas(data);
-    });
-
-    socket.on('addImage', function (data) {
-        canvasData.imgData.push(data);
-        fabric.Image.fromURL(data.url, function (image) {
-            image.set(data).setCoords();
-            canvas.add(image);
+    socket.on('addText',function(sIText){
+        canvasData.textData.push(sIText);
+        addUsers(sIText);
+        mdCanvas.add(canvas,sIText, function (fIText) {
+            fIText.on('editing:entered', function (e) {
+                console.log('进入编辑');
+            });
+            fIText.on('editing:exited', function (e) {
+                console.log('退出编辑');
+            });
+            fIText.on('selection:changed', function () {
+                $scope.setText($scope.getText());
+                canvas.renderAll();
+            });
         });
     });
 
-    socket.on('addVideo', function (data) {
-        var parent = document.createElement('div');
-        var videoEl = document.createElement('video');
-        videoEl.setAttribute('src',data.url);
-        videoEl.setAttribute('style','display:none');
-        videoEl.setAttribute('width',"480");
-        videoEl.setAttribute('height',"240");
-        parent.appendChild(videoEl);
-        var video = new fabric.Image(videoEl,data);
-        canvas.add(video);
-        fabric.util.requestAnimFrame(function render() {
-            canvas.renderAll();
-            fabric.util.requestAnimFrame(render);
-        });
+    socket.on('addGeometry', function (geometry) {
+        mdCanvas.add(geometry);
     });
 
-    socket.on('userJoined',function(data){
-        console.log(data.userName+' has joined in this room');
-        console.log('now there\'re '+data.numUsers+' participants')
+    socket.on('addImage', function (sImage) {
+        canvasData.imgData.push(sImage);
+        mdCanvas.add(canvas,sImage);
     });
 
-    socket.on('userLeft', function (data) {
-       console.log(data.userName+' has left from this room');
-       console.log('now there\'re '+data.numUsers+' participants');
+    socket.on('addVideo', function (sVideo) {
+        mdCanvas.add(canvas,sVideo);
     });
-    //监听全部清除操作
-    socket.on('clearAll',function(data){
-        if(data == 'clearAll'){
+
+    socket.on('userJoined',function(user){
+        console.log(user.userName+' has joined in this room');
+        console.log('now there\'re '+user.numUsers+' participants')
+    });
+
+    socket.on('userLeft', function (user) {
+       console.log(user.userName+' has left from this room');
+       console.log('now there\'re '+user.numUsers+' participants');
+    });
+
+    socket.on('clearAll',function(msg){
+        if(msg == 'clearAll'){
             canvasData.pathData = [];
             canvas.clear();
         }
     });
-    //监听清除选中操作
+
     socket.on('clearSelected',function(idArr){
-        var myObjArr = Utils.cloneArray(canvas.getObjects());
+        var myObjArr = mdCanvas.clone(canvas.getObjects());
         myObjArr.forEach(function(a){
             if(idArr.indexOf(a.id)!==-1){
                 canvas.remove(a);
@@ -1322,56 +1158,53 @@ function initCanvasSocket($scope){
             }
         }
     });
-    //监听单个path状态(旋转、放大、移动)改变操作
-    socket.on('stateChange',function(data){
+
+    socket.on('stateChange',function(state){
         canvas.deactivateAll();
-        var myObjArr = Utils.cloneArray(canvas.getObjects());
-        myObjArr.forEach(function(a){
-            if(a.id === data.id){
-                for(var prop in data){
-                    a.set(prop,data[prop]);
+        var myObjArr = mdCanvas.clone(canvas.getObjects());
+        myObjArr.forEach(function(obj){
+            if(obj.id === state.id){
+                for(var prop in state){
+                    obj.set(prop,state[prop]);
                 }
-                a.selectable = true;
-                a.hasControls = true;
-                a.setCoords();
-                canvas.renderAll();
-            }
-        });
-    });
-    //监听angular监控的style变化
-    socket.on('styleChange', function (data) {
-        var myObjArr = Utils.cloneArray(canvas.getObjects());
-        myObjArr.forEach(function (a) {
-            if (a.id === data.id) {
-                a[data.styleName] = data.value;
-                a.setCoords();
+                obj.selectable = true;
+                obj.hasControls = true;
+                obj.setCoords();
                 canvas.renderAll();
             }
         });
     });
 
-    //监听angular监控的属性（字体大小、类型等）变化
-    socket.on('propChange', function (data) {
-        var myObjArr = Utils.cloneArray(canvas.getObjects());
-        myObjArr.forEach(function (a) {
-            if (a.id === data.id) {
-                a.set(data.name,data.value).setCoords();
-                //$scope.$digest();
+    socket.on('styleChange', function (style) {
+        var myObjArr = mdCanvas.clone(canvas.getObjects());
+        myObjArr.forEach(function (obj) {
+            if (obj.id === style.id) {
+                obj[style.styleName] = style.value;
+                obj.setCoords();
                 canvas.renderAll();
             }
         });
     });
-    //监听成组obj状态改变操作
-    socket.on('groupChange',function(group){
-        var myObjArr = Utils.cloneArray(canvas.getObjects());
+
+    socket.on('propChange', function (prop) {
+        var myObjArr = mdCanvas.clone(canvas.getObjects());
+        myObjArr.forEach(function (obj) {
+            if (obj.id === prop.id) {
+                obj.set(prop.name,prop.value).setCoords();
+                canvas.renderAll();
+            }
+        });
+    });
+
+    socket.on('groupStateChange',function(group){
+        var myObjArr = mdCanvas.clone(canvas.getObjects());
         var selectObjs = [];
-        myObjArr.forEach(function(a){
-            if(group.idArr.indexOf(a.id) !== -1){
-                a.selectable = true;
-                a.hasControls = true;
-                a.setCoords();
-                //console.log(a.id+' has unlocked');
-                selectObjs.push(a);
+        myObjArr.forEach(function(obj){
+            if(group.idArr.indexOf(obj.id) !== -1){
+                obj.selectable = true;
+                obj.hasControls = true;
+                obj.setCoords();
+                selectObjs.push(obj);
             }
         });
         var opt ={};
@@ -1386,9 +1219,9 @@ function initCanvasSocket($scope){
         canvas.renderAll();
         canvas.discardActiveGroup() ;
     });
-    //监听其他用户操作对象时锁定该对象
+
     socket.on('lockState', function (data) {
-        var myObjArr = Utils.cloneArray(canvas.getObjects());
+        var myObjArr = mdCanvas.clone(canvas.getObjects());
         if(typeof data === 'string'){
             myObjArr.forEach(function (a) {
                 if(a.id === data){
@@ -1408,10 +1241,11 @@ function initCanvasSocket($scope){
         }
         canvas.renderAll();
     });
+
     socket.on('canvasBgColor', function (value) {
         canvas.backgroundColor = value;
         canvas.renderAll();
-    })
+    });
 }
 
 function initKeyBoard($scope){
@@ -1460,7 +1294,7 @@ function httpOpt($scope){
     $scope.saveFile = function () {
         var fileName = _('filename').value;
         canvasData.fileName = fileName;
-        var paramArr = Utils.urlParams(window.location.href);
+        var paramArr = mdUtils.urlParams(window.location.href);
         var id = paramArr['id'];
         if(id){
             canvasData.isSaveNew = false;
@@ -1480,9 +1314,10 @@ canvasModule.controller('CanvasCtrl', function($scope) {
     $scope.getActiveStyle = getActiveStyle;
     addAccessors($scope);
     addMyOwnAccessors($scope);
+    addObject($scope);
     initContextMenu($scope);
     initKeyBoard($scope);
     initCanvasSocket($scope);
-    watchCanvas($scope);
+    listenCanvas($scope);
     httpOpt($scope);
 });

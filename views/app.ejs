@@ -5,18 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><%= title %></title>
         <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
-        <link href="/css/font_awesome/font-awesome.css" rel="stylesheet">
+        <link href="/css/font_awesome/font-awesome.min.css" rel="stylesheet">
         <link href="/css/app-styles.css" rel="stylesheet">
         <link href="/css/colpick.css" rel="stylesheet">
-        <link href="http://cdn.bootcss.com/jquery-contextmenu/2.0.1/jquery.contextMenu.css" rel="stylesheet">
         <!--[if lt IE 9]>
         <script src="/app_3th_js/forIE/html5shiv.js"></script>
         <script src="/app_3th_js/forIE/respond.min.js"></script>
         <![endif]-->
     </head>
+
     <body ng-controller="CanvasCtrl">
 
         <div id="bd-wrapper">
+
             <!--导航栏-->
             <nav class="navbar navbar-default navbar-fixed-top my-navbar">
                 <div class="container-fluid">
@@ -34,7 +35,8 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">文件 <span class="caret"></span></a>
+                                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">文件 <span class="caret"></span></a>
+
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href=""><span class="fa fa-file menu-btn" ></span>新建</a></li>
                                     <li><a href="/filelist"><span class="fa fa-folder-open menu-btn" ></span>打开</a></li>
@@ -50,6 +52,7 @@
                                         </ul>
                                     </li>
                                 </ul>
+
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -109,11 +112,11 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-text-size menu-btn"></span>文字</a></li>
                         <li>
-                            <a  href="javascript:void(0)" ng-click="addImage1()" ><span class="glyphicon glyphicon-picture menu-btn"></span>图片</a>
+                            <a  href="javascript:void(0)" ng-click="addImage()" ><span class="glyphicon glyphicon-picture menu-btn"></span>图片</a>
                             <input type="file" id="image" name="image" style="display: none;"/>
                         </li>
                         <li>
-                            <a  href="javascript:void(0)" ng-click="addVideo1()" ><span class="glyphicon glyphicon-facetime-video menu-btn"></span>视频</a>
+                            <a  href="javascript:void(0)" ng-click="addVideo()" ><span class="glyphicon glyphicon-facetime-video menu-btn"></span>视频</a>
                             <input type="file" id="video" name="video" style="display: none;"/>
                         </li>
                         <li role="separator" class="divider"></li>
@@ -195,7 +198,9 @@
                 <!--测试-->
                 <button id="console-info" class="btn btn-default">Info</button>
                 <button id="test" class="btn btn-default">Test</button>
+
             </div>
+
             <!--左侧工具条 END-->
 
             <!--顶部工具条-->
@@ -339,6 +344,7 @@
 
             <!--画板最外层div scroll-->
             <div id="canvas-col">
+
                 <!--固定宽高的DIV -->
                 <div id="canvasCtn">
                     <canvas id="c"></canvas>
@@ -464,13 +470,15 @@
         <!--canvas 自定义大小 Modal-->
 
         <!--bootstrap context menu-->
-        <div id="context-menu2" style="position: absolute; z-index: 9999; top: 805px; left: 482px;" class="">
+        <div id="context-menu2">
             <ul class="dropdown-menu" role="menu">
                 <li><a href="" tabindex="-1" ng-click="removeSelected()"><span class="fa fa-trash menu-btn" ></span>清除</a></li>
-                <li><a href="" tabindex="-1"><span class="fa fa-copy menu-btn" ></span>复制</a></li>
+                <li><a href="" tabindex="-1" ng-click="copySelf()"><span class="fa fa-copy menu-btn" ></span>复制</a></li>
                 <li class="divider"></li>
-                <li><a href="" tabindex="-1"><span class="fa fa-angle-double-up menu-btn" ></span>置于顶层</a></li>
-                <li><a href="" tabindex="-1"><span class="fa fa-angle-double-down menu-btn" ></span>置于底层</a></li>
+                <li><a href="" tabindex="-1" ng-click="activeAll()"><span class="fa fa-check-square-o menu-btn" ></span>全选</a></li>
+                <li class="divider"></li>
+                <li><a href="" tabindex="-1" ng-click="bringToFront()"><span class="fa fa-angle-double-up menu-btn" ></span>置于顶层</a></li>
+                <li><a href="" tabindex="-1" ng-click="sendToBack()"><span class="fa fa-angle-double-down menu-btn" ></span>置于底层</a></li>
             </ul>
         </div>
     </body>
@@ -478,28 +486,15 @@
     <script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
     <script src='/app_3th_js/bootstrap/bootstrap.min.js'></script>
     <script src='/app_3th_js/bootstrap/bootstrap-contextmenu.js'></script>
-    <!--<script src="http://cdn.bootcss.com/bootstrap-contextmenu/0.3.3/bootstrap-contextmenu.min.js"></script>-->
-    <!--<script src="http://cdn.bootcss.com/jquery-contextmenu/2.0.1/jquery.contextMenu.js"></script>-->
-    <!--<script src="http://cdn.bootcss.com/jquery-contextmenu/2.0.1/jquery.ui.position.min.js"></script>-->
 	<script src='/app_3th_js/colpick.js'></script>
 	<script src='/socket.io/socket.io.js'></script>
-	<script src='/app_3th_js/fabric/fabric.min.js'></script>
-    <script src="/app_ui_js/utils.js"></script>
-	<script src='/app_util_js/util.js'></script>
+	<script src='/app_3th_js/fabric/fabric.js'></script>
+	<script src='/app_ui_js/mdUtils.js'></script>
 	<script src='/app_ui_js/Communication.js'></script>
-	<script src='/app_ui_js/SerializeShapes.js'></script>
     <script src='/app_ui_js/ConfigBoard.js'></script>
     <script src='/app_ui_js/EditBoard.js'></script>
-    <script>
-        $(function () { $("[data-toggle='tooltip']").tooltip(); });
-
-        $('#range').popover({
-            template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"><input type="range" ></div></div>'
-        });
-
-
-    </script>
 	<script>
+        $(function () { $("[data-toggle='tooltip']").tooltip(); });
         var apiKey='<%= apiKey%>';
         var userName ='<%= userName%>';
         var userId ='<%= userId%>';
@@ -514,7 +509,7 @@
                 canvasXOnPan = 0,
                 canvasYOnPan = 0;
         var _ = function(id){return document.getElementById(id)};
-        var urlParams = Utils.urlParams(window.location.href);
+        var urlParams = mdUtils.urlParams(window.location.href);
         if(urlParams['room']) var roomId = urlParams['room'];
         var editBoard = new EditBoard();
         if(urlParams['id']){
@@ -522,12 +517,11 @@
                 id: urlParams['id'],
                 userKey: apiKey
             };
-            editBoard.communication.loadFile(queryObj, Utils.bind(editBoard,editBoard.resetBoard));
+            editBoard.communication.loadFile(queryObj, mdUtils.bind(editBoard,editBoard.resetBoard));
         }
         var canvas = editBoard.__canvas;
         var socket = editBoard.__socket;
         var canvasCtnEl = editBoard.canvasCtnEl;
-        var SerializeShapes = editBoard.serializeShapes;
         var Communication = editBoard.communication;
 	</script>
     <script src="/app_ui_js/app.js"></script>
