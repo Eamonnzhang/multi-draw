@@ -17,7 +17,8 @@ var EditBoard = function (){
         backgroundColor :"#ffffff",
         width:750,
         height:530,
-        isDrawingMode:true
+        isDrawingMode:true,
+        includeDefaultValues:false
     });
 
     canvas.add();//chrome抽了，= =必须要加一句为了显示空白cavans画板
@@ -101,24 +102,15 @@ var EditBoard = function (){
         configBoard.resetCanvas();
     };
 
-
     consoleInfo.onclick = function(){
-        if(canvas.getActiveObject()){
-            console.log(canvas.getActiveObject());
-        }
-        if(canvas.getActiveGroup()){
-            //canvas.getActiveGroup().forEachObject(function(a) {
-                console.log(canvas.getActiveGroup());
-            //});
-        }
+        canvas.getActiveObject()&&console.log(canvas.getActiveObject());
+        canvas.getActiveGroup()&&console.log(canvas.getActiveGroup());
     };
 
     test.onclick = function(){
-        //console.log(JSON.stringify(canvas.getActiveObject()));
-        if(canvas.getActiveGroup()){
-           console.log(canvas.getActiveGroup().toObject());
-        }else
-            console.log(canvas.getActiveObject().toObject());
+        canvas.getActiveGroup()&&console.log(mdCanvas.toObject(canvas.getActiveGroup()));
+        canvas.getActiveObject()&&console.log(mdCanvas.toObject(canvas.getActiveObject()));
+        console.log(mdCanvas.toObject(canvas));
 
     };
 };

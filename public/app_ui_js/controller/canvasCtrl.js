@@ -924,8 +924,9 @@ function listenCanvas($scope) {
         if(!ctrlKeyDown){
             updateScope();
             var fPath = e.path;
+
+            mdCanvas.packageObj(fPath);
             var sPath = mdCanvas.toObject(fPath);
-            mdCanvas.packageObj(fPath,sPath);
             canvasData.pathData.push(sPath);
             if(canvasData.usersId.indexOf(sPath.userId) === -1){
                 canvasData.usersId.push(sPath.userId);

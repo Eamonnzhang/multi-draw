@@ -171,17 +171,17 @@ var mdCanvas = {
      * @returns {*}
      */
     toObject : function (obj) {
-        var s_obj = obj.toObject();
-        if(s_obj.type === 'group'){
-            obj.type = 'group';
-            return obj;
-        }
-        s_obj.id = mdUtils.generateId(8,32);
-        s_obj.userId = userId;
-        s_obj.userName = userName;
-        s_obj.createTime = new Date();
-        s_obj.lastModify = s_obj.createTime;
-        return s_obj;
+         return obj&&obj.toObject(['id','userId','userName','createTime','lastModify']);
+        //if(s_obj.type === 'group'){
+        //    obj.type = 'group';
+        //    return obj;
+        //}
+        //s_obj.id = mdUtils.generateId(8,32);
+        //s_obj.userId = userId;
+        //s_obj.userName = userName;
+        //s_obj.createTime = new Date();
+        //s_obj.lastModify = s_obj.createTime;
+        //return s_obj;
     },
 
     /**
@@ -223,12 +223,13 @@ var mdCanvas = {
      * @param c_obj
      * @param s_obj
      */
-    packageObj : function (c_obj,s_obj) {
-        c_obj.id = s_obj.id;
-        c_obj.userId = s_obj.userId;
-        c_obj.userName = s_obj.userName;
-        c_obj.createTime = s_obj.createTime;
-        c_obj.lastModify = s_obj.lastModify;
+    packageObj : function (c_obj) {
+        c_obj.set('includeDefaultValues',false);
+        c_obj.id = mdUtils.generateId(8,32);
+        c_obj.userId = userId;
+        c_obj.userName = userName;
+        c_obj.createTime = new Date();
+        c_obj.lastModify = c_obj.createTime;
     },
 
     /**
