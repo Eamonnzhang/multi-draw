@@ -3,7 +3,7 @@
  */
 var EditBoard = function (){
     var me = this;
-    this.__socket = io.connect('http://localhost:4500');
+    this.__socket = io.connect('http://192.168.1.81:4500');
     var drawingModeEl =this.__drawingModeEl= _('drawing-mode'),
         test = _('test'),
         copy = _('copy-value'),

@@ -179,7 +179,7 @@ var mdCanvas = {
      * @param obj
      * @returns {{}}
      */
-    toState : function (obj) {
+    toState : function (obj,callback) {
         var state= {};
         state.top = obj.top;
         state.left = obj.left;
@@ -189,7 +189,7 @@ var mdCanvas = {
         if(obj.type === 'group'){
             var objArr = [];
             var idArr = [];
-            obj._objects.forEach(function(x){
+            obj.objects.forEach(function(x){
                 var o = {
                     id : x.id,
                     left : x.left,
@@ -205,7 +205,7 @@ var mdCanvas = {
         }else{
             state.id = obj.id;
         }
-        return state;
+        callback&&callback(state);
     },
 
     /**

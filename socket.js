@@ -187,6 +187,7 @@ exports.startSocketIo = function(server){
 
         socket.on('groupStateChange',function(group){
             socket.broadcast.to(room).emit('groupStateChange', group);
+            //Todo 解决group状态改变的socket缓存
             for(var i =0;i<pathRoom[room].length;i++) {
                 group.objArr.forEach(function(x){
                     if(x.id === pathRoom[room][i].id ){
@@ -204,6 +205,9 @@ exports.startSocketIo = function(server){
         });
         socket.on('unlockState',function(data){
             socket.broadcast.to(room).emit('unlockState', data);
+        });
+        socket.on('discard',function(data){
+            socket.broadcast.to(room).emit('discard', data);
         });
         socket.on('disconnect',function(){
             if(room){
