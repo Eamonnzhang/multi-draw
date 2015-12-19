@@ -108,9 +108,15 @@ var EditBoard = function (){
     };
 
     test.onclick = function(){
-        canvas.getActiveGroup()&&console.log(mdCanvas.toObject(canvas.getActiveGroup()));
-        canvas.getActiveObject()&&console.log(mdCanvas.toObject(canvas.getActiveObject()));
-        console.log(mdCanvas.toObject(canvas));
+        canvas.getActiveGroup()&&mdCanvas.toObject(canvas.getActiveGroup(), function (sGroup) {
+            console.log(sGroup);
+        });
+        canvas.getActiveObject()&&mdCanvas.toObject(canvas.getActiveObject(), function (sObj) {
+            console.log(sObj);
+        });
+        mdCanvas.toObject(canvas, function (sCanvas) {
+            console.log(sCanvas);
+        });
 
     };
 };

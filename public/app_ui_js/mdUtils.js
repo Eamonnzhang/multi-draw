@@ -170,18 +170,8 @@ var mdCanvas = {
      * @param obj
      * @returns {*}
      */
-    toObject : function (obj) {
-         return obj&&obj.toObject(['id','userId','userName','createTime','lastModify']);
-        //if(s_obj.type === 'group'){
-        //    obj.type = 'group';
-        //    return obj;
-        //}
-        //s_obj.id = mdUtils.generateId(8,32);
-        //s_obj.userId = userId;
-        //s_obj.userName = userName;
-        //s_obj.createTime = new Date();
-        //s_obj.lastModify = s_obj.createTime;
-        //return s_obj;
+    toObject : function (obj,callback) {
+        callback&&callback(obj.toObject(['id','userId','userName','createTime','lastModify']),obj);
     },
 
     /**
@@ -223,8 +213,8 @@ var mdCanvas = {
      * @param c_obj
      * @param s_obj
      */
-    packageObj : function (c_obj) {
-        c_obj.set('includeDefaultValues',false);
+    packageObj : function (c_obj,includeDefaultValues) {
+        c_obj.set('includeDefaultValues',includeDefaultValues);
         c_obj.id = mdUtils.generateId(8,32);
         c_obj.userId = userId;
         c_obj.userName = userName;
@@ -266,9 +256,8 @@ var mdCanvas = {
                 alert('当前canvas不支持添加此对象！');
         }
         if(isNew){
-            var sObj = this.toObject(fObj);
-            this.packageObj(fObj,sObj);
-            callback&&callback(sObj,fObj);
+            this.packageObj(fObj,false);
+            this.toObject(fObj,callback);
             canvas.add(fObj);
             return;
         }
@@ -283,14 +272,12 @@ var mdCanvas = {
      */
     addUrl : function (canvas,url,props,isNew,callback) {
         var urlType = mdUtils.getDataUrlType(url);
-        var sObj ;
         if(urlType === 'image'){
             fabric.Image.fromURL(url, mdUtils.bind(this,function(image) {
                 image.set(props).setCoords();
                 if(isNew){
-                    sObj = this.toObject(image);
-                    this.packageObj(image,sObj);
-                    callback&&callback(sObj);
+                    this.packageObj(image,false);
+                    this.toObject(image,callback);
                 }
                 canvas.add(image);
             }));
@@ -305,9 +292,8 @@ var mdCanvas = {
             parent.appendChild(videoEl);
             var video = new fabric.Image(videoEl,props);
             if(isNew){
-                sObj = this.toObject(video);
-                this.packageObj(video,sObj);
-                callback&&callback(sObj);
+                this.packageObj(video,false);
+                this.toObject(video,callback);
             }
             canvas.add(video);
             fabric.util.requestAnimFrame(function render() {

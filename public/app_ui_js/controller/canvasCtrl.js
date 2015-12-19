@@ -1,15 +1,84 @@
 var canvasData = {};
-canvasData.pathData = [];
-canvasData.textData = [];
-canvasData.geometryData = [];
-canvasData.imgData=[];
 canvasData.usersId = [];
 
-//记录进入canvas的所有用户ID
-function addUsers(obj){
-    if (canvasData.usersId.indexOf(obj.userId) === -1) {
-        canvasData.usersId.push(obj.userId);
+var SINGLE_LINE = false;
+
+// custom input area
+if (SINGLE_LINE) {
+    var $itext = $('<input/>').attr('type', 'text').addClass('itext');
+}
+else {
+    var $itext = $('<textarea/>').addClass('itext');
+}
+
+//暂时用此方法来,解决输入中文的BUG
+function editorEnterFire(e){
+    var obj = this;
+    if (SINGLE_LINE) {
+        var keyDownCode = 0;
     }
+    canvas.remove(obj);
+    // show input area
+    $itext.css({
+        left: (1700-canvas.width)/2+obj.left,
+        top: (1500-canvas.height)/2+obj.top,
+        'line-height': obj.lineHeight,
+        'font-family': obj.fontFamily,
+        'font-size': Math.floor(obj.fontSize * Math.min(obj.scaleX, obj.scaleY)) + 'px',
+        'font-weight': obj.fontWeight,
+        'font-style': obj.fontStyle,
+        color: obj.fill
+    })
+        .val(obj.text)
+        .appendTo($(canvas.wrapperEl).closest('#canvasCtn'));
+    // text submit event
+    if (SINGLE_LINE) {
+        // submit text by ENTER key
+        $itext.on('keydown', function(e) {
+            // save the key code of a pressed key while kanji conversion (it differs from the code for keyup)
+            keyDownCode = e.which;
+        })
+            .on('keyup', function(e) {
+                if (e.keyCode == 13 && e.which == keyDownCode) {
+                    obj.exitEditing();
+                    obj.set('text', $(this).val());
+                    $(this).remove();
+                    canvas.add(obj);
+                    canvas.renderAll();
+                }
+            });
+    }
+    else {
+        // submit text by focusout
+        $itext.on('focusout', function(e) {
+            obj.exitEditing();
+            obj.set('text', $(this).val());
+            if(roomId){
+                var data = {};
+                data.id = obj.id;
+                data.name = 'text';
+                data.value = $(this).val();
+                socket.emit('propChange',data);
+            }
+            $(this).remove();
+            canvas.add(obj);
+            canvas.renderAll();
+        });
+        $itext.on("input propertychange",function(){
+            if(roomId){
+                var data = {};
+                data.id = obj.id;
+                data.name = 'text';
+                data.value = $(this).val();
+                socket.emit('propChange',data);
+            }
+        })
+    }
+
+    // focus on text
+    setTimeout(function() {
+        $itext.select();
+    }, 1);
 }
 
 function getActiveStyle(styleName, object) {
@@ -226,7 +295,6 @@ function addAccessors($scope) {
 
     $scope.confirmClear = function() {
         if(roomId) socket.emit('clearAll','clearAll');
-        canvasData.pathData = [];
         canvas.clear();
     };
 
@@ -659,7 +727,7 @@ function addObject($scope){
             height: 50
         };
         var rect = new fabric.Rect(props);
-        mdCanvas.add(canvas,rect.toObject(),true, function (sRect) {
+        mdCanvas.add(canvas,rect.toObject(), true, function (sRect) {
             roomId&&socket.emit('addGeometry',sRect);
         });
     };
@@ -744,10 +812,8 @@ function addObject($scope){
 
         mdCanvas.add(canvas, iText.toObject(), true, function (sIText,fIText) {
             roomId&&socket.emit('addText',sIText);
-            fIText.on('editing:entered', function (e) {
-                console.log('进入编辑');
-            });
-            fIText.on('editing:exited', function (e) {
+            fIText.on('editing:entered', editorEnterFire);
+            fIText.on('editing:exited', function () {
                 console.log('退出编辑');
             });
             fIText.on('selection:changed', function () {
@@ -924,14 +990,10 @@ function listenCanvas($scope) {
         if(!ctrlKeyDown){
             updateScope();
             var fPath = e.path;
-
-            mdCanvas.packageObj(fPath);
-            var sPath = mdCanvas.toObject(fPath);
-            canvasData.pathData.push(sPath);
-            if(canvasData.usersId.indexOf(sPath.userId) === -1){
-                canvasData.usersId.push(sPath.userId);
-            }
-            roomId&&socket.emit('addPath', sPath);
+            mdCanvas.packageObj(fPath,false);
+            mdCanvas.toObject(fPath,function(sPath){
+                roomId&&socket.emit('addPath', sPath);
+            });
         }
     }
 
@@ -1033,24 +1095,16 @@ function initCanvasSocket($scope){
     roomId&&socket.emit('room', roomId)&&socket.emit('addUser', userName);
 
     socket.on('allPath',function(data){
-      if(data) {
-          data.forEach(function (sPath) {
-              canvasData.pathData.push(sPath);
-              addUsers(sPath);
-              mdCanvas.add(canvas,sPath);
-          })
-      }
+      data&&data.forEach(function (sPath) {
+          mdCanvas.add(canvas,sPath);
+      });
     });
 
     socket.on('allText',function(data){
       if(data) {
           data.forEach(function (sIText) {
-              canvasData.textData.push(sIText);
-              addUsers(sIText);
-              mdCanvas.add(canvas,sIText,function (iText) {
-                  iText.on('editing:entered', function (e) {
-                      console.log('进入编辑');
-                  });
+              mdCanvas.add(canvas,sIText,false,function (iText) {
+                  iText.on('editing:entered', editorEnterFire);
                   iText.on('editing:exited', function (e) {
                       console.log('退出编辑');
                   });
@@ -1066,35 +1120,26 @@ function initCanvasSocket($scope){
     socket.on('allGeometry',function(data){
       if(data) {
           data.forEach(function (gt) {
-              //addGeometryToCanvas(x);
               mdCanvas.add(canvas,gt);
           });
       }
     });
 
-    socket.on('allImage',function(ImageArr){
-        if(ImageArr){
-            ImageArr.forEach(function (sImage) {
-                canvasData.imgData.push(sImage);
-                addUsers(sImage);
+    socket.on('allImage',function(imageArr){
+        if(imageArr){
+            imageArr.forEach(function (sImage) {
                 mdCanvas.add(canvas,sImage);
             });
         }
     });
 
     socket.on('addPath',function(sPath){
-        canvasData.pathData.push(sPath);
-        addUsers(sPath);
         mdCanvas.add(canvas,sPath);
     });
 
     socket.on('addText',function(sIText){
-        canvasData.textData.push(sIText);
-        addUsers(sIText);
-        mdCanvas.add(canvas,sIText, function (fIText) {
-            fIText.on('editing:entered', function (e) {
-                console.log('进入编辑');
-            });
+        mdCanvas.add(canvas, sIText, false,function (fIText) {
+            fIText.on('editing:entered', editorEnterFire);
             fIText.on('editing:exited', function (e) {
                 console.log('退出编辑');
             });
@@ -1106,11 +1151,10 @@ function initCanvasSocket($scope){
     });
 
     socket.on('addGeometry', function (geometry) {
-        mdCanvas.add(geometry);
+        mdCanvas.add(canvas,geometry);
     });
 
     socket.on('addImage', function (sImage) {
-        canvasData.imgData.push(sImage);
         mdCanvas.add(canvas,sImage);
     });
 
@@ -1130,7 +1174,6 @@ function initCanvasSocket($scope){
 
     socket.on('clearAll',function(msg){
         if(msg == 'clearAll'){
-            canvasData.pathData = [];
             canvas.clear();
         }
     });
@@ -1148,12 +1191,6 @@ function initCanvasSocket($scope){
                 }
             }
         });
-        for(var i =0;i<canvasData.pathData.length;i++) {
-            if (idArr.indexOf(canvasData.pathData[i].id) !== -1) {
-                canvasData.pathData.splice(i, 1);
-                i--;
-            }
-        }
     });
 
     socket.on('stateChange',function(state){
@@ -1298,14 +1335,13 @@ function initKeyBoard($scope){
 function httpOpt($scope){
     $scope.saveFile = function () {
         var fileName = _('filename').value;
-        canvasData.fileName = fileName;
         var paramArr = mdUtils.urlParams(window.location.href);
         var id = paramArr['id'];
-        if(id){
-            canvasData.isSaveNew = false;
-        }else{
-            canvasData.isSaveNew = true;
-        }
+        //if(id){
+        //    canvasData.isSaveNew = false;
+        //}else{
+        //    canvasData.isSaveNew = true;
+        //}
         Communication.saveFile(canvasData,function(data){
             console.log(data);
         });

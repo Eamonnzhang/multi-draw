@@ -12,11 +12,17 @@ label {
     margin-right: 4px;
 }
 
-textarea {
+#topToolbar textarea {
     font-family: 微软雅黑;
     height: 25px;
 }
 
+.itext {
+    width: 300px;
+    background: transparent;
+    position: absolute;
+    z-index: 2;
+}
 
 .my-navbar {
     background-color: #ffffff;
