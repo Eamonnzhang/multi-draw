@@ -191,11 +191,9 @@ exports.startSocketIo = function(server){
             for(var i =0;i<pathRoom[room].length;i++) {
                 group.objArr.forEach(function(x){
                     if(x.id === pathRoom[room][i].id ){
-                        pathRoom[room][i].left = x.left+group.width/2+group.left;
-                        pathRoom[room][i].top = x.top+group.height/2+group.top;
-                        //pathRoom[room][i].angle = group.angle;
-                        //pathRoom[room][i].scaleX = group.scaleX;
-                        //pathRoom[room][i].scaleY = group.scaleY;
+                        for(var p in x){
+                            pathRoom[room][i][p] = x[p];
+                        }
                     }
                 });
             }

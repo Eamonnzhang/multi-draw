@@ -171,7 +171,7 @@ var mdCanvas = {
      * @returns {*}
      */
     toObject : function (obj,callback) {
-        callback&&callback(obj.toObject(['id','userId','userName','createTime','lastModify']),obj);
+        callback&&callback(obj.toObject(['id','userId','userName','createTime','lastModify','skewX','skewY']),obj);
     },
 
     /**
@@ -189,15 +189,12 @@ var mdCanvas = {
         if(obj.type === 'group'){
             var objArr = [];
             var idArr = [];
-            obj.objects.forEach(function(x){
-                var o = {
-                    id : x.id,
-                    left : x.left,
-                    top : x.top
-                };
-                objArr.push(o);
+            obj.objects.forEach(mdUtils.bind(this,function(x){
+                var fixState = this.getObjectStateInGroup(x,obj);
+                fixState.id = x.id;
+                objArr.push(fixState);
                 idArr.push(x.id);
-            });
+            }));
             state.objArr = objArr;
             state.idArr = idArr;
             state.width = obj.width;
@@ -221,6 +218,46 @@ var mdCanvas = {
         c_obj.createTime = new Date();
         c_obj.lastModify = c_obj.createTime;
     },
+
+    /**
+     * get object by id,maybe will improve this function that can get Object by more conditions
+     * @param canvas
+     * @param id
+     * @param callback
+     */
+    getObject : function (canvas,id,callback) {
+        canvas.getObjects().forEach(function (x) {
+            if(x.id === id){
+                callback&&callback(x);
+            }
+        });
+    },
+
+    /**
+     * get the object's state in group relative to canvas
+     * @param object
+     * @param group
+     * @returns {{left: number, top: *, scaleX: number, scaleY: number, angle: *}}
+     */
+   getObjectStateInGroup : function (object,callback) {
+        var group = object.group;
+        var fAngle = group.getAngle() * Math.PI / 180,
+            sin = Math.sin(fAngle),
+            cos = Math.cos(fAngle),
+            fixX = group.originX === 'left' ? group.width/2 : 0,
+            fixY = group.originY === 'top' ? group.height/2 : 0;
+        var state =  {
+            id : object.id,
+            left : group.left + (object.left + fixX) * cos - (object.top + fixY) * sin,
+            top : group.top  + (object.left + fixX) * sin + (object.top + fixY) * cos,
+            scaleX : object.scaleX * group.scaleX,
+            scaleY : object.scaleY * group.scaleY,
+            skewX : object.skewX,
+            skewY : object.skewY,
+            angle : object.getAngle() + group.getAngle()
+        };
+        callback&&callback(state);
+   },
 
     /**
      * add an object to the assign canvas;

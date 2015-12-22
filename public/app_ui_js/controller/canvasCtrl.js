@@ -971,8 +971,7 @@ var isMouseDown = false,
 
 function listenCanvas($scope) {
     canvas
-        .on('object:selected',  updateScope)
-        .on('group:selected', updateScope)
+        .on('object:selected',  objectSelect)
         .on('path:created', addPath)
         .on('mouse:up', changeState)
         .on('mouse:down', listenMouseDown)
@@ -981,12 +980,20 @@ function listenCanvas($scope) {
 
 
 
-    function updateScope(e) {
+    function updateScope() {
         $scope.$$phase || $scope.$digest();
         canvas.renderAll();
     }
 
     function discardAct(e){
+        updateScope();
+    }
+
+    function objectSelect(e){
+        //if(e.target && e.target.toObject().type === 'group'){
+        //    e.target.set('originX','center');
+        //    e.target.set('originY','center');
+        //}
         updateScope();
     }
 
@@ -1012,12 +1019,43 @@ function listenCanvas($scope) {
             });
         }
         if(canvas.getActiveGroup()){
-            mdCanvas.toObject(canvas.getActiveGroup(), function (sGroup) {
-                mdCanvas.toState(sGroup, function (state) {
-                    socket.emit('groupStateChange',state);
+            canvas.getActiveGroup().forEachObject(function (obj) {
+                mdCanvas.getObjectStateInGroup(obj, function (state) {
+                    console.log(state);
+                    socket.emit('stateChange',state);
                 });
             });
         }
+    }
+
+    function CALC_COORDS(object){
+        if(object.group){
+            var group = object.group;
+            var fAngle = group.getAngle() * Math.PI / 180,
+                sin = Math.sin(fAngle),
+                cos = Math.cos(fAngle),
+                fixX = group.originX === 'left' ? group.width/2 : 0,
+                fixY = group.originY === 'top' ? group.height/2 : 0;
+            return {
+                left : group.left + (object.left + fixX) * cos - (object.top + fixY) * sin,
+                top : group.top  + (object.left + fixX) * sin + (object.top + fixY) * cos,
+                scaleX : object.scaleX,
+                scaleY : object.scaleY,
+                skewX : object.skewX,
+                skewY : object.skewY,
+                angle : object.getAngle()+group.getAngle()
+
+            };
+        }
+        return {
+            left : object.left,
+            top : object.top,
+            scaleX : object.scaleX,
+            scaleY : object.scaleY,
+            skewX : object.skewX,
+            skewY : object.skewY,
+            angle : object.getAngle()
+        };
     }
 
     function listenMouseDown(e){

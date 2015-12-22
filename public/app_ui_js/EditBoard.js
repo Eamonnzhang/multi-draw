@@ -104,7 +104,7 @@ var EditBoard = function (){
 
     consoleInfo.onclick = function(){
         canvas.getActiveObject()&&console.log(canvas.getActiveObject());
-        canvas.getActiveGroup()&&console.log(canvas.getActiveGroup());
+        canvas.getActiveGroup()&&console.log(canvas.getActiveGroup().getObjects());
     };
 
     test.onclick = function(){
