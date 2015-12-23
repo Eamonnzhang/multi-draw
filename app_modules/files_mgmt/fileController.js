@@ -4,31 +4,15 @@
 var fileService = require('./fileService.js');
 
 exports.save = function(req,res){
-    //console.log(req.body);
-    var id = req.body.id;
-    var fileName = req.body.fileName;
-    var usersId = req.body.usersId;
-    //var createUserName = req.body.ceateUserName;
-    var isNewFile = req.body.isSaveNew;
-    var pathData = JSON.parse(req.body.pathData);
+    var canvasData = {
+        objects : JSON.parse(req.body.objects),
+        background : req.body.background,
+    };
     var user = req.session.userData;
-    if(isNewFile === 'true'){
-        fileService.save(fileName,usersId,user,pathData,function(data){
-            res.send(data);
-        });
-    }
-    else{
-        var updateData = {
-            fileName : fileName,
-            pathData : pathData
-        };
-        var query  = {
-            id: id
-        };
-        fileService.update(query,updateData,function(data){
-            res.send(data);
-        })
-    }
+    fileService.save2(canvasData, function (data) {
+        console.log(data);
+    })
+
 };
 
 exports.loadAllFiles = function (req,res) {

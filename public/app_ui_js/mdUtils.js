@@ -187,15 +187,10 @@ var mdCanvas = {
         state.scaleX = obj.scaleX;
         state.scaleY = obj.scaleY;
         if(obj.type === 'group'){
-            var objArr = [];
             var idArr = [];
-            obj.objects.forEach(mdUtils.bind(this,function(x){
-                var fixState = this.getObjectStateInGroup(x,obj);
-                fixState.id = x.id;
-                objArr.push(fixState);
+            obj.objects.forEach(function(x){
                 idArr.push(x.id);
-            }));
-            state.objArr = objArr;
+            });
             state.idArr = idArr;
             state.width = obj.width;
             state.height = obj.height;
@@ -269,6 +264,7 @@ var mdCanvas = {
         switch (obj.type){
             case 'circle':
                 fObj = new fabric.Circle(obj);
+
                 break;
             case 'triangle':
                 fObj = new fabric.Triangle(obj);

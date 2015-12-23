@@ -25,21 +25,6 @@ var EditBoard = function (){
 
     var configBoard = new ConfigBoard(this);
 
-    //初始化取色器
-    $('#picker').colpick({
-        layout:'hex',
-        onSubmit: function(hsb,hex,rgb,el) {
-            canvas.backgroundColor = '#'+hex;
-            if(hex =='ffffff')
-                $(el).css('color', '#777777');
-            else
-                $(el).css('color', '#'+hex);
-            $(el).colpickHide();
-            canvas.renderAll();
-        }
-    });
-
-
     //监听window的缩放事件 使滚动条居中
     window.onresize = mdUtils.bind(configBoard,configBoard.resizeCanvas);
     configBoard.resizeCanvas();
@@ -53,17 +38,6 @@ var EditBoard = function (){
     this.canvasCtnEl.setAttribute('style',o_style+' position:absolute;left: '+left+'px;top:'+top+'px');
 
     fabric.Object.prototype.transparentCorners = false;
-
-    drawingModeEl.onclick =  function() {
-        if (!canvas.isDrawingMode) {
-            drawingModeEl.innerHTML = ' <i class="fa fa-mouse-pointer"></i>';
-            drawingModeEl.setAttribute('class','btn btn-default');
-        }
-        else {
-            drawingModeEl.innerHTML = ' <i class="fa fa-paint-brush "></i>';
-            drawingModeEl.setAttribute('class','btn btn-info');
-        }
-    };
 
     copy.onclick = function () {
         if (window.clipboardData)

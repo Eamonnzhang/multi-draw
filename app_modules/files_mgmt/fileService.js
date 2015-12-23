@@ -18,6 +18,14 @@ exports.save = function(fileName,usersId,user,pathData,next){
     });
 };
 
+exports.save2 = function (data,next) {
+    fileDao.insertOne(data, function (data) {
+        if(data){
+            next(data);
+        }
+    });
+}
+
 exports.update = function(query,updateData,next){
     fileDao.updateOneRecord(query,updateData,function(data){
         if(data){

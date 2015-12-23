@@ -58,7 +58,7 @@ function editorEnterFire(e){
                 data.id = obj.id;
                 data.name = 'text';
                 data.value = $(this).val();
-                socket.emit('propChange',data);
+                socket.emit('stylePropChange',data);
             }
             $(this).remove();
             canvas.add(obj);
@@ -70,7 +70,7 @@ function editorEnterFire(e){
                 data.id = obj.id;
                 data.name = 'text';
                 data.value = $(this).val();
-                socket.emit('propChange',data);
+                socket.emit('stylePropChange',data);
             }
         })
     }
@@ -96,7 +96,6 @@ function setActiveStyle(styleName, value, object) {
     if (!object) return;
 
     if (object.setSelectionStyles && object.isEditing) {
-        //console.log('setSelectionStyles');
         var style = { };
         style[styleName] = value;
         object.setSelectionStyles(style);
@@ -108,9 +107,9 @@ function setActiveStyle(styleName, value, object) {
     if(roomId){
         var obj = {};
         obj.id = object.id;
-        obj.styleName = styleName;
+        obj.name = styleName;
         obj.value = value;
-        socket.emit('styleChange',obj);
+        socket.emit('stylePropChange',obj);
     }
     object.setCoords();
     canvas.renderAll();
@@ -133,7 +132,7 @@ function setActiveProp(name, value) {
         obj.id = object.id;
         obj.name = name;
         obj.value = value;
-        socket.emit('propChange',obj);
+        socket.emit('stylePropChange',obj);
     }
     object.set(name, value).setCoords();
     canvas.renderAll();
@@ -514,6 +513,14 @@ function addAccessors($scope) {
     };
 
     $scope.setFreeDrawingMode = function(value) {
+        if (!value) {
+            _('drawing-mode').innerHTML = ' <i class="fa fa-mouse-pointer"></i>';
+            _('drawing-mode').setAttribute('class','btn btn-default');
+        }
+        else {
+            _('drawing-mode').innerHTML = ' <i class="fa fa-paint-brush "></i>';
+            _('drawing-mode').setAttribute('class','btn btn-info');
+        }
         canvas.isDrawingMode = !!value;
     };
 
@@ -728,7 +735,8 @@ function addObject($scope){
         };
         var rect = new fabric.Rect(props);
         mdCanvas.add(canvas,rect.toObject(), true, function (sRect) {
-            roomId&&socket.emit('addGeometry',sRect);
+            $scope.setFreeDrawingMode(false);
+            roomId&&socket.emit('addObject',sRect);
         });
     };
 
@@ -743,7 +751,8 @@ function addObject($scope){
         };
         var circle = new fabric.Circle(props);
         mdCanvas.add(canvas,circle.toObject(),true, function (sCircle) {
-            roomId&&socket.emit('addGeometry',sCircle);
+            $scope.setFreeDrawingMode(false);
+            roomId&&socket.emit('addObject',sCircle);
         });
     };
 
@@ -759,7 +768,8 @@ function addObject($scope){
         };
         var triangle = new fabric.Triangle(props);
         mdCanvas.add(canvas,triangle.toObject(),true, function (sTriangle) {
-            roomId&&socket.emit('addGeometry',sTriangle);
+            $scope.setFreeDrawingMode(false);
+            roomId&&socket.emit('addObject',sTriangle);
         });
     };
 
@@ -776,7 +786,8 @@ function addObject($scope){
         };
         var line = new fabric.Line([props.x1,props.y1,props.x2,props.y2],props);
         mdCanvas.add(canvas,line.toObject(),true, function (sLine) {
-            roomId&&socket.emit('addGeometry',sLine);
+            $scope.setFreeDrawingMode(false);
+            roomId&&socket.emit('addObject',sLine);
         });
     };
 
@@ -811,7 +822,8 @@ function addObject($scope){
         var iText = new fabric.IText(props.text, props);
 
         mdCanvas.add(canvas, iText.toObject(), true, function (sIText,fIText) {
-            roomId&&socket.emit('addText',sIText);
+            $scope.setFreeDrawingMode(false);
+            roomId&&socket.emit('addObject',sIText);
             fIText.on('editing:entered', editorEnterFire);
             fIText.on('editing:exited', function () {
                 console.log('退出编辑');
@@ -863,7 +875,8 @@ function addObject($scope){
             };
             reader.onload = function(e) {
                 mdCanvas.addUrl(canvas,e.target.result,getRandomLeftTop(),true,function (sImage) {
-                    roomId&&socket.emit('addImage',sImage);
+                    $scope.setFreeDrawingMode(false);
+                    roomId&&socket.emit('addObject',sImage);
                 });
 
             };
@@ -886,7 +899,8 @@ function addObject($scope){
             };
             reader.onload = function(e) {
                 mdCanvas.addUrl(canvas, e.target.result, getRandomLeftTop(),true,function (sVideo) {
-                    if(roomId) socket.emit('addVideo',sVideo);
+                    $scope.setFreeDrawingMode(false);
+                    if(roomId) socket.emit('addObject',sVideo);
                 });
             };
             reader.readAsDataURL(file);
@@ -895,6 +909,21 @@ function addObject($scope){
 }
 
 function addMyOwnAccessors($scope){
+
+    $('#picker').colpick({
+        layout:'hex',
+        onSubmit: function(hsb,hex,rgb,el) {
+            $scope.setCanvasBgColor('#'+hex);
+            //canvas.backgroundColor = '#'+hex;
+            if(hex =='ffffff')
+                $(el).css('color', '#777777');
+            else
+                $(el).css('color', '#'+hex);
+            $(el).colpickHide();
+            canvas.renderAll();
+        }
+    });
+
     $('.fill-color-box').colpick({
         colorScheme:'light',
         layout:'rgbhex',
@@ -964,101 +993,75 @@ function addMyOwnAccessors($scope){
 
 var isMouseDown = false,
     ctrlKeyDown = false,
+    isDisGroup = false,
     mouseXOnPan = 0,
     mouseYOnPan = 0,
     canvasXOnPan = 0,
     canvasYOnPan = 0;
 
 function listenCanvas($scope) {
-    canvas
-        .on('object:selected',  objectSelect)
-        .on('path:created', addPath)
-        .on('mouse:up', changeState)
-        .on('mouse:down', listenMouseDown)
-        .on('mouse:move', dragCanvas)
-        .on('selection:cleared', discardAct);
-
-
 
     function updateScope() {
         $scope.$$phase || $scope.$digest();
         canvas.renderAll();
     }
 
-    function discardAct(e){
+    canvas
+        .on('object:selected', objectSelectedLtn)
+        .on('object:modified', objectModifiedLtn)
+        .on('object:added', objectAddedLtn)
+        .on('path:created', pathCreatedLtn)
+        .on('mouse:up', mouseUpLtn)
+        .on('mouse:down', mouseDownLtn)
+        .on('mouse:move', mouseMoveLtn)
+        .on('object:scaling', objectScalingLtn)
+        .on('selection:created', selectCreatedLtn)
+        .on('before:selection:cleared', beforeSelectClearedLtn)
+        .on('selection:cleared', selectClearedLtn);
+
+
+    function selectClearedLtn(){
         updateScope();
     }
 
-    function objectSelect(e){
-        //if(e.target && e.target.toObject().type === 'group'){
-        //    e.target.set('originX','center');
-        //    e.target.set('originY','center');
-        //}
+    function objectSelectedLtn(){
         updateScope();
     }
 
-    function addPath(e){
+    function pathCreatedLtn(e){
         if(!ctrlKeyDown){
             updateScope();
             var fPath = e.path;
             mdCanvas.packageObj(fPath,false);
             mdCanvas.toObject(fPath,function(sPath){
-                roomId&&socket.emit('addPath', sPath);
+                roomId&&socket.emit('addObject', sPath);
             });
         }
     }
 
-    function changeState(e){
+    function mouseUpLtn(e){
         isMouseDown = false;
         if(!roomId) return;
         var obj = e.target;
         if(!obj) return;
+
         if(canvas.getActiveObject()){
             mdCanvas.toState(obj, function (state) {
-                socket.emit('stateChange',state);
+                socket.emit('statePropChange',state);
             });
         }
+
         if(canvas.getActiveGroup()){
-            canvas.getActiveGroup().forEachObject(function (obj) {
-                mdCanvas.getObjectStateInGroup(obj, function (state) {
-                    console.log(state);
-                    socket.emit('stateChange',state);
-                });
+            mdCanvas.toObject(canvas.getActiveGroup(), function (sGroup) {
+                mdCanvas.toState(sGroup, function (state) {
+                    roomId&&socket.emit('groupStateChange',state);
+                })
             });
         }
     }
 
-    function CALC_COORDS(object){
-        if(object.group){
-            var group = object.group;
-            var fAngle = group.getAngle() * Math.PI / 180,
-                sin = Math.sin(fAngle),
-                cos = Math.cos(fAngle),
-                fixX = group.originX === 'left' ? group.width/2 : 0,
-                fixY = group.originY === 'top' ? group.height/2 : 0;
-            return {
-                left : group.left + (object.left + fixX) * cos - (object.top + fixY) * sin,
-                top : group.top  + (object.left + fixX) * sin + (object.top + fixY) * cos,
-                scaleX : object.scaleX,
-                scaleY : object.scaleY,
-                skewX : object.skewX,
-                skewY : object.skewY,
-                angle : object.getAngle()+group.getAngle()
 
-            };
-        }
-        return {
-            left : object.left,
-            top : object.top,
-            scaleX : object.scaleX,
-            scaleY : object.scaleY,
-            skewX : object.skewX,
-            skewY : object.skewY,
-            angle : object.getAngle()
-        };
-    }
-
-    function listenMouseDown(e){
+    function mouseDownLtn(e){
         isMouseDown = true;
         if(ctrlKeyDown){
             mouseXOnPan = event.clientX;
@@ -1067,10 +1070,15 @@ function listenCanvas($scope) {
             canvasYOnPan = canvasCtnEl.offsetTop;
         } else {
             var obj = e.target;
-            if(!obj) {
+            if(!obj && !canvas.isDrawingMode && isDisGroup) {
+                mdCanvas.toObject(canvas, function (canvas) {
+                    roomId&&socket.emit('restoreAll',canvas);
+                    isDisGroup = false;
+                });
                 roomId&&socket.emit('discard','discard');
                 return;
             }
+            if(!obj) return;
             if (obj._objects){
                 if (obj._objects[0].selectable) {
                     var idArr = [];
@@ -1089,12 +1097,35 @@ function listenCanvas($scope) {
         }
     }
 
-    function dragCanvas(e){
+    function mouseMoveLtn(e){
         if (isMouseDown && ctrlKeyDown) {
             canvasCtnEl.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
             canvasCtnEl.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan  )+ 'px';
         }
     }
+
+    function objectModifiedLtn(){
+    }
+
+    function beforeSelectClearedLtn(e){
+        if(e.target&& e.target._objects){
+            isDisGroup = true;
+
+        }
+    }
+
+    function objectAddedLtn(){
+
+    }
+
+    function objectScalingLtn(){
+
+    }
+
+    function selectCreatedLtn(){
+
+    }
+
 }
 
 function initContextMenu($scope){
@@ -1112,10 +1143,8 @@ function initContextMenu($scope){
             }
                 },
         onItem: function (context, e) {
-            //alert($(e.target).text());
-
         }
-        });
+    });
 
     $('#context-menu2').on('show.bs.context', function (e) {
         console.log('before show event');
@@ -1135,71 +1164,42 @@ function initContextMenu($scope){
 }
 
 function initCanvasSocket($scope){
+
     roomId&&socket.emit('room', roomId)&&socket.emit('addUser', userName);
 
-    socket.on('allPath',function(data){
-        data&&data.forEach(function (sPath) {
-            mdCanvas.add(canvas,sPath);
+    socket.on('canvas', function (canvasData) {
+        canvasData.objectsRoom[roomId].forEach(function (sObject) {
+            if(sObject.type === 'i-text'){
+                mdCanvas.add(canvas,sObject,false,function (iText) {
+                    iText.on('editing:entered', editorEnterFire);
+                    iText.on('editing:exited', function (e) {
+                        console.log('退出编辑');
+                    });
+                    iText.on('selection:changed', function () {
+                        $scope.setText($scope.getText());
+                        canvas.renderAll();
+                    });
+                });
+            }else
+                mdCanvas.add(canvas,sObject);
         });
+        console.log(canvasData.userRoom[roomId]);
     });
 
-    socket.on('allText',function(data){
-        if(!data) return;
-        data.forEach(function (sIText) {
-            mdCanvas.add(canvas,sIText,false,function (iText) {
-                iText.on('editing:entered', editorEnterFire);
-                iText.on('editing:exited', function (e) {
+    socket.on('addObject', function (sObject) {
+        if(sObject.type === 'i-text'){
+            mdCanvas.add(canvas, sObject, false,function (fIText) {
+                fIText.on('editing:entered', editorEnterFire);
+                fIText.on('editing:exited', function (e) {
                     console.log('退出编辑');
                 });
-                iText.on('selection:changed', function () {
+                fIText.on('selection:changed', function () {
                     $scope.setText($scope.getText());
                     canvas.renderAll();
                 });
             });
-        });
-    });
-
-    socket.on('allGeometry',function(data){
-        if(!data) return;
-        data.forEach(function (gt) {
-            mdCanvas.add(canvas,gt);
-        });
-    });
-
-    socket.on('allImage',function(imageArr){
-        if(!imageArr) return;
-        imageArr.forEach(function (sImage) {
-            mdCanvas.add(canvas,sImage);
-        });
-    });
-
-    socket.on('addPath',function(sPath){
-        mdCanvas.add(canvas,sPath);
-    });
-
-    socket.on('addText',function(sIText){
-        mdCanvas.add(canvas, sIText, false,function (fIText) {
-            fIText.on('editing:entered', editorEnterFire);
-            fIText.on('editing:exited', function (e) {
-                console.log('退出编辑');
-            });
-            fIText.on('selection:changed', function () {
-                $scope.setText($scope.getText());
-                canvas.renderAll();
-            });
-        });
-    });
-
-    socket.on('addGeometry', function (geometry) {
-        mdCanvas.add(canvas,geometry);
-    });
-
-    socket.on('addImage', function (sImage) {
-        mdCanvas.add(canvas,sImage);
-    });
-
-    socket.on('addVideo', function (sVideo) {
-        mdCanvas.add(canvas,sVideo);
+        }else
+            mdCanvas.add(canvas,sObject);
     });
 
     socket.on('userJoined',function(user){
@@ -1233,8 +1233,7 @@ function initCanvasSocket($scope){
         });
     });
 
-    socket.on('stateChange',function(state){
-        //
+    socket.on('statePropChange',function(state){
         var myObjArr = mdCanvas.clone(canvas.getObjects());
         myObjArr.forEach(function(obj){
             if(obj.id === state.id){
@@ -1250,22 +1249,11 @@ function initCanvasSocket($scope){
         });
     });
 
-    socket.on('styleChange', function (style) {
+    socket.on('stylePropChange', function (style) {
         var myObjArr = mdCanvas.clone(canvas.getObjects());
         myObjArr.forEach(function (obj) {
             if (obj.id === style.id) {
-                obj[style.styleName] = style.value;
-                obj.setCoords();
-                canvas.renderAll();
-            }
-        });
-    });
-
-    socket.on('propChange', function (prop) {
-        var myObjArr = mdCanvas.clone(canvas.getObjects());
-        myObjArr.forEach(function (obj) {
-            if (obj.id === prop.id) {
-                obj.set(prop.name,prop.value).setCoords();
+                obj.set(style.name,style.value).setCoords();
                 canvas.renderAll();
             }
         });
@@ -1327,6 +1315,10 @@ function initCanvasSocket($scope){
 
     socket.on('canvasBgColor', function (value) {
         canvas.backgroundColor = value;
+        if(value.substring(1) =='ffffff')
+            $('#picker').css('color', '#777777');
+        else
+            $('#picker').css('color',value);
         canvas.renderAll();
     });
 }
@@ -1349,7 +1341,7 @@ function initKeyBoard($scope){
         if(key == 27){ //ESC键
             $scope.setFreeDrawingMode(!$scope.getFreeDrawingMode());
             $scope.$$phase || $scope.$digest();
-            if ($scope.getFreeDrawingMode()) {
+            if (!$scope.getFreeDrawingMode()) {
                 _('drawing-mode').innerHTML = ' <i class="fa fa-mouse-pointer"></i>';
                 _('drawing-mode').setAttribute('class','btn btn-default');
             }
@@ -1386,13 +1378,10 @@ function httpOpt($scope){
         var fileName = _('filename').value;
         var paramArr = mdUtils.urlParams(window.location.href);
         var id = paramArr['id'];
-        //if(id){
-        //    canvasData.isSaveNew = false;
-        //}else{
-        //    canvasData.isSaveNew = true;
-        //}
-        Communication.saveFile(canvasData,function(data){
-            console.log(data);
+        mdCanvas.toObject(canvas, function (data) {
+            Communication.saveFile(data, function (res) {
+                console.log(res);
+            })
         });
     }
 }

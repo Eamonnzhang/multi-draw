@@ -2,17 +2,49 @@
  * Created by Eamonn on 2015/8/28.
  */
 var socket = require('socket.io');
-var io=null;
-var pathRoom = {};
-var textRoom = {};
-var geometryRoom = {};
-var imgRoom = {};
-var userRoom = {};
+
+var io = null;
+
+var md = {
+    objectsRoom : {},
+    userRoom : {}
+};
+
+var utils = {
+    isNotValid : function (value) {
+        return value === null || value === undefined;
+    },
+    spliceArray : function (array,data) {
+        for(var i =0;i<array.length;i++) {
+            if (data.indexOf(array[i].id) !== -1) {
+                array.splice(i, 1);
+                i--;
+            }
+        }
+    },
+    setPropsInArray : function (array,data){
+        for(var i =0;i<array.length;i++) {
+            if (data.id === array[i].id) {
+                for(var p in data){
+                    array[i][p] = data[p];
+                }
+            }
+        }
+    },
+    setPropInArray : function (array,data) {
+        for(var i =0;i<array.length;i++) {
+            if (data.id === array[i].id) {
+                array[i][data.name] = data.value;
+            }
+        }
+    },
+};
+
+var room;
+
 exports.getSocketIo = function(){
     return socket;
 };
-var room;
-//var numUsers = 0;
 exports.startSocketIo = function(server){
     io = socket(server);
     io.on('connection', function (socket) {
@@ -20,165 +52,65 @@ exports.startSocketIo = function(server){
         socket.on('room',function(roomId){
             room = roomId;
             socket.join(room);
-            if(userRoom[room]===null||userRoom[room]===undefined){
-                userRoom[room]=[];
-                userRoom[room].numUsers = 0;
-                userRoom[room].users = [];
+            if(utils.isNotValid(md.userRoom[room])){
+                md.userRoom[room]=[];
+                md.userRoom[room].numUsers = 0;
+                md.userRoom[room].users = [];
             }
-            if(pathRoom[room]===null||pathRoom[room]===undefined)
-                pathRoom[room]=[];
-            if(textRoom[room]===null||textRoom[room]===undefined)
-                textRoom[room]=[];
-            if(geometryRoom[room]===null||geometryRoom[room]===undefined)
-                geometryRoom[room]=[];
-            if(imgRoom[room]===null||imgRoom[room]===undefined)
-                imgRoom[room]=[];
-            socket.emit('allPath', pathRoom[room]);
-            socket.emit('allText', textRoom[room]);
-            socket.emit('allGeometry', geometryRoom[room]);
-            socket.emit('allImage', imgRoom[room]);
+            if(utils.isNotValid(md.objectsRoom[room])){
+                md.objectsRoom[room]=[];
+            }
+            socket.emit('canvas',md);
         });
 
         socket.on('queryUsers', function (data) {
             var users={};
-            users.numUsers = userRoom[data].numUsers;
-            users.userNames = userRoom[data].users;
-            //console.log(users);
+            users.numUsers = md.userRoom[data].numUsers;
+            users.userNames = md.userRoom[data].users;
             socket.emit('queryUsers',users);
         });
+
         socket.on('addUser', function (userName) {
-            socket.userName = userName;
-            userRoom[room].users.push(userName);
-            ++userRoom[room].numUsers;
-            addedUser = true;
             io.sockets.in(room).emit('userJoined', {
                 userName:socket.userName,
-                numUsers:userRoom[room].numUsers
+                numUsers:md.userRoom[room].numUsers
             });
+            socket.userName = userName;
+            md.userRoom[room].users.push(userName);
+            ++md.userRoom[room].numUsers;
+            addedUser = true;
         });
 
         socket.on('clearAll',function(data){
-            pathRoom[room] = [];
-            textRoom[room] = [];
-            geometryRoom[room] = [];
-            imgRoom[room] = [];
             socket.broadcast.to(room).emit('clearAll', data);
+            md.objectsRoom[room] = [];
         });
+
         socket.on('clearSelected',function(data){
-            for(var i =0;i<pathRoom[room].length;i++) {
-                if (data.indexOf(pathRoom[room][i].id) !== -1) {
-                    pathRoom[room].splice(i, 1);
-                    i--;
-                }
-            }
-            for(var i =0;i<textRoom[room].length;i++) {
-                if (data.indexOf(textRoom[room][i].id) !== -1) {
-                    textRoom[room].splice(i, 1);
-                    i--;
-                }
-            }
-            for(var i =0;i<geometryRoom[room].length;i++) {
-                if (data.indexOf(geometryRoom[room][i].id) !== -1) {
-                    geometryRoom[room].splice(i, 1);
-                    i--;
-                }
-            }
-            for(var i =0;i<imgRoom[room].length;i++) {
-                if (data.indexOf(imgRoom[room][i].id) !== -1) {
-                    imgRoom[room].splice(i, 1);
-                    i--;
-                }
-            }
             socket.broadcast.to(room).emit('clearSelected', data);
-        });
-        socket.on('addPath',function(data){
-            pathRoom[room].push(data);
-            socket.broadcast.to(room).emit('addPath', data);
+            utils.spliceArray(md.objectsRoom[room],data);
         });
 
-        socket.on('addText',function(data){
-            textRoom[room].push(data);
-            socket.broadcast.to(room).emit('addText', data);
+        socket.on('addObject', function (data) {
+            socket.broadcast.to(room).emit('addObject',data);
+            md.objectsRoom[room].push(data);
         });
 
-        socket.on('addGeometry',function(data){
-            geometryRoom[room].push(data);
-            socket.broadcast.to(room).emit('addGeometry', data);
+        socket.on('restoreAll', function (data) {
+            if(data&&data.objects){
+                data.objects.forEach(function (obj) {
+                    utils.setPropsInArray(md.objectsRoom[room],obj);
+                })
+            }
+        });
+        socket.on('statePropChange',function(data){
+            socket.broadcast.to(room).emit('statePropChange', data);
+            utils.setPropsInArray(md.objectsRoom[room],data);
         });
 
-        socket.on('addImage', function (data) {
-            imgRoom[room].push(data);
-            socket.broadcast.to(room).emit('addImage',data);
-        });
-
-        socket.on('addVideo', function (data) {
-            socket.broadcast.to(room).emit('addVideo',data);
-        });
-
-        socket.on('stateChange',function(data){
-            for(var i =0;i<pathRoom[room].length;i++) {
-                if (data.id === pathRoom[room][i].id) {
-                    for(var p in data){
-                        pathRoom[room][i][p] = data[p];
-                    }
-                }
-            }
-            for(var i =0;i<textRoom[room].length;i++) {
-                if (data.id === textRoom[room][i].id) {
-                    for(var p in data){
-                        textRoom[room][i][p] = data[p];
-                    }
-                }
-            }
-            for(var i =0;i<geometryRoom[room].length;i++) {
-                if (data.id === geometryRoom[room][i].id) {
-                    for(var p in data){
-                        geometryRoom[room][i][p] = data[p];
-                    }
-                }
-            }
-            for(var i =0;i<imgRoom[room].length;i++) {
-                if (data.id === imgRoom[room][i].id) {
-                    for(var p in data){
-                        imgRoom[room][i][p] = data[p];
-                    }
-                }
-            }
-            socket.broadcast.to(room).emit('stateChange', data);
-        });
-
-        socket.on('styleChange', function (data) {
-            for(var i =0;i<pathRoom[room].length;i++) {
-                if (data.id === pathRoom[room][i].id) {
-                    pathRoom[room][i][data.styleName] = data.value;
-                }
-            }
-            for(var i =0;i<textRoom[room].length;i++) {
-                if (data.id === textRoom[room][i].id) {
-                    textRoom[room][i][data.styleName] = data.value;
-                }
-            }
-            for(var i =0;i<geometryRoom[room].length;i++) {
-                if (data.id === geometryRoom[room][i].id) {
-                    geometryRoom[room][i][data.styleName] = data.value;
-                }
-            }
-
-            for(var i =0;i<imgRoom[room].length;i++) {
-                if (data.id === imgRoom[room][i].id) {
-                    imgRoom[room][i][data.styleName] = data.value;
-                }
-            }
-            socket.broadcast.to(room).emit('styleChange', data);
-        });
-
-        socket.on('propChange', function (data) {
-            for(var i =0;i<textRoom[room].length;i++) {
-                if (data.id === textRoom[room][i].id) {
-                    textRoom[room][i][data.name] = data.value;
-                }
-            }
-            socket.broadcast.to(room).emit('propChange', data);
+        socket.on('stylePropChange',function(data){
+            socket.broadcast.to(room).emit('stylePropChange', data);
+            utils.setPropInArray(md.objectsRoom[room],data);
         });
 
         socket.on('canvasBgColor', function (value) {
@@ -187,36 +119,26 @@ exports.startSocketIo = function(server){
 
         socket.on('groupStateChange',function(group){
             socket.broadcast.to(room).emit('groupStateChange', group);
-            //Todo 解决group状态改变的socket缓存
-            for(var i =0;i<pathRoom[room].length;i++) {
-                group.objArr.forEach(function(x){
-                    if(x.id === pathRoom[room][i].id ){
-                        for(var p in x){
-                            pathRoom[room][i][p] = x[p];
-                        }
-                    }
-                });
-            }
         });
+
         socket.on('lockState',function(data){
             socket.broadcast.to(room).emit('lockState', data);
         });
-        socket.on('unlockState',function(data){
-            socket.broadcast.to(room).emit('unlockState', data);
-        });
+
         socket.on('discard',function(data){
             socket.broadcast.to(room).emit('discard', data);
         });
+
         socket.on('disconnect',function(){
             if(room){
                 if(addedUser){
-                    userRoom[room].users.splice(userRoom[room].users.indexOf(socket.userName),1);
-                    --userRoom[room].numUsers;
-                    console.log(userRoom[room]);
+                    md.userRoom[room].users.splice(md.userRoom[room].users.indexOf(socket.userName),1);
+                    --md.userRoom[room].numUsers;
+                    console.log(md.userRoom[room]);
                 }
                 io.sockets.in(room).emit('userLeft', {
                     userName:socket.userName,
-                    numUsers:userRoom[room].numUsers
+                    numUsers:md.userRoom[room].numUsers
                 });
             }
         })
