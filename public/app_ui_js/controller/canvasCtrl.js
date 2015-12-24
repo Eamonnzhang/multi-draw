@@ -212,7 +212,7 @@ function addAccessors($scope) {
     };
 
     $scope.getTextAlign = function() {
-        return capitalize(getActiveProp('textAlign'));
+        return mdUtils.capitalize(getActiveProp('textAlign'));
     };
     $scope.setTextAlign = function(value) {
         setActiveProp('textAlign', value.toLowerCase());
@@ -280,7 +280,7 @@ function addAccessors($scope) {
         return canvas.backgroundColor;
     };
     $scope.setCanvasBgColor = function(value) {
-        socket.emit('canvasBgColor',value);
+        roomId&&socket.emit('canvasBgColor',value);
         canvas.backgroundColor = value;
         canvas.renderAll();
     };
@@ -293,7 +293,7 @@ function addAccessors($scope) {
     }
 
     $scope.confirmClear = function() {
-        if(roomId) socket.emit('clearAll','clearAll');
+        roomId&&socket.emit('clearAll','clearAll');
         canvas.clear();
     };
 
@@ -330,10 +330,10 @@ function addAccessors($scope) {
         var activeObject = canvas.getActiveObject(),
             activeGroup = canvas.getActiveGroup();
         activeObject&&mdCanvas.remove(canvas,activeObject, function (idArr) {
-            socket.emit('clearSelected', idArr);
+            roomId&&socket.emit('clearSelected', idArr);
         });
         activeGroup&&mdCanvas.remove(canvas,activeGroup, function (idArr) {
-            socket.emit('clearSelected', idArr);
+            roomId&&socket.emit('clearSelected', idArr);
         });
     };
 
@@ -478,11 +478,11 @@ function addAccessors($scope) {
         obj.setGradient('fill', {
             x1: 0,
             y1: 0,
-            x2: (getRandomInt(0, 1) ? 0 : obj.width),
-            y2: (getRandomInt(0, 1) ? 0 : obj.height),
+            x2: (mdUtils.getRandomInt(0, 1) ? 0 : obj.width),
+            y2: (mdUtils.getRandomInt(0, 1) ? 0 : obj.height),
             colorStops: {
-                0: '#' + getRandomColor(),
-                1: '#' + getRandomColor()
+                0: '#' + mdUtils.getRandomColor(),
+                1: '#' + mdUtils.getRandomColor()
             }
         });
         canvas.renderAll();
@@ -613,11 +613,7 @@ function addAccessors($scope) {
         }
     };
     $scope.getRoomId = function(){
-        if($scope.roomId){
-            return $scope.roomId;
-        }
-        else
-            return null;
+        return $scope.roomId;
     };
 
     function initBrushes() {
@@ -724,7 +720,7 @@ function addAccessors($scope) {
 
 function addObject($scope){
     $scope.addRect = function() {
-        var coord = getRandomLeftTop();
+        var coord = mdUtils.getRandomLeftTop();
         var props = {
             left: coord.left,
             top: coord.top,
@@ -741,7 +737,7 @@ function addObject($scope){
     };
 
     $scope.addCircle = function() {
-        var coord = getRandomLeftTop();
+        var coord = mdUtils.getRandomLeftTop();
         var props = {
             left: coord.left,
             top: coord.top,
@@ -757,7 +753,7 @@ function addObject($scope){
     };
 
     $scope.addTriangle = function() {
-        var coord = getRandomLeftTop();
+        var coord = mdUtils.getRandomLeftTop();
         var props = {
             left: coord.left,
             top: coord.top,
@@ -774,7 +770,7 @@ function addObject($scope){
     };
 
     $scope.addLine = function() {
-        var coord = getRandomLeftTop();
+        var coord = mdUtils.getRandomLeftTop();
         var props = {
             x1:50,
             y1:100,
@@ -806,7 +802,7 @@ function addObject($scope){
     //};
 
     $scope.addText = function() {
-        var coord = getRandomLeftTop();
+        var coord = mdUtils.getRandomLeftTop();
         var props = {
             text : '点击编辑文字',
             left: coord.left,
@@ -838,13 +834,13 @@ function addObject($scope){
 
     var addShape = function(shapeName) {
         console.log('adding shape', shapeName);
-        var coord = getRandomLeftTop();
+        var coord = mdUtils.getRandomLeftTop();
         fabric.loadSVGFromURL('../assets/' + shapeName + '.svg', function(objects, options) {
             var loadedObject = fabric.util.groupSVGElements(objects, options);
             loadedObject.set({
                 left: coord.left,
                 top: coord.top,
-                angle: getRandomInt(-10, 10)
+                angle: mdUtils.getRandomInt(-10, 10)
             }).setCoords();
             canvas.add(loadedObject);
         });
@@ -874,7 +870,7 @@ function addObject($scope){
                 return;
             };
             reader.onload = function(e) {
-                mdCanvas.addUrl(canvas,e.target.result,getRandomLeftTop(),true,function (sImage) {
+                mdCanvas.addUrl(canvas,e.target.result,mdUtils.getRandomLeftTop(),true,function (sImage) {
                     $scope.setFreeDrawingMode(false);
                     roomId&&socket.emit('addObject',sImage);
                 });
@@ -898,9 +894,9 @@ function addObject($scope){
                 return;
             };
             reader.onload = function(e) {
-                mdCanvas.addUrl(canvas, e.target.result, getRandomLeftTop(),true,function (sVideo) {
+                mdCanvas.addUrl(canvas, e.target.result, mdUtils.getRandomLeftTop(),true,function (sVideo) {
                     $scope.setFreeDrawingMode(false);
-                    if(roomId) socket.emit('addObject',sVideo);
+                    roomId&&socket.emit('addObject',sVideo);
                 });
             };
             reader.readAsDataURL(file);
@@ -910,7 +906,7 @@ function addObject($scope){
 
 function addMyOwnAccessors($scope){
 
-    $('#picker').colpick({
+    $('.brand-title').colpick({
         layout:'hex',
         onSubmit: function(hsb,hex,rgb,el) {
             $scope.setCanvasBgColor('#'+hex);
@@ -983,11 +979,28 @@ function addMyOwnAccessors($scope){
         var activeObject = canvas.getActiveObject(),
             activeGroup = canvas.getActiveGroup();
         if(activeObject){
-            console.log(activeObject);
+           mdCanvas.toObject(activeObject, function (sObject) {
+               mdCanvas.add(canvas,sObject,true, function (sObject) {
+                   roomId&&socket.emit('addObject',sObject);
+               });
+           })
         }
         if(activeGroup){
-
+            console.log(activeGroup);
+            //mdCanvas.toState(activeGroup.toObject(), function (state) {
+            //    var objects = activeGroup._objects;
+            //    var newObjects = mdCanvas.clone(objects);
+            //    newObjects.forEach(function (obj) {
+            //        mdCanvas.packageObj(obj);
+            //    });
+            //    var group = new fabric.Group(newObjects,state);
+            //    canvas.add(group);
+            //});
         }
+    };
+
+    $scope.activeAll = function(){
+        mdCanvas.activeAll(canvas);
     }
 }
 
@@ -999,7 +1012,7 @@ var isMouseDown = false,
     canvasXOnPan = 0,
     canvasYOnPan = 0;
 
-function listenCanvas($scope) {
+function addCanvasListener($scope) {
 
     function updateScope() {
         $scope.$$phase || $scope.$digest();
@@ -1054,7 +1067,7 @@ function listenCanvas($scope) {
         if(canvas.getActiveGroup()){
             mdCanvas.toObject(canvas.getActiveGroup(), function (sGroup) {
                 mdCanvas.toState(sGroup, function (state) {
-                    roomId&&socket.emit('groupStateChange',state);
+                    socket.emit('groupStateChange',state);
                 })
             });
         }
@@ -1070,12 +1083,12 @@ function listenCanvas($scope) {
             canvasYOnPan = canvasCtnEl.offsetTop;
         } else {
             var obj = e.target;
-            if(!obj && !canvas.isDrawingMode && isDisGroup) {
+            if(!obj && !canvas.isDrawingMode && isDisGroup && roomId) {
                 mdCanvas.toObject(canvas, function (canvas) {
-                    roomId&&socket.emit('restoreAll',canvas);
+                    socket.emit('restoreAll',canvas);
                     isDisGroup = false;
                 });
-                roomId&&socket.emit('discard','discard');
+                socket.emit('discard','discard');
                 return;
             }
             if(!obj) return;
@@ -1104,13 +1117,21 @@ function listenCanvas($scope) {
         }
     }
 
-    function objectModifiedLtn(){
+    function objectModifiedLtn(e){
+        var modifiedObj = e.target;
+        if(modifiedObj._objects){
+            var modify = new Date();
+            modifiedObj._objects.forEach(function(obj){
+                obj.lastModify = modify;
+            })
+        }else{
+            modifiedObj.lastModify = new Date();
+        }
     }
 
     function beforeSelectClearedLtn(e){
         if(e.target&& e.target._objects){
             isDisGroup = true;
-
         }
     }
 
@@ -1133,40 +1154,46 @@ function initContextMenu($scope){
         return false;
     };
     $('.upper-canvas').contextmenu({
-        // Demo 3
-        target: '#context-menu2',
+        target: '#context-menu',
         before: function (e) {
-            if(!canvas.getActiveObject()&&!canvas.getActiveGroup()){
+            if(canvas.isDrawingMode){
                 e.preventDefault();
                 this.closemenu();
                 return false;
             }
-                },
+        },
         onItem: function (context, e) {
+            console.log(e);
         }
     });
 
-    $('#context-menu2').on('show.bs.context', function (e) {
-        console.log('before show event');
+    $('#context-menu').on('show.bs.context', function (e) {
+        if(!mdCanvas.isActiveObjectExist(canvas)){
+            _('clear-context').setAttribute('class','disabled');
+            _('copy-context').setAttribute('class','disabled');
+            _('btf-context').setAttribute('class','disabled');
+            _('stb-context').setAttribute('class','disabled');
+        }else{
+            $('#context-ul').children('.disabled').removeAttr('class');
+        }
     });
 
-    $('#context-menu2').on('shown.bs.context', function (e) {
+    $('#context-menu').on('shown.bs.context', function (e) {
         console.log('after show event');
     });
 
-    $('#context-menu2').on('hide.bs.context', function (e) {
+    $('#context-menu').on('hide.bs.context', function (e) {
         console.log('before hide event');
     });
 
-    $('#context-menu2').on('hidden.bs.context', function (e) {
+    $('#context-menu').on('hidden.bs.context', function (e) {
         console.log('after hide event');
     });
 }
 
 function initCanvasSocket($scope){
-
-    roomId&&socket.emit('room', roomId)&&socket.emit('addUser', userName);
-
+    socket.emit('room', roomId);
+    socket.emit('addUser', userName);
     socket.on('canvas', function (canvasData) {
         canvasData.objectsRoom[roomId].forEach(function (sObject) {
             if(sObject.type === 'i-text'){
@@ -1388,7 +1415,7 @@ function httpOpt($scope){
 
 var canvasModule = angular.module('CanvasModule', []);
 canvasModule.controller('CanvasCtrl', function($scope) {
-    if(roomId) $scope.roomId = roomId;
+    $scope.roomId = roomId ? roomId : null;
     $scope.canvas = canvas;
     $scope.getActiveStyle = getActiveStyle;
     addAccessors($scope);
@@ -1396,7 +1423,7 @@ canvasModule.controller('CanvasCtrl', function($scope) {
     addObject($scope);
     initContextMenu($scope);
     initKeyBoard($scope);
-    initCanvasSocket($scope);
-    listenCanvas($scope);
+    roomId&&initCanvasSocket($scope);
+    addCanvasListener($scope);
     httpOpt($scope);
 });

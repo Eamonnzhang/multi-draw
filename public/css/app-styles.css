@@ -12,10 +12,7 @@ label {
     margin-right: 4px;
 }
 
-#topToolbar textarea {
-    font-family: 微软雅黑;
-    height: 25px;
-}
+
 
 .itext {
     width: 300px;
@@ -49,7 +46,7 @@ label {
 }
 
 /*顶部工具条*/
-#topToolbar{
+.top-toolbar {
     background:#ffffff;
     padding-top:10px;
     padding-left:10px;
@@ -60,25 +57,29 @@ label {
     top:50px;
 }
 
+.top-toolbar textarea {
+    font-family: 微软雅黑;
+    height: 25px;
+}
 
-#topToolbar select{
+.top-toolbar select{
     width: 80px;
 }
 
-#topToolbar input{
+.top-toolbar input{
     width: 43px;
 }
 
-#topToolbar .cell{
+.top-toolbar .cell{
     margin-right: 5px;
     float:left;
 }
 
-#topToolbar .bigCell{
+.top-toolbar .bigCell{
     margin-right: 5px;
 }
 
-#topToolbar .colorBtn{
+.top-toolbar .colorBtn{
     cursor: default;
     border: none;
     float:left;
@@ -101,7 +102,7 @@ label {
 }
 
 /*左侧工具条*/
-.leftToolbar{
+.left-toolbar{
     position:absolute;
     top:90px;
 }

@@ -11,7 +11,7 @@ app.directive('bindValueTo', function() {
 
         link: function ($scope, $element, $attrs) {
 
-                var prop = capitalize($attrs.bindValueTo),
+                var prop = mdUtils.capitalize($attrs.bindValueTo),
                     getter = 'get' + prop,
                     setter = 'set' + prop;
 

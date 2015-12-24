@@ -1,93 +1,37 @@
 /**
  * Created by Eamonn on 2015/8/28.
  */
+var mdUtils = {
+    getRandomInt : fabric.util.getRandomInt,
 
-(function(global) {
-
-    function capitalize(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
-    function pad(str, length) {
-        while (str.length < length) {
-            str = '0' + str;
-        }
-        return str;
-    }
-
-    var getRandomInt = fabric.util.getRandomInt;
-    function getRandomColor() {
+    getRandomColor :function () {
         return (
-            pad(getRandomInt(0, 255).toString(16), 2) +
-            pad(getRandomInt(0, 255).toString(16), 2) +
-            pad(getRandomInt(0, 255).toString(16), 2)
+            this.pad(this.getRandomInt(0, 255).toString(16), 2) +
+            this.pad(this.getRandomInt(0, 255).toString(16), 2) +
+            this.pad(this.getRandomInt(0, 255).toString(16), 2)
         );
-    }
+    },
 
-    function getRandomNum(min, max) {
+    getRandomNum: function (min, max) {
         return Math.random() * (max - min) + min;
-    }
+    },
 
-    function getRandomLeftTop() {
-        //var offset = 50;
+    getRandomLeftTop: function () {
         return {
             left: fabric.util.getRandomInt(0, 200),
             top: fabric.util.getRandomInt(0 , 200)
         };
-    }
-
-    var supportsInputOfType = function(type) {
-        return function() {
-            var el = document.createElement('input');
-            try {
-                el.type = type;
-            }
-            catch(err) { }
-            return el.type === type;
-        };
-    };
-
-    var supportsSlider = supportsInputOfType('range'),
-        supportsColorpicker = supportsInputOfType('color');
-
-    global.getRandomNum = getRandomNum;
-    global.getRandomInt = getRandomInt;
-    global.getRandomColor = getRandomColor;
-    global.getRandomLeftTop = getRandomLeftTop;
-    global.supportsSlider = supportsSlider;
-    global.supportsColorpicker = supportsColorpicker;
-    global.capitalize = capitalize;
-
-})(this);
-
-var mdUtils = {
-
-    addCookie : function (name, value, expiresHours) {
-        var cookieString = name + "=" + escape(value);
-        if (expiresHours > 0) {
-            var date = new Date();
-            date.setTime(date.getTime + expiresHours * 3600 * 1000);
-            cookieString = cookieString + "; expires=" + date.toGMTString();
-        }
-        document.cookie = cookieString;
-    },
-    getCookie : function (name) {
-        var strCookie = document.cookie;
-        var arrCookie = strCookie.split("; ");
-        for (var i = 0; i < arrCookie.length; i++) {
-            var arr = arrCookie[i].split("=");
-            if (arr[0] == name) {
-                return arr[1];
-            }
-        }
-        return "";
-
     },
 
-    deleteCookie : function (name) {
-        var date = new Date();
-        date.setTime(date.getTime() - 10000);
-        document.cookie = name + "=v; expires=" + date.toGMTString();
+    capitalize:  function (string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+
+    pad: function (str, length) {
+        while (str.length < length) {
+            str = '0' + str;
+        }
+        return str;
     },
 
     urlParams : function (url) {
@@ -188,7 +132,8 @@ var mdCanvas = {
         state.scaleY = obj.scaleY;
         if(obj.type === 'group'){
             var idArr = [];
-            obj.objects.forEach(function(x){
+            var objArr = obj.objects || obj._objects;
+            objArr.forEach(function(x){
                 idArr.push(x.id);
             });
             state.idArr = idArr;
@@ -215,7 +160,7 @@ var mdCanvas = {
     },
 
     /**
-     * get object by id,maybe will improve this function that can get Object by more conditions
+     * get object by id,maybe I will improve this function in future that can get Object by more conditions
      * @param canvas
      * @param id
      * @param callback
@@ -230,6 +175,7 @@ var mdCanvas = {
 
     /**
      * get the object's state in group relative to canvas
+     * has some bugs
      * @param object
      * @param group
      * @returns {{left: number, top: *, scaleX: number, scaleY: number, angle: *}}
@@ -264,7 +210,6 @@ var mdCanvas = {
         switch (obj.type){
             case 'circle':
                 fObj = new fabric.Circle(obj);
-
                 break;
             case 'triangle':
                 fObj = new fabric.Triangle(obj);
@@ -289,11 +234,13 @@ var mdCanvas = {
                 alert('当前canvas不支持添加此对象！');
         }
         if(isNew){
+            //if is New ,should packageObj() and toObject() to socket to others
             this.packageObj(fObj,false);
             this.toObject(fObj,callback);
             canvas.add(fObj);
             return;
         }
+        //this callback is just for Fitext to bind text listener
         fObj&&canvas.add(fObj)&&callback&&callback(fObj);
     },
 
@@ -359,6 +306,14 @@ var mdCanvas = {
             canvas.remove(activeObj);
         }
         callback&&callback(idArr);
+    },
+
+    activeAll : function (canvas) {
+        canvas.setActiveGroup(new fabric.Group(canvas.getObjects()));
+    },
+
+    isActiveObjectExist : function (canvas) {
+        return canvas.getActiveObject()||canvas.getActiveGroup();
     }
 
 }

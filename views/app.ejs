@@ -29,7 +29,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a id="picker" class="navbar-brand brand-title" href="javascript:void(0)" ><i class="fa fa-paint-brush  fa-lg"></i>&nbsp;MultiDraw</a>
+                        <a class="navbar-brand brand-title" href="javascript:void(0)" ><i class="fa fa-paint-brush  fa-lg"></i>&nbsp;MultiDraw</a>
                     </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -72,7 +72,7 @@
             <!--导航栏END-->
 
             <!--左侧工具条-->
-            <div id="left-toolbar" class="btn-group-vertical leftToolbar"  role="group">
+            <div class="btn-group-vertical left-toolbar"  role="group">
                 <!--模式-->
                 <button  id="drawing-mode" type="button" class="btn btn-info"  data-toggle="tooltip" data-placement="right" title="切换模式"
                          ng-click="setFreeDrawingMode(!getFreeDrawingMode())">
@@ -200,11 +200,10 @@
                 <button id="test" class="btn btn-default">Test</button>
 
             </div>
-
             <!--左侧工具条 END-->
 
             <!--顶部工具条-->
-            <div  id="topToolbar">
+            <div class="top-toolbar">
                 <!--自由绘画选项-->
                 <div id="drawing-mode-options" ng-show="getFreeDrawingMode()">
                     <div class="cell">
@@ -271,7 +270,7 @@
                 <!--公用选项-->
 
                 <!--编辑文字选项-->
-                <div id="text-wrapper" class="bigCell" ng-show="getText()&&!getFreeDrawingMode()">
+                <div class="bigCell" ng-show="getText()&&!getFreeDrawingMode()">
 
                     <div class="bigCell">
                         <select class="cell btn-object-action" bind-value-to="fontFamily">
@@ -288,7 +287,7 @@
 
                         <div class="mdBtn  text-background-color-box cell" data-toggle="tooltip" data-placement="left" title="文本背景色">
                             <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-text-background colorBtn"></button>
-                            <div id='fill' class="color-div" bind-value-to="textBgColor"></div>
+                            <div class="color-div" bind-value-to="textBgColor"></div>
                         </div>
 
                         <div class="cell">
@@ -342,21 +341,17 @@
             </div>
             <!--顶部工具条 END-->
 
-            <!--画板最外层div scroll-->
+            <!--canvas容器-->
             <div id="canvas-col">
-
-                <!--固定宽高的DIV -->
                 <div id="canvasCtn">
                     <canvas id="c"></canvas>
                 </div>
-                <!--固定宽高的DIV END-->
             </div>
-            <!--画板最外层div scroll END-->
+            <!--canvas容器END-->
 
         </div>
         <!--bd--wrapper end-->
 
-        <!--Alert Modal -->
         <!--清空操作 Alert-->
         <div class="modal fade bs-example-modal-sm" id="myAlertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-sm" role="document">
@@ -382,7 +377,6 @@
             </div>
         </div>
         <!--不支持canvas Alert END-->
-        <!--Alert Modal END-->
 
         <!--Save Model-->
         <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -405,20 +399,6 @@
         </div>
         <!--Save Model END-->
 
-        <!--Share room-->
-        <div class="collapse" id="collapseShareRoom" >
-            <div class="well">
-                <form class="form-inline" action="/board" method="get">
-                    <div class="form-group">
-                        <label>房间名:</label>
-                        <input type="text" class="form-control" name="room" placeholder="创建或进入">
-                    </div>
-                    <button id='start-draw' type="submit" class="btn btn-primary" ><i class="fa fa-paper-plane"></i></button>
-                </form>
-            </div>
-        </div>
-        <!--Share room END-->
-
         <!--JSON Modal-->
         <div class="modal fade" id="JsonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -438,6 +418,7 @@
             </div>
         </div>
         <!--JSON Modal END-->
+
         <!--canvas 自定义大小 Modal-->
         <div class="modal fade bs-example-modal-sm" id="customizedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog  modal-sm" role="document">
@@ -467,20 +448,22 @@
                 </div>
             </div>
         </div>
-        <!--canvas 自定义大小 Modal-->
+        <!--canvas 自定义大小 Modal END-->
 
         <!--bootstrap context menu-->
-        <div id="context-menu2">
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="" tabindex="-1" ng-click="removeSelected()"><span class="fa fa-trash menu-btn" ></span>清除</a></li>
-                <li><a href="" tabindex="-1" ng-click="copySelf()"><span class="fa fa-copy menu-btn" ></span>复制</a></li>
+        <div id="context-menu">
+            <ul class="dropdown-menu" id = 'context-ul' role="menu">
+                <li id="clear-context"><a href="" tabindex="-1" ng-click="removeSelected()"><span class="fa fa-trash menu-btn" ></span>清除</a></li>
+                <li id="copy-context"><a href="" tabindex="-1" ng-click="copySelf()"><span class="fa fa-copy menu-btn" ></span>复制</a></li>
                 <li class="divider"></li>
-                <li><a href="" tabindex="-1" ng-click="activeAll()"><span class="fa fa-check-square-o menu-btn" ></span>全选</a></li>
+                <li id="active-all-context"><a href="" tabindex="-1" ng-click="activeAll()"><span class="fa fa-check-square-o menu-btn" ></span>全选</a></li>
                 <li class="divider"></li>
-                <li><a href="" tabindex="-1" ng-click="bringToFront()"><span class="fa fa-angle-double-up menu-btn" ></span>置于顶层</a></li>
-                <li><a href="" tabindex="-1" ng-click="sendToBack()"><span class="fa fa-angle-double-down menu-btn" ></span>置于底层</a></li>
+                <li id="btf-context"><a href="" tabindex="-1" ng-click="bringToFront()"><span class="fa fa-angle-double-up menu-btn" ></span>置于顶层</a></li>
+                <li id="stb-context"><a href="" tabindex="-1" ng-click="sendToBack()"><span class="fa fa-angle-double-down menu-btn" ></span>置于底层</a></li>
             </ul>
         </div>
+        <!--bootstrap context menu END-->
+
     </body>
 	<script src='/app_3th_js/angular/angular.min.js'></script>
     <script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
@@ -494,7 +477,6 @@
     <script src='/app_ui_js/ConfigBoard.js'></script>
     <script src='/app_ui_js/EditBoard.js'></script>
 	<script>
-        $(function () { $("[data-toggle='tooltip']").tooltip(); });
         var apiKey='<%= apiKey%>';
         var userName ='<%= userName%>';
         var userId ='<%= userId%>';
@@ -509,9 +491,9 @@
             };
             editBoard.communication.loadFile(queryObj, mdUtils.bind(editBoard,editBoard.resetBoard));
         }
-        var canvas = editBoard.__canvas;
-        var socket = editBoard.__socket;
-        var canvasCtnEl = editBoard.canvasCtnEl;
+        var canvas = editBoard.canvas;
+        var socket = editBoard.socket;
+        var canvasCtnEl = editBoard.configBord.canvasCtnEl;
         var Communication = editBoard.communication;
 	</script>
     <script src="/app_ui_js/app.js"></script>
