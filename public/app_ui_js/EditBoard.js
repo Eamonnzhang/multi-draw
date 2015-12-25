@@ -10,7 +10,7 @@ var EditBoard = function (){
         backgroundColor :"#ffffff",
         width:750,
         height:530,
-        isDrawingMode:true,
+        isDrawingMode:false,
     });
     var configBoard = this.configBord =  new ConfigBoard(this);
     fabric.Object.prototype.transparentCorners = false;

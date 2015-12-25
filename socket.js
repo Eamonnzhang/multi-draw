@@ -49,14 +49,26 @@ exports.startSocketIo = function(server){
     io = socket(server);
     io.on('connection', function (socket) {
         var addedUser = false;
-        socket.on('room',function(roomId){
-            room = roomId;
+        socket.on('room',function(info){
+            room = info.roomId;
             socket.join(room);
+            delete info.user.userKey;
+            var c_userName = info.user.userName;
+            socket.userName = c_userName;
+            addedUser = true;
             if(utils.isNotValid(md.userRoom[room])){
-                md.userRoom[room]=[];
-                md.userRoom[room].numUsers = 0;
-                md.userRoom[room].users = [];
+                md.userRoom[room] = {};
+                md.userRoom[room].numUsers = 1;
+                md.userRoom[room].users = [info.user];
+                //md.userRoom[room].users.push();
+            }else{
+                md.userRoom[room].users.push(info.user);
+                ++md.userRoom[room].numUsers;
             }
+            io.sockets.in(room).emit('userJoined', {
+                userName: info.user.userName,
+                numUsers: md.userRoom[room].numUsers
+            });
             if(utils.isNotValid(md.objectsRoom[room])){
                 md.objectsRoom[room]=[];
             }
@@ -70,14 +82,15 @@ exports.startSocketIo = function(server){
             socket.emit('queryUsers',users);
         });
 
-        socket.on('addUser', function (userName) {
-            io.sockets.in(room).emit('userJoined', {
-                userName:socket.userName,
-                numUsers:md.userRoom[room].numUsers
-            });
-            socket.userName = userName;
-            md.userRoom[room].users.push(userName);
+        socket.on('addUser', function (user) {
+            var c_userName = user.userName;
+            md.userRoom[room].users.push(user);
             ++md.userRoom[room].numUsers;
+            io.sockets.in(room).emit('userJoined', {
+                userName: user.userName,
+                numUsers: md.userRoom[room].numUsers
+            });
+            socket.userName = c_userName;
             addedUser = true;
         });
 

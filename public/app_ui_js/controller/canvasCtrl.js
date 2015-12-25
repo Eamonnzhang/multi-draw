@@ -1183,8 +1183,7 @@ function initContextMenu($scope){
 }
 
 function initCanvasSocket($scope){
-    socket.emit('room', roomId);
-    socket.emit('addUser', userName);
+    socket.emit('room', {roomId : roomId, user : user});
     socket.on('canvas', function (canvasData) {
         canvasData.objectsRoom[roomId].forEach(function (sObject) {
             if(sObject.type === 'i-text'){
