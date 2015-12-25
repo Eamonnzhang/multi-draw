@@ -1062,7 +1062,7 @@ function addCanvasListener($scope) {
             socket.emit('statePropChange',mdCanvas.toState(obj));
         }
         if(canvas.getActiveGroup()){
-            var sGroup = mdCanvas.toObject(canvas.getActiveGroup(),false);
+            var sGroup = mdCanvas.toObject(canvas.getActiveGroup(),true);
             socket.emit('groupStateChange',mdCanvas.toState(sGroup));
         }
     }
