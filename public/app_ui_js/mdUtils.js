@@ -114,16 +114,19 @@ var mdCanvas = {
      * @param obj
      * @returns {*}
      */
-    toObject : function (obj,callback) {
-        callback&&callback(obj.toObject(['id','userId','userName','createTime','lastModify','skewX','skewY']),obj);
+    toObject : function (obj,includeDefaultValues,propsInclude) {
+        obj.hasOwnProperty('isDrawingMode') ?  obj.includeDefaultValues = false : obj.set('includeDefaultValues',includeDefaultValues);
+        var base = ['id','userId','userName','createTime','lastModify','skewX','skewY'];
+        var propsArray = propsInclude ? propsInclude.concat(base) : base;
+        return obj.toObject(propsArray);
     },
 
     /**
-     * get an Object or a group of objects 's state to transport
+     * get an Object or a group of objects 's state prop
      * @param obj
      * @returns {{}}
      */
-    toState : function (obj,callback) {
+    toState : function (obj) {
         var state= {};
         state.top = obj.top;
         state.left = obj.left;
@@ -142,7 +145,7 @@ var mdCanvas = {
         }else{
             state.id = obj.id;
         }
-        callback&&callback(state);
+        return state;
     },
 
     /**
@@ -150,8 +153,7 @@ var mdCanvas = {
      * @param c_obj
      * @param s_obj
      */
-    packageObj : function (c_obj,includeDefaultValues) {
-        c_obj.set('includeDefaultValues',includeDefaultValues);
+    packageObj : function (c_obj) {
         c_obj.id = mdUtils.generateId(8,32);
         c_obj.userId = userId;
         c_obj.userName = userName;
@@ -205,7 +207,7 @@ var mdCanvas = {
      * @param canvas
      * @param obj is the return of toObject();
      */
-    add : function (canvas,obj,isNew,callback) {
+    add : function (canvas,obj,callback) {
         var fObj;
         switch (obj.type){
             case 'circle':
@@ -228,20 +230,17 @@ var mdCanvas = {
                 break;
             case 'image':
                 var url = obj.src;
-                this.addUrl(canvas,url,obj);
+                this.addUrl(canvas, url, function (urlObj) {
+                    urlObj.set(obj).setCoords();
+                });
                 break;
             default :
                 alert('当前canvas不支持添加此对象！');
         }
-        if(isNew){
-            //if is New ,should packageObj() and toObject() to socket to others
-            this.packageObj(fObj,false);
-            this.toObject(fObj,callback);
+        if(fObj){
+            callback&&callback(fObj);
             canvas.add(fObj);
-            return;
         }
-        //this callback is just for Fitext to bind text listener
-        fObj&&canvas.add(fObj)&&callback&&callback(fObj);
     },
 
     /**
@@ -250,15 +249,11 @@ var mdCanvas = {
      * @param url
      * @returns {*}
      */
-    addUrl : function (canvas,url,props,isNew,callback) {
+    addUrl : function (canvas,url,callback) {
         var urlType = mdUtils.getDataUrlType(url);
         if(urlType === 'image'){
             fabric.Image.fromURL(url, mdUtils.bind(this,function(image) {
-                image.set(props).setCoords();
-                if(isNew){
-                    this.packageObj(image,false);
-                    this.toObject(image,callback);
-                }
+                callback(image);
                 canvas.add(image);
             }));
         }
@@ -270,11 +265,9 @@ var mdCanvas = {
             videoEl.setAttribute('width',"480");
             videoEl.setAttribute('height',"240");
             parent.appendChild(videoEl);
-            var video = new fabric.Image(videoEl,props);
-            if(isNew){
-                this.packageObj(video,false);
-                this.toObject(video,callback);
-            }
+            var video = new fabric.Image(videoEl);
+            callback(video);
+            //if(video.id) parent.setAttribute('id',video.id);
             canvas.add(video);
             fabric.util.requestAnimFrame(function render() {
                 canvas.renderAll();
@@ -299,10 +292,18 @@ var mdCanvas = {
             var objectsInGroup = activeObj.getObjects();
             canvas.discardActiveGroup();
             objectsInGroup.forEach(function (object) {
+                if(object._element&&object._element.tagName === 'VIDEO'){
+                    if(!object._element.paused) object._element.pause();
+                    console.log('delete video in group');
+                }
                 canvas.remove(object);
             });
         }else{
             idArr.push(activeObj.id);
+            if(activeObj._element&&activeObj._element.tagName === 'VIDEO'){
+                if(!activeObj._element.paused) activeObj._element.pause();
+                console.log('delete a video');
+            }
             canvas.remove(activeObj);
         }
         callback&&callback(idArr);

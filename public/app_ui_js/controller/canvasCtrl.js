@@ -285,13 +285,6 @@ function addAccessors($scope) {
         canvas.renderAll();
     };
 
-    function removeVideoEl(el){
-        if(el.play){
-            el.pause();
-        }
-        console.log(el);
-    }
-
     $scope.confirmClear = function() {
         roomId&&socket.emit('clearAll','clearAll');
         canvas.clear();
@@ -329,10 +322,10 @@ function addAccessors($scope) {
     $scope.removeSelected = function() {
         var activeObject = canvas.getActiveObject(),
             activeGroup = canvas.getActiveGroup();
-        activeObject&&mdCanvas.remove(canvas,activeObject, function (idArr) {
+        activeObject&&mdCanvas.remove(canvas,activeObject,function (idArr) {
             roomId&&socket.emit('clearSelected', idArr);
         });
-        activeGroup&&mdCanvas.remove(canvas,activeGroup, function (idArr) {
+        activeGroup&&mdCanvas.remove(canvas,activeGroup,function (idArr) {
             roomId&&socket.emit('clearSelected', idArr);
         });
     };
@@ -730,10 +723,12 @@ function addObject($scope){
             height: 50
         };
         var rect = new fabric.Rect(props);
-        mdCanvas.add(canvas,rect.toObject(), true, function (sRect) {
+        mdCanvas.add(canvas,rect.toObject(),function (fRect) {
             $scope.setFreeDrawingMode(false);
-            roomId&&socket.emit('addObject',sRect);
+            mdCanvas.packageObj(fRect);
+            roomId&&socket.emit('addObject',mdCanvas.toObject(fRect,false))
         });
+
     };
 
     $scope.addCircle = function() {
@@ -746,9 +741,10 @@ function addObject($scope){
             radius: 50
         };
         var circle = new fabric.Circle(props);
-        mdCanvas.add(canvas,circle.toObject(),true, function (sCircle) {
+        mdCanvas.add(canvas,circle.toObject(),function (fCircle) {
             $scope.setFreeDrawingMode(false);
-            roomId&&socket.emit('addObject',sCircle);
+            mdCanvas.packageObj(fCircle);
+            roomId&&socket.emit('addObject',mdCanvas.toObject(fCircle,false))
         });
     };
 
@@ -763,9 +759,10 @@ function addObject($scope){
             height: 50
         };
         var triangle = new fabric.Triangle(props);
-        mdCanvas.add(canvas,triangle.toObject(),true, function (sTriangle) {
+        mdCanvas.add(canvas,triangle.toObject(),function (fTriangle) {
             $scope.setFreeDrawingMode(false);
-            roomId&&socket.emit('addObject',sTriangle);
+            mdCanvas.packageObj(fTriangle);
+            roomId&&socket.emit('addObject',mdCanvas.toObject(fTriangle,false))
         });
     };
 
@@ -781,9 +778,10 @@ function addObject($scope){
             stroke: '#000000'
         };
         var line = new fabric.Line([props.x1,props.y1,props.x2,props.y2],props);
-        mdCanvas.add(canvas,line.toObject(),true, function (sLine) {
+        mdCanvas.add(canvas,line.toObject(), function (fLine) {
             $scope.setFreeDrawingMode(false);
-            roomId&&socket.emit('addObject',sLine);
+            mdCanvas.packageObj(fLine);
+            roomId&&socket.emit('addObject',mdCanvas.toObject(fLine,false))
         });
     };
 
@@ -817,9 +815,10 @@ function addObject($scope){
         }
         var iText = new fabric.IText(props.text, props);
 
-        mdCanvas.add(canvas, iText.toObject(), true, function (sIText,fIText) {
+        mdCanvas.add(canvas, iText.toObject(),function (fIText) {
             $scope.setFreeDrawingMode(false);
-            roomId&&socket.emit('addObject',sIText);
+            mdCanvas.packageObj(fIText);
+            roomId&&socket.emit('addObject',mdCanvas.toObject(fIText,false));
             fIText.on('editing:entered', editorEnterFire);
             fIText.on('editing:exited', function () {
                 console.log('退出编辑');
@@ -828,7 +827,6 @@ function addObject($scope){
                 $scope.setText($scope.getText());
                 canvas.renderAll();
             });
-
         });
     };
 
@@ -870,11 +868,14 @@ function addObject($scope){
                 return;
             };
             reader.onload = function(e) {
-                mdCanvas.addUrl(canvas,e.target.result,mdUtils.getRandomLeftTop(),true,function (sImage) {
+                mdCanvas.addUrl(canvas, e.target.result, function (fImage) {
                     $scope.setFreeDrawingMode(false);
-                    roomId&&socket.emit('addObject',sImage);
+                    mdCanvas.packageObj(fImage);
+                    fImage.set(mdUtils.getRandomLeftTop()).setCoords();
+                    roomId&&socket.emit('addObject',mdCanvas.toObject(fImage,false));
                 });
-
+                //重置input，防止不能连续两次上传同一张图片
+                $('input[type=file]').wrap('<form>').closest('form').get(0).reset();
             };
             reader.readAsDataURL(file);
         };
@@ -894,10 +895,14 @@ function addObject($scope){
                 return;
             };
             reader.onload = function(e) {
-                mdCanvas.addUrl(canvas, e.target.result, mdUtils.getRandomLeftTop(),true,function (sVideo) {
+                mdCanvas.addUrl(canvas, e.target.result,function (fVideo) {
                     $scope.setFreeDrawingMode(false);
-                    roomId&&socket.emit('addObject',sVideo);
+                    mdCanvas.packageObj(fVideo);
+                    fVideo.set(mdUtils.getRandomLeftTop()).setCoords();
+                    roomId&&socket.emit('addObject',mdCanvas.toObject(fVideo,false));
                 });
+                //重置input，防止不能连续两次上传同一张图片
+                $('input[type=file]').wrap('<form>').closest('form').get(1).reset();
             };
             reader.readAsDataURL(file);
         };
@@ -979,11 +984,10 @@ function addMyOwnAccessors($scope){
         var activeObject = canvas.getActiveObject(),
             activeGroup = canvas.getActiveGroup();
         if(activeObject){
-           mdCanvas.toObject(activeObject, function (sObject) {
-               mdCanvas.add(canvas,sObject,true, function (sObject) {
-                   roomId&&socket.emit('addObject',sObject);
-               });
-           })
+            mdCanvas.add(canvas,activeObject.toObject(),function (fObj) {
+                mdCanvas.packageObj(fObj);
+                roomId&&socket.emit('addObject',mdCanvas.toObject(fObj,false));
+            });
         }
         if(activeGroup){
             console.log(activeGroup);
@@ -1042,14 +1046,11 @@ function addCanvasListener($scope) {
     }
 
     function pathCreatedLtn(e){
-        if(!ctrlKeyDown){
-            updateScope();
-            var fPath = e.path;
-            mdCanvas.packageObj(fPath,false);
-            mdCanvas.toObject(fPath,function(sPath){
-                roomId&&socket.emit('addObject', sPath);
-            });
-        }
+        if(ctrlKeyDown) return;
+        updateScope();
+        var fPath = e.path;
+        mdCanvas.packageObj(fPath);
+        roomId && socket.emit('addObject', mdCanvas.toObject(fPath,false));
     }
 
     function mouseUpLtn(e){
@@ -1057,19 +1058,12 @@ function addCanvasListener($scope) {
         if(!roomId) return;
         var obj = e.target;
         if(!obj) return;
-
         if(canvas.getActiveObject()){
-            mdCanvas.toState(obj, function (state) {
-                socket.emit('statePropChange',state);
-            });
+            socket.emit('statePropChange',mdCanvas.toState(obj));
         }
-
         if(canvas.getActiveGroup()){
-            mdCanvas.toObject(canvas.getActiveGroup(), function (sGroup) {
-                mdCanvas.toState(sGroup, function (state) {
-                    socket.emit('groupStateChange',state);
-                })
-            });
+            var sGroup = mdCanvas.toObject(canvas.getActiveGroup(),false);
+            socket.emit('groupStateChange',mdCanvas.toState(sGroup));
         }
     }
 
@@ -1084,10 +1078,8 @@ function addCanvasListener($scope) {
         } else {
             var obj = e.target;
             if(!obj && !canvas.isDrawingMode && isDisGroup && roomId) {
-                mdCanvas.toObject(canvas, function (canvas) {
-                    socket.emit('restoreAll',canvas);
-                    isDisGroup = false;
-                });
+                socket.emit('restoreAll',mdCanvas.toObject(canvas,false));
+                isDisGroup = false;
                 socket.emit('discard','discard');
                 return;
             }
@@ -1163,7 +1155,6 @@ function initContextMenu($scope){
             }
         },
         onItem: function (context, e) {
-            console.log(e);
         }
     });
 
@@ -1179,15 +1170,15 @@ function initContextMenu($scope){
     });
 
     $('#context-menu').on('shown.bs.context', function (e) {
-        console.log('after show event');
+        //console.log('after show event');
     });
 
     $('#context-menu').on('hide.bs.context', function (e) {
-        console.log('before hide event');
+        //console.log('before hide event');
     });
 
     $('#context-menu').on('hidden.bs.context', function (e) {
-        console.log('after hide event');
+        //console.log('after hide event');
     });
 }
 
@@ -1197,12 +1188,12 @@ function initCanvasSocket($scope){
     socket.on('canvas', function (canvasData) {
         canvasData.objectsRoom[roomId].forEach(function (sObject) {
             if(sObject.type === 'i-text'){
-                mdCanvas.add(canvas,sObject,false,function (iText) {
-                    iText.on('editing:entered', editorEnterFire);
-                    iText.on('editing:exited', function (e) {
+                mdCanvas.add(canvas,sObject,function (fIText) {
+                    fIText.on('editing:entered', editorEnterFire);
+                    fIText.on('editing:exited', function (e) {
                         console.log('退出编辑');
                     });
-                    iText.on('selection:changed', function () {
+                    fIText.on('selection:changed', function () {
                         $scope.setText($scope.getText());
                         canvas.renderAll();
                     });
@@ -1215,7 +1206,7 @@ function initCanvasSocket($scope){
 
     socket.on('addObject', function (sObject) {
         if(sObject.type === 'i-text'){
-            mdCanvas.add(canvas, sObject, false,function (fIText) {
+            mdCanvas.add(canvas, sObject,function (fIText) {
                 fIText.on('editing:entered', editorEnterFire);
                 fIText.on('editing:exited', function (e) {
                     console.log('退出编辑');
@@ -1249,13 +1240,7 @@ function initCanvasSocket($scope){
         var myObjArr = mdCanvas.clone(canvas.getObjects());
         myObjArr.forEach(function(a){
             if(idArr.indexOf(a.id)!==-1){
-                canvas.remove(a);
-                if(a._element){
-                    var el = a._element;
-                    if(el.tagName === 'VIDEO'){
-                        removeVideoEl(el);
-                    }
-                }
+                mdCanvas.remove(canvas,a);
             }
         });
     });
@@ -1405,11 +1390,11 @@ function httpOpt($scope){
         var fileName = _('filename').value;
         var paramArr = mdUtils.urlParams(window.location.href);
         var id = paramArr['id'];
-        mdCanvas.toObject(canvas, function (data) {
-            Communication.saveFile(data, function (res) {
-                console.log(res);
-            })
-        });
+        //mdCanvas.toObject(canvas, function (data) {
+        //    Communication.saveFile(data, function (res) {
+        //        console.log(res);
+        //    })
+        //});
     }
 }
 

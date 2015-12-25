@@ -11,7 +11,6 @@ var EditBoard = function (){
         width:750,
         height:530,
         isDrawingMode:true,
-        includeDefaultValues:false
     });
     var configBoard = this.configBord =  new ConfigBoard(this);
     fabric.Object.prototype.transparentCorners = false;
