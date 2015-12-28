@@ -44,7 +44,5 @@ var EditBoard = function (){
 };
 
 EditBoard.prototype.resetBoard= function (data) {
-    data.pathData.forEach(function(x){
-        canvas.add(new fabric.Path(x.path,x));
-    });
+    canvas.loadFromJSON(data,canvas.renderAll.bind(canvas));
 };

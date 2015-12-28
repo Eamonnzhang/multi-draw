@@ -2,23 +2,11 @@
  * Created by Eamonn on 2015/10/16.
  */
 var fileDao = new (require('./fileDao.js'))('canvasData');
-//var uuId = require('./_utils/uuidGenerator.js');
 var message = require('./../_utils/messageGenerator.js');
-exports.save = function(fileName,usersId,user,pathData,next){
-    var drawData = {};
-    drawData.fileName = fileName;
-    drawData.usersId = usersId;
-    drawData.createUserId = user.id;
-    drawData.createUserName = user.name;
-    drawData.pathData = pathData;
-    fileDao.insertOne(drawData, function (data) {
-        if(data){
-            next(data);
-        }
-    });
-};
 
-exports.save2 = function (data,next) {
+exports.save = function (data,user,next) {
+    data.createUserId = user.id;
+    data.createUserName = user.name.firstName+' '+user.name.lastName;
     fileDao.insertOne(data, function (data) {
         if(data){
             next(data);

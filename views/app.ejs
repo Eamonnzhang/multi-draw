@@ -78,6 +78,10 @@
                          ng-click="setFreeDrawingMode(!getFreeDrawingMode())">
                     <i class="fa fa-mouse-pointer"></i>
                 </button>
+                <!--清除全部-->
+                <button id="clear-all-canvas" type="button" class="btn btn-default" title="清除全部" data-toggle="modal" data-target="#myAlertModal">
+                    <i class="fa fa-trash fa-lg"></i>
+                </button>
                 <!--放大-->
                 <button  id="zoom-in" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="放大">
                     <i class="glyphicon glyphicon-zoom-in"></i>
@@ -95,10 +99,7 @@
                         ng-click="shadowify()">
                     <div class="geSprite geSprite-shadow"></div>
                 </button>
-                <!--清除全部-->
-                <button id="clear-all-canvas" type="button" class="btn btn-default" title="清除全部" data-toggle="modal" data-target="#myAlertModal">
-                    <i class="fa fa-trash fa-lg"></i>
-                </button>
+
                 <!--清除选中-->
                 <!--<button id="clear-selected-canvas" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="清除选中"-->
                         <!--ng-click="removeSelected()">-->
@@ -204,6 +205,12 @@
 
             <!--顶部工具条-->
             <div class="top-toolbar">
+                <div class="mdBtn cell" data-toggle="tooltip" data-placement="right" title="撤销">
+                    <button id="undo" type="button" class="btn btn-default btn-xs fa fa-reply colorBtn"></button>
+                </div>
+                <div class="mdBtn cell" data-toggle="tooltip" data-placement="right" title="重做">
+                    <button id="redo" type="button" class="btn btn-default btn-xs fa fa-share colorBtn"></button>
+                </div>
                 <!--自由绘画选项-->
                 <div id="drawing-mode-options" ng-show="getFreeDrawingMode()">
                     <div class="cell">

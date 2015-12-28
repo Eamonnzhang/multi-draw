@@ -1389,11 +1389,12 @@ function httpOpt($scope){
         var fileName = _('filename').value;
         var paramArr = mdUtils.urlParams(window.location.href);
         var id = paramArr['id'];
-        //mdCanvas.toObject(canvas, function (data) {
-        //    Communication.saveFile(data, function (res) {
-        //        console.log(res);
-        //    })
-        //});
+        canvas.fileName = fileName;
+        //console.log(JSON.stringify(mdCanvas.toObject(canvas,false,['fileName'])));
+        var data = JSON.stringify(mdCanvas.toObject(canvas,false,['fileName','width','height']));
+        Communication.saveFile([data], function (data) {
+            console.log(data);
+        })
     }
 }
 
