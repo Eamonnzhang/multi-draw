@@ -19,6 +19,9 @@ fileListModule.directive('ngFileItem', function () {
                     $(this).css('background-color','#FFFFFF');
                 }
             });
+            $($element).on('dblclick', mdUtils.bind($scope,function (e) {
+                this.loadFile();
+            }));
             $($element).on('mouseover', function (e) {
                 if(!$(this).hasClass('file-item-select'))
                     $(this).css('background-color','#F4F6F8');
