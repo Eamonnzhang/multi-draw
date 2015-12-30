@@ -10,6 +10,7 @@ fileListModule.directive('ngFileItem', function () {
             $($element).on('click', function (e) {
                 if(!$(this).hasClass('file-item-select')){
                     $('.file-item').removeClass('file-item-select');
+                    $('.file-item-list').removeClass('file-item-select');
                     $(this).removeAttr('style');
                     $(this).addClass('file-item-select');
                 }
@@ -45,6 +46,22 @@ fileListModule.controller('FileListCtrl', function($scope, $http) {
     $scope.isFileExist = function () {
         if(this.files)
             return this.files.length > 0;
-    }
+    };
+
+    $scope.thView = true;
+    $scope.listView = !$scope.thView;
+
+    $scope.toggleView = function () {
+        $scope.thView =  !$scope.thView;
+        $scope.listView =  !$scope.listView;
+    };
+    
+    $scope.isThView = function () {
+        return $scope.thView;
+    };
+    
+    $scope.isListView = function () {
+        return $scope.listView;
+    };
 
 });

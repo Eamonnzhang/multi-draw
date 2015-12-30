@@ -282,6 +282,15 @@ label {
     align:center;
     display: inline-block;
 }
+.file-item-list{
+
+}
+.file-item-list .file-name{
+    color:#9FC7D8;
+}
+.file-item-list .file-name:hover{
+    text-decoration: none;
+}
 
 .file-item .file-name {
     padding: 5px 8px;

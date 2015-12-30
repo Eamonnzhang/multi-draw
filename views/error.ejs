@@ -1,3 +1,21 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Error</title>
+    <link rel='stylesheet' href='css/bootstrap/bootstrap.css' />
+    <link href="css/font_awesome/font-awesome.css" rel="stylesheet">
+    <link href="css/error.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="app_3th_js/forIE/html5shiv.js"></script>
+    <script src="app_3th_js/forIE/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="error">
+    <h1><%= message %></h1>
+    <h2><%= error.status %></h2>
+    <pre><%= error.stack %></pre>
+</div>
+</body>
+</html>

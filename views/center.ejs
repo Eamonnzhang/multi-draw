@@ -80,17 +80,33 @@
                 <div role="tabpanel" class="tab-pane active file-container" id="file">
                     <div align="right" class="tab-option">
                         <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-default"><i class="fa fa-list"></i></button>
-                            <button type="button" class="btn btn-default"><i class="fa fa-th"></i></button>
+                            <button type="button" class="btn btn-default" ng-class="{'active': isListView()}" ng-click="toggleView()"><i class="fa fa-list"></i></button>
+                            <button type="button" class="btn btn-default" ng-class="{'active': isThView()}" ng-click="toggleView()"><i class="fa fa-th"></i></button>
                         </div>
                     </div>
                     <div ng-show="isFileExist()">
-                        <div class="panel panel-default ng-file-item file-item" ng-repeat="file in files">
+                        <div class="panel panel-default ng-file-item file-item" ng-show="isThView()" ng-repeat="file in files">
                             <div class="panel-body" align="center">
                                 <img src="images/file-img.png" class="file-img"/>
                             </div>
                             <div class="file-name"><a href="" ng-click="loadFile($event)">{{ file.fileName }}</a></div>
                         </div>
+                        <table class="table" ng-show="isListView()">
+                            <thead>
+                            <tr>
+                                <th>标题</th>
+                                <th>创建者</th>
+                                <th>最后修改</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="ng-file-item file-item-list" ng-repeat="file in files">
+                                    <td class="file-name"><a href="" ng-click="loadFile($event)"><i class="fa fa-paint-brush"></i> {{ file.fileName }}</a></td>
+                                    <td>{{ file.createUserName }}</td>
+                                    <td>{{ file.lastModify }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div ng-hide="isFileExist()">
                         您还未创建任何文件！
