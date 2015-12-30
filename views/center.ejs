@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="FileListModule">
+<head>
+    <meta charset="utf-8" />
+    <title><%= title %></title>
+    <link rel='stylesheet' href='css/bootstrap/bootstrap.css' />
+    <link href="css/app-styles.css" rel="stylesheet">
+    <link href="css/font_awesome/font-awesome.css" rel="stylesheet">
+    <script src="app_3th_js/angular/angular.min.js"></script>
+    <script src="app_3th_js/fabric/fabric.min.js"></script>
+    <script src="app_3th_js/jQuery/jquery-1.11.3.min.js"></script>
+    <script src="app_3th_js/bootstrap/bootstrap.js"></script>
+    <script src="app_ui_js/mdUtils.js"></script>
+    <!--[if lt IE 9]>
+    <script src="app_3th_js/forIE/html5shiv.js"></script>
+    <script src="app_3th_js/forIE/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand brand-title" href="/center" ><i class="fa fa-paint-brush  fa-lg"></i>&nbsp;MultiDraw</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">文件 <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/new"><span class="fa fa-file menu-btn" ></span>新建</a></li>
+                    </ul>
+
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href='javascript:void(0)' id="roomId" bind-value-to="roomId"></a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href=""><span class="glyphicon glyphicon-user"></span> 个人主页</a></li>
+                        <li><a href=""><span class="glyphicon glyphicon-cog"></span> 账户设置</a></li>
+                        <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> 退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+    <div class="row center-container">
+        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-9 col-sm-offset-1">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#file" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-folder"></i> 我的文件</a>
+                </li>
+                <li role="presentation">
+                    <a href="#star" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-star-o"></i> 我的收藏</a>
+                </li>
+                <li role="presentation">
+                    <a href="#cooperation" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-group"></i> 我的协作</a>
+                </li>
+                <li role="presentation">
+                    <a href="#modify" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-clock-o"></i> 最近修改</a>
+                </li>
+                <li role="presentation">
+                    <a href="#recycle" aria-controls="settings" role="tab" data-toggle="tab"><i class="fa fa-trash"></i> 回收站</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content"  ng-controller="FileListCtrl">
+                <div role="tabpanel" class="tab-pane active file-container" id="file">
+                    <div align="right" class="tab-option">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default"><i class="fa fa-list"></i></button>
+                            <button type="button" class="btn btn-default"><i class="fa fa-th"></i></button>
+                        </div>
+                    </div>
+                    <div ng-show="isFileExist()">
+                        <div class="panel panel-default ng-file-item file-item" ng-repeat="file in files">
+                            <div class="panel-body" align="center">
+                                <img src="images/file-img.png" class="file-img"/>
+                            </div>
+                            <div class="file-name"><a href="" ng-click="loadFile($event)">{{ file.fileName }}</a></div>
+                        </div>
+                    </div>
+                    <div ng-hide="isFileExist()">
+                        您还未创建任何文件！
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane file-container" id="star">
+                    <div align="right" class="tab-option">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default"><i class="fa fa-list"></i></button>
+                            <button type="button" class="btn btn-default"><i class="fa fa-th"></i></button>
+                        </div>
+                    </div>
+                    您还未收藏任何文件！
+                </div>
+                <div role="tabpanel" class="tab-pane file-container" id="cooperation">
+                    <div align="right" class="tab-option">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default"><i class="fa fa-list"></i></button>
+                            <button type="button" class="btn btn-default"><i class="fa fa-th"></i></button>
+                        </div>
+                    </div>
+                    您最近还未协作过任何文件！
+                </div>
+                <div role="tabpanel" class="tab-pane file-container" id="modify">
+                    <div align="right" class="tab-option">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default"><i class="fa fa-list"></i></button>
+                            <button type="button" class="btn btn-default"><i class="fa fa-th"></i></button>
+                        </div>
+                    </div>
+                    您最近还未修改任何文件！
+                </div>
+                <div role="tabpanel" class="tab-pane file-container" id="recycle">
+                    <div align="right" class="tab-option">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default"><i class="fa fa-list"></i></button>
+                            <button type="button" class="btn btn-default"><i class="fa fa-th"></i></button>
+                        </div>
+                    </div>
+                    回收站为空！
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/app_ui_js/controller/filesCtrl.js"></script>
+</html>

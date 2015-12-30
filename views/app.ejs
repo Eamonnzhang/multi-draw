@@ -39,7 +39,7 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href=""><span class="fa fa-file menu-btn" ></span>新建</a></li>
-                                    <li><a href="/filelist"><span class="fa fa-folder-open menu-btn" ></span>打开</a></li>
+                                    <li><a href="/center"><span class="fa fa-folder-open menu-btn" ></span>打开</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href='' data-toggle="modal" data-target="#myModal" ><span class="glyphicon glyphicon-save menu-btn"></span>保存</a></li>
                                     <li role="separator" class="divider"></li>
@@ -60,9 +60,9 @@
                             <li class="dropdown">
                                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                <li><a href=""><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                                <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-                                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                                    <li><a href=""><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                                    <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -72,7 +72,7 @@
             <!--导航栏END-->
 
             <!--左侧工具条-->
-            <div class="btn-group-vertical left-toolbar"  role="group">
+            <div class="btn-group-vertical left-toolbar" object-buttons-enabled="getSelected()" role="group">
                 <!--模式-->
                 <button  id="drawing-mode" type="button" class="btn btn-default"  data-toggle="tooltip" data-placement="right" title="切换模式"
                          ng-click="setFreeDrawingMode(!getFreeDrawingMode())">
@@ -94,11 +94,7 @@
                 <button  id="customized" type="button" class="btn btn-default" data-toggle="modal" title="自定义画布大小" data-target="#customizedModal">
                     <i class="fa fa-crop"></i>
                 </button>
-                <!--阴影-->
-                <button id="clip" class="btn btn-default btn-lock btn-object-action" data-toggle="tooltip" data-placement="right" title="添加阴影"
-                        ng-click="shadowify()">
-                    <div class="geSprite geSprite-shadow"></div>
-                </button>
+
 
                 <!--清除选中-->
                 <!--<button id="clear-selected-canvas" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="清除选中"-->
@@ -135,7 +131,7 @@
                 </div>
                 <!--锁定-->
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-default btn-object-action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-lock"></i>
                         <span class="caret"></span>
                     </button>
@@ -171,6 +167,11 @@
                         </li>
                     </ul>
                 </div>
+                <!--阴影-->
+                <button id="clip" class="btn btn-default btn-lock btn-object-action" data-toggle="tooltip" data-placement="right" title="添加阴影"
+                        ng-click="shadowify()">
+                    <div class="geSprite geSprite-shadow"></div>
+                </button>
                 <!--下移一层-->
                 <button id="send-backwards" class="btn btn-default btn-lock btn-object-action" data-toggle="tooltip" data-placement="right" title="下移一层"
                         ng-click="sendBackwards()">
@@ -183,7 +184,7 @@
                 </button>
                 <!--上移一层-->
                 <button id="bring-forward" class="btn btn-default btn-lock btn-object-action" data-toggle="tooltip" data-placement="right" title="上移一层"
-                        ng-click="bringForward()">
+                         ng-click="bringForward()">
                     <i class="fa fa-angle-up fa-lg"></i>
                 </button>
                 <!--置于顶层-->
@@ -294,7 +295,7 @@
 
                         <div class="mdBtn  text-background-color-box cell" data-toggle="tooltip" data-placement="left" title="文本背景色">
                             <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-text-background colorBtn"></button>
-                            <div class="color-div" bind-value-to="textBgColor"></div>
+                            <div id="fill" class="color-div" bind-value-to="textBgColor"></div>
                         </div>
 
                         <div class="cell">
@@ -470,6 +471,15 @@
             </ul>
         </div>
         <!--bootstrap context menu END-->
+        <!--清空操作 Alert-->
+        <div class="modal fade bs-example-modal-sm" id="saveSuccess" tabindex="-1" role="dialog" aria-labelledby="saveSuccess">
+            <div class="modal-dialog modal-sm" role="document">
+                <div align="center" class="alert alert-success" role="alert">
+                    <p>保存成功！</p>
+                </div>
+            </div>
+        </div>
+        <!--清空操作 Alert END-->
 
     </body>
 	<script src='/app_3th_js/angular/angular.min.js'></script>

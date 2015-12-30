@@ -28,12 +28,12 @@ module.exports = function(app){
         }
     });
 
-    app.get('/index',function(req,res){
+    app.get('/new',function(req,res){
         res.render('index',{title:'MultiDraw'});
     });
 
     app.get('/', function (req,res) {
-        res.redirect('/board');
+        res.redirect('/center');
     });
 
     app.get('/login',function(req,res){
@@ -43,6 +43,18 @@ module.exports = function(app){
     app.get('/filelist',function(req,res){
         res.render('file_list');
     });
+
+    app.get('/center', function (req,res) {
+        if (req.session.userData) {
+            res.render('center', {
+                userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
+                userId: req.session.userData.id,
+                apiKey: req.session.userData.apiKey,title:'MultiDraw'
+            });
+        }else{
+            res.redirect('/login');
+        }
+    })
 
     app.post('/loginHandle',function(req,res){
         userController.isExist(req,res);

@@ -58,3 +58,6 @@ app.directive('objectButtonsEnabled', function() {
         }
     };
 });
+
+
+

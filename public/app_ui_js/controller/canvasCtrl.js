@@ -1005,7 +1005,8 @@ function addMyOwnAccessors($scope){
 
     $scope.activeAll = function(){
         mdCanvas.activeAll(canvas);
-    }
+    };
+
 }
 
 var isMouseDown = false,
@@ -1385,17 +1386,26 @@ function initKeyBoard($scope){
 }
 
 function httpOpt($scope){
-    $scope.saveFile = function () {
-        var fileName = _('filename').value;
+    $scope.save = function () {
         var paramArr = mdUtils.urlParams(window.location.href);
         var id = paramArr['id'];
-        canvas.fileName = fileName;
-        //console.log(JSON.stringify(mdCanvas.toObject(canvas,false,['fileName'])));
-        var data = JSON.stringify(mdCanvas.toObject(canvas,false,['fileName','width','height']));
+        if(!id){
+            $('#myModal').modal();
+        }else{
+            canvas.id = id;
+            this.saveFile();
+        }
+    };
+
+    $scope.saveFile = function () {
+        canvas.fileName = _('filename').value;
+        var data = JSON.stringify(mdCanvas.toObject(canvas,false,['fileName','width','height','id']));
         Communication.saveFile([data], function (data) {
-            console.log(data);
+            if(data.success){
+                $('#saveSuccess').modal();
+            }
         })
-    }
+    };
 }
 
 var canvasModule = angular.module('CanvasModule', []);
