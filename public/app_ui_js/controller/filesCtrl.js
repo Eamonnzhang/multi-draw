@@ -50,13 +50,18 @@ fileListModule.controller('FileListCtrl', function($scope, $http) {
         if(this.files)
             return this.files.length > 0;
     };
-
-    $scope.thView = true;
-    $scope.listView = !$scope.thView;
-
+    $scope.viewCookie =  mdUtils.getCookie('view')?JSON.parse(unescape(mdUtils.getCookie('view'))):null;
+    if($scope.viewCookie){
+        $scope.thView =  $scope.viewCookie.thView;
+        $scope.listView = $scope.viewCookie.listView;
+    }else{
+        $scope.thView = true;
+        $scope.listView = !$scope.thView;
+    }
     $scope.toggleView = function () {
         $scope.thView =  !$scope.thView;
         $scope.listView =  !$scope.listView;
+        mdUtils.addCookie('view',JSON.stringify({thView:$scope.thView,listView:$scope.listView}),12);
     };
     
     $scope.isThView = function () {
@@ -66,5 +71,4 @@ fileListModule.controller('FileListCtrl', function($scope, $http) {
     $scope.isListView = function () {
         return $scope.listView;
     };
-
 });
