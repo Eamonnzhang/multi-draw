@@ -1391,6 +1391,7 @@ function httpOpt($scope){
         var id = paramArr['id'];
         if(!id){
             $('#myModal').modal();
+
         }else{
             canvas.id = id;
             this.saveFile();
@@ -1398,8 +1399,9 @@ function httpOpt($scope){
     };
 
     $scope.saveFile = function () {
-        canvas.fileName = _('filename').value;
+        if(!canvas.fileName) canvas.fileName = _('fileName').value;
         var data = JSON.stringify(mdCanvas.toObject(canvas,false,['fileName','width','height','id']));
+        console.log(data);
         Communication.saveFile([data], function (data) {
             if(data.success){
                 $('#saveSuccess').modal();

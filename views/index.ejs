@@ -8,31 +8,68 @@
     <link href="css/font_awesome/font-awesome.css" rel="stylesheet">
     <script src="app_3th_js/jQuery/jquery-1.11.3.min.js"></script>
     <script src="app_3th_js/bootstrap/bootstrap.js"></script>
+    <script src="app_ui_js/Communication.js"></script>
     <!--[if lt IE 9]>
     <script src="app_3th_js/forIE/html5shiv.js"></script>
     <script src="app_3th_js/forIE/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .my-collapse{
+            margin-top:10px;
+            width:400px;
+        }
+        .my-btn{
+            margin:10px;
+        }
+        .my-title{
+            display: block;
+            font-size: 19pt
+        }
+    </style>
 </head>
 <body>
-<div align='center' style="margin-top: 10px">
-    <span class="brand-title" style="display: block;font-size: 19pt"> <i class="fa fa-paint-brush"></i>&nbsp;MultiDraw</span><br>
-    <div id="modeBtn">
-        <a href="/board"><button id='alone-draw' type="submit" class="btn btn-info"><i class="fa fa-user"></i>&nbsp;&nbsp;单人模式</button></a>
-        <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseEnterRoom" aria-expanded="false" aria-controls="collapseEnterRoom">
-            <i class="fa fa-users"></i>&nbsp;&nbsp;多人模式
-        </button>
-    </div>
-    <div class="collapse" id="collapseEnterRoom" style="width:400px" >
-        <div class="well">
-            <form class="form-inline" action="/board" method="get">
-                <div class="form-group">
-                    <label>房间名:</label>
-                    <input type="text" class="form-control" name="room" placeholder="创建或进入">
+    <div align='center' style="margin-top: 30px">
+        <span class="brand-title my-title"> <i class="fa fa-paint-brush"></i> MultiDraw</span><br>
+        <div>
+            <button class="btn btn-info my-btn"  data-toggle="collapse" data-target="#collapseNewFile">
+                <i class="fa fa-user"></i> 单人模式
+            </button>
+            <button class="btn btn-info my-btn" data-toggle="collapse" data-target="#collapseEnterRoom">
+                <i class="fa fa-users"></i> 多人模式
+            </button>
+        </div>
+        <div class="collapse my-collapse" id="collapseEnterRoom">
+            <div class="well">
+                <form class="form-inline" action="/board" method="get">
+                    <div class="form-group">
+                        <label>房间名:</label>
+                        <input type="text" class="form-control" name="room" placeholder="创建或进入">
+                    </div>
+                    <button id='start-draw' type="submit" class="btn btn-primary my-btn">进入</button>
+                </form>
+            </div>
+        </div>
+        <div class="collapse my-collapse" id="collapseNewFile">
+            <div class="well">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>文件名:</label>
+                        <input type="text" class="form-control" id = "fileName" placeholder="请输入文件名">
+                    </div>
+                    <button id='createFile' class="btn btn-primary my-btn">创建</button>
                 </div>
-                <button id='start-draw' type="submit" class="btn btn-primary" style="margin-left: 10px"><i class="fa fa-paper-plane"></i></button>
-            </form>
+            </div>
         </div>
     </div>
-</div>
 </body>
+<script>
+    var cm = new Communication();
+    $('#createFile').on('click', function () {
+        cm.saveFile([JSON.stringify({fileName:$('#fileName').val()})], function (result) {
+            if(result.success){
+                window.location.href='/board?id='+result.data;
+            }
+        })
+    });
+</script>
 </html>

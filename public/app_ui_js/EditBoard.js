@@ -44,5 +44,9 @@ var EditBoard = function (){
 };
 
 EditBoard.prototype.resetBoard= function (data) {
+    if(data.fileName)
+        canvas.fileName = data.fileName;
+    else
+        canvas.fileName= '未命名文件';
     canvas.loadFromJSON(data,canvas.renderAll.bind(canvas));
 };

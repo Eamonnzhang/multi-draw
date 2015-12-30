@@ -7,6 +7,7 @@ var message = require('./../_utils/messageGenerator.js');
 exports.save = function (data,user,next) {
     data.createUserId = user.id;
     data.createUserName = user.name.firstName+' '+user.name.lastName;
+    if(!data.fileName) data.fileName = '未命名文件';
     fileDao.insertOne(data, function (data) {
         if(data){
             next(data);

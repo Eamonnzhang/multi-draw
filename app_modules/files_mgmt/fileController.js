@@ -7,7 +7,7 @@ exports.save = function(req,res){
     var user = req.session.userData;
     var data = req.body[0];
     var dataObj = JSON.parse(data);
-    console.log(dataObj);
+
     if(!dataObj.id)
         fileService.save(dataObj,user,function (data) {
             res.send(data);

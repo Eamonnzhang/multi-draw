@@ -41,7 +41,7 @@
                                     <li><a href=""><span class="fa fa-file menu-btn" ></span>新建</a></li>
                                     <li><a href="/center"><span class="fa fa-folder-open menu-btn" ></span>打开</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href='' data-toggle="modal" data-target="#myModal" ><span class="glyphicon glyphicon-save menu-btn"></span>保存</a></li>
+                                    <li><a href="" ng-click="save()"><span class="glyphicon glyphicon-save menu-btn"></span>保存</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#"><span class="fa fa-share menu-btn"></span>导出为</a>
@@ -60,9 +60,9 @@
                             <li class="dropdown">
                                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href=""><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                                    <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-                                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                                    <li><a href="/center"><span class="glyphicon glyphicon-user"></span> 个人主页</a></li>
+                                    <li><a href=""><span class="glyphicon glyphicon-cog"></span> 账户设置</a></li>
+                                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> 退出</a></li>
                                 </ul>
                             </li>
                         </ul>

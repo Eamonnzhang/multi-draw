@@ -52,4 +52,15 @@ AbstractDao.prototype.updateOneRecord = function(query,update, next) {
     });
 };
 
+AbstractDao.prototype.deleteRecord = function(query, callback){
+    this.dataCollection.deleteMany(query, {safe: true}, function (err, data) {
+        if (err) {
+            throw err;
+            callback({success:false});
+        } else {
+            callback({success:true});
+        }
+    });
+};
+
 module.exports = AbstractDao;

@@ -77,31 +77,36 @@
 
             <!-- Tab panes -->
             <div class="tab-content"  ng-controller="FileListCtrl">
-                <div role="tabpanel" class="tab-pane active file-container" id="file">
-                    <div align="right" class="tab-option">
-                        <div class="btn-group" role="group">
+                <div role="tabpanel" class="tab-pane active file-container" id="file" ng-click="discardSelectedFile()">
+                    <div class="tab-option">
+                        <div class="btn-group" role="group" style="display:inline-block;">
+                            <button type="button" class="btn btn-default"><i class="fa fa-plus"></i> 新建</button>
+                            <button type="button" class="btn btn-default"><i class="fa fa-upload"></i> 导入</button>
+
+                        </div>
+                        <div class="btn-group btn-object-action" role="group" style="display:inline-block;" ng-show="getFileSelected()">
+                            <button type="button" class="btn btn-default"><i class="fa fa-eye"></i> 预览</button>
+                            <button type="button" class="btn btn-default" ng-click="loadFile()"><i class="fa fa-edit"></i> 编辑</button>
+                            <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> 删除</button>
+                            <button type="button" class="btn btn-success"><i class="fa fa-share-alt"></i> 分享</button>
+                        </div>
+                        <div class="btn-group" role="group" style="float:right">
                             <button type="button" class="btn btn-default" ng-class="{'active': isThView()}" ng-click="toggleView()"><i class="fa fa-th"></i></button>
                             <button type="button" class="btn btn-default" ng-class="{'active': isListView()}" ng-click="toggleView()"><i class="fa fa-list"></i></button>
                         </div>
                     </div>
-                    <div ng-show="isFileExist()">
+                    <div ng-show="isFileExist()" class="file-ctn">
                         <div class="panel panel-default ng-file-item file-item" ng-show="isThView()" ng-repeat="file in files">
                             <div class="panel-body" align="center">
                                 <img src="images/file-img.png" class="file-img"/>
                             </div>
-                            <div class="file-name"><a href="" ng-click="loadFile($event)">{{ file.fileName }}</a></div>
+                            <div class="file-name"><a href="" ng-click="loadFile()">{{ file.fileName }}</a></div>
                         </div>
                         <table class="table" ng-show="isListView()">
-                            <thead>
-                            <tr>
-                                <th>标题</th>
-                                <th>创建者</th>
-                                <th>最后修改</th>
-                            </tr>
-                            </thead>
+                            <thead><tr><th>标题</th><th>创建者</th><th>最后修改</th></tr></thead>
                             <tbody>
                                 <tr class="ng-file-item file-item-list" ng-repeat="file in files">
-                                    <td class="file-name"><a href="" ng-click="loadFile($event)"><i class="fa fa-paint-brush"></i> {{ file.fileName }}</a></td>
+                                    <td class="file-name"><a href="" ng-click="loadFile()"><i class="fa fa-paint-brush"></i> {{ file.fileName }}</a></td>
                                     <td>{{ file.createUserName }}</td>
                                     <td>{{ file.lastModify }}</td>
                                 </tr>

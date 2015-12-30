@@ -29,7 +29,11 @@ module.exports = function(app){
     });
 
     app.get('/new',function(req,res){
-        res.render('index',{title:'MultiDraw'});
+        if (req.session.userData) {
+            res.render('index', {title: 'MultiDraw'});
+        }else{
+            res.redirect('/login');
+        }
     });
 
     app.get('/', function (req,res) {
