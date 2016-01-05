@@ -10,22 +10,43 @@ var fileDao = function(collectionName){
 
 utils.extend(fileDao,AbstractDao);
 
-fileDao.prototype.loadAllFileUnderAccount = function (user,next) {
-    this.dataCollection.find({createUserId: user.id}).toArray(function (err, data) {
-        if (err) {
-            throw err;
-        } else {
-            next(message.genSimpSuccessMsg(null, data));
-        }
-    });
+fileDao.prototype.loadAllFileUnderAccount = function (query,user,next) {
+    query.createUserId = user.id;
+    this.findAll(query,next);
 };
 
 fileDao.prototype.loadFileByIdUnderAccount = function (id,user,next) {
-    this.dataCollection.find({id: id, createUserId: user.id}).toArray(function (err, data) {
+    var query = {
+        id : id,
+        createUserId : user.id
+    };
+    this.findAll(query,next);
+};
+
+fileDao.prototype.recycleOrRestoreFiles = function (id,isRecycled,next) {
+    this.dataCollection.update(
+        {'id': id},
+        {
+            $set: {
+                'isRecycled': isRecycled
+            }
+        },
+        function (err, data) {
+            if (err) {
+                throw err;
+            } else {
+                next(data.result);
+            }
+        }
+    );
+};
+
+fileDao.prototype.removeById = function (id, next) {
+    this.dataCollection.remove({'id': id}, function (err, result) {
         if (err) {
             throw err;
         } else {
-            next(data[0]);
+            next(result);
         }
     });
 };

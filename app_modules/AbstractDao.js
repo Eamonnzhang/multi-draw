@@ -40,6 +40,16 @@ AbstractDao.prototype.findOne = function(data,next){
 
 };
 
+AbstractDao.prototype.findAll = function(query,next){
+    this.dataCollection.find(query).toArray(function (err, data) {
+        if (err) {
+            throw err;
+        } else {
+            next(message.genSimpSuccessMsg(null, data));
+        }
+    });
+};
+
 AbstractDao.prototype.updateOneRecord = function(query,update, next) {
     this.dataCollection.updateOne(query, {
         $set: update

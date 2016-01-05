@@ -122,6 +122,46 @@ var mdUtils = {
 
     getDataUrlType : function (url) {
         return url.substring(5,url.indexOf('/'));
+    },
+
+    getKeyPressValue : function (KeyPressCb,KeyUpCb) {
+        var ie;
+        document.all ? ie=true : ie=false;
+        document.onkeydown = KeyPress;
+        document.onkeyup = KeyUp;
+        var keyValue = "";
+
+        function KeyPress(){
+            var key;
+            if (ie)
+                key = event.keyCode;
+            else
+                key = KeyPress.arguments[0].keyCode;
+            switch (key) {
+                case 17 :
+                    keyValue = 'ctrl';
+                    break;
+                default :
+                    keyValue = 'null';
+            }
+            KeyPressCb(keyValue);
+        }
+
+        function KeyUp(event){
+            var key;
+            if (ie)
+                key = event.keyCode;
+            else
+                key = KeyUp.arguments[0].keyCode;
+            switch (key) {
+                case 17 :
+                    keyValue = 'ctrl';
+                    break;
+                default :
+                    keyValue = 'null';
+            }
+            KeyUpCb(keyValue);
+        }
     }
 
 }

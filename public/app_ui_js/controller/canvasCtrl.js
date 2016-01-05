@@ -1401,7 +1401,6 @@ function httpOpt($scope){
     $scope.saveFile = function () {
         if(!canvas.fileName) canvas.fileName = _('fileName').value;
         var data = JSON.stringify(mdCanvas.toObject(canvas,false,['fileName','width','height','id']));
-        console.log(data);
         Communication.saveFile([data], function (data) {
             if(data.success){
                 $('#saveSuccess').modal();

@@ -13,16 +13,52 @@ exports.save = function(req,res){
             res.send(data);
         });
     else
-        fileService.update({id:dataObj.id},dataObj,function (data) {
+        fileService.update({id : dataObj.id},dataObj,function (data) {
             res.send(data);
         });
-
 };
 
 exports.loadAllFiles = function (req,res) {
     var user = req.session.userData;
+    var isRecycled = req.query.isRecycled;
+    var query = {};
+    if(isRecycled === 'true')
+        query.isRecycled = true;
+    else
+        query.isRecycled = false;
     if(user){
-        fileService.loadAllFiles(user, function (data) {
+        fileService.loadAllFiles(query, user, function (data) {
+            res.send(data);
+        })
+    }
+};
+
+exports.recycleFiles = function (req,res) {
+    var user = req.session.userData;
+    var idArray = req.query.id;
+    if(user){
+        fileService.recycleOrRestoreFiles(idArray,true,function (data) {
+            res.send(data);
+        })
+    }
+
+};
+
+exports.restoreFiles = function (req,res) {
+    var user = req.session.userData;
+    var idArray = req.query.id;
+    if(user){
+        fileService.recycleOrRestoreFiles(idArray,false, function (data) {
+            res.send(data);
+        })
+    }
+};
+
+exports.deleteFiles = function (req,res) {
+    var user = req.session.userData;
+    var idArray = req.query.id;
+    if(user){
+        fileService.deleteFiles(idArray,function (data) {
             res.send(data);
         })
     }

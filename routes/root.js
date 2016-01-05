@@ -97,6 +97,18 @@ module.exports = function(app){
     app.get('/loadAllFiles',function(req,res){
         fileController.loadAllFiles(req,res);
     });
+    
+    app.get('/recycleFiles', function (req,res) {
+        fileController.recycleFiles(req,res);
+    });
+
+    app.get('/restoreFiles', function (req,res) {
+        fileController.restoreFiles(req,res);
+    });
+
+    app.get('/deleteFiles', function (req,res) {
+        fileController.deleteFiles(req,res);
+    });
 
     app.get('/loadFile',function(req,res){
         var userApi = userController.getUserApi();
