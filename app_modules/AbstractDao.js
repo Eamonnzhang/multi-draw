@@ -3,6 +3,7 @@
  */
 var dataSource = require('../app_db/dataSource.js');
 var uuid = require('node-uuid');
+var moment = require('moment');
 var message = require('./_utils/messageGenerator.js');
 
 var AbstractDao = function(collectionName){
@@ -13,7 +14,7 @@ AbstractDao.prototype.prepareNewObj = function(obj){
         obj = {};
     }
     obj.id = uuid.v1(); // -> '6c84fb90-12c4-11e1-840d-7b25c5ee775a'
-    obj.createTime = new Date();
+    obj.createTime = moment().format('YYYY-MM-DD HH:mm:ss');
     obj.lastModify = obj.createTime;
     return obj;
 };

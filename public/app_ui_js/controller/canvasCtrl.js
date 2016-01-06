@@ -1027,6 +1027,11 @@ function addMyOwnAccessors($scope,$http){
             return false;
         });
         input.trigger("focus");
+        input.hover(function () {
+            input.css('background-color','#ffffff')
+        }, function () {
+            
+        })
         input.blur(function () {
             var newtxt = $(this).val();
             me.html(newtxt);
@@ -1154,12 +1159,12 @@ function addCanvasListener($scope,$http) {
     function objectModifiedLtn(e){
         var modifiedObj = e.target;
         if(modifiedObj._objects){ //成组modify
-            var modify = new Date();
+            var modify = moment().format('YYYY-MM-DD HH:mm:ss');
             modifiedObj._objects.forEach(function(obj){
                 obj.lastModify = modify;
             })
         }else{ //单个modify
-            modifiedObj.lastModify = new Date();
+            modifiedObj.lastModify = moment().format('YYYY-MM-DD HH:mm:ss');
             $scope.saveFile();
         }
     }

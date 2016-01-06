@@ -224,7 +224,7 @@ var mdCanvas = {
         c_obj.id = mdUtils.generateId(8,32);
         c_obj.userId = userId;
         c_obj.userName = userName;
-        c_obj.createTime = new Date();
+        c_obj.createTime = moment().format('YYYY-MM-DD HH:mm:ss');
         c_obj.lastModify = c_obj.createTime;
     },
 

@@ -19,6 +19,7 @@
     "fabric": "*",
     "sessionstore":"1.2.3",
     "express-session":"1.11.3",
-    "node-uuid": "1.4.3"
+    "node-uuid": "1.4.3",
+    "moment":"*"
   }
 }

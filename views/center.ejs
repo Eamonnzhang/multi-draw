@@ -10,6 +10,7 @@
     <script src="app_3th_js/fabric/fabric.min.js"></script>
     <script src="app_3th_js/jQuery/jquery-1.11.3.min.js"></script>
     <script src="app_3th_js/bootstrap/bootstrap.js"></script>
+    <script src='/app_3th_js/moment.min.js'></script>
     <script src="app_ui_js/mdUtils.js"></script>
     <!--[if lt IE 9]>
     <script src="app_3th_js/forIE/html5shiv.js"></script>
@@ -121,13 +122,13 @@
                             <div class="panel-body" align="center">
                                 <img src="images/file-img.png" class="file-img"/>
                             </div>
-                            <div class="file-name"><a href="" ng-click="loadFile()">{{ file.fileName }}</a></div>
+                            <div class="file-name"><a href="" ng-click="loadFile(file)">{{ file.fileName }}</a></div>
                         </div>
                         <table class="table" ng-show="isListView()">
                             <thead><tr><th>标题</th><th>创建者</th><th>最后修改</th></tr></thead>
                             <tbody>
                                 <tr class="ng-file-item file-item-list" ng-repeat="file in files">
-                                    <td class="file-name"><a href="" ng-click="loadFile()"><i class="fa fa-paint-brush"></i> {{ file.fileName }}</a></td>
+                                    <td class="file-name"><a href="" ng-click="loadFile(file)"><i class="fa fa-paint-brush"></i> {{ file.fileName }}</a></td>
                                     <td>{{ file.createUserName }}</td>
                                     <td>{{ file.lastModify }}</td>
                                 </tr>
@@ -185,13 +186,13 @@
                             <div class="panel-body" align="center">
                                 <img src="images/file-img.png" class="file-img"/>
                             </div>
-                            <div class="file-name"><a href="" ng-click="loadFile()">{{ file.fileName }}</a></div>
+                            <div class="file-name"><a href="" ng-click="loadFile(file)">{{ file.fileName }}</a></div>
                         </div>
                         <table class="table" ng-show="isListView()">
                             <thead><tr><th>标题</th><th>创建者</th><th>最后修改</th></tr></thead>
                             <tbody>
                             <tr class="ng-file-item file-item-list" ng-repeat="file in files">
-                                <td class="file-name"><a href="" ng-click="loadFile()"><i class="fa fa-paint-brush"></i> {{ file.fileName }}</a></td>
+                                <td class="file-name"><a href="" ng-click="loadFile(file)"><i class="fa fa-paint-brush"></i> {{ file.fileName }}</a></td>
                                 <td>{{ file.createUserName }}</td>
                                 <td>{{ file.lastModify }}</td>
                             </tr>

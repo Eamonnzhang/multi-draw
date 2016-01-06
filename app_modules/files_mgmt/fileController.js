@@ -2,20 +2,24 @@
  * Created by Eamonn on 2015/10/16.
  */
 var fileService = require('./fileService.js');
+var moment = require('moment');
 
 exports.save = function(req,res){
     var user = req.session.userData;
     var data = req.body[0];
     var dataObj = JSON.parse(data);
 
-    if(!dataObj.id)
+    if(!dataObj.id){
         fileService.save(dataObj,user,function (data) {
             res.send(data);
         });
-    else
+    }
+    else{
+        dataObj.lastModify = moment().format('YYYY-MM-DD HH:mm:ss');
         fileService.update({id : dataObj.id},dataObj,function (data) {
             res.send(data);
         });
+    }
 };
 
 exports.renameFile = function(req,res){
