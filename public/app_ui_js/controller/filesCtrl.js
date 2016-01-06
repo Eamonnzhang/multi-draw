@@ -51,7 +51,7 @@ fileListModule.directive('ngFileItem', function () {
             });
         }
     }
-})
+});
 
 fileListModule.directive('objectButtonsEnabled', function() {
     return {

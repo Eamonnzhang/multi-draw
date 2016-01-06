@@ -23,6 +23,7 @@ label {
 
 .my-navbar {
     background-color: #ffffff;
+    text-color: #000000;
 }
 
 .brand-title {
@@ -84,6 +85,20 @@ label {
     border: none;
     float:left;
     height: 22px;
+}
+
+.top-toolbar .file-name{
+    float:right;
+    margin-right:10px;
+    margin-left:5px;
+    padding-left:5px;
+    padding-right:5px;
+    font-weight: bold;
+}
+
+.top-toolbar .file-name:hover{
+    cursor: pointer;
+    background-color: #E1E3EF;
 }
 
 /*取色按钮*/

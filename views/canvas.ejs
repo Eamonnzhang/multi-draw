@@ -23,7 +23,7 @@
                 <div class="container-fluid">
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -32,11 +32,10 @@
                         <a class="navbar-brand brand-title" href="javascript:void(0)" ><i class="fa fa-paint-brush  fa-lg"></i>&nbsp;MultiDraw</a>
                     </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <div class="collapse navbar-collapse" id="navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li class="dropdown">
                                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">文件 <span class="caret"></span></a>
-
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href=""><span class="fa fa-file menu-btn" ></span>新建</a></li>
                                     <li><a href="/center"><span class="fa fa-folder-open menu-btn" ></span>打开</a></li>
@@ -52,8 +51,8 @@
                                         </ul>
                                     </li>
                                 </ul>
-
                             </li>
+                            <li><a id="modifyText"></a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href='javascript:void(0)' id="roomId" bind-value-to="roomId"></a></li>
@@ -346,6 +345,7 @@
                     <textarea bind-value-to="text"></textarea>
                 </div>
                 <!--编辑文字选项 END-->
+                <div class="file-name" ng-click="setFileName($event)" ng-show="canvas.fileName">{[ canvas.fileName ]}</div>
             </div>
             <!--顶部工具条 END-->
 

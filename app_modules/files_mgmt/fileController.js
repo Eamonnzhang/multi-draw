@@ -18,6 +18,16 @@ exports.save = function(req,res){
         });
 };
 
+exports.renameFile = function(req,res){
+    var query = {
+        id : req.query.id,
+        fileName : req.query.fileName
+    };
+    fileService.renameFile(query,function (data) {
+        res.send(data);
+    });
+};
+
 exports.loadAllFiles = function (req,res) {
     var user = req.session.userData;
     var isRecycled = req.query.isRecycled;

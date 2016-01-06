@@ -9,7 +9,7 @@ module.exports = function(app){
 
     app.get('/board',function(req,res){
         if(req.query.userName&&req.query.userId){
-            res.render('app', {
+            res.render('canvas', {
                 userName: req.query.userName,
                 userId: req.query.userId,
                 apiKey: uuId.generateId(8, 32),
@@ -17,7 +17,7 @@ module.exports = function(app){
             });
         }else{
             if (req.session.userData) {
-                res.render('app', {
+                res.render('canvas', {
                     userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
                     userId: req.session.userData.id,
                     apiKey: req.session.userData.apiKey,title:'MultiDraw'
@@ -88,6 +88,10 @@ module.exports = function(app){
 
     app.post('/saveFile',function(req,res){
         fileController.save(req,res);
+    });
+
+    app.get('/renameFile',function(req,res){
+        fileController.renameFile(req,res);
     });
 
     app.get('/loadAllFiles',function(req,res){

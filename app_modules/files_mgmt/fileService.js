@@ -24,6 +24,13 @@ exports.update = function(query,updateData,next){
     });
 };
 
+exports.renameFile = function (query, next) {
+    fileDao.renameById(query.id,query.fileName, function (data) {
+        if(data)
+            next(message.genSimpSuccessMsg(null, data));
+    })
+};
+
 exports.loadAllFiles= function(query,user,next){
     fileDao.loadAllFileUnderAccount(query,user, function (data) {
         if(data){

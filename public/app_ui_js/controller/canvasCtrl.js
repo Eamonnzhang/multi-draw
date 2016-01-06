@@ -144,6 +144,7 @@ function addAccessors($scope) {
     $scope.getOpacity = function() {
         return getActiveStyle('opacity') * 100;
     };
+
     $scope.setOpacity = function(value) {
         setActiveStyle('opacity', parseInt(value, 10) / 100);
     };
@@ -917,7 +918,7 @@ function addObject($scope){
     }, false);
 }
 
-function addMyOwnAccessors($scope){
+function addMyOwnAccessors($scope,$http){
 
     $('.brand-title').colpick({
         layout:'hex',
@@ -1014,7 +1015,34 @@ function addMyOwnAccessors($scope){
     $scope.activeAll = function(){
         mdCanvas.activeAll(canvas);
     };
-
+    
+    $scope.setFileName = function ($event) {
+        var me = $($event.target);
+        var txt = me.text();
+        var input = $("<input type='text' class='form-control' value='" + txt + "'/>");
+        input.css('width','200');
+        input.css('height','25');
+        me.html(input);
+        input.click(function () {
+            return false;
+        });
+        input.trigger("focus");
+        input.blur(function () {
+            var newtxt = $(this).val();
+            me.html(newtxt);
+            if (newtxt != txt) {
+                $scope.canvas.fileName = newtxt;
+                var queryObj = {
+                    fileName : newtxt,
+                    id : $scope.canvas.id
+                };
+                $http.get("/renameFile"+mdUtils.convertJSONToQueryStr(queryObj))
+                    .success(function (res) {
+                        console.log(res);
+                    });
+            }
+        })
+    }
 }
 
 var isMouseDown = false,
@@ -1025,7 +1053,7 @@ var isMouseDown = false,
     canvasXOnPan = 0,
     canvasYOnPan = 0;
 
-function addCanvasListener($scope) {
+function addCanvasListener($scope,$http) {
 
     function updateScope() {
         $scope.$$phase || $scope.$digest();
@@ -1086,10 +1114,15 @@ function addCanvasListener($scope) {
             canvasYOnPan = canvasCtnEl.offsetTop;
         } else {
             var obj = e.target;
-            if(!obj && !canvas.isDrawingMode && isDisGroup && roomId) {
-                socket.emit('restoreAll',mdCanvas.toObject(canvas,false));
+            if(!obj && !canvas.isDrawingMode && isDisGroup) {
+                if(roomId){
+                    socket.emit('restoreAll',mdCanvas.toObject(canvas,false));
+                    socket.emit('discard','discard');
+                }
+                else{
+                    $scope.saveFile();
+                }
                 isDisGroup = false;
-                socket.emit('discard','discard');
                 return;
             }
             if(!obj) return;
@@ -1120,16 +1153,16 @@ function addCanvasListener($scope) {
 
     function objectModifiedLtn(e){
         var modifiedObj = e.target;
-        if(modifiedObj._objects){
+        if(modifiedObj._objects){ //成组modify
             var modify = new Date();
             modifiedObj._objects.forEach(function(obj){
                 obj.lastModify = modify;
             })
-        }else{
+        }else{ //单个modify
             modifiedObj.lastModify = new Date();
+            $scope.saveFile();
         }
     }
-
     function beforeSelectClearedLtn(e){
         if(e.target&& e.target._objects){
             isDisGroup = true;
@@ -1395,39 +1428,38 @@ function initKeyBoard($scope){
 
 function httpOpt($scope){
     $scope.save = function () {
-        var paramArr = mdUtils.urlParams(window.location.href);
-        var id = paramArr['id'];
-        if(!id){
+        if(!this.canvas.id){
             $('#myModal').modal();
-
         }else{
-            canvas.id = id;
             this.saveFile();
         }
     };
-
     $scope.saveFile = function () {
         if(!canvas.fileName) canvas.fileName = _('fileName').value;
         var data = JSON.stringify(mdCanvas.toObject(canvas,false,['fileName','width','height','id']));
+        $('#modifyText').html('正在保存...');
+        $('#modifyText').css('color','#A9A9A9');
         Communication.saveFile([data], function (data) {
             if(data.success){
-                $('#saveSuccess').modal();
+                $('#modifyText').html('所有更改已保存');
             }
         })
     };
 }
 
 var canvasModule = angular.module('CanvasModule', []);
-canvasModule.controller('CanvasCtrl', function($scope) {
+canvasModule.controller('CanvasCtrl', function($scope,$http) {
     $scope.roomId = roomId ? roomId : null;
+    var id = urlParams['id'];
+    if(id) canvas.id = id;
     $scope.canvas = canvas;
     $scope.getActiveStyle = getActiveStyle;
     addAccessors($scope);
-    addMyOwnAccessors($scope);
+    addMyOwnAccessors($scope,$http);
     addObject($scope);
     initContextMenu($scope);
     initKeyBoard($scope);
     roomId&&initCanvasSocket($scope);
-    addCanvasListener($scope);
+    addCanvasListener($scope,$http);
     httpOpt($scope);
 });

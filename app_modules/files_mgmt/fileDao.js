@@ -51,4 +51,20 @@ fileDao.prototype.removeById = function (id, next) {
     });
 };
 
+
+fileDao.prototype.renameById = function (id,fileName, next) {
+    this.dataCollection.update({'id': id},
+        {
+            $set: {
+                'fileName': fileName
+            }
+        }, function (err, result) {
+        if (err) {
+            throw err;
+        } else {
+            next(result);
+        }
+    });
+};
+
 module.exports = fileDao;

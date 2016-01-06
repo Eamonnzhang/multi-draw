@@ -349,7 +349,6 @@ fabric.Collection = {
 
   var sqrt = Math.sqrt,
       atan2 = Math.atan2,
-      atan = Math.atan,
       pow = Math.pow,
       abs = Math.abs,
       PiBy180 = Math.PI / 180;
@@ -429,9 +428,7 @@ fabric.Collection = {
      * Rotates `vector` with `radians`
      * @static
      * @memberOf fabric.util
-     * @param {Object} vector The vector to rotate
-     * @param {Object.x} x coordinate of vector
-     * @param {Object.y} y coordinate of vector
+     * @param {Object} vector The vector to rotate (x and y)
      * @param {Number} radians The radians of the angle for the rotation
      * @return {Object} The new rotated point
      */
@@ -441,7 +438,7 @@ fabric.Collection = {
           rx = vector.x * cos - vector.y * sin,
           ry = vector.x * sin + vector.y * cos;
       return {
-        x: rx, 
+        x: rx,
         y: ry
       };
     },
@@ -871,16 +868,13 @@ fabric.Collection = {
      * @return {Object} Components of transform
      */
     qrDecompose: function(a) {
-      var angle = atan(a[1] / a[0]) / PiBy180,
+      var angle = atan2(a[1], a[0]),
           denom = pow(a[0], 2) + pow(a[1], 2),
           scaleX = sqrt(denom),
           scaleY = (a[0] * a[3] - a[2] * a [1]) / scaleX,
-          skewX = atan((a[0] * a[2] + a[1] * a [3]) / denom);
-      if (a[0] < 0) {
-        angle += 180;
-      }
+          skewX = atan2(a[0] * a[2] + a[1] * a [3], denom);
       return {
-        angle: angle,
+        angle: angle  / PiBy180,
         scaleX: scaleX,
         scaleY: scaleY,
         skewX: skewX / PiBy180,
@@ -3033,8 +3027,15 @@ if (typeof console !== 'undefined') {
   function _setStrokeFillOpacity(attributes) {
     for (var attr in colorAttributes) {
 
-      if (!attributes[attr] || typeof attributes[colorAttributes[attr]] === 'undefined') {
+      if (typeof attributes[colorAttributes[attr]] === 'undefined') {
         continue;
+      }
+
+      if (!attributes[attr]) {
+        if (!fabric.Object.prototype[attr]) {
+          continue;
+        }
+        attributes[attr] = fabric.Object.prototype[attr];
       }
 
       if (attributes[attr].indexOf('url(') === 0) {
@@ -5732,8 +5733,10 @@ fabric.Pattern = fabric.util.createClass(/** @lends fabric.Pattern.prototype */ 
      */
     toSVG: function(object) {
       var fBoxX = 40, fBoxY = 40, NUM_FRACTION_DIGITS = fabric.Object.NUM_FRACTION_DIGITS,
-          offset = fabric.util.rotateVector({x: this.offsetX, y: this.offsetY},
-            fabric.util.degreesToRadians(-object.angle)), BLUR_BOX = 20;
+          offset = fabric.util.rotateVector(
+            { x: this.offsetX, y: this.offsetY },
+            fabric.util.degreesToRadians(-object.angle)),
+          BLUR_BOX = 20;
 
       if (object.width && object.height) {
         //http://www.w3.org/TR/SVG/filters.html#FilterEffectsRegion
@@ -5838,7 +5841,6 @@ fabric.Pattern = fabric.util.createClass(/** @lends fabric.Pattern.prototype */ 
       options || (options = { });
 
       this._initStatic(el, options);
-      fabric.StaticCanvas.activeInstance = this;
     },
 
     /**
@@ -6982,7 +6984,7 @@ fabric.Pattern = fabric.util.createClass(/** @lends fabric.Pattern.prototype */ 
      * @param {Number} [options.viewBox.width] Width of viewbox
      * @param {Number} [options.viewBox.height] Height of viewbox
      * @param {String} [options.encoding=UTF-8] Encoding of SVG output
-     * @param {String} [options.width] desired width of svg with or without units 
+     * @param {String} [options.width] desired width of svg with or without units
      * @param {String} [options.height] desired height of svg with or without units
      * @param {Function} [reviver] Method for further parsing of svg elements, called after each fabric object converted into svg representation.
      * @return {String} SVG string
@@ -8144,8 +8146,6 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
       this._initStatic(el, options);
       this._initInteractive();
       this._createCacheCanvas();
-
-      fabric.Canvas.activeInstance = this;
     },
 
     /**
@@ -8374,22 +8374,24 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
      */
     _normalizePointer: function (object, pointer) {
       var activeGroup = this.getActiveGroup(),
-          x = pointer.x,
-          y = pointer.y,
           isObjectInGroup = (
             activeGroup &&
             object.type !== 'group' &&
             activeGroup.contains(object)),
-          lt;
+          lt, m;
 
       if (isObjectInGroup) {
-        lt = fabric.util.transformPoint(activeGroup.getCenterPoint(), this.viewportTransform, true);
-        x -= lt.x;
-        y -= lt.y;
-        x /= activeGroup.scaleX;
-        y /= activeGroup.scaleY;
+        m = fabric.util.multiplyTransformMatrices(
+              this.viewportTransform,
+              activeGroup.calcTransformMatrix());
+
+        m = fabric.util.invertTransform(m);
+        pointer = fabric.util.transformPoint(pointer, m , false);
+        lt = fabric.util.transformPoint(activeGroup.getCenterPoint(), m , false);
+        pointer.x -= lt.x;
+        pointer.y -= lt.y;
       }
-      return { x: x, y: y };
+      return { x: pointer.x, y: pointer.y };
     },
 
     /**
@@ -9265,7 +9267,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
     },
 
     /**
-     * Sets active group to a speicified one
+     * Sets active group to a specified one
      * @param {fabric.Group} group Group to set as a current one
      * @return {fabric.Canvas} thisArg
      * @chainable
@@ -15293,6 +15295,10 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       if (!('left' in options)) {
         this.left = this.minX;
       }
+      this.pathOffset = {
+        x: this.minX + this.width / 2,
+        y: this.minY + this.height / 2
+      };
     },
 
     /**
@@ -15314,18 +15320,6 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
     },
 
     /**
-     * @private
-     */
-    _applyPointOffset: function() {
-      // change points to offset polygon into a bounding box
-      // executed one time
-      this.points.forEach(function(p) {
-        p.x -= (this.minX + this.width / 2);
-        p.y -= (this.minY + this.height / 2);
-      }, this);
-    },
-
-    /**
      * Returns object representation of an instance
      * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
      * @return {Object} Object representation of an instance
@@ -15343,18 +15337,20 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
      * @return {String} svg representation of an instance
      */
     toSVG: function(reviver) {
-      var points = [],
+      var points = [], addTransform,
           markup = this._createBaseSVGMarkup();
 
       for (var i = 0, len = this.points.length; i < len; i++) {
         points.push(toFixed(this.points[i].x, 2), ',', toFixed(this.points[i].y, 2), ' ');
       }
-
+      if (!(this.group && this.group.type === 'path-group')) {
+        addTransform = ' translate(' + (-this.pathOffset.x) + ', ' + (-this.pathOffset.y) + ') ';
+      }
       markup.push(
         '<', this.type, ' ',
           'points="', points.join(''),
           '" style="', this.getSvgStyles(),
-          '" transform="', this.getSvgTransform(),
+          '" transform="', this.getSvgTransform(), addTransform,
           ' ', this.getSvgTransformMatrix(),
         '"/>\n'
       );
@@ -15367,8 +15363,8 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
      * @private
      * @param {CanvasRenderingContext2D} ctx Context to render on
      */
-    _render: function(ctx) {
-      if (!this.commonRender(ctx)) {
+    _render: function(ctx, noTransform) {
+      if (!this.commonRender(ctx, noTransform)) {
         return;
       }
       this._renderFill(ctx);
@@ -15382,7 +15378,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
      * @private
      * @param {CanvasRenderingContext2D} ctx Context to render on
      */
-    commonRender: function(ctx) {
+    commonRender: function(ctx, noTransform) {
       var point, len = this.points.length;
 
       if (!len || isNaN(this.points[len - 1].y)) {
@@ -15391,15 +15387,8 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
         return false;
       }
 
+      noTransform || ctx.translate(-this.pathOffset.x, -this.pathOffset.y);
       ctx.beginPath();
-
-      if (this._applyPointOffset) {
-        if (!(this.group && this.group.type === 'path-group')) {
-          this._applyPointOffset();
-        }
-        this._applyPointOffset = null;
-      }
-
       ctx.moveTo(this.points[0].x, this.points[0].y);
       for (var i = 0; i < len; i++) {
         point = this.points[i];
@@ -17288,7 +17277,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
     type: 'image',
 
     /**
-     * crossOrigin value (one of "", "anonymous", "allow-credentials")
+     * crossOrigin value (one of "", "anonymous", "use-credentials")
      * @see https://developer.mozilla.org/en-US/docs/HTML/CORS_settings_attributes
      * @type String
      * @default
@@ -18221,8 +18210,8 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
       for (var y = 0; y < sh; y++) {
         for (var x = 0; x < sw; x++) {
           dstOff = (y * sw + x) * 4;
-              // calculate the weighed sum of the source image pixels that
-              // fall under the convolution matrix
+          // calculate the weighed sum of the source image pixels that
+          // fall under the convolution matrix
           r = 0; g = 0; b = 0; a = 0;
 
           for (var cy = 0; cy < side; cy++) {
@@ -18860,7 +18849,7 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
             abs(r - b) < distance &&
             abs(g - b) < distance
         ) {
-          data[i + 3] = 1;
+          data[i + 3] = 0;
         }
       }
 
@@ -20644,16 +20633,21 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
 
     _setSVGTextLineJustifed: function(i, textSpans, yPos, textLeftOffset) {
       var ctx = fabric.util.createCanvasElement().getContext('2d');
+
       this._setTextStyles(ctx);
+
       var line = this._textLines[i],
           words = line.split(/\s+/),
           wordsWidth = this._getWidthOfWords(ctx, line),
           widthDiff = this.width - wordsWidth,
           numSpaces = words.length - 1,
           spaceWidth = numSpaces > 0 ? widthDiff / numSpaces : 0,
-          word, attributes = this._getFillAttributes(this.fill);
-      textLeftOffset += this._getLineLeftOffset(this._getLineWidth(ctx, i))
-      for (var i = 0, len = words.length; i < len; i++) {
+          word, attributes = this._getFillAttributes(this.fill),
+          len;
+
+      textLeftOffset += this._getLineLeftOffset(this._getLineWidth(ctx, i));
+
+      for (i = 0, len = words.length; i < len; i++) {
         word = words[i];
         textSpans.push(
           '\t\t\t<tspan x="',
@@ -20669,7 +20663,6 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
         );
         textLeftOffset += this._getWidthOfWords(ctx, word) + spaceWidth;
       }
-      
     },
 
     _setSVGTextLineBg: function(textBgRects, i, textLeftOffset, textTopOffset, height) {
@@ -20794,8 +20787,26 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
     if (!options.originX) {
       options.originX = 'left';
     }
-    var textContent = element.textContent.replace(/^\s+|\s+$|\n+/g, '').replace(/\s+/g, ' '),
-        text = new fabric.Text(textContent, options),
+
+    var textContent = '';
+
+    // The XML is not properly parsed in IE9 so a workaround to get
+    // textContent is through firstChild.data. Another workaround would be
+    // to convert XML loaded from a file to be converted using DOMParser (same way loadSVGFromString() does)
+    if (!('textContent' in element)) {
+      if ('firstChild' in element && element.firstChild !== null) {
+        if ('data' in element.firstChild && element.firstChild.data !== null) {
+          textContent = element.firstChild.data;
+        }
+      }
+    }
+    else {
+      textContent = element.textContent;
+    }
+
+    textContent = textContent.replace(/^\s+|\s+$|\n+/g, '').replace(/\s+/g, ' ');
+
+    var text = new fabric.Text(textContent, options),
         /*
           Adjust positioning:
             x/y attributes in SVG correspond to the bottom-left corner of text bounding box
@@ -22899,12 +22910,6 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
           lineLeftOffset = this._getLineLeftOffset(widthOfLine);
 
       width = lineLeftOffset * this.scaleX;
-
-      if (this.flipX) {
-        // when oject is horizontally flipped we reverse chars
-        // we should reverse also style or do not revers at all.
-        this._textLines[i] = line.reverse().join('');
-      }
 
       for (var j = 0, jlen = line.length; j < jlen; j++) {
 
