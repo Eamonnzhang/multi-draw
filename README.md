@@ -3,7 +3,7 @@
 node app
 >OnlineDemo : http://www.xuezuowang.com:4500
 
-##Cavans Library
+##Canvas Library
 Fabric.js
 >Official Site : http://fabricjs.com/
 
