@@ -83,7 +83,6 @@ fileListModule.controller('FileListCtrl', function($scope, $http) {
                 if(res.success) $scope.files = res.data;
             });
     };
-    //$scope.loadAllRecycledFiles();
 
     $scope.loadFile = function (file) {
         var queryObj = {};
@@ -191,7 +190,6 @@ fileListModule.controller('FileListCtrl', function($scope, $http) {
         return ids;
     };
 
-
     $scope.isMultiFilesSelected = function () {
         if(this.getSelectedFiles())
             return  this.getSelectedFiles().length > 1;
@@ -201,12 +199,6 @@ fileListModule.controller('FileListCtrl', function($scope, $http) {
         if(this.getSelectedFiles())
             return  this.getSelectedFiles().length === 1;
     };
-
-    //
-    //$scope.setFileSelected = function(obj){
-    //    $scope.currentSelectedFile = obj;
-    //    $scope.$$phase || $scope.$digest();
-    //};
 
     $scope.setMultiFilesSelected = function (val,obj) {
         if(obj) obj.isSelected = val;

@@ -44,6 +44,10 @@ module.exports = function(app){
         res.render('login',{title:'MultiDraw'});
     });
 
+    app.get('/join',function(req,res){
+        res.render('join',{title:'MultiDraw'});
+    });
+
     app.get('/filelist',function(req,res){
         res.render('file_list');
     });
@@ -58,10 +62,18 @@ module.exports = function(app){
         }else{
             res.redirect('/login');
         }
-    })
+    });
 
     app.post('/loginHandle',function(req,res){
         userController.isExist(req,res);
+    });
+
+    app.post('/signUpHandle',function(req,res){
+        userController.addUser(req,res);
+    });
+
+    app.post('/userNameExist',function(req,res){
+        userController.isUserNameExist(req,res);
     });
 
     app.get('/logout', function (req, res) {
@@ -71,22 +83,6 @@ module.exports = function(app){
     });
 
     app.get('/users',function(req,res){
-
-    });
-
-    app.get('/admin/users/autoadd', function (req, res) {
-        for (var i = 1; i <= 20; i++) {
-            var user = {
-                username: 'user' + i,
-                password: '123',
-                name: {
-                    firstName: 'Developer',
-                    lastName: i.toString()
-                }
-            };
-            userController.addUser(user, req, res);
-        }
-        res.send(new message.genSimpSuccessMsg('Command has been sent.'));
 
     });
 

@@ -4,31 +4,49 @@
 
 var userService = require('./userService.js');
 var uuId = require('../_utils/uuidGenerator.js');
+var message = require('../_utils/messageGenerator.js');
 var api = [];
 
-exports.addUser = function (user, req, res) {
+exports.addUser = function (req, res) {
+    var user = {
+        username : req.body.username,
+        firstName : req.body.firstName,
+        lastName : req.body.lastName,
+        password : req.body.password
+    };
     userService.addUser(user, function (data) {
-
+        res.send(data);
     });
 };
 
 exports.isExist = function(req,res){
-    var username = req.body.username;
-    var password = req.body.password;
-    //console.log('')
-    userService.isExist(username, password, function (message) {
-        //console.log(data);
-        if (message.success === true) {
-            req.session.userData = message.data;
+    var query = {
+        username : req.body.username,
+        password : req.body.password
+    };
+    userService.isExist(query, function (result) {
+        if (result.success === true) {
+            req.session.userData = result.data;
             var userApi = {};
             userApi.apiKey = uuId.generateId(8, 32);
             userApi.userData = req.session.userData;
             api.push(userApi);
             req.session.userData.apiKey = userApi.apiKey;
             delete req.session.userData.password;
-            res.redirect('/');
-        } else {
-            res.redirect('/login');
+        }
+        res.send(result);
+    });
+};
+
+exports.isUserNameExist = function(req,res){
+    var query = {
+        username : req.body.username
+    };
+    userService.isExist(query,function (message) {
+        if (message.success === true) {
+            res.send({valid:false});
+        }else{
+            res.send({valid:true});
         }
     });
 };
