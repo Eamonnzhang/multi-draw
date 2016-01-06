@@ -871,7 +871,15 @@ function addObject($scope){
                 mdCanvas.addUrl(canvas, e.target.result, function (fImage) {
                     $scope.setFreeDrawingMode(false);
                     mdCanvas.packageObj(fImage);
-                    fImage.set(mdUtils.getRandomLeftTop()).setCoords();
+                    var prop = {};
+                    if(fImage.width >= (canvas.width-100))
+                        prop.width = canvas.width-200;
+                    if(fImage.height >= (canvas.height-100))
+                        prop.height = canvas.height-200;
+                    var lt = mdUtils.getRandomLeftTop();
+                    prop.left = lt.left;
+                    prop.top = lt.top;
+                    fImage.set(prop).setCoords();
                     roomId&&socket.emit('addObject',mdCanvas.toObject(fImage,false));
                 });
                 //重置input，防止不能连续两次上传同一张图片

@@ -201,7 +201,10 @@ fileListModule.controller('FileListCtrl', function($scope, $http) {
     };
 
     $scope.setMultiFilesSelected = function (val,obj) {
-        if(obj) obj.isSelected = val;
+        if(obj) {
+            obj.isSelected = val;
+            $scope.currentSelectedObj = obj;
+        }
         $scope.$$phase || $scope.$digest();
     };
 

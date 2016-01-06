@@ -334,7 +334,6 @@ var mdCanvas = {
             parent.appendChild(videoEl);
             var video = new fabric.Image(videoEl);
             callback(video);
-            //if(video.id) parent.setAttribute('id',video.id);
             canvas.add(video);
             fabric.util.requestAnimFrame(function render() {
                 canvas.renderAll();
