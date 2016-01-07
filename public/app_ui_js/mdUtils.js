@@ -2,7 +2,9 @@
  * Created by Eamonn on 2015/8/28.
  */
 var mdUtils = {
-    getRandomInt : fabric.util.getRandomInt,
+    getRandomInt : function(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    },
 
     getRandomColor :function () {
         return (
@@ -18,8 +20,8 @@ var mdUtils = {
 
     getRandomLeftTop: function () {
         return {
-            left: fabric.util.getRandomInt(0, 200),
-            top: fabric.util.getRandomInt(0 , 200)
+            left: this.getRandomInt(0, 200),
+            top:  this.getRandomInt(0 , 200)
         };
     },
 

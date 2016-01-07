@@ -8,7 +8,6 @@
     <link href="css/font_awesome/font-awesome.css" rel="stylesheet">
     <script src="app_3th_js/jQuery/jquery-1.11.3.min.js"></script>
     <script src="app_3th_js/bootstrap/bootstrap.js"></script>
-    <script src="app_ui_js/Communication.js"></script>
     <!--[if lt IE 9]>
     <script src="app_3th_js/forIE/html5shiv.js"></script>
     <script src="app_3th_js/forIE/respond.min.js"></script>
@@ -63,13 +62,14 @@
     </div>
 </body>
 <script>
-    var cm = new Communication();
     $('#createFile').on('click', function () {
-        cm.saveFile([JSON.stringify({fileName:$('#fileName').val()})], function (result) {
-            if(result.success){
-                window.location.href='/board?id='+result.data;
-            }
-        })
+        $.ajax({
+            method: "POST",
+            url: "/saveFile",
+            data: {fileName:$('#fileName').val()}
+        }).done(function( msg ) {
+                window.location.href='/board?id='+msg.data;
+            });
     });
 </script>
 </html>

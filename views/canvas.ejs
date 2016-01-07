@@ -482,8 +482,8 @@
         <!--清空操作 Alert END-->
 
     </body>
-	<script src='/app_3th_js/angular/angular.min.js'></script>
     <script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
+    <script src='/app_3th_js/angular/angular.min.js'></script>
     <script src='/app_3th_js/bootstrap/bootstrap.min.js'></script>
     <script src='/app_3th_js/bootstrap/bootstrap-contextmenu.js'></script>
 	<script src='/app_3th_js/colpick.js'></script>
@@ -491,7 +491,6 @@
     <script src='/app_3th_js/moment.min.js'></script>
     <script src='/socket.io/socket.io.js'></script>
     <script src='/app_ui_js/mdUtils.js'></script>
-	<script src='/app_ui_js/Communication.js'></script>
     <script src='/app_ui_js/ConfigBoard.js'></script>
     <script src='/app_ui_js/EditBoard.js'></script>
 	<script>
@@ -507,13 +506,6 @@
         var urlParams = mdUtils.urlParams(window.location.href);
         if(urlParams['room']) var roomId = urlParams['room'];
         var editBoard = new EditBoard();
-        if(urlParams['id']){
-            var queryObj = {
-                id: urlParams['id'],
-                userKey: apiKey
-            };
-            editBoard.communication.loadFile(queryObj, mdUtils.bind(editBoard,editBoard.resetBoard));
-        }
         var canvas = editBoard.canvas;
         var socket = editBoard.socket;
         var canvasCtnEl = editBoard.configBord.canvasCtnEl;

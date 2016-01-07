@@ -6,17 +6,15 @@ var moment = require('moment');
 
 exports.save = function(req,res){
     var user = req.session.userData;
-    var data = req.body[0];
-    var dataObj = JSON.parse(data);
-
-    if(!dataObj.id){
-        fileService.save(dataObj,user,function (data) {
+    var data = req.body;//这里拿到的就是前台传过来的对象，无需转换
+    if(!data.id){
+        fileService.save(data,user,function (data) {
             res.send(data);
         });
     }
     else{
-        dataObj.lastModify = moment().format('YYYY-MM-DD HH:mm:ss');
-        fileService.update({id : dataObj.id},dataObj,function (data) {
+        data.lastModify = moment().format('YYYY-MM-DD HH:mm:ss');
+        fileService.update({id : data.id},data,function (data) {
             res.send(data);
         });
     }

@@ -1,21 +1,18 @@
 var canvasData = {};
 canvasData.usersId = [];
 
-var SINGLE_LINE = false;
-
-// custom input area
-if (SINGLE_LINE) {
-    var $itext = $('<input/>').attr('type', 'text').addClass('itext');
-}
-else {
-    var $itext = $('<textarea/>').addClass('itext');
-}
-
 //暂时用此方法来,解决输入中文的BUG
 function editorEnterFire(e){
     var obj = this;
+    //var SINGLE_LINE = obj._textLines.length === 1 ? true : false;
+    var SINGLE_LINE = false;
+    // custom input area
     if (SINGLE_LINE) {
+        var $itext = $('<input/>').attr('type', 'text').addClass('itext');
         var keyDownCode = 0;
+    }
+    else {
+        var $itext = $('<textarea/>').addClass('itext');
     }
     canvas.remove(obj);
     // show input area
@@ -1069,6 +1066,7 @@ function addCanvasListener($scope,$http) {
         .on('object:selected', objectSelectedLtn)
         .on('object:modified', objectModifiedLtn)
         .on('object:added', objectAddedLtn)
+        .on('object:removed', objectRemovedLtn)
         .on('path:created', pathCreatedLtn)
         .on('mouse:up', mouseUpLtn)
         .on('mouse:down', mouseDownLtn)
@@ -1164,6 +1162,7 @@ function addCanvasListener($scope,$http) {
                 obj.lastModify = modify;
             })
         }else{ //单个modify
+            console.log('modify');
             modifiedObj.lastModify = moment().format('YYYY-MM-DD HH:mm:ss');
             $scope.saveFile();
         }
@@ -1175,7 +1174,11 @@ function addCanvasListener($scope,$http) {
     }
 
     function objectAddedLtn(){
+        $scope.saveFile();
+    }
 
+    function objectRemovedLtn(){
+        $scope.saveFile();
     }
 
     function objectScalingLtn(){
@@ -1431,7 +1434,7 @@ function initKeyBoard($scope){
     }
 }
 
-function httpOpt($scope){
+function httpOpt($scope,$http){
     $scope.save = function () {
         if(!this.canvas.id){
             $('#myModal').modal();
@@ -1444,19 +1447,53 @@ function httpOpt($scope){
         var data = JSON.stringify(mdCanvas.toObject(canvas,false,['fileName','width','height','id']));
         $('#modifyText').html('正在保存...');
         $('#modifyText').css('color','#A9A9A9');
-        Communication.saveFile([data], function (data) {
-            if(data.success){
+        $http.post('/saveFile',data).then(function (result) {
+            if(result.data.success){
                 $('#modifyText').html('所有更改已保存');
             }
-        })
+        }, function (err) {
+            alert(err.statusText+" "+err.status);
+        });
     };
+    $scope.loadFile = function (query) {
+        $http.get('/loadFile'+mdUtils.convertJSONToQueryStr(query)).then(function (result) {
+            var data = result.data.data[0];
+            if(data.fileName)
+                canvas.fileName = data.fileName;
+            else
+                canvas.fileName= '未命名文件';
+            canvas.loadFromJSON(data,canvas.renderAll.bind(canvas), function (o,object) {
+                if(object.type === 'i-text'){
+                    object.on('editing:entered', editorEnterFire);
+                    object.on('editing:exited', function (e) {
+                        console.log('退出编辑');
+                    });
+                    object.on('selection:changed', function () {
+                        console.log('selection:changed');
+                        canvas.renderAll();
+                    });
+                }
+            });
+        }, function () {
+            alert('请求失败！')
+        })
+    }
 }
 
 var canvasModule = angular.module('CanvasModule', []);
 canvasModule.controller('CanvasCtrl', function($scope,$http) {
     $scope.roomId = roomId ? roomId : null;
+    httpOpt($scope,$http);
     var id = urlParams['id'];
-    if(id) canvas.id = id;
+    if(id) {
+        canvas.id = id;
+        var query = {
+            id : id,
+            userKey : apiKey
+        };
+        $scope.loadFile(query);
+    }
+    //在把canvas绑定到scope之前，要把额外的基本信息 id fileName等set到canvas上
     $scope.canvas = canvas;
     $scope.getActiveStyle = getActiveStyle;
     addAccessors($scope);
@@ -1466,5 +1503,4 @@ canvasModule.controller('CanvasCtrl', function($scope,$http) {
     initKeyBoard($scope);
     roomId&&initCanvasSocket($scope);
     addCanvasListener($scope,$http);
-    httpOpt($scope);
 });

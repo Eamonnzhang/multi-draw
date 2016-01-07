@@ -5,7 +5,6 @@
  */
 var EditBoard = function (){
     this.socket = io.connect('http://192.168.1.81:4500');
-    this.communication = new Communication();
     var canvas = this.canvas = new fabric.Canvas('c', {
         backgroundColor :"#ffffff",
         width:750,
@@ -41,12 +40,4 @@ var EditBoard = function (){
             console.log(sCanvas);
         });
     })
-};
-
-EditBoard.prototype.resetBoard= function (data) {
-    if(data.fileName)
-        canvas.fileName = data.fileName;
-    else
-        canvas.fileName= '未命名文件';
-    canvas.loadFromJSON(data,canvas.renderAll.bind(canvas));
 };
