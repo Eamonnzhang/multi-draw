@@ -1055,7 +1055,7 @@ var isMouseDown = false,
     canvasXOnPan = 0,
     canvasYOnPan = 0;
 
-function addCanvasListener($scope,$http) {
+function addCanvasListener($scope) {
 
     function updateScope() {
         $scope.$$phase || $scope.$digest();
@@ -1064,12 +1064,8 @@ function addCanvasListener($scope,$http) {
 
     canvas
         .on('object:selected', objectSelectedLtn)
-        .on('object:modified', objectModifiedLtn)
-        .on('object:added', objectAddedLtn)
-        .on('object:removed', objectRemovedLtn)
         .on('path:created', pathCreatedLtn)
         .on('mouse:up', mouseUpLtn)
-        .on('mouse:down', mouseDownLtn)
         .on('mouse:move', mouseMoveLtn)
         .on('object:scaling', objectScalingLtn)
         .on('selection:created', selectCreatedLtn)
@@ -1107,6 +1103,33 @@ function addCanvasListener($scope,$http) {
         }
     }
 
+    function mouseMoveLtn(e){
+        if (isMouseDown && ctrlKeyDown) {
+            canvasCtnEl.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
+            canvasCtnEl.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan  )+ 'px';
+        }
+    }
+    function beforeSelectClearedLtn(e){
+        if(e.target&& e.target._objects){
+            isDisGroup = true;
+        }
+    }
+
+    function objectScalingLtn(){
+
+    }
+
+    function selectCreatedLtn(){
+
+    }
+
+}
+function addSaveCanvasListener($scope) {
+    canvas
+        .on('object:modified', objectModifiedLtn)
+        .on('object:added', objectAddedLtn)
+        .on('object:removed', objectRemovedLtn)
+        .on('mouse:down', mouseDownLtn)
 
     function mouseDownLtn(e){
         isMouseDown = true;
@@ -1123,6 +1146,7 @@ function addCanvasListener($scope,$http) {
                     socket.emit('discard','discard');
                 }
                 else{
+                    console.log('group modify save');
                     $scope.saveFile();
                 }
                 isDisGroup = false;
@@ -1147,12 +1171,6 @@ function addCanvasListener($scope,$http) {
         }
     }
 
-    function mouseMoveLtn(e){
-        if (isMouseDown && ctrlKeyDown) {
-            canvasCtnEl.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
-            canvasCtnEl.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan  )+ 'px';
-        }
-    }
 
     function objectModifiedLtn(e){
         var modifiedObj = e.target;
@@ -1162,16 +1180,12 @@ function addCanvasListener($scope,$http) {
                 obj.lastModify = modify;
             })
         }else{ //单个modify
-            console.log('modify');
+            console.log('object modify save');
             modifiedObj.lastModify = moment().format('YYYY-MM-DD HH:mm:ss');
             $scope.saveFile();
         }
     }
-    function beforeSelectClearedLtn(e){
-        if(e.target&& e.target._objects){
-            isDisGroup = true;
-        }
-    }
+
 
     function objectAddedLtn(){
         $scope.saveFile();
@@ -1179,14 +1193,6 @@ function addCanvasListener($scope,$http) {
 
     function objectRemovedLtn(){
         $scope.saveFile();
-    }
-
-    function objectScalingLtn(){
-
-    }
-
-    function selectCreatedLtn(){
-
     }
 
 }
@@ -1444,10 +1450,10 @@ function httpOpt($scope,$http){
     };
     $scope.saveFile = function () {
         if(!canvas.fileName) canvas.fileName = _('fileName').value;
-        var data = JSON.stringify(mdCanvas.toObject(canvas,false,['fileName','width','height','id']));
+        var obj = mdCanvas.toObject(canvas,false,['fileName','width','height','id']);
         $('#modifyText').html('正在保存...');
         $('#modifyText').css('color','#A9A9A9');
-        $http.post('/saveFile',data).then(function (result) {
+        $http.post('/saveFile',obj).then(function (result) {
             if(result.data.success){
                 $('#modifyText').html('所有更改已保存');
             }
@@ -1457,23 +1463,22 @@ function httpOpt($scope,$http){
     };
     $scope.loadFile = function (query) {
         $http.get('/loadFile'+mdUtils.convertJSONToQueryStr(query)).then(function (result) {
-            var data = result.data.data[0];
-            if(data.fileName)
-                canvas.fileName = data.fileName;
+            var canvasData = result.data.data[0];
+            if(canvasData.fileName)
+                canvas.fileName = canvasData.fileName;
             else
                 canvas.fileName= '未命名文件';
-            canvas.loadFromJSON(data,canvas.renderAll.bind(canvas), function (o,object) {
+            canvas.loadFromJSON(canvasData,canvas.renderAll.bind(canvas), function (o,object) {
                 if(object.type === 'i-text'){
                     object.on('editing:entered', editorEnterFire);
                     object.on('editing:exited', function (e) {
-                        console.log('退出编辑');
                     });
                     object.on('selection:changed', function () {
-                        console.log('selection:changed');
                         canvas.renderAll();
                     });
                 }
             });
+            addSaveCanvasListener($scope);
         }, function () {
             alert('请求失败！')
         })
@@ -1502,5 +1507,5 @@ canvasModule.controller('CanvasCtrl', function($scope,$http) {
     initContextMenu($scope);
     initKeyBoard($scope);
     roomId&&initCanvasSocket($scope);
-    addCanvasListener($scope,$http);
+    addCanvasListener($scope);
 });
