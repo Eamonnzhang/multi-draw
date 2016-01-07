@@ -50,13 +50,6 @@ function editorEnterFire(e){
         $itext.on('focusout', function(e) {
             obj.exitEditing();
             obj.set('text', $(this).val());
-            if(roomId){
-                var data = {};
-                data.id = obj.id;
-                data.name = 'text';
-                data.value = $(this).val();
-                socket.emit('stylePropChange',data);
-            }
             $(this).remove();
             canvas.add(obj);
             canvas.renderAll();
@@ -1070,6 +1063,8 @@ function addCanvasListener($scope) {
         .on('object:scaling', objectScalingLtn)
         .on('selection:created', selectCreatedLtn)
         .on('before:selection:cleared', beforeSelectClearedLtn)
+        .on('object:modified', objectModifiedLtn)
+        .on('mouse:down', mouseDownLtn)
         .on('selection:cleared', selectClearedLtn);
 
 
@@ -1080,56 +1075,6 @@ function addCanvasListener($scope) {
     function objectSelectedLtn(){
         updateScope();
     }
-
-    function pathCreatedLtn(e){
-        if(ctrlKeyDown) return;
-        updateScope();
-        var fPath = e.path;
-        mdCanvas.packageObj(fPath);
-        roomId && socket.emit('addObject', mdCanvas.toObject(fPath,false));
-    }
-
-    function mouseUpLtn(e){
-        isMouseDown = false;
-        if(!roomId) return;
-        var obj = e.target;
-        if(!obj) return;
-        if(canvas.getActiveObject()){
-            socket.emit('statePropChange',mdCanvas.toState(obj));
-        }
-        if(canvas.getActiveGroup()){
-            var sGroup = mdCanvas.toObject(canvas.getActiveGroup(),true);
-            socket.emit('groupStateChange',mdCanvas.toState(sGroup));
-        }
-    }
-
-    function mouseMoveLtn(e){
-        if (isMouseDown && ctrlKeyDown) {
-            canvasCtnEl.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
-            canvasCtnEl.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan  )+ 'px';
-        }
-    }
-    function beforeSelectClearedLtn(e){
-        if(e.target&& e.target._objects){
-            isDisGroup = true;
-        }
-    }
-
-    function objectScalingLtn(){
-
-    }
-
-    function selectCreatedLtn(){
-
-    }
-
-}
-function addSaveCanvasListener($scope) {
-    canvas
-        .on('object:modified', objectModifiedLtn)
-        .on('object:added', objectAddedLtn)
-        .on('object:removed', objectRemovedLtn)
-        .on('mouse:down', mouseDownLtn)
 
     function mouseDownLtn(e){
         isMouseDown = true;
@@ -1182,9 +1127,59 @@ function addSaveCanvasListener($scope) {
         }else{ //单个modify
             console.log('object modify save');
             modifiedObj.lastModify = moment().format('YYYY-MM-DD HH:mm:ss');
-            $scope.saveFile();
+            if(!roomId) $scope.saveFile();
         }
     }
+
+
+    function pathCreatedLtn(e){
+        if(ctrlKeyDown) return;
+        updateScope();
+        var fPath = e.path;
+        mdCanvas.packageObj(fPath);
+        roomId && socket.emit('addObject', mdCanvas.toObject(fPath,false));
+    }
+
+    function mouseUpLtn(e){
+        isMouseDown = false;
+        if(!roomId) return;
+        var obj = e.target;
+        if(!obj) return;
+        if(canvas.getActiveObject()){
+            socket.emit('statePropChange',mdCanvas.toState(obj));
+        }
+        if(canvas.getActiveGroup()){
+            var sGroup = mdCanvas.toObject(canvas.getActiveGroup(),true);
+            socket.emit('groupStateChange',mdCanvas.toState(sGroup));
+        }
+    }
+
+    function mouseMoveLtn(e){
+        if (isMouseDown && ctrlKeyDown) {
+            canvasCtnEl.style.left = ( event.clientX - mouseXOnPan + canvasXOnPan ) + 'px';
+            canvasCtnEl.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan  )+ 'px';
+        }
+    }
+    function beforeSelectClearedLtn(e){
+        if(e.target&& e.target._objects){
+            isDisGroup = true;
+        }
+    }
+
+    function objectScalingLtn(){
+
+    }
+
+    function selectCreatedLtn(){
+
+    }
+
+}
+function addSaveCanvasListener($scope) {
+    canvas
+        .on('object:added', objectAddedLtn)
+        .on('object:removed', objectRemovedLtn)
+
 
 
     function objectAddedLtn(){
@@ -1245,13 +1240,6 @@ function initCanvasSocket($scope){
             if(sObject.type === 'i-text'){
                 mdCanvas.add(canvas,sObject,function (fIText) {
                     fIText.on('editing:entered', editorEnterFire);
-                    fIText.on('editing:exited', function (e) {
-                        console.log('退出编辑');
-                    });
-                    fIText.on('selection:changed', function () {
-                        $scope.setText($scope.getText());
-                        canvas.renderAll();
-                    });
                 });
             }else
                 mdCanvas.add(canvas,sObject);
@@ -1468,17 +1456,13 @@ function httpOpt($scope,$http){
                 canvas.fileName = canvasData.fileName;
             else
                 canvas.fileName= '未命名文件';
-            canvas.loadFromJSON(canvasData,canvas.renderAll.bind(canvas), function (o,object) {
+            canvas.loadFromJSON(canvasData, function () {
+                addSaveCanvasListener($scope);
+            },function (o,object) {
                 if(object.type === 'i-text'){
                     object.on('editing:entered', editorEnterFire);
-                    object.on('editing:exited', function (e) {
-                    });
-                    object.on('selection:changed', function () {
-                        canvas.renderAll();
-                    });
                 }
             });
-            addSaveCanvasListener($scope);
         }, function () {
             alert('请求失败！')
         })
@@ -1486,6 +1470,64 @@ function httpOpt($scope,$http){
 }
 
 var canvasModule = angular.module('CanvasModule', []);
+canvasModule.config(function($interpolateProvider) {
+    $interpolateProvider
+        .startSymbol('{[')
+        .endSymbol(']}');
+});
+
+canvasModule.directive('bindValueTo', function() {
+    return {
+        restrict: 'A',
+
+        link: function ($scope, $element, $attrs) {
+
+            var prop = mdUtils.capitalize($attrs.bindValueTo),
+                getter = 'get' + prop,
+                setter = 'set' + prop;
+
+            $element.on('change keyup select', function () {
+                if(this.getAttribute('class')!=='share'&&this.getAttribute('class')!=='room'){
+                    $scope[setter] && $scope[setter](this.value);
+                    //this.previousSibling.innerHTML = this.value;
+                }
+            });
+
+            //初始化每个模型的监听器
+            $scope.$watch($scope[getter], function (newVal) {
+                //console.log($element[0]);
+                if($element[0].getAttribute('id') =='json-value'){
+                    $element[0].innerHTML = newVal;
+                } else if($element[0].getAttribute('id') =='roomId'){
+                    if(newVal == null)
+                        $element[0].innerHTML = '<span class="glyphicon glyphicon-share"></span>&nbsp;分享画板';
+                    else{
+                        newVal = decodeURI(newVal);
+                        $element[0].innerHTML = '房间：'+newVal;
+                    }
+                } else if($element[0].getAttribute('id') =='fill'){
+                    $element[0].style.background= newVal;
+                }else{
+                    //$element[0].previousSibling.innerHTML = newVal;
+                    $element.val(newVal);
+                }
+            });
+        }
+    };
+});
+
+canvasModule.directive('objectButtonsEnabled', function() {
+    return {
+        restrict: 'A',
+
+        link: function ($scope, $element, $attrs) {
+            $scope.$watch($attrs.objectButtonsEnabled, function(newVal) {
+                $($element).find('.btn-object-action')
+                    .prop('disabled', !newVal);
+            });
+        }
+    };
+});
 canvasModule.controller('CanvasCtrl', function($scope,$http) {
     $scope.roomId = roomId ? roomId : null;
     httpOpt($scope,$http);
@@ -1498,7 +1540,7 @@ canvasModule.controller('CanvasCtrl', function($scope,$http) {
         };
         $scope.loadFile(query);
     }
-    //在把canvas绑定到scope之前，要把额外的基本信息 id fileName等set到canvas上
+    //在把canvas绑定到scope之前，要把额外的基本信息 id fileName等都set到canvas上
     $scope.canvas = canvas;
     $scope.getActiveStyle = getActiveStyle;
     addAccessors($scope);

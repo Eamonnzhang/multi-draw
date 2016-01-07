@@ -3,7 +3,6 @@
  */
 var fileListModule = angular.module('FileListModule', []);
 var keyValue = '';
-
 fileListModule.directive('ngFileItem', function () {
     return {
         restrict: 'C',

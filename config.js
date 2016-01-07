@@ -17,8 +17,8 @@ app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false,limit: '10mb'}));
+app.use(bodyParser.urlencoded({extended: false,limit: '100mb'}));
+app.use(bodyParser.json({limit: '100mb'}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 var aDay = 3600000 * 24;
