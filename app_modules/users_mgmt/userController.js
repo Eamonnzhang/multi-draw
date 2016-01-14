@@ -26,7 +26,8 @@ exports.isExist = function(req,res){
     };
     userService.isExist(query, function (result) {
         if (result.success === true) {
-            req.session.userData = result.data;
+            req.session.userData = result.data[0];
+            //console.log('userCtrl',req.session);
             var userApi = {};
             userApi.apiKey = uuId.generateId(8, 32);
             userApi.userData = req.session.userData;

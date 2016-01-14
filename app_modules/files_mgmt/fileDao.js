@@ -1,68 +1,52 @@
 /**
  * Created by Eamonn on 2015/10/16.
+ * My own CRUD for file
  */
 var AbstractDao = require('./../AbstractDao.js');
+var itemDao = new (require('./../items_mgmt/itemDao.js'))('canvasItems');
 var utils = require('./../_utils/utils.js');
 var message = require('../_utils/messageGenerator.js');
 var fileDao = function(collectionName){
     AbstractDao.call(this,collectionName);
 };
-
 utils.extend(fileDao,AbstractDao);
 
-fileDao.prototype.loadAllFileUnderAccount = function (query,user,next) {
-    query.createUserId = user.id;
-    this.findAll(query,next);
+fileDao.prototype.saveFile = function (data,next) {
+    this.insertOne(data,next);
 };
 
-fileDao.prototype.loadFileByIdUnderAccount = function (id,user,next) {
+fileDao.prototype.deleteFileById = function (id,next) {
+    this.deleteOne({'id': id}, function (result) {
+        itemDao.deleteAllItemsInCanvas(id, function (data) {
+            next(result);
+        })
+    });
+};
+
+fileDao.prototype.updateFileById = function (id,update,next) {
+    this.updateOne({'id' : id},update,next);
+};
+
+fileDao.prototype.findManyFilesUnderAccount = function (query,user,next) {
+    query.createUserId = user.id;
+    this.findMany(query,next);
+};
+
+fileDao.prototype.findFileByIdUnderAccount = function (id,user,next) {
     var query = {
         id : id,
         createUserId : user.id
     };
-    this.findAll(query,next);
-};
-
-fileDao.prototype.recycleOrRestoreFiles = function (id,isRecycled,next) {
-    this.dataCollection.update(
-        {'id': id},
-        {
-            $set: {
-                'isRecycled': isRecycled
-            }
-        },
-        function (err, data) {
-            if (err) {
-                throw err;
-            } else {
-                next(data.result);
-            }
-        }
-    );
-};
-
-fileDao.prototype.removeById = function (id, next) {
-    this.dataCollection.remove({'id': id}, function (err, result) {
-        if (err) {
-            throw err;
-        } else {
-            next(result);
-        }
-    });
-};
-
-
-fileDao.prototype.renameById = function (id,fileName, next) {
-    this.dataCollection.update({'id': id},
-        {
-            $set: {
-                'fileName': fileName
-            }
-        }, function (err, result) {
-        if (err) {
-            throw err;
-        } else {
-            next(result);
+    this.findOne(query, function (result) {
+        if(result.data[0]){
+            itemDao.findItemsInCanvas(id, function (itemsData) {
+                if(itemsData.success){
+                    result.data[0].objects = itemsData.data;
+                }
+                next(result);
+            })
+        }else{
+            next(result.data[0]);
         }
     });
 };

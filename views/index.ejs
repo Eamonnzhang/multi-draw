@@ -27,49 +27,37 @@
     </style>
 </head>
 <body>
-    <div align='center' style="margin-top: 30px">
+    <div align="center" style="margin-top: 30px">
         <span class="brand-title my-title"> <i class="fa fa-paint-brush"></i> MultiDraw</span><br>
-        <div>
-            <button class="btn btn-info my-btn"  data-toggle="collapse" data-target="#collapseNewFile">
-                <i class="fa fa-user"></i> 单人模式
-            </button>
-            <button class="btn btn-info my-btn" data-toggle="collapse" data-target="#collapseEnterRoom">
-                <i class="fa fa-users"></i> 多人模式
-            </button>
-        </div>
-        <div class="collapse my-collapse" id="collapseEnterRoom">
-            <div class="well">
-                <form class="form-inline" action="/board" method="get">
-                    <div class="form-group">
-                        <label>房间名:</label>
-                        <input type="text" class="form-control" name="room" placeholder="创建或进入">
-                    </div>
-                    <button id='start-draw' type="submit" class="btn btn-primary my-btn">进入</button>
-                </form>
-            </div>
-        </div>
-        <div class="collapse my-collapse" id="collapseNewFile">
-            <div class="well">
-                <div class="form-inline">
-                    <div class="form-group">
-                        <label>文件名:</label>
-                        <input type="text" class="form-control" id = "fileName" placeholder="请输入文件名">
-                    </div>
-                    <button id='createFile' class="btn btn-primary my-btn">创建</button>
+        <!--<p>一个多人实时协作的自由画板</p>-->
+        <div class="well my-collapse">
+            <div class="alert alert-danger" style="display: none"></div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label>文件名:</label>
+                    <input type="text" class="form-control" id = "fileName" placeholder="请输入文件名">
                 </div>
+                <button id='createFile' class="btn btn-primary my-btn">创建</button>
             </div>
         </div>
     </div>
 </body>
 <script>
     $('#createFile').on('click', function () {
-        $.ajax({
-            method: "POST",
-            url: "/saveFile",
-            data: {fileName:$('#fileName').val()}
-        }).done(function( msg ) {
-                window.location.href='/board?id='+msg.data;
-            });
+        if($.trim($('#fileName').val()) === ""){
+            $('.alert').html('文件名不能为空！').show();
+        }else{
+            $.ajax({
+                method: "POST",
+                url: "/saveFile",
+                data: {fileName:$('#fileName').val(),background:'#ffffff'}
+            }).done(function( msg ) {
+                    window.location.href='/board?id='+msg.data;
+                });
+        }
     });
+    $('#fileName').on('focus', function () {
+        $('.alert').hide();
+    })
 </script>
 </html>

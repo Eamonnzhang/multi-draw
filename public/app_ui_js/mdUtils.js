@@ -20,8 +20,8 @@ var mdUtils = {
 
     getRandomLeftTop: function () {
         return {
-            left: this.getRandomInt(0, 200),
-            top:  this.getRandomInt(0 , 200)
+            left: this.getRandomInt(200, 500),
+            top:  this.getRandomInt(150 , 300)
         };
     },
 
@@ -164,6 +164,20 @@ var mdUtils = {
             }
             KeyUpCb(keyValue);
         }
+    },
+
+    showAlert: function(message,size,type,showWay){
+        var alertDialog = $('#alertModal');
+        alertDialog.find('p').html(message);
+        alertDialog.find('#size').removeClass();
+        alertDialog.find('#size').addClass('modal-dialog modal-'+size);
+        alertDialog.find('#type').removeClass();
+        alertDialog.find('#type').addClass('alert alert-'+type);
+        alertDialog.modal(showWay);
+    },
+
+    closeAlert: function(){
+        $('#alertModal').modal('hide');
     }
 
 }
@@ -185,7 +199,7 @@ var mdCanvas = {
      */
     toObject : function (obj,includeDefaultValues,propsInclude) {
         obj.hasOwnProperty('isDrawingMode') ?  obj.includeDefaultValues = false : obj.set('includeDefaultValues',includeDefaultValues);
-        var base = ['id','userId','userName','createTime','lastModify','skewX','skewY'];
+        var base = ['itemId','canvasId','skewX','skewY'];
         var propsArray = propsInclude ? propsInclude.concat(base) : base;
         return obj.toObject(propsArray);
     },
@@ -193,28 +207,40 @@ var mdCanvas = {
     /**
      * get an Object or a group of objects 's state prop
      * @param obj
-     * @returns {{}}
+     * @returns {[]}
      */
     toState : function (obj) {
         var state= {};
+        var items = [];
         state.top = obj.top;
         state.left = obj.left;
         state.angle = obj.angle;
         state.scaleX = obj.scaleX;
         state.scaleY = obj.scaleY;
-        if(obj.type === 'group'){
-            var idArr = [];
-            var objArr = obj.objects || obj._objects;
-            objArr.forEach(function(x){
-                idArr.push(x.id);
-            });
-            state.idArr = idArr;
-            state.width = obj.width;
-            state.height = obj.height;
+        state.skewX = obj.skewX;
+        state.skewY = obj.skewY;
+        if(obj._objects){
+            var objs = obj._objects;
+            objs.forEach(function(obj){
+                var matrix = obj.calcTransformMatrix(),
+                    options = fabric.util.qrDecompose(matrix);
+                var item = {
+                    itemId : obj.itemId,
+                    left : options.translateX,
+                    top : options.translateY,
+                    scaleX : options.scaleX,
+                    scaleY : options.scaleY,
+                    skewX : options.skewX,
+                    skewY : options.skewY,
+                    angle : options.angle
+                };
+                items.push(item);
+            })
         }else{
-            state.id = obj.id;
+            state.itemId = obj.itemId;
+            items.push(state);
         }
-        return state;
+        return items;
     },
 
     /**
@@ -223,11 +249,8 @@ var mdCanvas = {
      * @param s_obj
      */
     packageObj : function (c_obj) {
-        c_obj.id = mdUtils.generateId(8,32);
-        c_obj.userId = userId;
-        c_obj.userName = userName;
-        c_obj.createTime = moment().format('YYYY-MM-DD HH:mm:ss');
-        c_obj.lastModify = c_obj.createTime;
+        c_obj.canvasId = canvas.id;
+        c_obj.itemId = mdUtils.generateId(8,32);
     },
 
     /**
@@ -238,38 +261,11 @@ var mdCanvas = {
      */
     getObject : function (canvas,id,callback) {
         canvas.getObjects().forEach(function (x) {
-            if(x.id === id){
+            if(x.itemId === itemId){
                 callback&&callback(x);
             }
         });
     },
-
-    /**
-     * get the object's state in group relative to canvas
-     * has some bugs
-     * @param object
-     * @param group
-     * @returns {{left: number, top: *, scaleX: number, scaleY: number, angle: *}}
-     */
-   getObjectStateInGroup : function (object,callback) {
-        var group = object.group;
-        var fAngle = group.getAngle() * Math.PI / 180,
-            sin = Math.sin(fAngle),
-            cos = Math.cos(fAngle),
-            fixX = group.originX === 'left' ? group.width/2 : 0,
-            fixY = group.originY === 'top' ? group.height/2 : 0;
-        var state =  {
-            id : object.id,
-            left : group.left + (object.left + fixX) * cos - (object.top + fixY) * sin,
-            top : group.top  + (object.left + fixX) * sin + (object.top + fixY) * cos,
-            scaleX : object.scaleX * group.scaleX,
-            scaleY : object.scaleY * group.scaleY,
-            skewX : object.skewX,
-            skewY : object.skewY,
-            angle : object.getAngle() + group.getAngle()
-        };
-        callback&&callback(state);
-   },
 
     /**
      * add an object to the assign canvas;
@@ -349,13 +345,12 @@ var mdCanvas = {
      * remove the active(selected) objects
      * @param canvas
      * @param activeObj
-     * @param callback
      */
-    remove : function (canvas,activeObj,callback) {
+    remove : function (canvas,activeObj) {
         var idArr = [];
         if(activeObj._objects){
             activeObj.forEachObject(function (a) {
-                idArr.push(a.id);
+                idArr.push(a.itemId);
             });
             var objectsInGroup = activeObj.getObjects();
             canvas.discardActiveGroup();
@@ -367,14 +362,14 @@ var mdCanvas = {
                 canvas.remove(object);
             });
         }else{
-            idArr.push(activeObj.id);
+            idArr.push(activeObj.itemId);
             if(activeObj._element&&activeObj._element.tagName === 'VIDEO'){
                 if(!activeObj._element.paused) activeObj._element.pause();
                 console.log('delete a video');
             }
             canvas.remove(activeObj);
         }
-        callback&&callback(idArr);
+        return idArr;
     },
 
     activeAll : function (canvas) {
@@ -383,6 +378,19 @@ var mdCanvas = {
 
     isActiveObjectExist : function (canvas) {
         return canvas.getActiveObject()||canvas.getActiveGroup();
+    },
+
+    getSelectedItemId : function (canvas,objs) {
+        var ids = [];
+        if(objs._objects){
+            objs._objects.forEach(function (obj) {
+                ids.push(obj.itemId);
+            })
+        }else{
+            ids.push(objs.itemId);
+        }
+        return ids;
     }
 
 }
+

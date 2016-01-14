@@ -5,6 +5,7 @@
 var AbstractDao = require('../AbstractDao.js');
 var utils = require('../_utils/utils.js');
 var message = require('../_utils/messageGenerator.js');
+
 var userDao = function(collectionName){
   AbstractDao.call(this,collectionName);
 };

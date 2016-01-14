@@ -4,28 +4,26 @@
 var fileService = require('./fileService.js');
 var moment = require('moment');
 
-exports.save = function(req,res){
+exports.saveFile = function(req,res){
+    //data.lastModify = moment().format('YYYY-MM-DD HH:mm:ss');
     var user = req.session.userData;
-    var data = req.body;//这里拿到的就是前台传过来的对象，无需转换
-    if(!data.id){
-        fileService.save(data,user,function (data) {
+    var data = req.body; //这里拿到的就是前台传过来的对象，无需转换
+
+    if(!data.id){    //1：新建canvas（save）
+        fileService.saveFile(data,user,function (data) {
             res.send(data);
         });
-    }
-    else{
-        data.lastModify = moment().format('YYYY-MM-DD HH:mm:ss');
-        fileService.update({id : data.id},data,function (data) {
+    } else {    //2: 更新canvas非objs的属性 ({id,value})
+        var id = data.id;
+        delete data.id;
+        fileService.updateFile(id,data,function (data) {
             res.send(data);
         });
     }
 };
 
 exports.renameFile = function(req,res){
-    var query = {
-        id : req.query.id,
-        fileName : req.query.fileName
-    };
-    fileService.renameFile(query,function (data) {
+    fileService.updateFile(req.query.id,{fileName : req.query.fileName},function (data) {
         res.send(data);
     });
 };

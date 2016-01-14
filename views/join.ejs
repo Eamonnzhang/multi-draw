@@ -12,45 +12,43 @@
 	<![endif]-->
 </head>
 <body>
-	<div class="row">
-		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-3 col-lg-offset-4 col-md-5 col-md-offset-3">
-			<div class="login-panel panel panel-default" style="margin-top: 30px;">
-				<div class="panel-heading">欢迎加入 MultiDraw ！</div>
-				<div class="panel-body">
-                    <form id="joinForm" role="form" action="/signUpHandle" method="post">
-                        <div class="alert alert-success" style="display: none;"></div>
-                        <fieldset>
-                            <div class="form-group" id="userNameDiv">
-                                <label class="control-label" for="userName">用户名</label>
-                                <input class="form-control" placeholder="用户名（用于登录）" name="username" id="userName" type="text">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-3 col-lg-offset-4 col-md-5 col-md-offset-3">
+        <div class="login-panel panel panel-default" style="margin-top: 30px;">
+            <div class="panel-heading">欢迎加入 MultiDraw ！</div>
+            <div class="panel-body">
+                <form id="joinForm" role="form" action="/signUpHandle" method="post">
+                    <div class="alert alert-success" style="display: none;"></div>
+                    <fieldset>
+                        <div class="form-group" id="userNameDiv">
+                            <label class="control-label" for="userName">用户名</label>
+                            <input class="form-control" placeholder="用户名（用于登录）" name="username" id="userName" type="text">
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                <label class="control-label" for="firstName">名</label>
+                                <input class="form-control"placeholder="FirstName" name="firstName" id="firstName" type="text">
                             </div>
-                            <div class="row">
-                                <div class="form-group col-lg-6 col-md-6 col-sm-6">
-                                    <label class="control-label" for="firstName">名</label>
-                                    <input class="form-control"placeholder="FirstName" name="firstName" id="firstName" type="text">
-                                </div>
-                                <div class="form-group col-lg-6 col-md-6 col-sm-6">
-                                    <label class="control-label" for="lastName">姓</label>
-                                    <input class="form-control" placeholder="LastName" name="lastName" id="lastName" type="text">
-                                </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                <label class="control-label" for="lastName">姓</label>
+                                <input class="form-control" placeholder="LastName" name="lastName" id="lastName" type="text">
                             </div>
-                            <div class="form-group" id="passwordDiv">
-                                <label class="control-label" for="passWord">密码</label>
-                                <input class="form-control" placeholder="密码" name="password" id="passWord" type="password">
-                            </div>
-                            <div class="form-group" id="rePasswordDiv">
-                                <label class="control-label" for="rePassword">确认密码</label>
-                                <input class="form-control" placeholder="确认密码" name="confirmPassword" id="rePassword" type="password">
-                            </div>
-                            <button class="btn btn-success" type="submit">注册</button>
-                            <button type="button" class="btn btn-info" id="resetBtn">重置</button>
-                            <a href="/login" style="float:right;margin-top: 10px;">已有账号？立即登录！</a>
-                        </fieldset>
-                    </form>
-				</div>
-			</div>
-		</div><!-- /.col-->
-	</div><!-- /.row -->
+                        </div>
+                        <div class="form-group" id="passwordDiv">
+                            <label class="control-label" for="passWord">密码</label>
+                            <input class="form-control" placeholder="密码" name="password" id="passWord" type="password">
+                        </div>
+                        <div class="form-group" id="rePasswordDiv">
+                            <label class="control-label" for="rePassword">确认密码</label>
+                            <input class="form-control" placeholder="确认密码" name="confirmPassword" id="rePassword" type="password">
+                        </div>
+                        <button class="btn btn-success" type="submit">注册</button>
+                        <button type="button" class="btn btn-info" id="resetBtn">重置</button>
+                        <a href="/login" style="float:right;margin-top: 10px;">已有账号？立即登录！</a>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div><!-- /.col-->
 	<script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
 	<script src='/app_3th_js/bootstrap/bootstrap.js'></script>
 	<script src='/app_3th_js/bootstrap/bootstrapValidator.min.js'></script>

@@ -37,10 +37,10 @@
                             <li class="dropdown">
                                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">文件 <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href=""><span class="fa fa-file menu-btn" ></span>新建</a></li>
+                                    <li><a href="/new"><span class="fa fa-file menu-btn" ></span>新建</a></li>
                                     <li><a href="/center"><span class="fa fa-folder-open menu-btn" ></span>打开</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="" ng-click="save()"><span class="glyphicon glyphicon-save menu-btn"></span>保存</a></li>
+                                    <!--<li role="separator" class="divider"></li>-->
+                                    <!--<li><a href="" ng-click="save()"><span class="glyphicon glyphicon-save menu-btn"></span>保存</a></li>-->
                                     <li role="separator" class="divider"></li>
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#"><span class="fa fa-share menu-btn"></span>导出为</a>
@@ -55,7 +55,7 @@
                             <li><a id="modifyText"></a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href='javascript:void(0)' id="roomId" bind-value-to="roomId"></a></li>
+                            <li><a href='javascript:void(0)'><span class="glyphicon glyphicon-share"></span>&nbsp;分享画板</a></li>
                             <li class="dropdown">
                                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -263,7 +263,7 @@
                         <input type="number" min="1" max="10" id="stroke-width" bind-value-to="strokeWidth">
                     </div>
 
-                    <div class="mdBtn fill-color-box cell" data-toggle="tooltip" data-placement="left" title="填充色">
+                    <div id="fill-color-box" class="mdBtn fill-color-box cell" data-toggle="tooltip" data-placement="left" title="填充色">
                         <button class="btn btn-default geSprite geSprite-fillcolor colorBtn"></button>
                         <div id='fill' class="color-div" bind-value-to="fill"></div>
                     </div>
@@ -360,31 +360,27 @@
         </div>
         <!--bd--wrapper end-->
 
+        <!--通用 Alert-->
+        <div class="modal" id="alertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard=false aria-labelledby="alertModal">
+            <div id="size" role="document">
+                <div align="center" id="type" role="alert">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+
         <!--清空操作 Alert-->
         <div class="modal fade bs-example-modal-sm" id="myAlertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-sm" role="document">
                 <div align="center" class="alert alert-danger alert-dismissible fade in" role="alert">
                     <h4>清空后将不可恢复!</h4>
-                    <!--<p>清空后将不可恢复</p>-->
-                    <br>
-                    <p >
+                    <p>
                         <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmClear()">清空</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                     </p>
                 </div>
             </div>
         </div>
-        <!--清空操作 Alert END-->
-
-        <!--不支持canvas Alert-->
-        <div class="modal fade bs-example-modal-sm" id="myUnsptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog modal-sm" role="document">
-                <div align="center" class="alert alert-warning alert-dismissible fade in" role="alert">
-                    <p>您的浏览器可能<strong>不支持</strong>此操作！</p>
-                </div>
-            </div>
-        </div>
-        <!--不支持canvas Alert END-->
 
         <!--Save Model-->
         <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -395,7 +391,7 @@
                         <h4 class="modal-title">文件名：</h4>
                     </div>
                     <div class="modal-body">
-                        <input id='filename' type='text' size="30">
+                        <input id='fileName' type='text' size="30">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -405,7 +401,6 @@
                 </div>
             </div>
         </div>
-        <!--Save Model END-->
 
         <!--JSON Modal-->
         <div class="modal fade" id="JsonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -425,7 +420,6 @@
                 </div>
             </div>
         </div>
-        <!--JSON Modal END-->
 
         <!--canvas 自定义大小 Modal-->
         <div class="modal fade bs-example-modal-sm" id="customizedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -456,7 +450,6 @@
                 </div>
             </div>
         </div>
-        <!--canvas 自定义大小 Modal END-->
 
         <!--bootstrap context menu-->
         <div id="context-menu">
@@ -470,16 +463,7 @@
                 <li id="stb-context"><a href="" tabindex="-1" ng-click="sendToBack()"><span class="fa fa-angle-double-down menu-btn" ></span>置于底层</a></li>
             </ul>
         </div>
-        <!--bootstrap context menu END-->
-        <!--清空操作 Alert-->
-        <div class="modal fade bs-example-modal-sm" id="saveSuccess" tabindex="-1" role="dialog" aria-labelledby="saveSuccess">
-            <div class="modal-dialog modal-sm" role="document">
-                <div align="center" class="alert alert-success" role="alert">
-                    <p>保存成功！</p>
-                </div>
-            </div>
-        </div>
-        <!--清空操作 Alert END-->
+
 
     </body>
     <script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
@@ -504,7 +488,7 @@
         };
         var _ = function(id){return document.getElementById(id)};
         var urlParams = mdUtils.urlParams(window.location.href);
-        if(urlParams['room']) var roomId = urlParams['room'];
+        if(urlParams['id']) var canvasId = urlParams['id'];
         var editBoard = new EditBoard();
         var canvas = editBoard.canvas;
         var socket = editBoard.socket;

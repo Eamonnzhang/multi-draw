@@ -3,10 +3,11 @@
  */
 var fileController = require('../app_modules/files_mgmt/fileController.js');
 var userController = require('../app_modules/users_mgmt/userController.js');
+var itemController = require('../app_modules/items_mgmt/itemController.js');
 var message = require('../app_modules/_utils/messageGenerator.js');
 var uuId = require('../app_modules/_utils/uuidGenerator.js');
-module.exports = function(app){
 
+module.exports = function(app){
     app.get('/board',function(req,res){
         if(req.query.userName&&req.query.userId){
             res.render('canvas', {
@@ -17,16 +18,27 @@ module.exports = function(app){
             });
         }else{
             if (req.session.userData) {
-                res.render('canvas', {
-                    userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
-                    userId: req.session.userData.id,
-                    apiKey: req.session.userData.apiKey,title:'MultiDraw'
-                });
+                if(req.query.id){
+                    res.render('canvas', {
+                        userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
+                        userId: req.session.userData.id,
+                        apiKey: req.session.userData.apiKey,title:'MultiDraw'
+                    });
+                }
+                else{
+                    res.redirect('/center');
+                }
             }else{
                 res.redirect('/login');
             }
         }
     });
+
+    app.get('/test', function (req, res) {
+
+        itemController.findOneItem(req,res);
+
+    })
 
     app.get('/new',function(req,res){
         if (req.session.userData) {
@@ -82,22 +94,14 @@ module.exports = function(app){
         res.redirect('/board');
     });
 
-    app.get('/users',function(req,res){
-
-    });
-
     app.post('/saveFile',function(req,res){
-        fileController.save(req,res);
-    });
-
-    app.get('/renameFile',function(req,res){
-        fileController.renameFile(req,res);
+        fileController.saveFile(req,res);
     });
 
     app.get('/loadAllFiles',function(req,res){
         fileController.loadAllFiles(req,res);
     });
-    
+
     app.get('/recycleFiles', function (req,res) {
         fileController.recycleFiles(req,res);
     });
@@ -114,6 +118,24 @@ module.exports = function(app){
         var userApi = userController.getUserApi();
         fileController.loadFile(userApi,req,res);
     });
+
+    app.post('/saveItem', function (req,res) {
+        itemController.saveItem(req,res);
+    });
+
+    app.post('/updateItems', function (req,res) {
+        itemController.updateItem(req,res);
+    });
+
+    app.post('/deleteItems', function (req,res) {
+        itemController.deleteItem(req,res);
+    });
+
+    app.get('/renameFile',function(req,res){
+        fileController.renameFile(req,res);
+    });
+
+
 
     // catch 404 and forward to error handler
     app.use(function(req, res, next) {

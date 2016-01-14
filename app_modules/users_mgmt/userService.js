@@ -8,7 +8,7 @@ var message = require('../_utils/messageGenerator.js');
 
 exports.isExist = function(query,next){
     userDao.findOne(query,function(result){
-        if(result.data)
+        if(result.data.length)
             next(result);
         else
             next(message.genSimpFailedMsg('not exist',null));

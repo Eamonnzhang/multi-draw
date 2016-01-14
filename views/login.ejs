@@ -12,28 +12,25 @@
 	<![endif]-->
 </head>
 <body>
-	<div class="row">
-		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-3 col-md-offset-4">
-			<div class="login-panel panel panel-default" style="margin-top: 30px;">
-				<div class="panel-heading">登录 MultiDraw！
-                </div>
-				<div class="panel-body">
-					<form id="logInForm" role="form" action="/loginHandle" method="post">
-                        <div class="alert alert-warning" style="display: none;"></div>
-						<fieldset>
-							<div class="form-group">
-								<input class="form-control" placeholder="用户名" name="username" type="text" autofocus="">
-							</div>
-							<div class="form-group">
-								<input class="form-control" placeholder="密码" name="password" type="password" value="">
-							</div>
-							<button class="btn btn-info">登录</button> <a href="/join" style="float:right;margin-top:10px;">加入 MultiDraw!</a>
-						</fieldset>
-					</form>
-                </div>
-			</div>
-		</div><!-- /.col-->
-	</div><!-- /.row -->
+    <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-3 col-md-offset-4">
+        <div class="login-panel panel panel-default" style="margin-top: 30px;">
+            <div class="panel-heading">登录 MultiDraw！</div>
+            <div class="panel-body">
+                <form id="logInForm" role="form" action="/loginHandle" method="post">
+                    <div class="alert alert-warning" style="display: none;"></div>
+                    <fieldset>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="用户名" name="username" type="text" autofocus="">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="密码" name="password" type="password" value="">
+                        </div>
+                        <button class="btn btn-info">登录</button> <a href="/join" style="float:right;margin-top:10px;">加入 MultiDraw!</a>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
 	<script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
 	<script src='/app_3th_js/bootstrap/bootstrap.js'></script>
     <script src='/app_3th_js/bootstrap/bootstrapValidator.min.js'></script>

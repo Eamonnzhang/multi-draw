@@ -4,13 +4,15 @@
  * and if you don't know where to put your code,put them here temporarily
  */
 var EditBoard = function (){
-    this.socket = io.connect('http://192.168.1.81:4500');
+    this.socket = io.connect('http://localhost:4500');
     var canvas = this.canvas = new fabric.Canvas('c', {
         backgroundColor :"#ffffff",
         width:750,
         height:530,
         isDrawingMode:false,
+        id:canvasId
     });
+    //if(canvasId) this.canvas.id = canvasId;
     var configBoard = this.configBord =  new ConfigBoard(this);
     fabric.Object.prototype.transparentCorners = false;
     canvas.add();//chrome抽了，= =必须要加一句为了显示空白canvas

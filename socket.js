@@ -6,7 +6,6 @@ var socket = require('socket.io');
 var io = null;
 
 var md = {
-    objectsRoom : {},
     userRoom : {}
 };
 
@@ -14,30 +13,10 @@ var utils = {
     isNotValid : function (value) {
         return value === null || value === undefined;
     },
-    spliceArray : function (array,data) {
-        for(var i =0;i<array.length;i++) {
-            if (data.indexOf(array[i].id) !== -1) {
-                array.splice(i, 1);
-                i--;
-            }
-        }
-    },
-    setPropsInArray : function (array,data){
-        for(var i =0;i<array.length;i++) {
-            if (data.id === array[i].id) {
-                for(var p in data){
-                    array[i][p] = data[p];
-                }
-            }
-        }
-    },
-    setPropInArray : function (array,data) {
-        for(var i =0;i<array.length;i++) {
-            if (data.id === array[i].id) {
-                array[i][data.name] = data.value;
-            }
-        }
-    },
+    prepareNewObj : function (obj,user) {
+        obj.userId = user.id;
+        obj.userName = user.name.firstName+" "+user.name.lastName;
+    }
 };
 
 var room;
@@ -45,8 +24,10 @@ var room;
 exports.getSocketIo = function(){
     return socket;
 };
-exports.startSocketIo = function(server){
+exports.startSocketIo = function(server,db,configCallback){
     io = socket(server);
+    var itemDao = db;
+    io.use(configCallback);
     io.on('connection', function (socket) {
         var addedUser = false;
         socket.on('room',function(info){
@@ -60,7 +41,6 @@ exports.startSocketIo = function(server){
                 md.userRoom[room] = {};
                 md.userRoom[room].numUsers = 1;
                 md.userRoom[room].users = [info.user];
-                //md.userRoom[room].users.push();
             }else{
                 md.userRoom[room].users.push(info.user);
                 ++md.userRoom[room].numUsers;
@@ -69,10 +49,10 @@ exports.startSocketIo = function(server){
                 userName: info.user.userName,
                 numUsers: md.userRoom[room].numUsers
             });
-            if(utils.isNotValid(md.objectsRoom[room])){
-                md.objectsRoom[room]=[];
-            }
-            socket.emit('canvas',md);
+            var currentRoomData = {
+                userData : md.userRoom[room]
+            };
+            socket.emit('canvas',currentRoomData);
         });
 
         socket.on('queryUsers', function (data) {
@@ -95,52 +75,84 @@ exports.startSocketIo = function(server){
         });
 
         socket.on('clearAll',function(data){
-            socket.broadcast.to(room).emit('clearAll', data);
-            md.objectsRoom[room] = [];
+            socket.broadcast.to(room).emit('clearAll', 'clearAll');
+            itemDao.deleteAllItemsInCanvas(data.canvasId, function (data) {
+                console.log('clearAll',data);
+            })
         });
 
         socket.on('clearSelected',function(data){
             socket.broadcast.to(room).emit('clearSelected', data);
-            utils.spliceArray(md.objectsRoom[room],data);
-        });
-
-        socket.on('addObject', function (data) {
-            socket.broadcast.to(room).emit('addObject',data);
-            md.objectsRoom[room].push(data);
-        });
-
-        socket.on('restoreAll', function (data) {
-            if(data&&data.objects){
-                data.objects.forEach(function (obj) {
-                    utils.setPropsInArray(md.objectsRoom[room],obj);
+            var itemsId = data.itemsId,
+                cbNum = 0,
+                result = [];
+            for(var i = 0; i < itemsId.length; i++){
+                itemDao.deleteItemInCanvas({itemId : itemsId[i]},data.canvasId, function (data) {
+                    cbNum++;
+                    if(data){
+                        result.push(data);
+                        if(cbNum === itemsId.length){
+                            console.log('clearSelect',result);
+                        }
+                    }
                 })
             }
         });
+
+        socket.on('addObject', function (data) {
+            utils.prepareNewObj(data,socket.handshake.session.userData);
+            socket.broadcast.to(room).emit('addObject',data);
+            itemDao.saveItem(data, function (data) {
+                console.log('addObject');
+            });
+        });
+
         socket.on('statePropChange',function(data){
             socket.broadcast.to(room).emit('statePropChange', data);
-            utils.setPropsInArray(md.objectsRoom[room],data);
+            var items = data.items,
+                cbNum = 0,
+                result = [];
+            for(var i = 0; i < items.length; i++){
+                var itemId = items[i].itemId;
+                delete items[i].itemId;
+                itemDao.updateItemInCanvas({itemId : itemId},data.canvasId,items[i], function (data) {
+                    cbNum++;
+                    if(data){
+                        result.push(data);
+                        if(cbNum === items.length){
+                            console.log('statePropChange',result);
+                        }
+                    }
+                })
+            }
         });
 
         socket.on('stylePropChange',function(data){
             socket.broadcast.to(room).emit('stylePropChange', data);
-            utils.setPropInArray(md.objectsRoom[room],data);
+            var item = data.items[0],
+                itemId = item.itemId;
+            delete item.itemId;
+            itemDao.updateItemInCanvas({itemId :itemId},data.canvasId,item,function (result) {
+                console.log('stylePropchange');
+            });
         });
 
         socket.on('canvasBgColor', function (value) {
             socket.broadcast.to(room).emit('canvasBgColor', value);
         });
 
-        socket.on('groupStateChange',function(group){
-            socket.broadcast.to(room).emit('groupStateChange', group);
-        });
+        socket.on('canvasPropChange', function (data) {
+            socket.broadcast.to(room).emit('canvasPropChange', data);
+        })
 
         socket.on('lockState',function(data){
             socket.broadcast.to(room).emit('lockState', data);
         });
 
-        socket.on('discard',function(data){
-            socket.broadcast.to(room).emit('discard', data);
+        socket.on('unlockState',function(data){
+            socket.broadcast.to(room).emit('unlockState', data);
         });
+
 
         socket.on('disconnect',function(){
             if(room){
