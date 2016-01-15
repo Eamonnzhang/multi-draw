@@ -65,6 +65,7 @@ function editorEnterFire(e){
             item.itemId = obj.itemId;
             item.text =  $(this).val();
             data.items.push(item);
+            $('#modifyText').html('正在保存...');
             socket.emit('stylePropChange',data);
         });
 
@@ -114,6 +115,7 @@ function setActiveStyle($scope,styleName, value, object) {
     item[styleName] = value;
     console.log(item);
     data.items.push(item);
+    $('#modifyText').html('正在保存...');
     socket.emit('stylePropChange', data);
 }
 
@@ -138,6 +140,7 @@ function setActiveProp($scope,name, value) {
     item.itemId = object.itemId;
     item[name] = value;
     data.items.push(item);
+    $('#modifyText').html('正在保存...');
     socket.emit('stylePropChange',data);
 }
 
@@ -290,6 +293,8 @@ function addAccessors($scope) {
     };
 
     $scope.confirmClear = function() {
+        $('#modifyText').html('正在保存...');
+
         socket.emit('clearAll',{canvasId:$scope.canvas.id});
         canvas.clear();
     };
@@ -336,6 +341,8 @@ function addAccessors($scope) {
         if(activeGroup){
             data.itemsId = mdCanvas.remove(canvas,activeGroup);
         }
+        $('#modifyText').html('正在保存...');
+
         socket.emit('clearSelected', data);
     };
 
@@ -754,7 +761,7 @@ function addObject($scope){
         mdCanvas.add(canvas,circle.toObject(),function (fCircle) {
             $scope.setFreeDrawingMode(false);
             //mdCanvas.packageObj(fCircle);
-            socket.emit('addObject',mdCanvas.toObject(fCircle,false))
+            //socket.emit('addObject',mdCanvas.toObject(fCircle,false))
         });
     };
 
@@ -1073,10 +1080,13 @@ function addMyOwnAccessors($scope,$http){
                     fileName : newtxt,
                     id : $scope.canvas.id
                 };
+                $('#modifyText').html('正在保存...');
+
                 socket.emit('canvasPropChange',{fileName:newtxt});
                 $http.get("/renameFile"+mdUtils.convertJSONToQueryStr(queryObj))
                     .success(function (res) {
-                        console.log(res);
+                        $('#modifyText').html('所有更改已保存');
+
                     });
             }
         })
@@ -1176,6 +1186,8 @@ function addCanvasListener($scope) {
             items : []
         };
         data.items = mdCanvas.toState(modifiedObj);
+        $('#modifyText').html('正在保存...');
+
         socket.emit('statePropChange',data);
 
     }
@@ -1196,7 +1208,7 @@ function addCanvasListener($scope) {
         }
     }
     function beforeSelectClearedLtn(e){
-        console.log('beforeSelectClearedLtn');
+        //console.log('beforeSelectClearedLtn');
         var target = e.target;
         var idArr = mdCanvas.getSelectedItemId(canvas,target);
         socket.emit('unlockState',idArr);
@@ -1217,6 +1229,8 @@ function addObjListener(){
         if(!item.hasOwnProperty('isOld')){
             //console.log('emit new obj');
             mdCanvas.packageObj(item);
+            $('#modifyText').html('正在保存...');
+
             socket.emit('addObject',mdCanvas.toObject(item,false));
         }else{
             console.log(item.isOld);
@@ -1326,8 +1340,21 @@ function initContextMenu($scope){
 function initCanvasSocket($scope){
     socket.emit('room', {roomId : canvasId, user : user});
     //mdUtils.showAlert('正在同步画板数据...','sm','warning','show');
+
+
+
     socket.on('canvas', function (canvasData) {
         console.log(canvasData.userData);
+    });
+
+    socket.on('saveSuccess', function (data) {
+        $('#modifyText').html(data.msg);
+        //$('#modifyText').css('color','#A9A9A9');
+    });
+
+    socket.on('saveFailed', function (data) {
+        $('#modifyText').html(data.msg);
+        //$('#modifyText').css('color','#A9A9A9');
     });
 
     socket.on('addObject', function (sObject) {
@@ -1477,6 +1504,7 @@ function initCanvasSocket($scope){
 
 function httpOpt($scope,$http){
 
+
     $scope.loadFile = function (query) {
         $http.get('/loadFile'+mdUtils.convertJSONToQueryStr(query))
             .then(function (result) {
@@ -1589,7 +1617,6 @@ canvasModule.controller('CanvasCtrl', function($scope,$http) {
     };
     $scope.loadFile(query);
     $scope.canvas = canvas;
-    //$scope.fileName = canvas.fileName;
     $scope.getActiveStyle = getActiveStyle;
     addAccessors($scope);
     addMyOwnAccessors($scope,$http);

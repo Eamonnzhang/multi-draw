@@ -77,7 +77,12 @@ exports.startSocketIo = function(server,db,configCallback){
         socket.on('clearAll',function(data){
             socket.broadcast.to(room).emit('clearAll', 'clearAll');
             itemDao.deleteAllItemsInCanvas(data.canvasId, function (data) {
-                console.log('clearAll',data);
+                //console.log('clearAll',data);
+                if(data.success){
+                    io.sockets.in(room).emit('saveSuccess',{msg:'所有更改已保存'});
+                }else{
+                    io.sockets.in(room).emit('saveFailed',{msg:'保存失败'});
+                }
             })
         });
 
@@ -92,7 +97,7 @@ exports.startSocketIo = function(server,db,configCallback){
                     if(data){
                         result.push(data);
                         if(cbNum === itemsId.length){
-                            console.log('clearSelect',result);
+                            io.sockets.in(room).emit('saveSuccess',{msg:'所有更改已保存'});
                         }
                     }
                 })
@@ -103,7 +108,12 @@ exports.startSocketIo = function(server,db,configCallback){
             utils.prepareNewObj(data,socket.handshake.session.userData);
             socket.broadcast.to(room).emit('addObject',data);
             itemDao.saveItem(data, function (data) {
-                console.log('addObject');
+                //console.log('addObject');
+                if(data.success){
+                    io.sockets.in(room).emit('saveSuccess',{msg:'所有更改已保存'});
+                }else{
+                    io.sockets.in(room).emit('saveFailed',{msg:'保存失败'});
+                }
             });
         });
 
@@ -120,7 +130,7 @@ exports.startSocketIo = function(server,db,configCallback){
                     if(data){
                         result.push(data);
                         if(cbNum === items.length){
-                            console.log('statePropChange',result);
+                            io.sockets.in(room).emit('saveSuccess',{msg:'所有更改已保存'});
                         }
                     }
                 })
@@ -133,7 +143,12 @@ exports.startSocketIo = function(server,db,configCallback){
                 itemId = item.itemId;
             delete item.itemId;
             itemDao.updateItemInCanvas({itemId :itemId},data.canvasId,item,function (result) {
-                console.log('stylePropchange');
+                //console.log('stylePropchange');
+                if(data.success){
+                    io.sockets.in(room).emit('saveSuccess',{msg:'所有更改已保存'});
+                }else{
+                    io.sockets.in(room).emit('saveFailed',{msg:'保存失败'});
+                }
             });
         });
 
