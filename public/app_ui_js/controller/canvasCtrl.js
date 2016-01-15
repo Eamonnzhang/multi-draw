@@ -1,6 +1,3 @@
-var canvasData = {};
-canvasData.usersId = [];
-
 //暂时用此方法来,解决输入中文的BUG
 function editorEnterFire(e){
     var obj = this;
@@ -287,6 +284,11 @@ function addAccessors($scope) {
         return canvas.backgroundColor;
     };
     $scope.setCanvasBgColor = function(value) {
+        var obj ={
+            id : $scope.canvas.id,
+            background : value
+        };
+        $scope.updateCanvas(obj);
         socket.emit('canvasBgColor',value);
         canvas.backgroundColor = value;
         canvas.renderAll();
@@ -1086,7 +1088,6 @@ function addMyOwnAccessors($scope,$http){
                 $http.get("/renameFile"+mdUtils.convertJSONToQueryStr(queryObj))
                     .success(function (res) {
                         $('#modifyText').html('所有更改已保存');
-
                     });
             }
         })
@@ -1233,7 +1234,7 @@ function addObjListener(){
 
             socket.emit('addObject',mdCanvas.toObject(item,false));
         }else{
-            console.log(item.isOld);
+            //console.log(item.isOld);
             delete item.isOld;
         }
     }
@@ -1491,8 +1492,9 @@ function initCanvasSocket($scope){
         canvas.renderAll();
     });
 
+    //监听canvas在视图上显示的一些meta属性的改变(fileName等)
     socket.on('canvasPropChange', function (data) {
-        console.log(data);
+        //console.log(data);
         for(var p in data){
             canvas[p] = data[p];
         }
@@ -1526,7 +1528,7 @@ function httpOpt($scope,$http){
                     }
                     canvas.fileName = canvasData.fileName;
                     canvas.loadFromJSON(canvasData, function () {
-                        if(vObj.length){
+                        if(vObj.length){   //canvas在load完之后渲染video对象
                             vObj.forEach(function (video) {
                                 mdCanvas.addUrl(canvas,video.url,function (urlObj) {
                                     urlObj.set(video.prop).setCoords();
@@ -1534,9 +1536,9 @@ function httpOpt($scope,$http){
                             })
                         }
                         //canvas.renderAll.bind(canvas);
-                        addObjListener($scope);
+                        addObjListener($scope);  //load完之后再绑定addobject监听事件，防止重复请求存储
                     },function (o,object) {
-                        if(object.type === 'i-text'){
+                        if(object.type === 'i-text'){   //对i-text绑定特殊的编辑事件
                             object.on('editing:entered', editorEnterFire);
                         }
                     });
@@ -1548,9 +1550,10 @@ function httpOpt($scope,$http){
             });
     };
 
-    $scope.updateCanvas = function (obj) {
+    $scope.updateCanvas = function (obj) { //更新canvas的一些Meta属性
         $http.post('/saveFile',obj).then(function (result) {
-                console.log(result);
+                //console.log(result);
+            $('#modifyText').html('所有更改已保存');
         }, function (err) {
             mdUtils.showAlert('请求失败','sm','danger','show');
         })
