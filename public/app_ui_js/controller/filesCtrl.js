@@ -83,14 +83,19 @@ fileListModule.controller('FileListCtrl', function($scope, $http) {
             });
     };
 
-    $scope.loadFile = function (file) {
+    $scope.loadFile = function (file,isReload) {
+        console.log(isReload);
         var queryObj = {};
         if(this.getSelectedFilesIds())
             queryObj.id = this.getSelectedFilesIds()[0];
         if(file)
             queryObj.id = file.id;
-        window.open('/board' + mdUtils.convertJSONToQueryStr(queryObj,true));
+        if(!isReload)
+            window.open('/board' + mdUtils.convertJSONToQueryStr(queryObj,true));
+        else
+            window.location.href= '/board' + mdUtils.convertJSONToQueryStr(queryObj,true);
     };
+
 
     //回收
     $scope.recycleFile = function () {

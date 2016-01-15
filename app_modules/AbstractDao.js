@@ -101,9 +101,9 @@ AbstractDao.prototype.deleteManyFields = function (query,filedNameArr,next) {
 AbstractDao.prototype.updateOne = function(query,update, next) {
     this.dataCollection.updateOne(query, {
         $set: update
-    },function (err, data) {
+    },{upsert:true},function (err, data) {
         if (err) {
-            next(message.genSimpFailedMsg(err.message, err.stack));
+            next(message.genSimpFailedMsg(null,err));
         } else {
             next(message.genSimpSuccessMsg(null, data.result));
         }

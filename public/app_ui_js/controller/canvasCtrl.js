@@ -128,10 +128,6 @@ function getActiveProp(name) {
 function setActiveProp($scope,name, value) {
     var object = canvas.getActiveObject();
     if (!object) return;
-    //var obj = {};
-    //obj.id = object.id;
-    //obj.name = name;
-    //obj.value = value;
     object.set(name, value).setCoords();
     canvas.renderAll();
     var data = {
@@ -341,17 +337,6 @@ function addAccessors($scope) {
             data.itemsId = mdCanvas.remove(canvas,activeGroup);
         }
         socket.emit('clearSelected', data);
-        //activeObject&&mdCanvas.remove(canvas,activeObject,function (idArr) {
-        //        var data = {
-        //            canvasId : $scope.canvas.id,
-        //            itemsId : idArr
-        //        };
-        //        //$scope.saveFile('/deleteItems',data);
-        //    socket.emit('clearSelected', idArr);
-        //});
-        //activeGroup&&mdCanvas.remove(canvas,activeGroup,function (idArr) {
-        //    socket.emit('clearSelected', idArr);
-        //});
     };
 
     $scope.getHorizontalLock = function() {
@@ -1288,6 +1273,14 @@ function initKeyBoard($scope){
             ctrlKeyDown = false;
         }
     }
+    $(window).on('beforeunload', function(){
+        //save canvas thumbnail
+        var obj = {
+            id : $scope.canvas.id,
+            thumbnail : canvas.toDataURL('png')
+        };
+        $scope.updateCanvas(obj);
+    })
 }
 function initContextMenu($scope){
     document.oncontextmenu = function (e) {
@@ -1460,7 +1453,7 @@ function initCanvasSocket($scope){
             }
         });
         canvas.renderAll();
-    })
+    });
 
     socket.on('canvasBgColor', function (value) {
         canvas.backgroundColor = value;
@@ -1512,7 +1505,7 @@ function httpOpt($scope,$http){
                                 });
                             })
                         }
-                        canvas.renderAll.bind(canvas);
+                        //canvas.renderAll.bind(canvas);
                         addObjListener($scope);
                     },function (o,object) {
                         if(object.type === 'i-text'){
@@ -1525,6 +1518,14 @@ function httpOpt($scope,$http){
             }, function () {
                 mdUtils.showAlert('请求失败','sm','danger','show');
             });
+    };
+
+    $scope.updateCanvas = function (obj) {
+        $http.post('/saveFile',obj).then(function (result) {
+                console.log(result);
+        }, function (err) {
+            mdUtils.showAlert('请求失败','sm','danger','show');
+        })
     }
 }
 

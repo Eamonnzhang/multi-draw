@@ -342,7 +342,14 @@ label {
 .file-container{
     background-color: #FFFFFF;
     padding: 10px;
+    /*height: 200px;*/
+    /*overflow: auto;*/
     /*margin-right: -20px;*/
+}
+
+.file-ctn{
+    height: 550px;
+    overflow: auto;
 }
 .center-container{
     margin-top:100px;

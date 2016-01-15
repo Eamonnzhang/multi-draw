@@ -65,7 +65,7 @@
     </div><!-- /.container-fluid -->
 </nav>
     <div class="center-container" ng-controller="FileListCtrl">
-        <div class="col-lg-8 col-lg-offset-1 col-md-offset-1 col-md-8">
+        <div class="col-lg-8 col-lg-offset-1 col-md-offset-1 col-md-8 col-sm-8">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
@@ -120,15 +120,15 @@
                     <div ng-show="isFileExist()" class="file-ctn" ng-click="discardSelectedFile()">
                         <div class="panel panel-default ng-file-item file-item" ng-show="isThView()" ng-repeat="file in files">
                             <div class="panel-body" align="center">
-                                <img src="images/file-img.png" class="file-img"/>
+                                <img ng-src= "{{file.thumbnail}}" class="file-img"/>
                             </div>
-                            <div class="file-name"><a href="" ng-click="loadFile(file)">{{ file.fileName }}</a></div>
+                            <div class="file-name"><a href="" ng-click="loadFile(file,true)">{{ file.fileName }}</a></div>
                         </div>
                         <table class="table" ng-show="isListView()">
                             <thead><tr><th>标题</th><th>创建者</th><th>最后修改</th></tr></thead>
                             <tbody>
                                 <tr class="ng-file-item file-item-list" ng-repeat="file in files">
-                                    <td class="file-name"><a href="" ng-click="loadFile(file)"><i class="fa fa-paint-brush"></i> {{ file.fileName }}</a></td>
+                                    <td class="file-name"><a href="" ng-click="loadFile(file,true)"><i class="fa fa-paint-brush"></i> {{ file.fileName }}</a></td>
                                     <td>{{ file.createUserName }}</td>
                                     <td>{{ file.lastModify }}</td>
                                 </tr>
@@ -184,15 +184,15 @@
                     <div ng-show="isFileExist()" class="file-ctn"  ng-click="discardSelectedFile()">
                         <div class="panel panel-default ng-file-item file-item" ng-show="isThView()" ng-repeat="file in files">
                             <div class="panel-body" align="center">
-                                <img src="images/file-img.png" class="file-img"/>
+                                <img ng-src= "{{file.thumbnail}}" class="file-img"/>
                             </div>
-                            <div class="file-name"><a href="" ng-click="loadFile(file)">{{ file.fileName }}</a></div>
+                            <div class="file-name"><a href="" ng-click="loadFile(file,true)">{{ file.fileName }}</a></div>
                         </div>
                         <table class="table" ng-show="isListView()">
                             <thead><tr><th>标题</th><th>创建者</th><th>最后修改</th></tr></thead>
                             <tbody>
                             <tr class="ng-file-item file-item-list" ng-repeat="file in files">
-                                <td class="file-name"><a href="" ng-click="loadFile(file)"><i class="fa fa-paint-brush"></i> {{ file.fileName }}</a></td>
+                                <td class="file-name"><a href="" ng-click="loadFile(file,true)"><i class="fa fa-paint-brush"></i> {{ file.fileName }}</a></td>
                                 <td>{{ file.createUserName }}</td>
                                 <td>{{ file.lastModify }}</td>
                             </tr>
@@ -206,11 +206,11 @@
             </div>
         </div>
         <!--文件详情-->
-        <div class="col-lg-2 col-md-3">
+        <div class="col-lg-2 col-md-3 col-sm-4">
             <div class="file-detail" ng-show="isFileSelected()" ng-model="currentSelectedObj">
                 <div class="panel panel-default">
                     <div class="panel-body" align="center">
-                        <img src="images/file-img.png" width="170" height="200"/>
+                        <img ng-src= "{{currentSelectedObj.thumbnail}}" width="170" height="200"/>
                     </div>
                 </div>
                 <div class="panel-footer">
@@ -247,5 +247,7 @@
             reader.readAsDataURL(file);
         };
     });
+
+
 </script>
 </html>
