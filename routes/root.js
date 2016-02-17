@@ -9,36 +9,21 @@ var uuId = require('../app_modules/_utils/uuidGenerator.js');
 
 module.exports = function(app){
     app.get('/board',function(req,res){
-        if(req.query.userName&&req.query.userId){
-            res.render('canvas', {
-                userName: req.query.userName,
-                userId: req.query.userId,
-                apiKey: uuId.generateId(8, 32),
-                title:'MultiDraw'
-            });
-        }else{
-            if (req.session.userData) {
-                if(req.query.id){
-                    res.render('canvas', {
-                        userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
-                        userId: req.session.userData.id,
-                        apiKey: req.session.userData.apiKey,title:'MultiDraw'
-                    });
-                }
-                else{
-                    res.redirect('/center');
-                }
-            }else{
-                res.redirect('/login');
+        if (req.session.userData) {
+            if(req.query.id){
+                res.render('canvas', {
+                    userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
+                    userId: req.session.userData.id,
+                    apiKey: req.session.userData.apiKey,title:'MultiDraw'
+                });
             }
+            else{
+                res.redirect('/center');
+            }
+        }else{
+            res.redirect('/login');
         }
     });
-
-    app.get('/test', function (req, res) {
-
-        itemController.findOneItem(req,res);
-
-    })
 
     app.get('/new',function(req,res){
         if (req.session.userData) {
@@ -58,10 +43,6 @@ module.exports = function(app){
 
     app.get('/join',function(req,res){
         res.render('join',{title:'MultiDraw'});
-    });
-
-    app.get('/filelist',function(req,res){
-        res.render('file_list');
     });
 
     app.get('/center', function (req,res) {

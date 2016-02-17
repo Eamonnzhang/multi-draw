@@ -49,7 +49,7 @@ label {
 /*顶部工具条*/
 .top-toolbar {
     background:#ffffff;
-    padding-top:10px;
+    /*padding-top:10px;*/
     padding-left:10px;
     position:absolute;
     width: 100%;
@@ -59,8 +59,10 @@ label {
 }
 
 .top-toolbar textarea {
+    margin-top:10px;
     font-family: 微软雅黑;
     height: 25px;
+    resize: none;
 }
 
 .top-toolbar select{
@@ -72,12 +74,19 @@ label {
 }
 
 .top-toolbar .cell{
+    margin-top:10px;
     margin-right: 5px;
+    float:left;
+}
+.top-toolbar .cell2{
+    margin-right: 5px;
+    margin-top: 7px;
     float:left;
 }
 
 .top-toolbar .bigCell{
     margin-right: 5px;
+    float:left;
 }
 
 .top-toolbar .colorBtn{
@@ -89,6 +98,7 @@ label {
 
 .top-toolbar .file-name{
     float:right;
+    margin-top: 10px;
     margin-right:10px;
     margin-left:5px;
     font-weight: bold;
@@ -105,6 +115,9 @@ label {
     filter:none !important;
 }
 
+.mdBtn{
+    padding-top: 3px;
+}
 
 /*色块*/
 .color-div {
@@ -162,7 +175,7 @@ label {
 .geSprite-bottom { background-position: 0 -92px; }
 .geSprite-center { background-position: 0 -138px; }
 .geSprite-delete { background-position: 0 -184px; }
-.geSprite-fillcolor { background-position: 0 -230px; }
+.geSprite-fillcolor { background-position: 0 -227px; }
 .geSprite-fit { background-position: 0 -277px; }
 .geSprite-fontcolor { background-position: 0 -322px; }
 .geSprite-gradientcolor { background-position: 0 -368px; }
@@ -173,8 +186,8 @@ label {
 .geSprite-print { background-position: 0 -598px; }
 .geSprite-redo { background-position: 0 -644px; }
 .geSprite-right { background-position: 0 -689px; }
-.geSprite-shadow { background-position: 0 -736px; }
-.geSprite-strokecolor { background-position: 0 -782px; }
+.geSprite-shadow { background-position: 0 -735px; }
+.geSprite-strokecolor { background-position: 0 -779px; }
 .geSprite-top { background-position: 0 -828px; }
 .geSprite-underline { background-position: 0 -874px; }
 .geSprite-undo { background-position: 0 -920px; }

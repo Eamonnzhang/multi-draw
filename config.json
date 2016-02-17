@@ -1,4 +1,11 @@
 {
-  "port": "4000",
-  "dbUrl": "mongodb://localhost:27017/multidraw"
+  "runMode":"demo",
+  "port": "4500",
+  "dbUrl": "mongodb://localhost:27017/multidraw",
+  "UMBHost":{
+    "dev":"192.168.1.138:3500",
+    "production":"",
+    "demo":"www.xuezuowang.com:3500",
+    "joint":"192.168.1.138:3500"
+  }
 }

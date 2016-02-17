@@ -17,7 +17,6 @@
     <body ng-controller="CanvasCtrl">
 
         <div id="bd-wrapper">
-
             <!--导航栏-->
             <nav class="navbar navbar-default navbar-fixed-top my-navbar">
                 <div class="container-fluid">
@@ -93,7 +92,6 @@
                 <button  id="customized" type="button" class="btn btn-default" data-toggle="modal" title="自定义画布大小" data-target="#customizedModal">
                     <i class="fa fa-crop"></i>
                 </button>
-
 
                 <!--清除选中-->
                 <!--<button id="clear-selected-canvas" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="清除选中"-->
@@ -197,8 +195,8 @@
                     <i class="fa fa-scissors fa-lg"></i>
                 </button>
                 <!--测试-->
-                <button id="console-info" class="btn btn-default">Info</button>
-                <button id="test" class="btn btn-default">Test</button>
+                <!--<button id="console-info" class="btn btn-default">Info</button>-->
+                <!--<button id="test" class="btn btn-default">Test</button>-->
 
             </div>
             <!--左侧工具条 END-->
@@ -249,36 +247,28 @@
                     </div>
                 </div>
                 <!--自由绘画选项END-->
-
-
                 <!--公用选项-->
                 <div id="color-opacity-controls" class="bigCell" ng-show="canvas.getActiveObject()&&!getFreeDrawingMode()">
                     <div class="cell">
                         <label for="opacity">透明度:</label>
                         <input value="100" type="number" bind-value-to="opacity">
                     </div>
-
                     <div class="cell">
                         <label for="stroke-width">线条宽度:</label>
                         <input type="number" min="1" max="10" id="stroke-width" bind-value-to="strokeWidth">
                     </div>
-
                     <div id="fill-color-box" class="mdBtn fill-color-box cell" data-toggle="tooltip" data-placement="left" title="填充色">
                         <button class="btn btn-default geSprite geSprite-fillcolor colorBtn"></button>
                         <div id='fill' class="color-div" bind-value-to="fill"></div>
                     </div>
-
                     <div class="mdBtn stroke-color-box cell" data-toggle="tooltip" data-placement="left" title="线条色">
                         <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-pencil colorBtn"></button>
                         <div id='fill' class="color-div" bind-value-to="strokeColor"></div>
                     </div>
-
                 </div>
                 <!--公用选项-->
-
                 <!--编辑文字选项-->
                 <div class="bigCell" ng-show="getText()&&!getFreeDrawingMode()">
-
                     <div class="bigCell">
                         <select class="cell btn-object-action" bind-value-to="fontFamily">
                             <option value="arial">Arial</option>
@@ -291,26 +281,22 @@
                             <option value="monaco">Monaco</option>
                             <option value="微软雅黑">微软雅黑</option>
                         </select>
-
                         <div class="mdBtn  text-background-color-box cell" data-toggle="tooltip" data-placement="left" title="文本背景色">
                             <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-text-background colorBtn"></button>
                             <div id="fill" class="color-div" bind-value-to="textBgColor"></div>
                         </div>
-
                         <div class="cell">
                             <label for="text-font-size">字体大小:</label>
                             <input type="number"  value="" min="1" max="120" step="1" id="text-font-size" class="btn-object-action"
                                    bind-value-to="fontSize">
                         </div>
-
                         <div class="cell">
                             <label for="text-line-height">行间距:</label>
                             <input type="number"  value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
                                    bind-value-to="lineHeight">
                         </div>
                     </div><!--text controls end-->
-
-                    <div class="cell">
+                    <div class="cell2">
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-default btn-sm btn-object-action"
                                     ng-click="toggleBold()"
@@ -340,7 +326,6 @@
                                     O
                             </button>
                         </div>
-
                     </div><!--text control add1 end-->
                     <textarea bind-value-to="text"></textarea>
                 </div>
@@ -348,7 +333,6 @@
                 <div class="file-name" ng-click="setFileName($event)" ng-show="canvas.fileName">{[ canvas.fileName ]}</div>
             </div>
             <!--顶部工具条 END-->
-
             <!--canvas容器-->
             <div id="canvas-col">
                 <div id="canvasCtn">
@@ -356,7 +340,6 @@
                 </div>
             </div>
             <!--canvas容器END-->
-
         </div>
         <!--bd--wrapper end-->
 

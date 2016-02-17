@@ -7,8 +7,7 @@ function editorEnterFire(e){
     if (SINGLE_LINE) {
         var $itext = $('<input/>').attr('type', 'text').addClass('itext');
         var keyDownCode = 0;
-    }
-    else {
+    } else {
         var $itext = $('<textarea/>').addClass('itext');
     }
     canvas.remove(obj);
@@ -1040,6 +1039,7 @@ function addMyOwnAccessors($scope,$http){
             activeGroup = canvas.getActiveGroup();
         if(activeObject){
             mdCanvas.add(canvas,activeObject.toObject(),function (fObj) {
+                fObj.set({top:activeObject.getTop()+10,left:activeObject.getLeft()+10}).setCoords();
                 //mdCanvas.packageObj(fObj);
                 //socket.emit('addObject',mdCanvas.toObject(fObj,false));
             });
@@ -1096,12 +1096,10 @@ function addMyOwnAccessors($scope,$http){
 
 var isMouseDown = false,
     ctrlKeyDown = false,
-    isDisGroup = false,
     mouseXOnPan = 0,
     mouseYOnPan = 0,
     canvasXOnPan = 0,
     canvasYOnPan = 0;
-
 function addCanvasListener($scope) {
 
     function updateScope() {
@@ -1122,28 +1120,14 @@ function addCanvasListener($scope) {
         .on('object:removed', objectRemovedLtn)
         .on('selection:cleared', selectClearedLtn);
 
-
-
-
     function objectRemovedLtn(e){
-        //var target = e.target;
-        //if(!target.hasOwnProperty('editState')){
-        //    var data = {
-        //        canvasId : $scope.canvas.id,
-        //        itemsId : [target.itemId]
-        //    };
-        //    $scope.saveFile('/deleteItems',data);
-        //}
     }
 
-    function selectClearedLtn(e){
+    function selectClearedLtn(){
         updateScope();
-        console.log('selectClearedLtn');
-
     }
 
     function objectSelectedLtn(e){
-        console.log('objectSelectedLtn');
         updateScope();
         var selectObj = e.target;
         var idArr = mdCanvas.getSelectedItemId(canvas,selectObj);
@@ -1160,24 +1144,12 @@ function addCanvasListener($scope) {
         } else {
             var obj = e.target;
             if(!obj) return;
-            //if (obj._objects){
-            //    if (obj._objects[0].selectable) {
-            //        var idArr = [];
-            //        obj._objects.forEach(function (a) {
-            //            idArr.push(a.itemId);
-            //        });
-            //        socket.emit('lockState', idArr);
-            //    }
-            //} else {
-            //obj.selectable&&socket.emit('lockState', obj.itemId);
             if (obj._element&&obj._element.tagName === 'VIDEO') {
                 var myVideo = obj._element;
                 myVideo.paused ? myVideo.play() : myVideo.pause();
             }
-            //}
         }
     }
-
 
     function objectModifiedLtn(e){
         console.log('objectModifiedLtn');
@@ -1188,9 +1160,7 @@ function addCanvasListener($scope) {
         };
         data.items = mdCanvas.toState(modifiedObj);
         $('#modifyText').html('正在保存...');
-
         socket.emit('statePropChange',data);
-
     }
 
     function pathCreatedLtn(e){
@@ -1208,15 +1178,14 @@ function addCanvasListener($scope) {
             canvasCtnEl.style.top = ( event.clientY - mouseYOnPan + canvasYOnPan  )+ 'px';
         }
     }
+
     function beforeSelectClearedLtn(e){
-        //console.log('beforeSelectClearedLtn');
         var target = e.target;
         var idArr = mdCanvas.getSelectedItemId(canvas,target);
         socket.emit('unlockState',idArr);
     }
 
     function objectScalingLtn(){
-
     }
 
     function selectCreatedLtn(){
@@ -1239,7 +1208,6 @@ function addObjListener(){
         }
     }
 }
-
 function initKeyBoard($scope){
     var ie;
     var free;
@@ -1337,7 +1305,6 @@ function initContextMenu($scope){
         //console.log('after hide event');
     });
 }
-
 function initCanvasSocket($scope){
     socket.emit('room', {roomId : canvasId, user : user});
     //mdUtils.showAlert('正在同步画板数据...','sm','warning','show');
@@ -1431,34 +1398,6 @@ function initCanvasSocket($scope){
         });
     });
 
-    //socket.on('groupStateChange',function(group){
-    //    var myObjArr = mdCanvas.clone(canvas.getObjects());
-    //    var selectObjs = [];
-    //    myObjArr.forEach(function(obj){
-    //        if(group.idArr.indexOf(obj.id) !== -1){
-    //            obj.selectable = true;
-    //            obj.hasControls = true;
-    //            obj.setCoords();
-    //            selectObjs.push(obj);
-    //        }
-    //    });
-    //    var opt ={};
-    //    opt.top = group.top;
-    //    opt.left = group.left;
-    //    opt.angle = group.angle;
-    //    opt.scaleX = group.scaleX;
-    //    opt.scaleY = group.scaleY;
-    //    if(canvas.getActiveGroup()){
-    //        var actGroup = canvas.getActiveGroup();
-    //        actGroup.set(opt);
-    //    }else{
-    //        var objGroup = new fabric.Group(selectObjs,opt);
-    //        canvas.setActiveGroup(objGroup);
-    //        objGroup.setObjectsCoords();
-    //    }
-    //    canvas.renderAll();
-    //});
-
     socket.on('lockState', function (data) {
         var myObjArr = mdCanvas.clone(canvas.getObjects());
        myObjArr.forEach(function (a) {
@@ -1501,9 +1440,6 @@ function initCanvasSocket($scope){
         $scope.$$phase || $scope.$digest();
     });
 }
-
-
-
 function httpOpt($scope,$http){
 
 

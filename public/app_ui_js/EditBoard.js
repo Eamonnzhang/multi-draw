@@ -4,7 +4,7 @@
  * and if you don't know where to put your code,put them here temporarily
  */
 var EditBoard = function (){
-    this.socket = io.connect('http://localhost:4500');
+    this.socket = io.connect('http://192.168.1.81:4500');
     var canvas = this.canvas = new fabric.Canvas('c', {
         backgroundColor :"#ffffff",
         width:750,
