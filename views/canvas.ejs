@@ -13,14 +13,11 @@
         <script src="/app_3th_js/forIE/respond.min.js"></script>
         <![endif]-->
     </head>
-
     <body ng-controller="CanvasCtrl">
-
         <div id="bd-wrapper">
             <!--导航栏-->
             <nav class="navbar navbar-default navbar-fixed-top my-navbar">
                 <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
                             <span class="sr-only">Toggle navigation</span>
@@ -30,7 +27,6 @@
                         </button>
                         <a class="navbar-brand brand-title" href="javascript:void(0)" ><i class="fa fa-paint-brush  fa-lg"></i>&nbsp;MultiDraw</a>
                     </div>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li class="dropdown">
@@ -73,11 +69,10 @@
                                 </ul>
                             </li>
                         </ul>
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
+                    </div>
+                </div>
             </nav>
             <!--导航栏END-->
-
             <!--左侧工具条-->
             <div class="btn-group-vertical left-toolbar" object-buttons-enabled="getSelected()" role="group">
                 <!--模式-->
@@ -339,7 +334,6 @@
             <!--canvas容器END-->
         </div>
         <!--bd--wrapper end-->
-
         <!--通用 Alert-->
         <div class="modal" id="alertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard=false aria-labelledby="alertModal">
             <div id="size" role="document">
@@ -348,7 +342,6 @@
                 </div>
             </div>
         </div>
-
         <!--清空操作 Alert-->
         <div class="modal fade bs-example-modal-sm" id="myAlertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-sm" role="document">
@@ -361,7 +354,6 @@
                 </div>
             </div>
         </div>
-
         <!--另存为 Model-->
         <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-sm" role="document">
@@ -381,7 +373,6 @@
                 </div>
             </div>
         </div>
-
         <!--JSON Modal-->
         <div class="modal fade" id="JsonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -400,7 +391,6 @@
                 </div>
             </div>
         </div>
-
         <!--canvas 自定义大小 Modal-->
         <div class="modal fade bs-example-modal-sm" id="customizedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog  modal-sm" role="document">
@@ -430,7 +420,6 @@
                 </div>
             </div>
         </div>
-
         <!--bootstrap context menu-->
         <div id="context-menu">
             <ul class="dropdown-menu" id = 'context-ul' role="menu">
@@ -443,8 +432,6 @@
                 <li id="stb-context"><a href="" tabindex="-1" ng-click="sendToBack()"><span class="fa fa-angle-double-down menu-btn" ></span>置于底层</a></li>
             </ul>
         </div>
-
-
     </body>
     <script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
     <script src='/app_3th_js/angular/angular.min.js'></script>
