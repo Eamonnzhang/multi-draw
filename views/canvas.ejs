@@ -51,6 +51,17 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="dropdown">
+                                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">视图 <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="javascript:void(0)" id="zoom-in"><i class="glyphicon glyphicon-zoom-in menu-btn"></i>放大</a></li>
+                                    <li><a href="javascript:void(0)" id="zoom-out"><i class="glyphicon glyphicon-zoom-out menu-btn"></i>缩小</a></li>
+                                    <!--<li role="separator" class="divider"></li>-->
+                                    <!--<li><a href="" ng-click="save()"><span class="glyphicon glyphicon-save menu-btn"></span>保存</a></li>-->
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="javascript:void(0)" id="customized" data-toggle="modal" title="自定义画布大小" data-target="#customizedModal"><i class="fa fa-crop menu-btn"></i>自定义</a></li>
+                                </ul>
+                            </li>
                             <li><a id="modifyText"></a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -76,24 +87,28 @@
                          ng-click="setFreeDrawingMode(!getFreeDrawingMode())">
                     <i class="fa fa-mouse-pointer"></i>
                 </button>
-                <!--清除全部-->
-                <button id="clear-all-canvas" type="button" class="btn btn-default" title="清除全部" data-toggle="modal" data-target="#myAlertModal">
-                    <i class="fa fa-trash fa-lg"></i>
-                </button>
-                <!--放大-->
-                <button  id="zoom-in" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="放大">
-                    <i class="glyphicon glyphicon-zoom-in"></i>
-                </button>
-                <!--缩小-->
-                <button  id="zoom-out" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="缩小">
-                    <i class="glyphicon glyphicon-zoom-out"></i>
-                </button>
-                <!--自适应-->
-                <button  id="customized" type="button" class="btn btn-default" data-toggle="modal" title="自定义画布大小" data-target="#customizedModal">
-                    <i class="fa fa-crop"></i>
-                </button>
 
-                <!--清除选中-->
+                <!--text-->
+                <button  ng-click="addText()" type="button" class="btn btn-default"  data-toggle="tooltip" data-placement="right" title="添加文字">
+                    <span class="glyphicon glyphicon-text-size"></span>
+                </button>
+                <button  ng-click="addImage()" type="button" class="btn btn-default"  data-toggle="tooltip" data-placement="right" title="添加图片">
+                    <span class="glyphicon glyphicon-picture"></span>
+                    <input type="file" id="image" name="image" style="display: none;"/>
+                </button>
+                <button  ng-click="addVideo()" type="button" class="btn btn-default"  data-toggle="tooltip" data-placement="right" title="添加视频">
+                    <span class="glyphicon glyphicon-facetime-video"></span>
+                    <input type="file" id="video" name="video" style="display: none;"/>
+                </button>
+                <!--&lt;!&ndash;缩小&ndash;&gt;-->
+                <!--<button  id="zoom-out" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="缩小">-->
+                    <!--<i class="glyphicon glyphicon-zoom-out"></i>-->
+                <!--</button>-->
+                <!--&lt;!&ndash;自适应&ndash;&gt;-->
+                <!--<button  id="customized" type="button" class="btn btn-default" data-toggle="modal" title="自定义画布大小" data-target="#customizedModal">-->
+                    <!--<i class="fa fa-crop"></i>-->
+                <!--</button>-->
+                <!--&lt;!&ndash;清除选中&ndash;&gt;-->
                 <!--<button id="clear-selected-canvas" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="清除选中"-->
                         <!--ng-click="removeSelected()">-->
                     <!--<i class="fa fa-trash-o fa-lg"></i>-->
@@ -101,29 +116,29 @@
                 <!--插入-->
                 <div class="btn-group" role="group">
                     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="fa fa-plus"></span>&nbsp;<span class="caret"></span>
+                        <span class="fa fa-pie-chart"></span>&nbsp;<span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-text-size menu-btn"></span>文字</a></li>
-                        <li>
-                            <a  href="javascript:void(0)" ng-click="addImage()" ><span class="glyphicon glyphicon-picture menu-btn"></span>图片</a>
-                            <input type="file" id="image" name="image" style="display: none;"/>
-                        </li>
-                        <li>
-                            <a  href="javascript:void(0)" ng-click="addVideo()" ><span class="glyphicon glyphicon-facetime-video menu-btn"></span>视频</a>
-                            <input type="file" id="video" name="video" style="display: none;"/>
-                        </li>
-                        <li role="separator" class="divider"></li>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#"><span class="fa fa-pie-chart menu-btn"></span>图形</a>
-                            <ul class="dropdown-menu menu-panel">
+                    <ul class="dropdown-menu menu-panel" role="menu">
+                        <!--<li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-text-size menu-btn"></span>文字</a></li>-->
+                        <!--<li>-->
+                            <!--<a  href="javascript:void(0)" ng-click="addImage()" ><span class="glyphicon glyphicon-picture menu-btn"></span>图片</a>-->
+                            <!--<input type="file" id="image" name="image" style="display: none;"/>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a  href="javascript:void(0)" ng-click="addVideo()" ><span class="glyphicon glyphicon-facetime-video menu-btn"></span>视频</a>-->
+                            <!--<input type="file" id="video" name="video" style="display: none;"/>-->
+                        <!--</li>-->
+                        <!--<li role="separator" class="divider"></li>-->
+                        <!--<li class="dropdown-submenu">-->
+                            <!--<a tabindex="-1" href="#"><span class="fa fa-pie-chart menu-btn"></span>图形</a>-->
+                            <!--<ul class="dropdown-menu menu-panel">-->
                                 <li ><a href="" ng-click="addRect()">矩形</a></li>
                                 <li ><a href="" ng-click="addTriangle()">三角形</a></li>
                                 <li ><a href="" ng-click="addCircle()">圆形</a></li>
                                 <!--<li ng-click="addPolygon()">多边形</li>-->
                                 <li ><a href="" ng-click="addLine()">直线</a></li>
-                            </ul>
-                        </li>
+                            <!--</ul>-->
+                        <!--</li>-->
                     </ul>
                 </div>
                 <!--锁定-->
@@ -194,6 +209,10 @@
                         ng-click="clip()" style="display: none">
                     <i class="fa fa-scissors fa-lg"></i>
                 </button>
+                <!--清除全部-->
+                <button id="clear-all-canvas" type="button" class="btn btn-default" title="清除全部" data-toggle="modal" data-target="#myAlertModal">
+                    <i class="fa fa-trash fa-lg"></i>
+                </button>
                 <!--测试-->
                 <!--<button id="console-info" class="btn btn-default">Info</button>-->
                 <!--<button id="test" class="btn btn-default">Test</button>-->
@@ -227,7 +246,7 @@
                     </div>
 
                     <div class="cell">
-                        <button type='button' class="btn btn-default geSprite geSprite-strokecolor colorBtn" data-toggle="tooltip" data-placement="left" title="线宽"></button>
+                        <button type='button' class="btn btn-default geSprite geSprite-strokecolor colorBtn" data-toggle="tooltip" data-placement="left" title="绘画线宽"></button>
                         <input type="number" min="0" max="150" bind-value-to="drawingLineWidth">
                     </div>
 
@@ -365,7 +384,7 @@
             </div>
         </div>
 
-        <!--Save Model-->
+        <!--另存为 Model-->
         <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">

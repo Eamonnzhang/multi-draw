@@ -826,7 +826,7 @@ function addObject($scope){
         var props = {
             originX: 'center',
             originY: 'center',
-            text : '点击编辑文字',
+            text : '双击编辑文字',
             left: coord.left,
             top: coord.top,
             fontFamily: '微软雅黑',
