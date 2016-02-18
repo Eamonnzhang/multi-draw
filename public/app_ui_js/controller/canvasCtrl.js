@@ -1441,12 +1441,9 @@ function initCanvasSocket($scope){
     });
 }
 function httpOpt($scope,$http){
-
-
     $scope.loadFile = function (query) {
         $http.get('/loadFile'+mdUtils.convertJSONToQueryStr(query))
             .then(function (result) {
-                //mdUtils.closeAlert();
                 if(result.data.success){
                     var canvasData = result.data.data[0];
                     var vObj = [];

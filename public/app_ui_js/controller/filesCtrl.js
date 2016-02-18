@@ -64,6 +64,7 @@ fileListModule.directive('objectButtonsEnabled', function() {
     };
 });
 
+//解决IE下，无法更新scope模型的问题
 fileListModule.config(['$httpProvider', function($httpProvider) {
     //initialize get if not there
     if (!$httpProvider.defaults.headers.get) {
@@ -168,7 +169,7 @@ fileListModule.controller('FileListCtrl', function($scope, $http) {
                 if(res.success)
                     $scope.loadAllRecycledFiles();
             });
-    }
+    };
 
     $scope.isFileExist = function () {
         if(this.files)

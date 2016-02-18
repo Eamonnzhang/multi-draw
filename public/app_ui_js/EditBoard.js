@@ -22,7 +22,7 @@ var EditBoard = function (){
     //初始化canvas和滚动条位置，使二者均居中
     configBoard.initCanvasPos();
 
-    $(function () { $("[data-toggle='tooltip']").tooltip(); });
+    $(function () { $("[data-toggle='tooltip']").tooltip({container: 'body'}); });
     $('#zoom-in').on('click',mdUtils.bind(configBoard,configBoard.zoomInCanvas));
     $('#zoom-out').on('click',mdUtils.bind(configBoard,configBoard.zoomOutCanvas));
     $('#customizedCanvas').on('click', mdUtils.bind(configBoard,configBoard.customizedCanvas));

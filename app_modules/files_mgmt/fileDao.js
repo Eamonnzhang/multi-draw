@@ -51,4 +51,36 @@ fileDao.prototype.findFileByIdUnderAccount = function (id,user,next) {
     });
 };
 
+fileDao.prototype.findFileById = function (id,user,next) {
+    var query = {
+        id : id
+    };
+    this.findOne(query, function (result) {
+        if(result.data[0]){
+            itemDao.findItemsInCanvas(id, function (itemsData) {
+                if(itemsData.success){
+                    result.data[0].objects = itemsData.data;
+                }
+                next(result);
+            })
+        }else{
+            next(result.data[0]);
+        }
+    });
+};
+
+fileDao.prototype.findParticitantsById = function (canvasId,user,next) {
+    var query = {
+        canvasId : canvasId,
+        userId : user.id
+    };
+    this.findOne(query, function (result) {
+        next(result.data[0]);
+    })
+};
+
+fileDao.prototype.saveParticitants = function (data,next) {
+    this.insertUnpreOne(data,next);
+}
+
 module.exports = fileDao;

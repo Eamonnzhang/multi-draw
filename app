@@ -19,7 +19,6 @@ var session = Session({
     saveUninitialized: true
 });
 
-
 dataSource.connectDb(config.dbUrl,function(multidrawDb){
     var app = require('./config'); //获取启动app的基本配置信息，实际上就是express对象
     app.use(session);

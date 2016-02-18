@@ -83,20 +83,20 @@
             <!--左侧工具条-->
             <div class="btn-group-vertical left-toolbar" object-buttons-enabled="getSelected()" role="group">
                 <!--模式-->
-                <button  id="drawing-mode" type="button" class="btn btn-default"  data-toggle="tooltip" data-placement="right" title="切换模式"
+                <button  id="drawing-mode" type="button" class="btn btn-default border"  data-toggle="tooltip" data-placement="right" title="切换模式"
                          ng-click="setFreeDrawingMode(!getFreeDrawingMode())">
                     <i class="fa fa-mouse-pointer"></i>
                 </button>
 
                 <!--text-->
-                <button  ng-click="addText()" type="button" class="btn btn-default"  data-toggle="tooltip" data-placement="right" title="添加文字">
+                <button  ng-click="addText()" type="button" class="btn btn-default border"  data-toggle="tooltip" data-placement="right" title="添加文字">
                     <span class="glyphicon glyphicon-text-size"></span>
                 </button>
-                <button  ng-click="addImage()" type="button" class="btn btn-default"  data-toggle="tooltip" data-placement="right" title="添加图片">
+                <button  ng-click="addImage()" type="button" class="btn btn-default border"  data-toggle="tooltip" data-placement="right" title="添加图片">
                     <span class="glyphicon glyphicon-picture"></span>
                     <input type="file" id="image" name="image" style="display: none;"/>
                 </button>
-                <button  ng-click="addVideo()" type="button" class="btn btn-default"  data-toggle="tooltip" data-placement="right" title="添加视频">
+                <button  ng-click="addVideo()" type="button" class="btn btn-default border"  data-toggle="tooltip" data-placement="right" title="添加视频">
                     <span class="glyphicon glyphicon-facetime-video"></span>
                     <input type="file" id="video" name="video" style="display: none;"/>
                 </button>
@@ -180,32 +180,32 @@
                     </ul>
                 </div>
                 <!--阴影-->
-                <button id="clip" class="btn btn-default btn-lock btn-object-action" data-toggle="tooltip" data-placement="right" title="添加阴影"
+                <button id="clip" class="btn btn-default btn-lock btn-object-action border" data-toggle="tooltip" data-placement="right" title="添加阴影"
                         ng-click="shadowify()">
                     <div class="geSprite geSprite-shadow"></div>
                 </button>
                 <!--下移一层-->
-                <button id="send-backwards" class="btn btn-default btn-lock btn-object-action" data-toggle="tooltip" data-placement="right" title="下移一层"
+                <button id="send-backwards" class="btn btn-default btn-lock btn-object-action border" data-toggle="tooltip" data-placement="right" title="下移一层"
                         ng-click="sendBackwards()">
                     <i class="fa fa-angle-down fa-lg"></i>
                 </button>
                 <!--置于底层-->
-                <button id="send-to-back" class="btn btn-default btn-lock btn-object-action" data-toggle="tooltip" data-placement="right" title="置于底层"
+                <button id="send-to-back" class="btn btn-default btn-lock btn-object-action border" data-toggle="tooltip" data-placement="right" title="置于底层"
                         ng-click="sendToBack()">
                     <i class="fa fa-angle-double-down fa-lg"></i>
                 </button>
                 <!--上移一层-->
-                <button id="bring-forward" class="btn btn-default btn-lock btn-object-action" data-toggle="tooltip" data-placement="right" title="上移一层"
+                <button id="bring-forward" class="btn btn-default btn-lock btn-object-action border" data-toggle="tooltip" data-placement="right" title="上移一层"
                          ng-click="bringForward()">
                     <i class="fa fa-angle-up fa-lg"></i>
                 </button>
                 <!--置于顶层-->
-                <button id="bring-to-front" class="btn btn-default btn-lock btn-object-action" data-toggle="tooltip" data-placement="right" title="置于顶层"
+                <button id="bring-to-front" class="btn btn-default btn-lock btn-object-action border" data-toggle="tooltip" data-placement="right" title="置于顶层"
                         ng-click="bringToFront()">
                     <i class="fa fa-angle-double-up fa-lg"></i>
                 </button>
                 <!--修剪-->
-                <button id="clip" class="btn btn-default btn-lock btn-object-action"
+                <button id="clip" class="btn btn-default btn-lock btn-object-action border"
                         ng-click="clip()" style="display: none">
                     <i class="fa fa-scissors fa-lg"></i>
                 </button>

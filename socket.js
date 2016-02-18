@@ -158,7 +158,7 @@ exports.startSocketIo = function(server,db,configCallback){
 
         socket.on('canvasPropChange', function (data) {
             socket.broadcast.to(room).emit('canvasPropChange', data);
-        })
+        });
 
         socket.on('lockState',function(data){
             socket.broadcast.to(room).emit('lockState', data);
@@ -167,7 +167,6 @@ exports.startSocketIo = function(server,db,configCallback){
         socket.on('unlockState',function(data){
             socket.broadcast.to(room).emit('unlockState', data);
         });
-
 
         socket.on('disconnect',function(){
             if(room){

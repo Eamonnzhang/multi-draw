@@ -35,6 +35,16 @@ AbstractDao.prototype.insertOne = function(data,next){
     });
 };
 
+AbstractDao.prototype.insertUnpreOne = function (data,next) {
+    this.dataCollection.insertOne(data,function(err,result){
+        if(err){
+            next(message.genSimpFailedMsg(err.message, err.stack));
+        }else{
+            next(message.genSimpSuccessMsg(null, data));
+        }
+    });
+};
+
 AbstractDao.prototype.insertMany = function(dataArr,next){
     var array = [];
     dataArr.forEach(function (data) {
@@ -49,7 +59,6 @@ AbstractDao.prototype.insertMany = function(dataArr,next){
         }
     });
 };
-
 
 AbstractDao.prototype.deleteOne = function(query, next){
     this.dataCollection.deleteOne(query, {safe: true}, function (err, data) {
@@ -99,6 +108,7 @@ AbstractDao.prototype.deleteManyFields = function (query,filedNameArr,next) {
 };
 
 AbstractDao.prototype.updateOne = function(query,update, next) {
+    update.lastModify = moment().format('YYYY-MM-DD HH:mm:ss');
     this.dataCollection.updateOne(query, {
         $set: update
     },{upsert:true},function (err, data) {
