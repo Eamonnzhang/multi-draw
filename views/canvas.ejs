@@ -56,8 +56,6 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="javascript:void(0)" id="zoom-in"><i class="glyphicon glyphicon-zoom-in menu-btn"></i>放大</a></li>
                                     <li><a href="javascript:void(0)" id="zoom-out"><i class="glyphicon glyphicon-zoom-out menu-btn"></i>缩小</a></li>
-                                    <!--<li role="separator" class="divider"></li>-->
-                                    <!--<li><a href="" ng-click="save()"><span class="glyphicon glyphicon-save menu-btn"></span>保存</a></li>-->
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:void(0)" id="customized" data-toggle="modal" title="自定义画布大小" data-target="#customizedModal"><i class="fa fa-crop menu-btn"></i>自定义</a></li>
                                 </ul>
@@ -83,20 +81,20 @@
             <!--左侧工具条-->
             <div class="btn-group-vertical left-toolbar" object-buttons-enabled="getSelected()" role="group">
                 <!--模式-->
-                <button  id="drawing-mode" type="button" class="btn btn-default border"  data-toggle="tooltip" data-placement="right" title="切换模式"
+                <button  id="drawing-mode" type="button" class="btn btn-default"  data-toggle="tooltip" data-placement="right" title="切换模式"
                          ng-click="setFreeDrawingMode(!getFreeDrawingMode())">
                     <i class="fa fa-mouse-pointer"></i>
                 </button>
 
                 <!--text-->
-                <button  ng-click="addText()" type="button" class="btn btn-default border"  data-toggle="tooltip" data-placement="right" title="添加文字">
+                <button  ng-click="addText()" type="button" class="btn btn-default"  data-toggle="tooltip" data-placement="right" title="添加文字">
                     <span class="glyphicon glyphicon-text-size"></span>
                 </button>
-                <button  ng-click="addImage()" type="button" class="btn btn-default border"  data-toggle="tooltip" data-placement="right" title="添加图片">
+                <button  ng-click="addImage()" type="button" class="btn btn-default"  data-toggle="tooltip" data-placement="right" title="添加图片">
                     <span class="glyphicon glyphicon-picture"></span>
                     <input type="file" id="image" name="image" style="display: none;"/>
                 </button>
-                <button  ng-click="addVideo()" type="button" class="btn btn-default border"  data-toggle="tooltip" data-placement="right" title="添加视频">
+                <button  ng-click="addVideo()" type="button" class="btn btn-default"  data-toggle="tooltip" data-placement="right" title="添加视频">
                     <span class="glyphicon glyphicon-facetime-video"></span>
                     <input type="file" id="video" name="video" style="display: none;"/>
                 </button>
@@ -119,26 +117,11 @@
                         <span class="fa fa-pie-chart"></span>&nbsp;<span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu menu-panel" role="menu">
-                        <!--<li><a  href="javascript:void(0)" ng-click="addText()" ><span class="glyphicon glyphicon-text-size menu-btn"></span>文字</a></li>-->
-                        <!--<li>-->
-                            <!--<a  href="javascript:void(0)" ng-click="addImage()" ><span class="glyphicon glyphicon-picture menu-btn"></span>图片</a>-->
-                            <!--<input type="file" id="image" name="image" style="display: none;"/>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a  href="javascript:void(0)" ng-click="addVideo()" ><span class="glyphicon glyphicon-facetime-video menu-btn"></span>视频</a>-->
-                            <!--<input type="file" id="video" name="video" style="display: none;"/>-->
-                        <!--</li>-->
-                        <!--<li role="separator" class="divider"></li>-->
-                        <!--<li class="dropdown-submenu">-->
-                            <!--<a tabindex="-1" href="#"><span class="fa fa-pie-chart menu-btn"></span>图形</a>-->
-                            <!--<ul class="dropdown-menu menu-panel">-->
-                                <li ><a href="" ng-click="addRect()">矩形</a></li>
-                                <li ><a href="" ng-click="addTriangle()">三角形</a></li>
-                                <li ><a href="" ng-click="addCircle()">圆形</a></li>
-                                <!--<li ng-click="addPolygon()">多边形</li>-->
-                                <li ><a href="" ng-click="addLine()">直线</a></li>
-                            <!--</ul>-->
-                        <!--</li>-->
+                        <li ><a href="" ng-click="addRect()">矩形</a></li>
+                        <li ><a href="" ng-click="addTriangle()">三角形</a></li>
+                        <li ><a href="" ng-click="addCircle()">圆形</a></li>
+                        <!--<li ng-click="addPolygon()">多边形</li>-->
+                        <li ><a href="" ng-click="addLine()">直线</a></li>
                     </ul>
                 </div>
                 <!--锁定-->
@@ -180,58 +163,72 @@
                     </ul>
                 </div>
                 <!--阴影-->
-                <button id="clip" class="btn btn-default btn-lock btn-object-action border" data-toggle="tooltip" data-placement="right" title="添加阴影"
+                <button id="clip" class="btn btn-default btn-lock btn-object-action" data-toggle="tooltip" data-placement="right" title="添加阴影"
                         ng-click="shadowify()">
                     <div class="geSprite geSprite-shadow"></div>
                 </button>
                 <!--下移一层-->
-                <button id="send-backwards" class="btn btn-default btn-lock btn-object-action border" data-toggle="tooltip" data-placement="right" title="下移一层"
+                <button id="send-backwards" class="btn btn-default btn-lock btn-object-action" data-toggle="tooltip" data-placement="right" title="下移一层"
                         ng-click="sendBackwards()">
                     <i class="fa fa-angle-down fa-lg"></i>
                 </button>
                 <!--置于底层-->
-                <button id="send-to-back" class="btn btn-default btn-lock btn-object-action border" data-toggle="tooltip" data-placement="right" title="置于底层"
+                <button id="send-to-back" class="btn btn-default btn-lock btn-object-action" data-toggle="tooltip" data-placement="right" title="置于底层"
                         ng-click="sendToBack()">
                     <i class="fa fa-angle-double-down fa-lg"></i>
                 </button>
                 <!--上移一层-->
-                <button id="bring-forward" class="btn btn-default btn-lock btn-object-action border" data-toggle="tooltip" data-placement="right" title="上移一层"
+                <button id="bring-forward" class="btn btn-default btn-lock btn-object-action" data-toggle="tooltip" data-placement="right" title="上移一层"
                          ng-click="bringForward()">
                     <i class="fa fa-angle-up fa-lg"></i>
                 </button>
                 <!--置于顶层-->
-                <button id="bring-to-front" class="btn btn-default btn-lock btn-object-action border" data-toggle="tooltip" data-placement="right" title="置于顶层"
+                <button id="bring-to-front" class="btn btn-default btn-lock btn-object-action" data-toggle="tooltip" data-placement="right" title="置于顶层"
                         ng-click="bringToFront()">
                     <i class="fa fa-angle-double-up fa-lg"></i>
                 </button>
                 <!--修剪-->
-                <button id="clip" class="btn btn-default btn-lock btn-object-action border"
+                <button id="clip" class="btn btn-default btn-lock btn-object-action"
                         ng-click="clip()" style="display: none">
                     <i class="fa fa-scissors fa-lg"></i>
                 </button>
                 <!--清除全部-->
-                <button id="clear-all-canvas" type="button" class="btn btn-default" title="清除全部" data-toggle="modal" data-target="#myAlertModal">
+                <button id="clear-all-canvas" type="button" class="btn btn-default" title="清空" data-toggle="modal" data-target="#myAlertModal">
                     <i class="fa fa-trash fa-lg"></i>
                 </button>
                 <!--测试-->
                 <!--<button id="console-info" class="btn btn-default">Info</button>-->
                 <!--<button id="test" class="btn btn-default">Test</button>-->
-
             </div>
             <!--左侧工具条 END-->
-
             <!--顶部工具条-->
             <div class="top-toolbar">
-                <div class="mdBtn cell" data-toggle="tooltip" data-placement="right" title="撤销">
-                    <button id="undo" type="button" class="btn btn-default btn-xs fa fa-reply colorBtn"></button>
+                <div class="mdBtn colorBtn cell" data-toggle="tooltip" data-placement="bottom" title="撤销">
+                    <div class="geSprite geSprite-undo"></div>
                 </div>
-                <div class="mdBtn cell" data-toggle="tooltip" data-placement="right" title="重做">
-                    <button id="redo" type="button" class="btn btn-default btn-xs fa fa-share colorBtn"></button>
+                <div class="mdBtn colorBtn cell" data-toggle="tooltip" data-placement="bottom" title="恢复">
+                    <div class="geSprite geSprite-redo"></div>
                 </div>
+                <div class="vertical-line"></div>
                 <!--自由绘画选项-->
                 <div id="drawing-mode-options" ng-show="getFreeDrawingMode()">
+                    <div class="mdBtn drawing-color-box cell" data-toggle="tooltip" data-placement="bottom" title="绘画颜色">
+                        <button type="button" class="btn btn-default btn-xs fa fa-paint-brush colorBtn"></button>
+                        <div id='fill' class="color-div" bind-value-to="drawingLineColor"></div>
+                    </div>
                     <div class="cell">
-                        <label for="drawing-mode-selector">画笔:</label>
+                        <label for="drawing-mode-selector">绘画线宽:</label>
+                        <input type="number" min="0" max="150" bind-value-to="drawingLineWidth">
+                    </div>
+                    <div class="mdBtn shadow-color-box cell"  data-toggle="tooltip" data-placement="bottom" title="阴影颜色">
+                        <button class="btn btn-default geSprite geSprite-shadow colorBtn"></button>
+                        <div id='fill' class="color-div" bind-value-to="drawingLineShadowColor"></div>
+                    </div>
+                    <div class="cell">
+                        <label for="drawing-shadow-width">阴影宽度:</label>
+                        <input type="number" min="0" max="50" bind-value-to="drawingLineShadowWidth">
+                    </div>
+                    <div class="cell" data-toggle="tooltip" data-placement="bottom" title="画笔类型">
                         <select id="drawing-mode-selector" bind-value-to="drawingMode">
                             <option>Pencil</option>
                             <option>Circle</option>
@@ -244,64 +241,34 @@
                             <option>texture</option>
                         </select>
                     </div>
-
-                    <div class="cell">
-                        <button type='button' class="btn btn-default geSprite geSprite-strokecolor colorBtn" data-toggle="tooltip" data-placement="left" title="绘画线宽"></button>
-                        <input type="number" min="0" max="150" bind-value-to="drawingLineWidth">
-                    </div>
-
-                    <div class="mdBtn drawing-color-box cell" data-toggle="tooltip" data-placement="left" title="画笔色">
-                        <button type="button" class="btn btn-default btn-xs fa fa-paint-brush colorBtn"></button>
-                        <div id='fill' class="color-div" bind-value-to="drawingLineColor"></div>
-                    </div>
-
-                    <div class="mdBtn shadow-color-box cell"  data-toggle="tooltip" data-placement="left" title="阴影色">
-                        <button class="btn btn-default geSprite geSprite-shadow colorBtn"></button>
-                        <div id='fill' class="color-div" bind-value-to="drawingLineShadowColor"></div>
-                    </div>
-
-                    <div class="cell">
-                        <label for="drawing-shadow-width">阴影宽度:</label>
-                        <input type="number" min="0" max="50" bind-value-to="drawingLineShadowWidth">
-                    </div>
                 </div>
                 <!--自由绘画选项END-->
                 <!--公用选项-->
                 <div id="color-opacity-controls" class="bigCell" ng-show="canvas.getActiveObject()&&!getFreeDrawingMode()">
-                    <div class="cell">
-                        <label for="opacity">透明度:</label>
-                        <input value="100" type="number" bind-value-to="opacity">
-                    </div>
-                    <div class="cell">
-                        <label for="stroke-width">线条宽度:</label>
-                        <input type="number" min="1" max="10" id="stroke-width" bind-value-to="strokeWidth">
-                    </div>
-                    <div id="fill-color-box" class="mdBtn fill-color-box cell" data-toggle="tooltip" data-placement="left" title="填充色">
+                    <div class="mdBtn fill-color-box cell" data-toggle="tooltip" data-placement="bottom" title="填充色">
                         <button class="btn btn-default geSprite geSprite-fillcolor colorBtn"></button>
                         <div id='fill' class="color-div" bind-value-to="fill"></div>
                     </div>
-                    <div class="mdBtn stroke-color-box cell" data-toggle="tooltip" data-placement="left" title="线条色">
-                        <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-pencil colorBtn"></button>
+                    <div class="mdBtn stroke-color-box cell" data-toggle="tooltip" data-placement="bottom" title="线条色">
+                        <button type='button' class="btn btn-default geSprite geSprite-strokecolor colorBtn"></button>
                         <div id='fill' class="color-div" bind-value-to="strokeColor"></div>
                     </div>
+                    <div class="cell">
+                        <label for="stroke-width">线宽:</label>
+                        <input type="number" min="1" max="10" id="stroke-width" bind-value-to="strokeWidth">
+                    </div>
+                    <div class="cell">
+                        <label for="opacity">不透明度:</label>
+                        <input value="100" type="number" bind-value-to="opacity">
+                    </div>
+                    <div class="vertical-line"></div>
                 </div>
                 <!--公用选项-->
                 <!--编辑文字选项-->
                 <div class="bigCell" ng-show="getText()&&!getFreeDrawingMode()">
                     <div class="bigCell">
-                        <select class="cell btn-object-action" bind-value-to="fontFamily">
-                            <option value="arial">Arial</option>
-                            <option value="myriad pro">Myriad Pro</option>
-                            <option value="verdana">Verdana</option>
-                            <option value="georgia">Georgia</option>
-                            <option value="courier">Courier</option>
-                            <option value="comic sans ms">Comic Sans MS</option>
-                            <option value="impact">Impact</option>
-                            <option value="monaco">Monaco</option>
-                            <option value="微软雅黑">微软雅黑</option>
-                        </select>
-                        <div class="mdBtn  text-background-color-box cell" data-toggle="tooltip" data-placement="left" title="文本背景色">
-                            <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-text-background colorBtn"></button>
+                        <div class="mdBtn  text-background-color-box cell" data-toggle="tooltip" data-placement="bottom" title="文本背景色">
+                            <button class="btn btn-default geSprite geSprite-fontbackground colorBtn"></button>
                             <div id="fill" class="color-div" bind-value-to="textBgColor"></div>
                         </div>
                         <div class="cell">
@@ -314,7 +281,18 @@
                             <input type="number"  value="" min="0" max="10" step="0.1" id="text-line-height" class="btn-object-action"
                                    bind-value-to="lineHeight">
                         </div>
-                    </div><!--text controls end-->
+                        <select class="cell btn-object-action" data-toggle="tooltip" data-placement="bottom" title="字体样式" bind-value-to="fontFamily">
+                            <option value="arial">Arial</option>
+                            <option value="myriad pro">Myriad Pro</option>
+                            <option value="verdana">Verdana</option>
+                            <option value="georgia">Georgia</option>
+                            <option value="courier">Courier</option>
+                            <option value="comic sans ms">Comic Sans MS</option>
+                            <option value="impact">Impact</option>
+                            <option value="monaco">Monaco</option>
+                            <option value="微软雅黑">微软雅黑</option>
+                        </select>
+                    </div>
                     <div class="cell2">
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-default btn-sm btn-object-action"
@@ -345,7 +323,7 @@
                                     O
                             </button>
                         </div>
-                    </div><!--text control add1 end-->
+                    </div>
                     <textarea bind-value-to="text"></textarea>
                 </div>
                 <!--编辑文字选项 END-->

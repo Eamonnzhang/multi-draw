@@ -46,6 +46,14 @@ label {
     color:#5BC0DE;
 }
 
+.vertical-line{
+    width: 1px;
+    height: 40px;
+    float:left;
+    margin-right:5px;
+    background-color: #E7E7E7
+}
+
 /*顶部工具条*/
 .top-toolbar {
     background:#ffffff;
@@ -62,22 +70,30 @@ label {
     margin-top:10px;
     font-family: 微软雅黑;
     height: 25px;
+    width: 120px;
     resize: none;
 }
 
 .top-toolbar select{
-    width: 80px;
+    width: 85px;
+    height: 24px;
 }
 
 .top-toolbar input{
-    width: 43px;
+    height: 24px;
+    width: 47px;
 }
 
 .top-toolbar .cell{
     margin-top:10px;
-    margin-right: 5px;
+    margin-right: 7px;
     float:left;
 }
+
+/*.cell:hover{*/
+    /*border-bottom: solid 1px;*/
+/*}*/
+
 .top-toolbar .cell2{
     margin-right: 5px;
     margin-top: 7px;
@@ -85,7 +101,7 @@ label {
 }
 
 .top-toolbar .bigCell{
-    margin-right: 5px;
+    /*margin-right: 0px;*/
     float:left;
 }
 
@@ -93,7 +109,12 @@ label {
     cursor: default;
     border: none;
     float:left;
-    height: 22px;
+    padding-bottom: 2px;
+    height: 23px;
+}
+
+.colorBtn:hover{
+    background-color: inherit;
 }
 
 .top-toolbar .file-name{
@@ -111,7 +132,8 @@ label {
 
 /*取色按钮*/
 .mdBtn:hover {
-    opacity:0.7;
+    opacity:0.5;
+    border-bottom: 1px solid;
     filter:none !important;
 }
 
@@ -181,6 +203,7 @@ label {
 .geSprite-fontcolor { background-position: 0 -322px; }
 .geSprite-gradientcolor { background-position: 0 -368px; }
 .geSprite-image { background-position: 0 -414px; }
+.geSprite-image { background-position: 0 -414px; }
 .geSprite-italic { background-position: 0 -460px; }
 .geSprite-left { background-position: 0 -505px; }
 .geSprite-middle { background-position: 0 -552px; }
@@ -188,7 +211,7 @@ label {
 .geSprite-redo { background-position: 0 -644px; }
 .geSprite-right { background-position: 0 -689px; }
 .geSprite-shadow { background-position: 0 -735px; }
-.geSprite-strokecolor { background-position: 0 -779px; }
+.geSprite-strokecolor { background-position: 0 -782px; }
 .geSprite-top { background-position: 0 -828px; }
 .geSprite-underline { background-position: 0 -874px; }
 .geSprite-undo { background-position: 0 -920px; }
@@ -231,7 +254,7 @@ label {
 .geSprite-indent { background-position: 0 -2622px; }
 .geSprite-outdent { background-position: 0 -2668px; }
 .geSprite-code { background-position: 0 -2714px; }
-.geSprite-fontbackground { background-position: 0 -2760px; }
+.geSprite-fontbackground { background-position: 0 -2759px; }
 .geSprite-removeformat { background-position: 0 -2806px; }
 .geSprite-superscript { background-position: 0 -2852px; }
 .geSprite-subscript { background-position: 0 -2898px; }
