@@ -23,6 +23,7 @@ var EditBoard = function (){
     configBoard.initCanvasPos();
 
     $(function () { $("[data-toggle='tooltip']").tooltip({container: 'body'}); });
+
     $('#zoom-in').on('click',mdUtils.bind(configBoard,configBoard.zoomInCanvas));
     $('#zoom-out').on('click',mdUtils.bind(configBoard,configBoard.zoomOutCanvas));
     $('#customizedCanvas').on('click', mdUtils.bind(configBoard,configBoard.customizedCanvas));

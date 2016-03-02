@@ -5924,6 +5924,21 @@ button.close {
   -webkit-overflow-scrolling: touch;
   outline: 0;
 }
+
+.mymodal{
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+}
+
 .modal.fade .modal-dialog {
   -webkit-transition: -webkit-transform .3s ease-out;
        -o-transition:      -o-transform .3s ease-out;
@@ -5967,15 +5982,18 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: #000;
+  /*change #000 */
+  background-color: #FFFFFF;
 }
 .modal-backdrop.fade {
   filter: alpha(opacity=0);
   opacity: 0;
 }
 .modal-backdrop.in {
-  filter: alpha(opacity=50);
-  opacity: .5;
+  /*change 50*/
+  filter: alpha(opacity=20);
+  /*change 0.5*/
+  opacity: .2;
 }
 .modal-header {
   min-height: 16.42857143px;
