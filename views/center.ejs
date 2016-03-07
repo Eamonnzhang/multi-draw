@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title><%= title %></title>
-    <link rel='stylesheet' href='css/bootstrap/bootstrap.min.css' />
+    <link rel='stylesheet' href='css/bootstrap/bootstrap.css' />
     <link href="css/app-styles.css" rel="stylesheet">
     <link href="css/font_awesome/font-awesome.min.css" rel="stylesheet">
     <script src="app_3th_js/jQuery/jquery-1.11.3.min.js"></script>
@@ -104,7 +104,7 @@
                                     分享 <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">添加协作成员</a></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#shareModal">添加协作成员</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="">分享浏览链接</a></li>
                                     <li><a href="">下载</a></li>
@@ -220,6 +220,34 @@
                     <h4>协作信息</h4>
                     <p>创建人：{{ currentSelectedObj.createUserName }}</p>
                     <p>参与者：{{ currentSelectedObj.createUserName }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Share Modal -->
+    <div class="mymodal fade" id="shareModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">管理协作成员</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="pms-div">
+                        <p style="font-weight: bold">权限列表：</p>
+                        <div class="permission-user">
+                            <i class="glyphicon glyphicon-user"></i>Eamonn
+                            <span style="float:right">创建者</span>
+                        </div>
+                    </div>
+                    <div class="newpms-div">
+                        <p style="font-weight: bold">新邀请：<span style="color: #5e5e5e">请输入被邀请人的用户名</span></p>
+                        <input style="width: 100%"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><%= title %></title>
-        <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/css/font_awesome/font-awesome.min.css" rel="stylesheet">
         <link href="/css/app-styles.css" rel="stylesheet">
         <link href="/css/colpick.css" rel="stylesheet">
@@ -59,7 +59,7 @@
                             <li><a id="modifyText"></a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href='javascript:void(0)'><span class="glyphicon glyphicon-share"></span>&nbsp;分享画板</a></li>
+                            <li><a href='javascript:void(0)' data-toggle="modal" data-target="#shareModal"><span class="glyphicon glyphicon-share"></span>&nbsp;分享画板</a></li>
                             <li class="dropdown">
                                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -420,6 +420,36 @@
                 </div>
             </div>
         </div>
+
+        <!--Share Modal -->
+        <div class="modal fade" id="shareModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">管理协作成员</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="pms-div">
+                            <p style="font-weight: bold">权限列表：</p>
+                            <div class="permission-user">
+                                <i class="glyphicon glyphicon-user"></i>Eamonn
+                                <span style="float:right">创建者</span>
+                            </div>
+                        </div>
+                        <div class="newpms-div">
+                            <p style="font-weight: bold">新邀请：<span style="color: #5e5e5e">请输入被邀请人的用户名</span></p>
+                            <input style="width: 100%"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!--bootstrap context menu-->
         <div id="context-menu">
             <ul class="dropdown-menu" id = 'context-ul' role="menu">
