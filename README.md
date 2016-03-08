@@ -1,7 +1,7 @@
 #MutilDraw
 ##Usage
 node app
->OnlineDemo : http://www.xuezuowang.com:4500
+>OnlineDemo : http://multidraw.coding.io
 
 ##Canvas Library
 Fabric.js
