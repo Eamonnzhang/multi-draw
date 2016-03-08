@@ -47,11 +47,21 @@ AbstractDao.prototype.insertUnpreOne = function (data,next) {
 
 AbstractDao.prototype.insertMany = function(dataArr,next){
     var array = [];
-    dataArr.forEach(function (data) {
-        var obj = this.prepareNewObj(data);
+    for(var i = 0; i<dataArr.length;i++){
+        var obj = this.prepareNewObj(dataArr[i]);
         array.push(obj);
-    });
+    }
     this.dataCollection.insertMany(array,function(err,result){
+        if (err) {
+            next(message.genSimpFailedMsg(err.message, err.stack));
+        } else {
+            next(message.genSimpSuccessMsg(null, result));
+        }
+    });
+};
+
+AbstractDao.prototype.insertUnpreMany = function(dataArr,next){
+    this.dataCollection.insertMany(dataArr,function(err,result){
         if (err) {
             next(message.genSimpFailedMsg(err.message, err.stack));
         } else {

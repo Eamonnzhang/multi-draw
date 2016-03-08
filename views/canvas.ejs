@@ -8,12 +8,21 @@
         <link href="/css/font_awesome/font-awesome.min.css" rel="stylesheet">
         <link href="/css/app-styles.css" rel="stylesheet">
         <link href="/css/colpick.css" rel="stylesheet">
+        <link href="/css/semantic/components/dropdown.css" rel="stylesheet">
+        <link href="/css/semantic/components/menu.css" rel="stylesheet">
+        <link href="/css/semantic/components/list.css" rel="stylesheet">
+        <link href="/css/semantic/components/item.css" rel="stylesheet">
+        <link href="/css/semantic/components/transition.css" rel="stylesheet">
+        <link href="/css/semantic/components/label.css" rel="stylesheet">
+        <link href="/css/semantic/components/icon.css" rel="stylesheet">
+        <link href="/css/semantic/components/image.css" rel="stylesheet">
         <!--[if lt IE 9]>
         <script src="/app_3th_js/forIE/html5shiv.js"></script>
         <script src="/app_3th_js/forIE/respond.min.js"></script>
         <![endif]-->
     </head>
     <body ng-controller="CanvasCtrl">
+    <div ng-controller="UserCtrl">
         <div id="bd-wrapper">
             <!--导航栏-->
             <nav class="navbar navbar-default navbar-fixed-top my-navbar">
@@ -59,7 +68,7 @@
                             <li><a id="modifyText"></a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href='javascript:void(0)' data-toggle="modal" data-target="#shareModal"><span class="glyphicon glyphicon-share"></span>&nbsp;分享画板</a></li>
+                            <li><a href='' ng-click="getParticipants()" data-toggle="modal" data-target="#shareModal"><span class="glyphicon glyphicon-share"></span>&nbsp;分享画板</a></li>
                             <li class="dropdown">
                                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -420,9 +429,8 @@
                 </div>
             </div>
         </div>
-
         <!--Share Modal -->
-        <div class="modal fade" id="shareModal">
+        <div class="mymodal fade" data-backdrop="static" id="shareModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -432,24 +440,57 @@
                     <div class="modal-body">
                         <div class="pms-div">
                             <p style="font-weight: bold">权限列表：</p>
-                            <div class="permission-user">
-                                <i class="glyphicon glyphicon-user"></i>Eamonn
-                                <span style="float:right">创建者</span>
+                            <div class="ui celled list" style="height: 100px;overflow:auto;">
+                                <div class="item" ng-repeat="part in participants">
+                                    <img class="ui avatar image" src="/images/avatar.jpg">
+                                    <div class="content">
+                                        <a>{[ part.userName ]}</a>
+                                    </div>
+                                    <span style="float:right;margin-right: 20px;" ng-if="part.permission === '2' ">
+                                        创建者
+                                    </span>
+                                    <span style="float:right;margin-right: 20px;" ng-if="part.permission === '1' ">
+                                        <select>
+                                            <option value="1" selected="selected">编辑者</option>
+                                            <option value="0">浏览者</option>
+                                        </select>
+                                    </span>
+                                    <span style="float:right;margin-right: 20px;" ng-if="part.permission === '0' ">
+                                        <select>
+                                            <option value="1">编辑者</option>
+                                            <option value="0" selected="selected">浏览者</option>
+                                        </select>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="newpms-div">
-                            <p style="font-weight: bold">新邀请：<span style="color: #5e5e5e">请输入被邀请人的用户名</span></p>
-                            <input style="width: 100%"/>
+                            <p style="font-weight: bold">新邀请：</p>
+                            <div class="ui multiple search selection dropdown" >
+                                <input type="hidden" name="selectUser" id="selectUsers" >
+                                <i class="dropdown icon"></i>
+                                <div class="default text" ng-click="loadAllUsers()" >输入被邀请人的用户名</div>
+                                <div class="menu">
+                                    <div class="item ng-user-item" ng-repeat="user in users" >{[ user.username ]}</div>
+                                </div>
+                            </div>
+                            <div class="ui selection dropdown">
+                                <input type="hidden" name="permission" id="userPms">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">选择权限</div>
+                                <div class="menu">
+                                    <div class="item" data-value="1">编辑者</div>
+                                    <div class="item" data-value="0">浏览者</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary ng-add-users">发送邀请</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <!--bootstrap context menu-->
         <div id="context-menu">
             <ul class="dropdown-menu" id = 'context-ul' role="menu">
@@ -462,11 +503,13 @@
                 <li id="stb-context"><a href="" tabindex="-1" ng-click="sendToBack()"><span class="fa fa-angle-double-down menu-btn" ></span>置于底层</a></li>
             </ul>
         </div>
+    </div>
     </body>
     <script src='/app_3th_js/jQuery/jquery-1.11.3.min.js'></script>
     <script src='/app_3th_js/angular/angular.min.js'></script>
     <script src='/app_3th_js/bootstrap/bootstrap.min.js'></script>
     <script src='/app_3th_js/bootstrap/bootstrap-contextmenu.js'></script>
+    <script src='/app_3th_js/semantic/semantic.min.js'></script>
 	<script src='/app_3th_js/colpick.js'></script>
     <script src='/app_3th_js/fabric/fabric.min.js'></script>
     <script src='/app_3th_js/moment.min.js'></script>
@@ -475,6 +518,7 @@
     <script src='/app_ui_js/ConfigBoard.js'></script>
     <script src='/app_ui_js/EditBoard.js'></script>
 	<script>
+        $('.ui.dropdown').dropdown();
         var apiKey='<%= apiKey%>';
         var userName ='<%= userName%>';
         var userId ='<%= userId%>';
@@ -491,5 +535,6 @@
         var socket = editBoard.socket;
         var canvasCtnEl = editBoard.configBord.canvasCtnEl;
 	</script>
+    <script src="/app_ui_js/controller/userCtrl.js"></script>
     <script src="/app_ui_js/controller/canvasCtrl.js"></script>
 </html>

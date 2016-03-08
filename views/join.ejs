@@ -23,16 +23,16 @@
                             <label class="control-label" for="userName">用户名</label>
                             <input class="form-control" placeholder="用户名（用于登录）" name="username" id="userName" type="text">
                         </div>
-                        <div class="row">
-                            <div class="form-group col-lg-6 col-md-6 col-sm-6">
-                                <label class="control-label" for="firstName">名</label>
-                                <input class="form-control"placeholder="FirstName" name="firstName" id="firstName" type="text">
-                            </div>
-                            <div class="form-group col-lg-6 col-md-6 col-sm-6">
-                                <label class="control-label" for="lastName">姓</label>
-                                <input class="form-control" placeholder="LastName" name="lastName" id="lastName" type="text">
-                            </div>
-                        </div>
+                        <!--<div class="row">-->
+                            <!--<div class="form-group col-lg-6 col-md-6 col-sm-6">-->
+                                <!--<label class="control-label" for="firstName">名</label>-->
+                                <!--<input class="form-control"placeholder="FirstName" name="firstName" id="firstName" type="text">-->
+                            <!--</div>-->
+                            <!--<div class="form-group col-lg-6 col-md-6 col-sm-6">-->
+                                <!--<label class="control-label" for="lastName">姓</label>-->
+                                <!--<input class="form-control" placeholder="LastName" name="lastName" id="lastName" type="text">-->
+                            <!--</div>-->
+                        <!--</div>-->
                         <div class="form-group" id="passwordDiv">
                             <label class="control-label" for="passWord">密码</label>
                             <input class="form-control" placeholder="密码" name="password" id="passWord" type="password">
@@ -82,22 +82,6 @@
                                     regexp: {
                                         regexp: /^[a-zA-Z0-9_\.]+$/,
                                         message: '用户名只能是字母、数字和下划线'
-                                    }
-                                }
-                            },
-                            firstName: {
-                                message: 'The firstname is not valid',
-                                validators: {
-                                    notEmpty: {
-                                        message: '名不能为空'
-                                    }
-                                }
-                            },
-                            lastName: {
-                                message: 'The lastname is not valid',
-                                validators: {
-                                    notEmpty: {
-                                        message: '姓不能为空'
                                     }
                                 }
                             },

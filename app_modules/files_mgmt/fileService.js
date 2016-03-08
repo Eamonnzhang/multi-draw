@@ -2,16 +2,25 @@
  * Created by Eamonn on 2015/10/16.
  */
 var fileDao = new (require('./fileDao.js'))('canvasMetaData');
+var participantsDao = new (require('./../users_mgmt/userDao.js'))('canvasParticipants');
 var message = require('./../_utils/messageGenerator.js');
 
 exports.saveFile = function (data,user,next) {
     data.createUserId = user.id;
-    data.createUserName = user.name.firstName+' '+user.name.lastName;
+    data.createUserName = user.username;
     data.isRecycled =  false;
     if(!data.fileName) data.fileName = '未命名文件';
     fileDao.saveFile(data, function (data) {
         if(data){
-            next(data);
+            var participants = {
+                canvasId : data.data,
+                userId : user.id,
+                userName : user.username,
+                permission : '2'
+            };
+            participantsDao.addParticipants([participants], function (result) {
+                next(data);
+            });
         }
     });
 };

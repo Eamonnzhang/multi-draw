@@ -15,7 +15,7 @@ var utils = {
     },
     prepareNewObj : function (obj,user) {
         obj.userId = user.id;
-        obj.userName = user.name.firstName+" "+user.name.lastName;
+        obj.userName = user.username;
     }
 };
 

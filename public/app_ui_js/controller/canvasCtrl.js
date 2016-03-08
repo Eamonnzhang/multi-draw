@@ -1444,6 +1444,7 @@ function httpOpt($scope,$http){
     $scope.loadFile = function (query) {
         $http.get('/loadFile'+mdUtils.convertJSONToQueryStr(query))
             .then(function (result) {
+                console.log(result);
                 if(result.data.success){
                     var canvasData = result.data.data[0];
                     var vObj = [];
@@ -1475,8 +1476,10 @@ function httpOpt($scope,$http){
                             object.on('editing:entered', editorEnterFire);
                         }
                     });
-                }else{
-                    mdUtils.showAlert('文件不存在或您无权查看！<br><a href="/">点击返回</a>','sm','danger');
+                } else {
+                    //mdUtils.showAlert('文件不存在或您无权查看！<br><a href="/">点击返回</a>','sm','danger');
+                    //alert('文件不存在或您无权查看！<br><a href="/">点击返回</a>','sm','danger');
+                    window.location.href='/';
                 }
             }, function () {
                 mdUtils.showAlert('请求失败','sm','danger','show');
@@ -1493,7 +1496,7 @@ function httpOpt($scope,$http){
     }
 }
 
-var canvasModule = angular.module('CanvasModule', []);
+var canvasModule = angular.module('CanvasModule', ['UserModule']);
 canvasModule.config(function($interpolateProvider) {
     $interpolateProvider
         .startSymbol('{[')
@@ -1545,6 +1548,7 @@ canvasModule.directive('objectButtonsEnabled', function() {
         }
     };
 });
+
 canvasModule.controller('CanvasCtrl', function($scope,$http) {
     httpOpt($scope,$http);
     var query = {
@@ -1561,4 +1565,7 @@ canvasModule.controller('CanvasCtrl', function($scope,$http) {
     initKeyBoard($scope);
     initCanvasSocket($scope);
     addCanvasListener($scope);
+    $scope.getSelectedFiles = function () {
+        return [{id: this.canvas.id}];
+    }
 });

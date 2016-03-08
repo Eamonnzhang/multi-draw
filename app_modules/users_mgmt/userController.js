@@ -10,13 +10,34 @@ var api = [];
 exports.addUser = function (req, res) {
     var user = {
         username : req.body.username,
-        firstName : req.body.firstName,
-        lastName : req.body.lastName,
         password : req.body.password
     };
     userService.addUser(user, function (data) {
         res.send(data);
     });
+};
+
+exports.loadAllUsers = function (req,res) {
+    userService.loadAllUsers(function (result) {
+        res.send(result);
+    })
+};
+
+exports.addParticipants = function (req,res) {
+    var participants = req.body;
+    //console.log(participants);
+    userService.addParticipants(participants, function (result) {
+        res.send(result);
+    })
+};
+
+exports.getParticipants = function (req,res) {
+    var canvasId = req.query.canvasId;
+    userService.getParticipants(canvasId, function (result) {
+        if(result.success){
+            res.send(result);
+        }
+    })
 };
 
 exports.isExist = function(req,res){
@@ -27,7 +48,6 @@ exports.isExist = function(req,res){
     userService.isExist(query, function (result) {
         if (result.success === true) {
             req.session.userData = result.data[0];
-            //console.log('userCtrl',req.session);
             var userApi = {};
             userApi.apiKey = uuId.generateId(8, 32);
             userApi.userData = req.session.userData;

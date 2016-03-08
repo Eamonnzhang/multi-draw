@@ -13,21 +13,28 @@ var userDao = function(collectionName){
 utils.extend(userDao,AbstractDao);
 
 userDao.prototype.addUser = function (user,next) {
-    this.dataCollection.insert({
-      id: user.id,
-      username: user.username,
-      password: user.password,
-      name: {
-        firstName: user.name.firstName,
-        lastName: user.name.lastName
-      }
-    }, function (err, data) {
-      if (err) {
-        next(message.genSimpFailedMsg(err.message, err.stack));
-      } else {
-        next(message.genSimpSuccessMsg(null, data));
-      }
-    });
+  this.insertOne(user,next);
+};
+
+userDao.prototype.loadAll = function (next) {
+  this.dataCollection.find().toArray(function (err, data) {
+    if (err) {
+      next(message.genSimpFailedMsg(null,err));
+    } else {
+      next(message.genSimpSuccessMsg(null, data));
+    }
+  });
+};
+
+userDao.prototype.addParticipants = function (participants, next) {
+    this.insertMany(participants,next);
+};
+
+userDao.prototype.getParticipants = function (canvasId, next) {
+    var query = {
+      canvasId : canvasId
+    };
+    this.findMany(query,next);
 };
 
 module.exports = userDao;

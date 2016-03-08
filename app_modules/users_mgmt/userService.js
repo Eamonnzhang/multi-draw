@@ -3,6 +3,7 @@
  */
 
 var userDao = new (require('./userDao.js'))('users');
+var participantsDao = new (require('./userDao.js'))('canvasParticipants');
 var uuId = require('../_utils/uuidGenerator.js');
 var message = require('../_utils/messageGenerator.js');
 
@@ -16,14 +17,18 @@ exports.isExist = function(query,next){
 };
 
 exports.addUser = function (user,next) {
-    var user = {
-        id: uuId.generateId(8, 32),
-        username: user.username,
-        password: user.password,
-        name: {
-            firstName: user.firstName,
-            lastName: user.lastName
-        }
-    };
     userDao.addUser(user,next);
+};
+
+exports.addParticipants = function (participants,next) {
+    participantsDao.addParticipants(participants,next);
+};
+
+exports.getParticipants = function (canvasId,next) {
+    participantsDao.getParticipants(canvasId,next);
+};
+
+
+exports.loadAllUsers = function (next) {
+    userDao.loadAll(next);
 };

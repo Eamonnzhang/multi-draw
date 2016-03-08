@@ -388,10 +388,22 @@ label {
     height: 550px;
     overflow: auto;
 }
+
 .center-container{
     margin-top:100px;
 }
 
 #modifyText{
     color:#A9A9A9;
+}
+
+.pms-div{
+    margin-bottom: 20px;
+}
+
+.newpms-div{
+    margin-bottom: 15px;
+}
+.permission-user {
+    padding: 10px;
 }

@@ -12,7 +12,7 @@ module.exports = function(app){
         if (req.session.userData) {
             if(req.query.id){
                 res.render('canvas', {
-                    userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
+                    userName: req.session.userData.username,
                     userId: req.session.userData.id,
                     apiKey: req.session.userData.apiKey,title:'MultiDraw'
                 });
@@ -48,7 +48,7 @@ module.exports = function(app){
     app.get('/center', function (req,res) {
         if (req.session.userData) {
             res.render('center', {
-                userName: req.session.userData.name.firstName + ' ' + req.session.userData.name.lastName,
+                userName: req.session.userData.username,
                 userId: req.session.userData.id,
                 apiKey: req.session.userData.apiKey,title:'MultiDraw'
             });
@@ -83,6 +83,16 @@ module.exports = function(app){
         fileController.loadAllFiles(req,res);
     });
 
+    app.get('/loadAllUsers',function(req,res){
+        userController.loadAllUsers(req,res);
+    });
+
+    app.post('/addParticipants',function(req,res){
+        userController.addParticipants(req,res);
+    });
+    app.get('/getParticipants',function(req,res){
+        userController.getParticipants(req,res);
+    });
     app.get('/recycleFiles', function (req,res) {
         fileController.recycleFiles(req,res);
     });
