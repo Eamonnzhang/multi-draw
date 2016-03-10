@@ -407,3 +407,8 @@ label {
 .permission-user {
     padding: 10px;
 }
+
+.remove-pms {
+    position: absolute;
+    right: 25px;
+}

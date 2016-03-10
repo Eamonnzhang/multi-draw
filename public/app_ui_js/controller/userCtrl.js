@@ -3,6 +3,7 @@
  */
 
 $('#selectUsers').val('');
+$('.ui.dropdown').dropdown();
 var userModule = angular.module('UserModule', []);
 //解决IE下，scope缓存无法更新的问题
 userModule.config(['$httpProvider', function($httpProvider) {
@@ -21,13 +22,17 @@ userModule.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
 }]);
 
-userModule.directive('ngUserItem', function () {
+userModule.directive('ngUserList', function () {
     return {
         restrict: 'C',
         link : function ($scope,$element,$attrs) {
-            $($element).on('click', function (event) {
-                $(this).attr('data-value',$scope.user.id+'+'+$scope.user.username);
-            })
+            $($element).hover(function (event) {
+                $(this).children('.close').css('display','');
+                $(this).css('background-color','#EEEEEE');
+            },function(){
+                $(this).children('.close').css('display','none');
+                $(this).css('background-color','inherit');
+            });
         }
     }
 });
@@ -42,7 +47,7 @@ userModule.directive('ngAddUsers',function () {
                 var userIdAndName;
                 var pms = $('#userPms').attr('value');
                 var participants = [];
-                if(inputUsers && pms){
+                if (inputUsers && pms){
                     userIdAndName = inputUsers.split(',');
                     userIdAndName.forEach(function (idAndName) {
                         participants.push({
@@ -63,9 +68,15 @@ userModule.directive('ngAddUsers',function () {
 });
 
 
-userModule.controller('UserCtrl', function($scope, $http) {
 
+userModule.controller('UserCtrl', function($scope, $http) {
+    $scope.participatedUsers = [];
+
+    //打开模态框
+    //清空dropdown
     $scope.getParticipants = function () {
+        $('#shareModal').modal('show');
+        $('.ui .multiple .dropdown').dropdown('clear');
         $('.ui .label').remove();
         $('#selectUsers').removeAttr('value');
         $('#userPms').removeAttr('value');
@@ -86,36 +97,80 @@ userModule.controller('UserCtrl', function($scope, $http) {
             });
     };
 
-    $scope.participatedUsers = [];
-
-    $scope.loadAllUsers = function () {
-        $http.get("/loadAllUsers")
-            .success(function (res) {
-                if(res.success) {
-                    var allUsers = res.data;
-                    for(var i = 0; i < allUsers.length; ++i){
-                       for(var j = 0 ; j < $scope.participatedUsers.length; j++){
-                           if(allUsers[i].id === $scope.participatedUsers[j]){
-                               allUsers.splice(i,1);
-                               i--;
-                               break;
-                           }
-                       }
+    $scope.loadUninvitedUsers = function (e) {
+        var selectedFileId = $scope.getSelectedFiles()[0].id;
+        console.log('select ID',selectedFileId);
+        var url = '/loadUninvitedUsers?keyWords={query}&canvasId=' + selectedFileId;
+        var setting = {
+            apiSettings: {
+                cache : false,
+                url: url,
+                onResponse: function(res) {
+                    var response = {
+                        results : []
+                    };
+                    if(res.data){
+                        res.data.forEach(function(user){
+                            user.value = user.id+'+'+user.name;
+                            response.results.push(user);
+                        });
                     }
-                    $scope.users = allUsers;
+                    return response;
                 }
-            });
+            },
+            fields : {
+                name : 'name',
+                value : 'value'
+            }
+        };
+        $('.ui.dropdown').dropdown(setting);
     };
 
     $scope.addParticipants = function (participants) {
         $http.post("/addParticipants",participants)
             .success(function (res) {
                 if(res.success) {
-                    console.log(res);
+                    console.log('success');
+                    $("#shareModal").modal('hide');
+
+                    mdUtils.showAlert('邀请成功！','sm','success','toggle');
                 }
             });
     };
 
+    $scope.changePermission = function (part) {
+        console.log(part);
+        var data = {
+            canvasId : part.canvasId,
+            userId : part.userId,
+            permission : part.permission
+        };
+        $http.post("/updateParticipants",data)
+            .success(function (res) {
+                if(res.success) {
 
+                }
+            });
+    };
+
+    $scope.removePermission = function ($event,part) {
+        console.log('removepms');
+        $http.get("/removeParticipants?canvasId="+part.canvasId+'&userId='+part.userId)
+            .success(function (res) {
+                if(res.success) {
+                    $($event.toElement.parentNode.parentNode).remove();
+                }
+            });
+    };
+});
+
+$('#shareModal').on('hidden.bs.modal', function (e) {
+    // do something...
+    //console.log('model hidee');
+    $('.ui.multiple.dropdown').children('.default.text').removeClass('filtered');
+    $('.ui.multiple.dropdown').children('.menu.transition').remove();
+    //console.log($('.ui.multiple.dropdown'));
+    //console.log($('.menu.transition'));
+    $('.ui.dropdown').dropdown();
 });
 

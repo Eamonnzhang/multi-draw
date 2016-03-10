@@ -15,7 +15,7 @@ var utils = {
     },
     prepareNewObj : function (obj,user) {
         obj.userId = user.id;
-        obj.userName = user.username;
+        obj.userName = user.name;
     }
 };
 
@@ -33,7 +33,6 @@ exports.startSocketIo = function(server,db,configCallback){
         socket.on('room',function(info){
             room = info.roomId;
             socket.join(room);
-            delete info.user.userKey;
             var c_userName = info.user.userName;
             socket.userName = c_userName;
             addedUser = true;

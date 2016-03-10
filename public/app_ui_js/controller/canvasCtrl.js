@@ -1553,7 +1553,7 @@ canvasModule.controller('CanvasCtrl', function($scope,$http) {
     httpOpt($scope,$http);
     var query = {
         id : canvas.id,
-        userKey : apiKey
+        //userIds ,
     };
     $scope.loadFile(query);
     $scope.canvas = canvas;

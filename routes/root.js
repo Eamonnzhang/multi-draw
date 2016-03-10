@@ -5,23 +5,22 @@ var fileController = require('../app_modules/files_mgmt/fileController.js');
 var userController = require('../app_modules/users_mgmt/userController.js');
 var itemController = require('../app_modules/items_mgmt/itemController.js');
 var message = require('../app_modules/_utils/messageGenerator.js');
-var uuId = require('../app_modules/_utils/uuidGenerator.js');
-
+var config = require('../config.json');
 module.exports = function(app){
     app.get('/board',function(req,res){
         if (req.session.userData) {
             if(req.query.id){
                 res.render('canvas', {
-                    userName: req.session.userData.username,
+                    userName: req.session.userData.name,
                     userId: req.session.userData.id,
-                    apiKey: req.session.userData.apiKey,title:'MultiDraw'
+                    title:'MultiDraw'
                 });
             }
             else{
                 res.redirect('/center');
             }
         }else{
-            res.redirect('/login');
+            res.redirect(config.loginUrl[config.runMode]);
         }
     });
 
@@ -29,12 +28,12 @@ module.exports = function(app){
         if (req.session.userData) {
             res.render('index', {title: 'MultiDraw'});
         }else{
-            res.redirect('/login');
+            res.redirect(config.loginUrl[config.runMode]);
         }
     });
 
     app.get('/', function (req,res) {
-        res.redirect('/center');
+       res.redirect('/center');
     });
 
     app.get('/login',function(req,res){
@@ -46,14 +45,15 @@ module.exports = function(app){
     });
 
     app.get('/center', function (req,res) {
+        console.log('center session',req.session.userData);
         if (req.session.userData) {
             res.render('center', {
-                userName: req.session.userData.username,
+                userName: req.session.userData.name,
                 userId: req.session.userData.id,
-                apiKey: req.session.userData.apiKey,title:'MultiDraw'
+                title:'MultiDraw'
             });
         }else{
-            res.redirect('/login');
+            res.redirect(config.loginUrl[config.runMode]);
         }
     });
 
@@ -71,8 +71,7 @@ module.exports = function(app){
 
     app.get('/logout', function (req, res) {
         delete req.session.userData;
-        userController.removeUserApi(req);
-        res.redirect('/board');
+        res.redirect('/');
     });
 
     app.post('/saveFile',function(req,res){
@@ -83,15 +82,20 @@ module.exports = function(app){
         fileController.loadAllFiles(req,res);
     });
 
-    app.get('/loadAllUsers',function(req,res){
-        userController.loadAllUsers(req,res);
+    app.get('/loadUninvitedUsers',function(req,res){
+        userController.loadUnParticipantUsers(req,res);
     });
-
     app.post('/addParticipants',function(req,res){
         userController.addParticipants(req,res);
     });
     app.get('/getParticipants',function(req,res){
         userController.getParticipants(req,res);
+    });
+    app.get('/removeParticipants',function(req,res){
+        userController.removeParticipants(req,res);
+    });
+    app.post('/updateParticipants',function(req,res){
+        userController.updateParticipants(req,res);
     });
     app.get('/recycleFiles', function (req,res) {
         fileController.recycleFiles(req,res);
@@ -106,8 +110,7 @@ module.exports = function(app){
     });
 
     app.get('/loadFile',function(req,res){
-        var userApi = userController.getUserApi();
-        fileController.loadFile(userApi,req,res);
+        fileController.loadFile(req,res);
     });
 
     app.post('/saveItem', function (req,res) {

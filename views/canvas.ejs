@@ -68,7 +68,7 @@
                             <li><a id="modifyText"></a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href='' ng-click="getParticipants()" data-toggle="modal" data-target="#shareModal"><span class="glyphicon glyphicon-share"></span>&nbsp;分享画板</a></li>
+                            <li><a href='' ng-click="getParticipants()"><span class="glyphicon glyphicon-share"></span>&nbsp;分享画板</a></li>
                             <li class="dropdown">
                                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -344,7 +344,7 @@
         </div>
         <!--bd--wrapper end-->
         <!--通用 Alert-->
-        <div class="modal" id="alertModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard=false aria-labelledby="alertModal">
+        <div class="modal" id="alertModal" tabindex="-1" role="dialog" data-keyboard=false aria-labelledby="alertModal">
             <div id="size" role="document">
                 <div align="center" id="type" role="alert">
                     <p></p>
@@ -430,7 +430,7 @@
             </div>
         </div>
         <!--Share Modal -->
-        <div class="mymodal fade" data-backdrop="static" id="shareModal">
+        <div class="modal fade" id="shareModal" >
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -441,37 +441,32 @@
                         <div class="pms-div">
                             <p style="font-weight: bold">权限列表：</p>
                             <div class="ui celled list" style="height: 100px;overflow:auto;">
-                                <div class="item" ng-repeat="part in participants">
+                                <div class="item ng-user-list" ng-repeat="part in participants">
                                     <img class="ui avatar image" src="/images/avatar.jpg">
                                     <div class="content">
                                         <a>{[ part.userName ]}</a>
                                     </div>
-                                    <span style="float:right;margin-right: 20px;" ng-if="part.permission === '2' ">
-                                        创建者
-                                    </span>
-                                    <span style="float:right;margin-right: 20px;" ng-if="part.permission === '1' ">
-                                        <select>
-                                            <option value="1" selected="selected">编辑者</option>
-                                            <option value="0">浏览者</option>
-                                        </select>
-                                    </span>
-                                    <span style="float:right;margin-right: 20px;" ng-if="part.permission === '0' ">
-                                        <select>
-                                            <option value="1">编辑者</option>
-                                            <option value="0" selected="selected">浏览者</option>
-                                        </select>
-                                    </span>
+                                        <span style="float:right;margin-right: 30px;" ng-if="part.permission === '2' ">
+                                            创建者
+                                        </span>
+                                        <span style="float:right;margin-right: 30px;" ng-if="part.permission !== '2' ">
+                                            <select ng-model="part.permission" ng-change="changePermission(part)">
+                                                <option value="1" selected="selected">编辑者</option>
+                                                <option value="0">浏览者</option>
+                                            </select>
+                                        </span>
+                                    <button type="button" class="close remove-pms" ng-click="removePermission($event,part)" style="display: none" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
                             </div>
                         </div>
                         <div class="newpms-div">
                             <p style="font-weight: bold">新邀请：</p>
-                            <div class="ui multiple search selection dropdown" >
-                                <input type="hidden" name="selectUser" id="selectUsers" >
+                            <div class="ui multiple search selection dropdown">
+                                <input type="hidden" name="selectUser"  id="selectUsers" >
                                 <i class="dropdown icon"></i>
-                                <div class="default text" ng-click="loadAllUsers()" >输入被邀请人的用户名</div>
+                                <input class="search test" ng-focus="loadUninvitedUsers()">
+                                <div class="default text">输入被邀请人的用户名</div>
                                 <div class="menu">
-                                    <div class="item ng-user-item" ng-repeat="user in users" >{[ user.username ]}</div>
                                 </div>
                             </div>
                             <div class="ui selection dropdown">
@@ -509,7 +504,7 @@
     <script src='/app_3th_js/angular/angular.min.js'></script>
     <script src='/app_3th_js/bootstrap/bootstrap.min.js'></script>
     <script src='/app_3th_js/bootstrap/bootstrap-contextmenu.js'></script>
-    <script src='/app_3th_js/semantic/semantic.min.js'></script>
+    <script src='/app_3th_js/semantic/semantic.js'></script>
 	<script src='/app_3th_js/colpick.js'></script>
     <script src='/app_3th_js/fabric/fabric.min.js'></script>
     <script src='/app_3th_js/moment.min.js'></script>
@@ -519,11 +514,9 @@
     <script src='/app_ui_js/EditBoard.js'></script>
 	<script>
         $('.ui.dropdown').dropdown();
-        var apiKey='<%= apiKey%>';
         var userName ='<%= userName%>';
         var userId ='<%= userId%>';
         var user = {
-            userKey : apiKey,
             userName : userName,
             userId : userId
         };

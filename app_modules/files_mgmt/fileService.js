@@ -7,7 +7,7 @@ var message = require('./../_utils/messageGenerator.js');
 
 exports.saveFile = function (data,user,next) {
     data.createUserId = user.id;
-    data.createUserName = user.username;
+    data.createUserName = user.name;
     data.isRecycled =  false;
     if(!data.fileName) data.fileName = '未命名文件';
     fileDao.saveFile(data, function (data) {
@@ -15,7 +15,7 @@ exports.saveFile = function (data,user,next) {
             var participants = {
                 canvasId : data.data,
                 userId : user.id,
-                userName : user.username,
+                userName : user.name,
                 permission : '2'
             };
             participantsDao.addParticipants([participants], function (result) {

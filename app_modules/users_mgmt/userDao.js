@@ -16,8 +16,11 @@ userDao.prototype.addUser = function (user,next) {
   this.insertOne(user,next);
 };
 
-userDao.prototype.loadAll = function (next) {
-  this.dataCollection.find().toArray(function (err, data) {
+userDao.prototype.loadAll = function (reg,next) {
+    var query = {
+        name : reg
+    };
+  this.dataCollection.find(query).toArray(function (err, data) {
     if (err) {
       next(message.genSimpFailedMsg(null,err));
     } else {
@@ -35,6 +38,18 @@ userDao.prototype.getParticipants = function (canvasId, next) {
       canvasId : canvasId
     };
     this.findMany(query,next);
+};
+
+userDao.prototype.removeParticipants = function (query,next) {
+    this.deleteOne(query,next);
+};
+
+userDao.prototype.updateParticipants = function (query,updateData,next) {
+    this.updateOne(query,updateData,next);
+};
+
+userDao.prototype.isExist = function (query,next) {
+    this.findOne(query,next);
 };
 
 module.exports = userDao;

@@ -1,11 +1,18 @@
 {
-  "runMode":"demo",
+  "runMode":"dev",
   "port": "4500",
   "dbUrl": "mongodb://localhost:27017/multidraw",
-  "UMBHost":{
-    "dev":"192.168.1.138:3500",
-    "production":"",
-    "demo":"www.xuezuowang.com:3500",
-    "joint":"192.168.1.138:3500"
+  "loginUrl":{
+    "dev":"/login",
+    "production":"http://www.xuezuowang.com/login"
+  },
+  "cookieInfo":{
+    "dev":{
+      "maxAge": 5400000
+    },
+    "production":{
+      "maxAge": 5400000,
+      "domain":".xuezuowang.com"
+    }
   }
 }

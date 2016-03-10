@@ -7,7 +7,7 @@ var message = require('./../_utils/messageGenerator.js');
 
 exports.saveItem = function (data,user,next) {
     data.createUserId = user.id;
-    data.createUserName = user.name.firstName+' '+user.name.lastName;
+    data.createUserName = user.name;
     itemDao.saveItem(data,next);
 };
 

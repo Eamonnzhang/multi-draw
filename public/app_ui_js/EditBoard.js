@@ -4,7 +4,7 @@
  * and if you don't know where to put your code,put them here temporarily
  */
 var EditBoard = function (){
-    this.socket = io.connect('http://192.168.1.81:4500');
+    this.socket = io.connect();
     var canvas = this.canvas = new fabric.Canvas('c', {
         backgroundColor :"#ffffff",
         width:750,
@@ -15,7 +15,7 @@ var EditBoard = function (){
     //if(canvasId) this.canvas.id = canvasId;
     var configBoard = this.configBord =  new ConfigBoard(this);
     fabric.Object.prototype.transparentCorners = false;
-    //canvas.add();//chrome抽了，= =必须要加一句为了显示空白canvas
+    canvas.add();//chrome抽了，= =必须要加一句为了显示空白canvas
 
     //监听window的缩放事件 使滚动条始终居中
     window.onresize = mdUtils.bind(configBoard,configBoard.resetScroll);

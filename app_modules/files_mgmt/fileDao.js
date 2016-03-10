@@ -43,10 +43,9 @@ fileDao.prototype.findFileByIdUnderAccount = function (id,user,next) {
         userId : user.id
     };
     participantsDao.findOne(partQuery, function (result) {
-        console.log(result.data);
+        //console.log(result.data);
         if(result.data[0]){ //该用户已参与此画板分享
             //打开此画板
-            console.log('由此画板');
             me.findOne(query, function (result) {
                 if(result.data[0]){
                     itemDao.findItemsInCanvas(id, function (itemsData) {

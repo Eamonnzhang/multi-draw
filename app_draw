@@ -1,22 +1,17 @@
 #!/usr/bin/env node
-
-
 var debug = require('debug')('multidraw:server');
 var http = require('http');
 var socket = require('./socket.js');
 var dataSource = require('./app_db/dataSource.js');
 var config = require('./config.json');
 var Session = require('express-session');
-var sessionstore = require('sessionstore');
-//var SessionStore = require('session-file-store')(Session);
-var aDay = 3600000 * 24;
+const MongoStore = require('connect-mongo')(Session);
 var session = Session({
-    //store: new SessionStore({path: __dirname+'/tmp/sessions'}),
-    store: sessionstore.createSessionStore(),
-    secret: 'fuck',
-    resave: true,
-    cookie :{maxAge: 2*aDay,expires:2*aDay},
-    saveUninitialized: true
+    resave : true,
+    saveUninitialized : true ,
+    secret : 'fens.me',
+    cookie: config.cookieInfo[config.runMode],
+    store: new MongoStore({ url: "mongodb://localhost:27017/session_store"})
 });
 
 dataSource.connectDb(config.dbUrl,function(multidrawDb){

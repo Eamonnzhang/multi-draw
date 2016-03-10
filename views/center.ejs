@@ -4,16 +4,17 @@
     <meta charset="utf-8" />
     <title><%= title %></title>
     <link rel='stylesheet' href='css/bootstrap/bootstrap.css' />
-    <link rel='stylesheet' href='css/semantic/semantic.css' />
+    <!--<link rel='stylesheet' href='css/semantic/semantic.css' />-->
+    <link href="/css/semantic/components/dropdown.css" rel="stylesheet">
+    <link href="/css/semantic/components/menu.css" rel="stylesheet">
+    <link href="/css/semantic/components/list.css" rel="stylesheet">
+    <link href="/css/semantic/components/item.css" rel="stylesheet">
+    <link href="/css/semantic/components/transition.css" rel="stylesheet">
+    <link href="/css/semantic/components/label.css" rel="stylesheet">
+    <link href="/css/semantic/components/icon.css" rel="stylesheet">
+    <link href="/css/semantic/components/image.css" rel="stylesheet">
     <link href="css/app-styles.css" rel="stylesheet">
     <link href="css/font_awesome/font-awesome.min.css" rel="stylesheet">
-    <script src="app_3th_js/jQuery/jquery-1.11.3.min.js"></script>
-    <script src="app_3th_js/angular/angular.min.js"></script>
-    <script src="app_3th_js/fabric/fabric.min.js"></script>
-    <script src="app_3th_js/bootstrap/bootstrap.min.js"></script>
-    <script src='app_3th_js/moment.min.js'></script>
-    <script src='app_3th_js/semantic/semantic.min.js'></script>
-    <script src="app_ui_js/mdUtils.js"></script>
     <!--[if lt IE 9]>
     <script src="app_3th_js/forIE/html5shiv.js"></script>
     <script src="app_3th_js/forIE/respond.min.js"></script>
@@ -27,274 +28,280 @@
             text-decoration: none;
             color: #000000;
         }
+        body {
+            margin : 0;
+        }
     </style>
 </head>
-<body ng-controller="FileListCtrl">
-    <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand brand-title" href="/center" ><i class="fa fa-paint-brush  fa-lg"></i>&nbsp;MultiDraw</a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">文件 <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="/new"><span class="fa fa-file menu-btn" ></span>新建</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href=""><span class="glyphicon glyphicon-user"></span> 个人主页</a></li>
-                        <li><a href=""><span class="glyphicon glyphicon-cog"></span> 账户设置</a></li>
-                        <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> 退出</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
-    <div  ng-controller="UserCtrl" >
-        <div class="center-container" >
-            <div class="col-lg-8 col-lg-offset-1 col-md-offset-1 col-md-8 col-sm-8">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active">
-                        <a href="#file" ng-click="loadAllNotRecycledFiles()" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-folder"></i> 我的文件</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#star" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-star-o"></i> 我的收藏</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#cooperation" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-group"></i> 我的协作</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#modify" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-clock-o"></i> 最近修改</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#recycle" ng-click="loadAllRecycledFiles()" aria-controls="settings" role="tab" data-toggle="tab"><i class="fa fa-recycle"></i> 回收站</a>
+<body>
+    <div ng-controller="FileListCtrl">
+        <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand brand-title" href="/center" ><i class="fa fa-paint-brush  fa-lg"></i>&nbsp;MultiDraw</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">文件 <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/new"><span class="fa fa-file menu-btn" ></span>新建</a></li>
+                        </ul>
                     </li>
                 </ul>
-                <!-- Tab panes -->
-                <div class="tab-content tab-border">
-                    <div role="tabpanel fade in" class="tab-pane active file-container" id="file" >
-                        <div class="tab-option">
-                            <div class="btn-group " role="group" style="display:inline-block;">
-                                <button type="button" class="btn btn-sm btn-default" onclick="{location.href='/new'}"><i class="fa fa-plus"></i> 新建</button>
-                                <button type="button" class="btn btn-sm btn-default"><i class="fa fa-upload"></i>
-                                    <a href="javascript:void(0)" class="none" onclick="importFile()" >导入</a>
-                                    <input type="file" id="importFile" name="importFile" style="display: none;"/>
-                                </button>
-                            </div>
-                            <button type="button" class="btn btn-sm btn-danger" ng-show="isMultiFilesSelected()" ng-click="recycleFile()"><i class="fa fa-trash-o"></i> 删除</button>
-                            <div class="btn-group btn-object-action" role="group" style="display:inline-block;" ng-show="isFileSelected()">
-                                <!--<button type="button" class="btn btn-sm btn-default"><i class="fa fa-eye"></i> 预览</button>-->
-                                <button type="button" class="btn btn-sm btn-default" ng-click="loadFile()"><i class="fa fa-edit"></i> 编辑</button>
-                                <button type="button" class="btn btn-sm btn-default" ng-click="recycleFile()"><i class="fa fa-trash-o"></i> 删除</button>
-                                <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-share-alt"></i>
-                                        分享 <span class="caret"></span>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <%= userName %><span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href=""><span class="glyphicon glyphicon-user"></span> 个人主页</a></li>
+                            <li><a href=""><span class="glyphicon glyphicon-cog"></span> 账户设置</a></li>
+                            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> 退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+        <div  ng-controller="UserCtrl" >
+            <div class="center-container" >
+                <div class="col-lg-8 col-lg-offset-1 col-md-offset-1 col-md-8 col-sm-8">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#file" ng-click="loadAllNotRecycledFiles()" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-folder"></i> 我的文件</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#star" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-star-o"></i> 我的收藏</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#cooperation" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-group"></i> 我的协作</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#modify" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-clock-o"></i> 最近修改</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#recycle" ng-click="loadAllRecycledFiles()" aria-controls="settings" role="tab" data-toggle="tab"><i class="fa fa-recycle"></i> 回收站</a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content tab-border">
+                        <div role="tabpanel fade in" class="tab-pane active file-container" id="file" >
+                            <div class="tab-option">
+                                <div class="btn-group " role="group" style="display:inline-block;">
+                                    <button type="button" class="btn btn-sm btn-default" onclick="{location.href='/new'}"><i class="fa fa-plus"></i> 新建</button>
+                                    <button type="button" class="btn btn-sm btn-default"><i class="fa fa-upload"></i>
+                                        <a href="javascript:void(0)" class="none" onclick="importFile()" >导入</a>
+                                        <input type="file" id="importFile" name="importFile" style="display: none;"/>
                                     </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#" ng-click="getParticipants()" data-toggle="modal" data-target="#shareModal">添加协作成员</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="">分享浏览链接</a></li>
-                                        <li><a href="">下载</a></li>
-                                    </ul>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-danger" ng-show="isMultiFilesSelected()" ng-click="recycleFile()"><i class="fa fa-trash-o"></i> 删除</button>
+                                <div class="btn-group btn-object-action" role="group" style="display:inline-block;" ng-show="isFileSelected()">
+                                    <!--<button type="button" class="btn btn-sm btn-default"><i class="fa fa-eye"></i> 预览</button>-->
+                                    <button type="button" class="btn btn-sm btn-default" ng-click="loadFile()"><i class="fa fa-edit"></i> 编辑</button>
+                                    <button type="button" class="btn btn-sm btn-default" ng-click="recycleFile()"><i class="fa fa-trash-o"></i> 删除</button>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-share-alt"></i>
+                                            分享 <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#" ng-click="getParticipants()">添加协作成员</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="">分享浏览链接</a></li>
+                                            <li><a href="">下载</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="btn-group" role="group" style="float:right">
+                                    <button type="button" class="btn btn-sm btn-default" ng-class="{'active': isThView()}" ng-click="toggleView()"><i class="fa fa-th"></i></button>
+                                    <button type="button" class="btn btn-sm btn-default" ng-class="{'active': isListView()}" ng-click="toggleView()"><i class="fa fa-list"></i></button>
                                 </div>
                             </div>
-                            <div class="btn-group" role="group" style="float:right">
-                                <button type="button" class="btn btn-sm btn-default" ng-class="{'active': isThView()}" ng-click="toggleView()"><i class="fa fa-th"></i></button>
-                                <button type="button" class="btn btn-sm btn-default" ng-class="{'active': isListView()}" ng-click="toggleView()"><i class="fa fa-list"></i></button>
+                            <div ng-show="isFileExist()" class="file-ctn" ng-click="discardSelectedFile()">
+                                <div class="panel panel-default ng-file-item file-item" ng-show="isThView()" ng-repeat="file in files">
+                                    <div class="panel-body" align="center">
+                                        <img ng-src= "{{file.thumbnail}}" class="file-img"/>
+                                    </div>
+                                    <div class="file-name"><a href="" ng-click="loadFile(file,true)">{{ file.fileName }}</a></div>
+                                </div>
+                                <table class="table" ng-show="isListView()">
+                                    <thead><tr><th>标题</th><th>创建者</th><th>最后修改</th></tr></thead>
+                                    <tbody>
+                                        <tr class="ng-file-item file-item-list" ng-repeat="file in files">
+                                            <td class="file-name"><a href="" ng-click="loadFile(file,true)"><i class="fa fa-paint-brush"></i> {{ file.fileName }}</a></td>
+                                            <td>{{ file.createUserName }}</td>
+                                            <td>{{ file.lastModify }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div ng-hide="isFileExist()">
+                                您还未创建任何文件！
                             </div>
                         </div>
-                        <div ng-show="isFileExist()" class="file-ctn" ng-click="discardSelectedFile()">
-                            <div class="panel panel-default ng-file-item file-item" ng-show="isThView()" ng-repeat="file in files">
-                                <div class="panel-body" align="center">
-                                    <img ng-src= "{{file.thumbnail}}" class="file-img"/>
+                        <div role="tabpanel fade" class="tab-pane file-container" id="star">
+                            <div align="right" class="tab-option">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-sm btn-default"><i class="fa fa-list"></i></button>
+                                    <button type="button" class="btn btn-sm btn-default"><i class="fa fa-th"></i></button>
                                 </div>
-                                <div class="file-name"><a href="" ng-click="loadFile(file,true)">{{ file.fileName }}</a></div>
                             </div>
-                            <table class="table" ng-show="isListView()">
-                                <thead><tr><th>标题</th><th>创建者</th><th>最后修改</th></tr></thead>
-                                <tbody>
+                            您还未收藏任何文件！
+                        </div>
+                        <div role="tabpanel fade" class="tab-pane file-container" id="cooperation">
+                            <div align="right" class="tab-option">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-sm btn-default"><i class="fa fa-list"></i></button>
+                                    <button type="button" class="btn btn-sm btn-default"><i class="fa fa-th"></i></button>
+                                </div>
+                            </div>
+                            您最近还未协作过任何文件！
+                        </div>
+                        <div role="tabpanel fade" class="tab-pane file-container" id="modify">
+                            <div align="right" class="tab-option">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-sm btn-default"><i class="fa fa-list"></i></button>
+                                    <button type="button" class="btn btn-sm btn-default"><i class="fa fa-th"></i></button>
+                                </div>
+                            </div>
+                            您最近还未修改任何文件！
+                        </div>
+                        <div role="tabpanel fade" class="tab-pane file-container" id="recycle">
+                            <div class="tab-option">
+                                <div class="btn-group" role="group" style="display:inline-block;">
+                                    <button type="button" class="btn btn-sm btn-default" ng-click="restoreAll()"><i class="fa fa-undo"></i> 全部还原</button>
+                                    <button type="button" class="btn btn-sm btn-default" ng-click="deleteAll()"><i class="fa fa-trash-o"></i> 清空回收站</button>
+                                </div>
+                                <div class="btn-group btn-object-action" role="group" style="display:inline-block;" ng-show="isFileSelected()||isMultiFilesSelected()">
+                                    <button type="button" class="btn btn-sm btn-default" ng-click="restoreFiles()">还原</button>
+                                    <button type="button" class="btn btn-sm btn-default" ng-click="deleteFiles()">删除</button>
+                                </div>
+                                <div class="btn-group" role="group" style="float:right">
+                                    <button type="button" class="btn btn-sm btn-default" ng-class="{'active': isThView()}" ng-click="toggleView()"><i class="fa fa-th"></i></button>
+                                    <button type="button" class="btn btn-sm btn-default" ng-class="{'active': isListView()}" ng-click="toggleView()"><i class="fa fa-list"></i></button>
+                                </div>
+                            </div>
+                            <div ng-show="isFileExist()" class="file-ctn"  ng-click="discardSelectedFile()">
+                                <div class="panel panel-default ng-file-item file-item" ng-show="isThView()" ng-repeat="file in files">
+                                    <div class="panel-body" align="center">
+                                        <img ng-src= "{{file.thumbnail}}" class="file-img"/>
+                                    </div>
+                                    <div class="file-name"><a href="" ng-click="loadFile(file,true)">{{ file.fileName }}</a></div>
+                                </div>
+                                <table class="table" ng-show="isListView()">
+                                    <thead><tr><th>标题</th><th>创建者</th><th>最后修改</th></tr></thead>
+                                    <tbody>
                                     <tr class="ng-file-item file-item-list" ng-repeat="file in files">
                                         <td class="file-name"><a href="" ng-click="loadFile(file,true)"><i class="fa fa-paint-brush"></i> {{ file.fileName }}</a></td>
                                         <td>{{ file.createUserName }}</td>
                                         <td>{{ file.lastModify }}</td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div ng-hide="isFileExist()">
-                            您还未创建任何文件！
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div ng-hide="isFileExist()">
+                               回收站为空！
+                            </div>
                         </div>
                     </div>
-                    <div role="tabpanel fade" class="tab-pane file-container" id="star">
-                        <div align="right" class="tab-option">
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-sm btn-default"><i class="fa fa-list"></i></button>
-                                <button type="button" class="btn btn-sm btn-default"><i class="fa fa-th"></i></button>
+                </div>
+                <!--文件详情-->
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                    <div class="file-detail" ng-show="isFileSelected()" ng-model="currentSelectedObj">
+                        <div class="panel panel-default">
+                            <div class="panel-body" align="center">
+                                <img ng-src= "{{currentSelectedObj.thumbnail}}" width="170" height="200"/>
                             </div>
                         </div>
-                        您还未收藏任何文件！
-                    </div>
-                    <div role="tabpanel fade" class="tab-pane file-container" id="cooperation">
-                        <div align="right" class="tab-option">
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-sm btn-default"><i class="fa fa-list"></i></button>
-                                <button type="button" class="btn btn-sm btn-default"><i class="fa fa-th"></i></button>
-                            </div>
-                        </div>
-                        您最近还未协作过任何文件！
-                    </div>
-                    <div role="tabpanel fade" class="tab-pane file-container" id="modify">
-                        <div align="right" class="tab-option">
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-sm btn-default"><i class="fa fa-list"></i></button>
-                                <button type="button" class="btn btn-sm btn-default"><i class="fa fa-th"></i></button>
-                            </div>
-                        </div>
-                        您最近还未修改任何文件！
-                    </div>
-                    <div role="tabpanel fade" class="tab-pane file-container" id="recycle">
-                        <div class="tab-option">
-                            <div class="btn-group" role="group" style="display:inline-block;">
-                                <button type="button" class="btn btn-sm btn-default" ng-click="restoreAll()"><i class="fa fa-undo"></i> 全部还原</button>
-                                <button type="button" class="btn btn-sm btn-default" ng-click="deleteAll()"><i class="fa fa-trash-o"></i> 清空回收站</button>
-                            </div>
-                            <div class="btn-group btn-object-action" role="group" style="display:inline-block;" ng-show="isFileSelected()||isMultiFilesSelected()">
-                                <button type="button" class="btn btn-sm btn-default" ng-click="restoreFiles()">还原</button>
-                                <button type="button" class="btn btn-sm btn-default" ng-click="deleteFiles()">删除</button>
-                            </div>
-                            <div class="btn-group" role="group" style="float:right">
-                                <button type="button" class="btn btn-sm btn-default" ng-class="{'active': isThView()}" ng-click="toggleView()"><i class="fa fa-th"></i></button>
-                                <button type="button" class="btn btn-sm btn-default" ng-class="{'active': isListView()}" ng-click="toggleView()"><i class="fa fa-list"></i></button>
-                            </div>
-                        </div>
-                        <div ng-show="isFileExist()" class="file-ctn"  ng-click="discardSelectedFile()">
-                            <div class="panel panel-default ng-file-item file-item" ng-show="isThView()" ng-repeat="file in files">
-                                <div class="panel-body" align="center">
-                                    <img ng-src= "{{file.thumbnail}}" class="file-img"/>
-                                </div>
-                                <div class="file-name"><a href="" ng-click="loadFile(file,true)">{{ file.fileName }}</a></div>
-                            </div>
-                            <table class="table" ng-show="isListView()">
-                                <thead><tr><th>标题</th><th>创建者</th><th>最后修改</th></tr></thead>
-                                <tbody>
-                                <tr class="ng-file-item file-item-list" ng-repeat="file in files">
-                                    <td class="file-name"><a href="" ng-click="loadFile(file,true)"><i class="fa fa-paint-brush"></i> {{ file.fileName }}</a></td>
-                                    <td>{{ file.createUserName }}</td>
-                                    <td>{{ file.lastModify }}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div ng-hide="isFileExist()">
-                           回收站为空！
+                        <div class="panel-footer">
+                            <h4>信息</h4>
+                            <p>标题：{{ currentSelectedObj.fileName }}</p>
+                            <p>创建时间：{{ currentSelectedObj.createTime }}</p>
+                            <p>修改时间：{{ currentSelectedObj.lastModify }}</p>
+                            <h4>协作信息</h4>
+                            <p>创建人：{{ currentSelectedObj.createUserName }}</p>
+                            <p>参与者：{{ currentSelectedObj.createUserName }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--文件详情-->
-            <div class="col-lg-2 col-md-3 col-sm-4">
-                <div class="file-detail" ng-show="isFileSelected()" ng-model="currentSelectedObj">
-                    <div class="panel panel-default">
-                        <div class="panel-body" align="center">
-                            <img ng-src= "{{currentSelectedObj.thumbnail}}" width="170" height="200"/>
+            <!--Share Modal -->
+            <div class="modal fade" id="shareModal" >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">管理协作成员</h4>
                         </div>
-                    </div>
-                    <div class="panel-footer">
-                        <h4>信息</h4>
-                        <p>标题：{{ currentSelectedObj.fileName }}</p>
-                        <p>创建时间：{{ currentSelectedObj.createTime }}</p>
-                        <p>修改时间：{{ currentSelectedObj.lastModify }}</p>
-                        <h4>协作信息</h4>
-                        <p>创建人：{{ currentSelectedObj.createUserName }}</p>
-                        <p>参与者：{{ currentSelectedObj.createUserName }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Share Modal -->
-        <div class="mymodal fade" data-backdrop="static" id="shareModal" >
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">管理协作成员</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="pms-div">
-                            <p style="font-weight: bold">权限列表：</p>
-                            <div class="ui celled list" style="height: 100px;overflow:auto;">
-                                <div class="item" ng-repeat="part in participants">
-                                    <img class="ui avatar image" src="/images/avatar.jpg">
-                                    <div class="content">
-                                        <a>{{ part.userName }}</a>
+                        <div class="modal-body">
+                            <div class="pms-div">
+                                <p style="font-weight: bold">权限列表：</p>
+                                <div class="ui celled list" style="height: 100px;overflow:auto;">
+                                    <div class="item ng-user-list" ng-repeat="part in participants">
+                                        <img class="ui avatar image" src="/images/avatar.jpg">
+                                        <div class="content">
+                                            <a>{{ part.userName }}</a>
+                                        </div>
+                                        <span style="float:right;margin-right: 30px;" ng-if="part.permission === '2' ">
+                                            创建者
+                                        </span>
+                                        <span style="float:right;margin-right: 30px;" >
+                                            <select ng-model="part.permission" ng-change="changePermission(part)">
+                                                <option value="1" selected="selected">编辑者</option>
+                                                <option value="0">浏览者</option>
+                                            </select>
+                                        </span>
+                                        <button type="button" class="close remove-pms" ng-click="removePermission($event,part)" style="display: none" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     </div>
-                                    <span style="float:right;margin-right: 20px;" ng-if="part.permission === '2' ">
-                                        创建者
-                                    </span>
-                                    <span style="float:right;margin-right: 20px;" ng-if="part.permission === '1' ">
-                                        <select>
-                                            <option value="1" selected="selected">编辑者</option>
-                                            <option value="0">浏览者</option>
-                                        </select>
-                                    </span>
-                                    <span style="float:right;margin-right: 20px;" ng-if="part.permission === '0' ">
-                                        <select>
-                                            <option value="1">编辑者</option>
-                                            <option value="0" selected="selected">浏览者</option>
-                                        </select>
-                                    </span>
                                 </div>
                             </div>
+                            <div class="newpms-div">
+                                <p style="font-weight: bold">新邀请：</p>
+                                <div class="ui multiple search selection dropdown">
+                                    <input type="hidden" name="selectUser"  id="selectUsers" >
+                                    <i class="dropdown icon"></i>
+                                    <input class="search test" ng-focus="loadUninvitedUsers()">
+                                    <div class="default text">输入被邀请人的用户名</div>
+                                    <div class="menu">
+                                    </div>
+                                </div>
+                                <div class="ui selection dropdown">
+                                    <input type="hidden" name="permission" id="userPms">
+                                    <i class="dropdown icon"></i>
+                                    <div class="default text">选择权限</div>
+                                    <div class="menu">
+                                        <div class="item" data-value="1">编辑者</div>
+                                        <div class="item" data-value="0">浏览者</div>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary ng-add-users">发送邀请</button>
                         </div>
-                        <div class="newpms-div">
-                            <p style="font-weight: bold">新邀请：</p>
-                            <div class="ui multiple search selection dropdown" >
-                                <input type="hidden" name="selectUser" id="selectUsers" >
-                                <i class="dropdown icon"></i>
-                                <div class="default text" ng-click="loadAllUsers()" >输入被邀请人的用户名</div>
-                                <div class="menu">
-                                    <div class="item ng-user-item" ng-repeat="user in users" >{{ user.username }}</div>
-                                </div>
-                            </div>
-                            <div class="ui selection dropdown">
-                                <input type="hidden" name="permission" id="userPms">
-                                <i class="dropdown icon"></i>
-                                <div class="default text">选择权限</div>
-                                <div class="menu">
-                                    <div class="item" data-value="1">编辑者</div>
-                                    <div class="item" data-value="0">浏览者</div>
-                                </div>
-                            </div>
-                        </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary ng-add-users">发送邀请</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        </div>
     </div>
 </body>
+<script src="app_3th_js/jQuery/jquery-1.11.3.min.js"></script>
+<script src="app_3th_js/angular/angular.min.js"></script>
+<script src="app_3th_js/fabric/fabric.min.js"></script>
+<script src="app_3th_js/bootstrap/bootstrap.min.js"></script>
+<script src='app_3th_js/moment.min.js'></script>
+<script src='app_3th_js/semantic/semantic.js'></script>
+<script src="app_ui_js/mdUtils.js"></script>
 <script src="app_ui_js/controller/userCtrl.js"></script>
 <script src="app_ui_js/controller/filesCtrl.js"></script>
 <script>
-    $('.ui.dropdown').dropdown();
     function importFile() {
         $('#importFile').click();
     }

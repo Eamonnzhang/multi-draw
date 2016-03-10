@@ -74,17 +74,10 @@ exports.deleteFiles = function (req,res) {
     }
 };
 
-exports.loadFile = function (userApi,req,res) {
+exports.loadFile = function (req,res) {
     var id = req.query.id;
-    var userKey = req.query.userKey;
-    for (var i = 0; i < userApi.length; i++) {
-        if (userApi[i].apiKey && userKey) {
-            if (userApi[i].apiKey === userKey) {
-                fileService.loadFile(id, userApi[i].userData, function (data) {
-                    res.send(data);
-                });
-                break;
-            }
-        }
-    }
+    var userInfo = req.session.userData;
+    fileService.loadFile(id, userInfo, function (data) {
+        res.send(data);
+    });
 };

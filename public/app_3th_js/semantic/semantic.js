@@ -8232,7 +8232,7 @@ $.fn.embed.settings = {
 
 "use strict";
 
-$.fn.modal = function(parameters) {
+$.fn.suimodal = function(parameters) {
   var
     $allModules    = $(this),
     $window        = $(window),
